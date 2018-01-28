@@ -30,7 +30,13 @@ public class Book extends Document {
     public void save() throws SQLException {
         super.save();
         statement.executeUpdate("update documents set type = 'book' where id = '"+id+"'");
-        statement.executeUpdate("update books set publisher = '"+publisher+"', year='"+year+"', edititon_number = '"+edition_number+"', best_seller = '"+best_seller+"' where id = '"+id+"'");
+        ResultSet resultSet = statement.executeQuery("select * from books where id_document = '"+id+"'");
+        if(resultSet.next()) {
+            statement.executeUpdate("update books set publisher = '" + publisher + "', year='" + year + "', edition_number = '" + edition_number + "', best_seller = '" + getBest_sellerAsInt() + "' where id_document = '" + id + "'");
+        }
+        else{
+            statement.executeUpdate("insert into books (publisher, year, edition_number, best_seller, id_document) values('"+publisher+"', '"+year+"', '"+edition_number+"', '"+getBest_sellerAsInt()+"', '"+id+"')");
+        }
     }
     @Override
     public void setVariablesKnowingTitle() throws SQLException {
@@ -38,7 +44,7 @@ public class Book extends Document {
         ResultSet resultSet = statement.executeQuery("select * from books where id = '"+id+"'");
         if(resultSet.next()){
             setYear(resultSet.getInt("year"));
-            setBest_seller(resultSet.getBoolean("best_seller"));
+            setBest_sellerFromInt(resultSet.getInt("best_seller"));
             setEdition_number(resultSet.getInt("edition_number"));
             setPublisher(resultSet.getString("publisher"));
         }
@@ -71,5 +77,11 @@ public class Book extends Document {
     }
     public boolean isBest_seller() {
         return best_seller;
+    }
+    public int getBest_sellerAsInt(){
+        return best_seller?1:0;
+    }
+    public void setBest_sellerFromInt(int best_seller){
+        this.best_seller = (best_seller==0) ? true:false;
     }
 }
