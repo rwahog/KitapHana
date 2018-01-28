@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Document implements Document_interface{
-    private String title;
-    private ArrayList<Keyword> keywords;
-    private ArrayList<Author> authors;
-    private int price, amount, id, type;
-    private Statement statement;
-    private Connection connection;
-    private Scanner in;
+    protected String title;
+    protected ArrayList<Keyword> keywords;
+    protected ArrayList<Author> authors;
+    protected int price, amount, id;
+    protected Statement statement;
+    protected Connection connection;
+    protected Scanner in;
     Document(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.statement = connection.createStatement();
@@ -21,53 +21,51 @@ public class Document implements Document_interface{
         keywords = new ArrayList<Keyword>();
         authors = new ArrayList<Author>();
     }
-    public void readDocument() throws SQLException {
+    public void read() throws SQLException {
         System.out.println("Title: ");
-        setTitle(in.next());
-        System.out.println("Authors: ");
-        while(in.hasNext()){
-            String name = in.next();
-            if(name.equals("end")) break;
-            ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"'");
-            Author author = new Author(connection, in);
-            author.setName(name);
-            addAuthor(author);
-            author.addDocument(this);
+        ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
+        if(resultSet.next()){
+            System.out.println("This document already exists");
         }
-        System.out.println("Keywords: ");
-        while(in.hasNext()){
-            String word = in.next();
-            if(word.equals("end")) break;
-            ResultSet resultSet = statement.executeQuery("select * from keywords where keyword = '"+word+"'");
-            Keyword keyword = new Keyword(connection, in);
-            keyword.setKeyword(word);
-            addKeyword(keyword);
-            keyword.addDocument(this);
+        else {
+            setTitle(in.next());
+            System.out.println("Authors: ");
+            while (in.hasNext()) {
+                String name = in.next();
+                if (name.equals("end")) break;
+                Author author = new Author(connection, in);
+                author.setName(name);
+                addAuthor(author);
+                author.addDocument(this);
+            }
+            System.out.println("Keywords: ");
+            while (in.hasNext()) {
+                String word = in.next();
+                if (word.equals("end")) break;
+                Keyword keyword = new Keyword(connection, in);
+                keyword.setKeyword(word);
+                addKeyword(keyword);
+                keyword.addDocument(this);
+            }
+            System.out.println("Price: ");
+            setPrice(in.nextInt());
+            System.out.println("Amount: ");
+            setAmount(in.nextInt());
         }
-        System.out.println("Price: ");
-        setPrice(in.nextInt());
-        System.out.println("Amount: ");
-        setAmount(in.nextInt());
     }
     public void save() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
+        for (int i = 0; i < authors.size(); i++) {
+            authors.get(i).save();
+        }
+        for (int i = 0; i < keywords.size(); i++) {
+            keywords.get(i).save();
+        }
         if(resultSet.next()){
-            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', price = '"+price+"', amount = '"+amount+"', type = '"+type+"' where id = '"+id+"'");
-            for (int i = 0; i < authors.size(); i++) {
-                authors.get(i).save();
-            }
-            for (int i = 0; i < keywords.size(); i++) {
-                keywords.get(i).save();
-            }
+            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', price = '"+price+"', amount = '"+amount+"' where id = '"+id+"'");
         }
         else {
             statement.executeUpdate("insert into documents (title, authors, keywords, price, amount) values ('" + title + "','" + getAuthorsAsString() + "', '" + getKeywordsAsString() + "', '" + price + "', '" + amount + "' )");
-            for (int i = 0; i < authors.size(); i++) {
-                authors.get(i).save();
-            }
-            for (int i = 0; i < keywords.size(); i++) {
-                keywords.get(i).save();
-            }
             resultSet = statement.executeQuery("select * from documents where title = '" + title + "'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -80,8 +78,8 @@ public class Document implements Document_interface{
             setPrice(resultSet.getInt("price"));
             setAmount(resultSet.getInt("amount"));
             setId(resultSet.getInt("id"));
-            addAuthorsFromString(resultSet.getString("authors"));
-            addKeywordsFromString(resultSet.getString("keywords"));
+            setAuthorsFromString(resultSet.getString("authors"));
+            setKeywordsFromString(resultSet.getString("keywords"));
         }
     }
     //Id
@@ -106,7 +104,7 @@ public class Document implements Document_interface{
         authors.add(author);
         author.addDocument(this);
     }
-    public void addAuthorsFromString(String s) throws SQLException {
+    public void setAuthorsFromString(String s) throws SQLException {
         for(int i = 0; i<s.length(); i++){
             int j = i;
             String cur = "";
@@ -140,7 +138,7 @@ public class Document implements Document_interface{
         keywords.add(keyword);
         keyword.addDocument(this);
     }
-    public void addKeywordsFromString(String s) throws SQLException {
+    public void setKeywordsFromString(String s) throws SQLException {
         for(int i = 0; i<s.length(); i++){
             int j = i;
             String cur = "";
@@ -182,5 +180,8 @@ public class Document implements Document_interface{
     }
     public void increaseAmount() throws SQLException {
         setAmount(amount + 1);
+    }
+    public void decreaseAmount() throws SQLException {
+        setAmount(amount - 1);
     }
 }
