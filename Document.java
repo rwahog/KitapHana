@@ -36,7 +36,6 @@ public class Document implements Document_interface{
                 Author author = new Author(connection, in);
                 author.setName(name);
                 addAuthor(author);
-                author.addDocument(this);
             }
             System.out.println("Keywords: ");
             while (in.hasNext()) {
@@ -45,7 +44,6 @@ public class Document implements Document_interface{
                 Keyword keyword = new Keyword(connection, in);
                 keyword.setKeyword(word);
                 addKeyword(keyword);
-                keyword.addDocument(this);
             }
             System.out.println("Price: ");
             setPrice(in.nextInt());
