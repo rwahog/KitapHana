@@ -48,6 +48,24 @@ public class User implements User_interface {
             }
         }
     }
+    public void login() throws SQLException {
+        System.out.println("Phone number: ");
+        setPhone_number(in.next());
+        ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
+        System.out.println("Card number: ");
+        card_number = in.nextLong();
+        if(resultSet.next()){
+            if(card_number == resultSet.getLong("card_number")){
+                setVariablesKnowingCard_number(card_number);
+            }
+            else{
+                System.out.println("Wrong card number");
+            }
+        }
+        else{
+            System.out.println("There is no user with this phone number");
+        }
+    }
     public void setVariablesKnowingNameSurname(String name, String surname) throws SQLException {
         setName(name);
         setSurname(surname);
@@ -142,7 +160,7 @@ public class User implements User_interface {
         }
         return s;
     }
-    public void addDocument(Document document) {
+    public void addDocument(Document document) throws SQLException {
         documents.add(document);
     }
     public void setDocumentsFromString(String s) throws SQLException {
