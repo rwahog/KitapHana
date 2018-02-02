@@ -8,9 +8,10 @@ public class Library {
     private Connection connection;
     private Statement statement;
     private Scanner in;
-    Library(Connection connection, Scanner in){
+    Library(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.in = in;
+        this.statement = connection.createStatement();
     }
     public Document getDocumentByTitle(String title) throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
