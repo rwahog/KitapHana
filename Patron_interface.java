@@ -45,15 +45,15 @@ public class Patron_interface {
         switch (command){
             case("Author"):
                 GUI.print("write the Author");
-                library.searchDocumentByAuthor(GUI.read());
+                doc = library.getDocumentByTitle(library.searchDocumentByAuthor(GUI.read()));
                 break;
             case("PossibleTitle"):
                 GUI.print("write the Title");
-                library.searchDocumentByPossibleTitle(GUI.read());
+                doc = library.getDocumentByTitle(GUI.read());
                 break;
             case("Keyword"):
                 GUI.print("write the keyword");
-                library.searchDocumentByKeyword(GUI.read());
+                doc = library.getDocumentByTitle(library.searchDocumentByKeyword(GUI.read()));
                 break;
         }
         return doc;
