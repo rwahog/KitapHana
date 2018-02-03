@@ -10,7 +10,7 @@ public class Document implements Document_interface{
     protected String title;
     protected ArrayList<Keyword> keywords;
     protected ArrayList<Author> authors;
-    protected int price, amount, id;
+    protected int price, amount, id, year;
     protected Statement statement;
     protected Connection connection;
     protected Scanner in;
@@ -93,6 +93,13 @@ public class Document implements Document_interface{
     }
     public int getPrice() {
         return price;
+    }
+    //year
+    public void setYear(int year) throw SQLException {
+        this.year = year;
+    }
+    public int getYear(){
+        return year;
     }
     //Authors
     public ArrayList<Author> getAuthors() {
