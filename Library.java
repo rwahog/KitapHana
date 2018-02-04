@@ -37,8 +37,8 @@ public class Library {
         }
         return answer;
     }
-    public String searchDocumentByAuthor(String name) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"'");
+    public String searchDocumentByAuthor(String name, String surname) throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");
         if(resultSet.next()){
             return resultSet.getString("documents");
         }
