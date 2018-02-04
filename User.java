@@ -26,13 +26,13 @@ public class User {
     }
     public void read() throws SQLException {
         GUI.print("Name: ");
-        setName(GUI.read());
+        setName(in.next());
         GUI.print("Surname: ");
-        setSurname(GUI.read());
+        setSurname(in.next());
         GUI.print("Phone number: ");
-        setPhone_number(GUI.read());
+        setPhone_number(in.next());
         GUI.print("Password: ");
-        setPassword(GUI.read());
+        setPassword(in.next());
         address = new Address(connection, in);
         address.readAddress();
         setCard_number(getPhone_number());
@@ -54,11 +54,11 @@ public class User {
     }
     public void login() throws SQLException {
         GUI.print("Phone number: ");
-        setPhone_number(GUI.read());
+        setPhone_number(in.next());
         ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
         if(resultSet.next()){
             GUI.print("Password: ");
-            password = GUI.read();
+            password = in.next();
             if(password.equals(resultSet.getString("password"))){
                 setVariablesKnowingCard_number(resultSet.getLong("card_number"));
             }
@@ -208,10 +208,10 @@ public class User {
     public String searchDocumentByPossibleTitle(String title) throws SQLException { // Ищет документ по частично
         return library.searchDocumentByPossibleTitle(title);
     }
-    public String searchDocumentByAuthor(String name) throws SQLException {
-        return library.searchDocumentByAuthor(name);
+    public String searchDocumentByAuthor(Author author) throws SQLException {
+        return library.searchDocumentByAuthor(author);
     }
-    public String searchDocumentByKeyword(String keyword) throws SQLException {
+    public String searchDocumentByKeyword(Keyword keyword) throws SQLException {
         return library.searchDocumentByKeyword(keyword);
     }
 
