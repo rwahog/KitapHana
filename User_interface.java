@@ -30,6 +30,7 @@ public class User_interface {
             case("Librarian"):
                 Librarian librarian = new Librarian(conn, in);
                 librarian.login();
+                Librarian_interface.command(conn, in, librarian);
                 break;
             case("Patron"):
                 Patron patron = new Patron(conn, in);
@@ -51,6 +52,7 @@ public class User_interface {
             case("Librarian"):
                 Librarian librarian = new Librarian(conn, in);
                 librarian.read();
+                Librarian_interface.command(conn, in, librarian);
                 break;
             case("Patron"):
                 Patron patron = new Patron(conn, in);
