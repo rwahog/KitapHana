@@ -23,18 +23,21 @@ public class Document implements Document_interface{
     }
     public void read() throws SQLException {
         System.out.println("Title: ");
+        setTitle(in.nextLine());setTitle(in.nextLine());
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         if(resultSet.next()){
             System.out.println("This document already exists");
         }
         else {
-            setTitle(in.next());
             System.out.println("Authors: ");
             while (in.hasNext()) {
                 String name = in.next();
                 if (name.equals("end")) break;
+                String surname = in.next();
                 Author author = new Author(connection, in);
                 author.setName(name);
+                author.setSurname(surname);
+                author.setVariablesKnowingNameSurname();
                 addAuthor(author);
             }
             System.out.println("Keywords: ");
@@ -43,6 +46,7 @@ public class Document implements Document_interface{
                 if (word.equals("end")) break;
                 Keyword keyword = new Keyword(connection, in);
                 keyword.setKeyword(word);
+                keyword.setVariablesKnowingKeyword();
                 addKeyword(keyword);
             }
             System.out.println("Price: ");
@@ -103,17 +107,19 @@ public class Document implements Document_interface{
         author.addDocument(this);
     }
     public void setAuthorsFromString(String s) throws SQLException {
-        for(int i = 0; i<s.length(); i++){
-            int j = i;
-            String cur = "";
-            while(j<s.length() && s.charAt(j)!=','){
-                cur = cur.concat(String.valueOf(s.charAt(j)));
-                j++;
+        if(s!=null) {
+            for (int i = 0; i < s.length(); i++) {
+                int j = i;
+                String cur = "";
+                while (j < s.length() && s.charAt(j) != ',') {
+                    cur = cur.concat(String.valueOf(s.charAt(j)));
+                    j++;
+                }
+                i = j + 1;
+                Author author = new Author(connection, in);
+                author.setName(cur);
+                addAuthor(author);
             }
-            i = j+1;
-            Author author = new Author(connection, in);
-            author.setName(cur);
-            addAuthor(author);
         }
     }
     public void removeAuthor(Author author) throws SQLException {
@@ -123,8 +129,8 @@ public class Document implements Document_interface{
     public String getAuthorsAsString(){
         String s = "";
         for(int i = 0; i<authors.size(); i++){
-            if(i<authors.size()-1) s = s.concat(authors.get(i).getName() + ", ");
-            else s = s.concat(authors.get(i).getName());
+            if(i<authors.size()-1) s = s.concat(authors.get(i).getName() + " " + authors.get(i).getSurname() + ", ");
+            else s = s.concat(authors.get(i).getName() +" "+authors.get(i).getSurname());
         }
         return s;
     }
@@ -137,17 +143,19 @@ public class Document implements Document_interface{
         keyword.addDocument(this);
     }
     public void setKeywordsFromString(String s) throws SQLException {
-        for(int i = 0; i<s.length(); i++){
-            int j = i;
-            String cur = "";
-            while(j<s.length() && s.charAt(j)!=','){
-                cur = cur.concat(String.valueOf(s.charAt(j)));
-                j++;
+        if(s!=null) {
+            for (int i = 0; i < s.length(); i++) {
+                int j = i;
+                String cur = "";
+                while (j < s.length() && s.charAt(j) != ',') {
+                    cur = cur.concat(String.valueOf(s.charAt(j)));
+                    j++;
+                }
+                i = j + 1;
+                Keyword keyword = new Keyword(connection, in);
+                keyword.setKeyword(cur);
+                addKeyword(keyword);
             }
-            i = j+1;
-            Keyword keyword = new Keyword(connection, in);
-            keyword.setKeyword(cur);
-            addKeyword(keyword);
         }
     }
     public void removeKeyword(Keyword keyword) throws SQLException {
