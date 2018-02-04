@@ -4,9 +4,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.security.Key;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Document implements Document_interface{
+public class Document {
     protected String title;
     protected ArrayList<Keyword> keywords;
     protected ArrayList<Author> authors;
@@ -22,37 +28,37 @@ public class Document implements Document_interface{
         authors = new ArrayList<Author>();
     }
     public void read() throws SQLException {
-        System.out.println("Title: ");
-        setTitle(in.nextLine());setTitle(in.nextLine());
+        GUI.print("Title: ");
+        setTitle(GUI.read());setTitle(GUI.read());
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         if(resultSet.next()){
-            System.out.println("This document already exists");
+            GUI.print("This document already exists");
         }
         else {
-            System.out.println("Authors: ");
+            GUI.print("Authors: ");
             while (in.hasNext()) {
-                String name = in.next();
+                String name = GUI.read();
                 if (name.equals("end")) break;
-                String surname = in.next();
+                String surname = GUI.read();
                 Author author = new Author(connection, in);
                 author.setName(name);
                 author.setSurname(surname);
                 author.setVariablesKnowingNameSurname();
                 addAuthor(author);
             }
-            System.out.println("Keywords: ");
+            GUI.print("Keywords: ");
             while (in.hasNext()) {
-                String word = in.next();
+                String word = GUI.read();
                 if (word.equals("end")) break;
                 Keyword keyword = new Keyword(connection, in);
                 keyword.setKeyword(word);
                 keyword.setVariablesKnowingKeyword();
                 addKeyword(keyword);
             }
-            System.out.println("Price: ");
-            setPrice(in.nextInt());
-            System.out.println("Amount: ");
-            setAmount(in.nextInt());
+            GUI.print("Price: ");
+            setPrice(Integer.parseInt(GUI.read()));
+            GUI.print("Amount: ");
+            setAmount(Integer.parseInt(GUI.read()));
         }
     }
     public void save() throws SQLException {

@@ -16,13 +16,13 @@ public class Book extends Document {
     @Override
     public void read() throws SQLException {
         super.read();
-        System.out.println("Publisher: ");
-        setPublisher(in.next());
-        System.out.println("Year: ");
-        setYear(in.nextInt());
-        System.out.println("Edition number: ");
-        setEdition_number(in.nextInt());
-        System.out.println("Best_seller: ");
+        GUI.print("Publisher: ");
+        setPublisher(GUI.read());
+        GUI.print("Year: ");
+        setYear(Integer.parseInt(GUI.read()));
+        GUI.print("Edition number: ");
+        setEdition_number(Integer.parseInt(GUI.read()));
+        GUI.print("Best_seller: ");
         setBest_seller(in.nextBoolean());
     }
 

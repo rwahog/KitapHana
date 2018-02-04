@@ -30,6 +30,7 @@ public class Patron_interface {
     }
 
     private static void returnDoc(Connection conn, Scanner in) throws SQLException {
+        patron.returnDocument(searchFor(conn, in));
     }
 
     private static void checkOut(Connection conn, Scanner in) throws SQLException {
@@ -45,15 +46,15 @@ public class Patron_interface {
         switch (command){
             case("Author"):
                 GUI.print("write the Author");
-                doc = library.getDocumentByTitle(library.searchDocumentByAuthor(GUI.read()));
+                doc = patron.getDocumentByTitle(library.searchDocumentByAuthor(GUI.read()));
                 break;
             case("PossibleTitle"):
                 GUI.print("write the Title");
-                doc = library.getDocumentByTitle(GUI.read());
+                doc = patron.getDocumentByTitle(GUI.read());
                 break;
             case("Keyword"):
                 GUI.print("write the keyword");
-                doc = library.getDocumentByTitle(library.searchDocumentByKeyword(GUI.read()));
+                doc = patron.getDocumentByTitle(library.searchDocumentByKeyword(GUI.read()));
                 break;
         }
         return doc;

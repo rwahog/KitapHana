@@ -1,4 +1,5 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -53,20 +54,31 @@ public class Librarian_interface {
     public static void manage(Connection conn, Scanner in) throws SQLException {
         GUI.print("DELETE or MODIFY");
         command = GUI.read();
-
-        Patron patron = new Patron(conn, in);
         switch (command) {
             case ("DELETE"):
-                librarian.removeUser(patron);
+                librarian.removeUser(search(conn, in));
                 break;
             case("MODIFY"):
-                librarian.removeUser(patron);
+                librarian.modifyUser(search(conn, in));
                 break;
             default: GUI.print("WRONG INPUT"); manage(conn, in)    ;
         }
     }
-
+    public static User search(Connection conn, Scanner in) throws SQLException {
+        GUI.print("Search by card number/name");
+        command = GUI.read();
+        switch (command){
+            case("card number"):
+                GUI.print("Get the number:");
+                return library.searchUserByCard_number(Integer.parseInt(GUI.read()));
+            case("name"):
+                GUI.print("Get the name, then get surname:");
+                return library.searchUserByNameSurname(GUI.read(), GUI.read());
+        }
+        return null;
+    }
     public static void checkOverdue(Connection conn, Scanner in) throws SQLException {
          librarian.checkOutDocument(library.getDocumentByTitle(GUI.read()));
+
     }
 }

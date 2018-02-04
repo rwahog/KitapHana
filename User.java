@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class User implements User_interface {
+public class User {
     protected String phone_number, name, surname, password;
     protected Address address;
     protected long card_number;
@@ -25,14 +25,14 @@ public class User implements User_interface {
         address = new Address(connection, in);
     }
     public void read() throws SQLException {
-        System.out.println("Name: ");
-        setName(in.next());
-        System.out.println("Surname: ");
-        setSurname(in.next());
-        System.out.println("Phone number: ");
-        setPhone_number(in.next());
-        System.out.println("Password: ");
-        setPassword(in.next());
+        GUI.print("Name: ");
+        setName(GUI.read());
+        GUI.print("Surname: ");
+        setSurname(GUI.read());
+        GUI.print("Phone number: ");
+        setPhone_number(GUI.read());
+        GUI.print("Password: ");
+        setPassword(GUI.read());
         address = new Address(connection, in);
         address.readAddress();
         setCard_number(getPhone_number());
@@ -53,21 +53,21 @@ public class User implements User_interface {
         }
     }
     public void login() throws SQLException {
-        System.out.println("Phone number: ");
-        setPhone_number(in.next());
+        GUI.print("Phone number: ");
+        setPhone_number(GUI.read());
         ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
         if(resultSet.next()){
-            System.out.println("Password: ");
-            password = in.next();
+            GUI.print("Password: ");
+            password = GUI.read();
             if(password.equals(resultSet.getString("password"))){
                 setVariablesKnowingCard_number(resultSet.getLong("card_number"));
             }
             else{
-                System.out.println("Wrong password");
+                GUI.print("Wrong password");
             }
         }
         else{
-            System.out.println("There is no user with this phone number");
+            GUI.print("There is no user with this phone number");
         }
     }
     public void setVariablesKnowingNameSurname(String name, String surname) throws SQLException {
@@ -196,7 +196,7 @@ public class User implements User_interface {
             document.decreaseAmount();
         }
         else{
-            System.out.println("You can't book this document");
+            GUI.print("You can't book this document");
         }
     }
     public void returnDocument(Document document){

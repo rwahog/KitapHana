@@ -21,10 +21,10 @@ public class Patron extends User {
         ResultSet resultSet = statement.executeQuery("select * from users where id = '"+id+"'");
         if(resultSet.next()){
             if(resultSet.getString("type").equals("patron")){
-                System.out.println("Successfully");
+                GUI.print("Successfully");
             }
             else{
-                System.out.println("Wrong card number");
+                GUI.print("Wrong card number");
             }
         }
     }

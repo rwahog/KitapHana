@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class User_interface {
     static String command;
     public static void command(Connection conn, Scanner in) throws SQLException {
-
+        GUI.print("Choose your command: registration/log in/exit");
         command = GUI.read();
         switch (command){
             case("registration"):

@@ -14,18 +14,18 @@ public class Address {
         id_address = -1;
     }
     public void readAddress() throws SQLException {
-        System.out.println("Country: ");
-        setCountry(in.next());
-        System.out.println("Town: ");
-        setTown(in.next());
-        System.out.println("Street: ");
-        setStreet(in.next());
-        System.out.println("House number: ");
-        setHouse_number(in.nextInt());
-        System.out.println("Apartment number: ");
-        setApartment_number(in.nextInt());
-        System.out.println("Postcode: ");
-        setPostcode(in.next());
+        GUI.print("Country: ");
+        setCountry(GUI.read());
+        GUI.print("Town: ");
+        setTown(GUI.read());
+        GUI.print("Street: ");
+        setStreet(GUI.read());
+        GUI.print("House number: ");
+        setHouse_number(Integer.parseInt(GUI.read()));
+        GUI.print("Apartment number: ");
+        setApartment_number(Integer.parseInt(GUI.read()));
+        GUI.print("Postcode: ");
+        setPostcode(GUI.read());
     }
     public void save() throws SQLException {
         if(id_address >= 0) {
