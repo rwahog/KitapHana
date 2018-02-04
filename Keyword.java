@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Keyword {
-    private int id;
-    private ArrayList<Document> documents;
-    private String keyword;
-    private Statement statement;
-    private Connection connection;
-    private Scanner in;
+    protected int id;
+    protected ArrayList<Document> documents;
+    protected String keyword;
+    protected Statement statement;
+    protected Connection connection;
+    protected Scanner in;
     Keyword(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.in = in;
