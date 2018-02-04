@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Author {
-    private int id;
-    private ArrayList<Document> documents;
-    private String name, surname;
-    private Statement statement;
-    private Connection connection;
-    private Scanner in;
+    protected int id;
+    protected ArrayList<Document> documents;
+    protected String name, surname;
+    protected Statement statement;
+    protected Connection connection;
+    protected Scanner in;
     Author(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.in = in;
