@@ -21,9 +21,9 @@ public class Address {
         GUI.print("Street: ");
         setStreet(GUI.read());
         GUI.print("House number: ");
-        setHouse_number(Integer.parseInt(GUI.read()));
+        setHouse_number(GUI.readInt());
         GUI.print("Apartment number: ");
-        setApartment_number(Integer.parseInt(GUI.read()));
+        setApartment_number(GUI.readInt());
         GUI.print("Postcode: ");
         setPostcode(GUI.read());
     }
