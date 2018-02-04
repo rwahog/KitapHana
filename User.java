@@ -21,6 +21,8 @@ public class User implements User_interface {
         this.statement = connection.createStatement();
         this.in = in;
         library = new Library(connection, in);
+        documents = new ArrayList<Document>();
+        address = new Address(connection, in);
     }
     public void read() throws SQLException {
         System.out.println("Name: ");
@@ -37,7 +39,7 @@ public class User implements User_interface {
         ResultSet resultSet = statement.executeQuery("select * from users where card_number = '"+card_number+"'");
         address.save();
         if(resultSet.next()){
-            statement.executeUpdate("update users name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+" where id = '"+id+"'");
+            statement.executeUpdate("update users set name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
         }
         else {
             int id_address = address.getId_address();
@@ -52,9 +54,9 @@ public class User implements User_interface {
         System.out.println("Phone number: ");
         setPhone_number(in.next());
         ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
-        System.out.println("Card number: ");
-        card_number = in.nextLong();
         if(resultSet.next()){
+            System.out.println("Card number: ");
+            card_number = in.nextLong();
             if(card_number == resultSet.getLong("card_number")){
                 setVariablesKnowingCard_number(card_number);
             }
@@ -69,13 +71,12 @@ public class User implements User_interface {
     public void setVariablesKnowingNameSurname(String name, String surname) throws SQLException {
         setName(name);
         setSurname(surname);
-        ResultSet resultSet = statement.executeQuery("select * from users where name = '"+name+"', surname = '"+surname+"'");
+        ResultSet resultSet = statement.executeQuery("select * from users where name = '"+name+"' and surname = '"+surname+"'");
         if(resultSet.next()){
             setPhone_number(resultSet.getString("phone_number"));
             id = resultSet.getInt("id");
             setCard_number(resultSet.getString("card_number"));
             setDocumentsFromString(resultSet.getString("documents"));
-            Address address = new Address(connection,in);
             address.setVariablesKnowingId_address(resultSet.getInt("id_address"));
         }
     }
@@ -88,7 +89,6 @@ public class User implements User_interface {
             setPhone_number(resultSet.getString("phone_number"));
             id = resultSet.getInt("id");
             setDocumentsFromString(resultSet.getString("documents"));
-            Address address = new Address(connection,in);
             address.setVariablesKnowingId_address(resultSet.getInt("id_address"));
         }
     }
@@ -164,17 +164,19 @@ public class User implements User_interface {
         documents.add(document);
     }
     public void setDocumentsFromString(String s) throws SQLException {
-        for(int i = 0; i<s.length(); i++){
-            int j = i;
-            String cur = "";
-            while(j<s.length() && s.charAt(j)!=','){
-                cur = cur.concat(String.valueOf(s.charAt(j)));
-                j++;
+        if(s!=null) {
+            for (int i = 0; i < s.length(); i++) {
+                int j = i;
+                String cur = "";
+                while (j < s.length() && s.charAt(j) != ',') {
+                    cur = cur.concat(String.valueOf(s.charAt(j)));
+                    j++;
+                }
+                i = j + 1;
+                Document document = new Document(connection, in);
+                document.setTitle(cur);
+                addDocument(document);
             }
-            i = j+1;
-            Document document = new Document(connection, in);
-            document.setTitle(cur);
-            addDocument(document);
         }
     }
     //Actions
