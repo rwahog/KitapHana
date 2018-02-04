@@ -5,9 +5,9 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Library {
-    private Connection connection;
-    private Statement statement;
-    private Scanner in;
+    protected Connection connection;
+    protected Statement statement;
+    protected Scanner in;
     Library(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.in = in;
