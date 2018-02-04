@@ -39,15 +39,23 @@ public class Librarian_interface {
     }
 
     private static void modify(Connection conn, Scanner in) throws SQLException {
-        librarian.modifyDocument(library.getDocumentByTitle(GUI.read()));
+        GUI.print("Get the title:");
+        Document doc = library.getDocumentByTitle(GUI.read());
+        librarian.modifyDocument(doc);
+        doc.save();
+        librarian.save();
     }
 
     private static void delete(Connection conn, Scanner in) throws SQLException {
         librarian.removeDocument(library.getDocumentByTitle(GUI.read()));
+        librarian.save();
     }
 
     public static void add(Connection conn, Scanner in) throws SQLException {
         Document newDoc = new Document(conn, in);
+        GUI.print("Set title:");
+        newDoc.setTitle(GUI.read());
+        newDoc.setVariablesKnowingTitle();
         librarian.addDocument(newDoc);
     }
 
@@ -57,9 +65,13 @@ public class Librarian_interface {
         switch (command) {
             case ("DELETE"):
                 librarian.removeUser(search(conn, in));
+                librarian.save();
                 break;
             case("MODIFY"):
-                librarian.modifyUser(search(conn, in));
+                User user = search(conn, in);
+                librarian.modifyUser(user);
+                user.save();
+                librarian.save();
                 break;
             default: GUI.print("WRONG INPUT"); manage(conn, in)    ;
         }

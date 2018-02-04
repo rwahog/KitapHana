@@ -30,13 +30,18 @@ public class Patron_interface {
     }
 
     private static void returnDoc(Connection conn, Scanner in) throws SQLException {
-        patron.returnDocument(searchFor(conn, in));
+        Document doc = searchFor(conn, in);
+        patron.returnDocument(doc);
+        doc.save();
+        patron.save();
     }
 
     private static void checkOut(Connection conn, Scanner in) throws SQLException {
 
         Document document = searchFor(conn, in);
         patron.checkOutDocument(document);
+        document.save();
+        patron.save();
     }
 
     public static Document searchFor(Connection conn, Scanner in) throws SQLException {
