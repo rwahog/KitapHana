@@ -14,4 +14,7 @@ public class GUI {
         print("Good bye, my friend");
         System.exit(0);
     }
+    public static int readInt(){
+        return Integer.parseInt(JOptionPane.showInputDialog(""));
+    }
 }
