@@ -2,11 +2,11 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Address {
-    private String country, town, postcode, street;
-    private int house_number, apartment_number, id_address;
-    private Connection connection;
-    private Statement statement;
-    private Scanner in;
+    protected String country, town, postcode, street;
+    protected int house_number, apartment_number, id_address;
+    protected Connection connection;
+    protected Statement statement;
+    protected Scanner in;
     Address(Connection conn, Scanner in) throws SQLException {
         this.connection = conn;
         this.in = in;
