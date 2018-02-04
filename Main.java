@@ -36,7 +36,12 @@ public class Main {
             statement.executeUpdate("create table if not exists ja (id_document mediumint not null primary key, title varchar(1024), date varchar(1024), journal_name varchar(1024), editors varchar(1024))");
             Librarian librarian = new Librarian(conn, scan2);
             librarian.login();
-            librarian.addDocument();
+            Document document = new Document(conn, scan2);
+            document.setTitle(scan2.next());
+            document.setVariablesKnowingTitle();
+            librarian.checkOutDocument(document);
+            librarian.save();
+            document.save();
         }
 
     }
