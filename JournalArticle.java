@@ -17,13 +17,13 @@ public class JournalArticle extends Document{
     @Override
     public void read() throws SQLException {
         super.read();
-        GUI.print("Journal name: ");
-        setJournal_name(GUI.read());setJournal_name(GUI.read());
-        GUI.print("Date: ");
-        setDate(GUI.read());
-        GUI.print("Editors: ");
+        System.out.println("Journal name: ");
+        setJournal_name(in.nextLine());setJournal_name(in.nextLine());
+        System.out.println("Date: ");
+        setDate(in.nextLine());
+        System.out.println("Editors: ");
         while(in.hasNext()){
-            String editor = GUI.read();
+            String editor = in.nextLine();
             if(editor.equals("end")) break;
             addEditor(editor);
         }
