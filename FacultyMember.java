@@ -10,4 +10,9 @@ public class FacultyMember extends Patron {
         maxdays = 21;
     }
 
+    @Override
+    public void save() throws SQLException {
+        super.save();
+        statement.executeUpdate("update users set type = 'faculty member' where id = '"+id+"'");
+    }
 }
