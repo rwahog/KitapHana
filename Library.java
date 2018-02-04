@@ -37,8 +37,8 @@ public class Library {
         }
         return answer;
     }
-    public String searchDocumentByAuthor(String name, String surname) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");
+    public String searchDocumentByAuthor(Author author) throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+author.getName()+"' and surname = '"+author.getSurname()+"'");
         if(resultSet.next()){
             return resultSet.getString("documents");
         }
@@ -46,8 +46,8 @@ public class Library {
             return "No documents from this author";
         }
     }
-    public String searchDocumentByKeyword(String keyword) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from keywords where keyword = '"+keyword+"'");
+    public String searchDocumentByKeyword(Keyword keyword) throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from keywords where keyword = '"+keyword.getKeyword()+"'");
         if(resultSet.next()){
             return resultSet.getString("documents");
         }
@@ -78,4 +78,3 @@ public class Library {
         }
     }
 }
-
