@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class User implements User_interface {
-    protected String phone_number, name, surname;
+    protected String phone_number, name, surname, password;
     protected Address address;
     protected long card_number;
-    protected int id;
+    protected int id, maxdays;
     protected ArrayList<Document> documents;
     protected Statement statement;
     protected Connection connection;
@@ -31,6 +31,8 @@ public class User implements User_interface {
         setSurname(in.next());
         System.out.println("Phone number: ");
         setPhone_number(in.next());
+        System.out.println("Password: ");
+        setPassword(in.next());
         address = new Address(connection, in);
         address.readAddress();
         setCard_number(getPhone_number());
@@ -39,11 +41,11 @@ public class User implements User_interface {
         ResultSet resultSet = statement.executeQuery("select * from users where card_number = '"+card_number+"'");
         address.save();
         if(resultSet.next()){
-            statement.executeUpdate("update users set name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
+            statement.executeUpdate("update users set name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', password = '"+password+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
         }
         else {
             int id_address = address.getId_address();
-            statement.executeUpdate("insert into users (name, surname, phone_number, card_number, id_address) values('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '" + id_address + "')");
+            statement.executeUpdate("insert into users (name, surname, phone_number, card_number, password, id_address) values('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '"+password+"', '" + id_address + "')");
             resultSet = statement.executeQuery("select * from users where card_number = '" + card_number + "'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -55,13 +57,13 @@ public class User implements User_interface {
         setPhone_number(in.next());
         ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
         if(resultSet.next()){
-            System.out.println("Card number: ");
-            card_number = in.nextLong();
-            if(card_number == resultSet.getLong("card_number")){
-                setVariablesKnowingCard_number(card_number);
+            System.out.println("Password: ");
+            password = in.next();
+            if(password.equals(resultSet.getString("password"))){
+                setVariablesKnowingCard_number(resultSet.getLong("card_number"));
             }
             else{
-                System.out.println("Wrong card number");
+                System.out.println("Wrong password");
             }
         }
         else{
@@ -147,6 +149,13 @@ public class User implements User_interface {
 
     public int getId() {
         return id;
+    }
+    //Password
+    public void setPassword(String password){
+        this.password = password;
+    }
+    public String getPassword(){
+        return password;
     }
     //Documents
     public ArrayList<Document> getDocuments() {
