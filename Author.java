@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Author {
     private int id;
     private ArrayList<Document> documents;
-    private String name;
+    private String name, surname;
     private Statement statement;
     private Connection connection;
     private Scanner in;
@@ -19,16 +19,23 @@ public class Author {
         documents = new ArrayList<Document>();
     }
     public void save() throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"'");
+        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");
         if(resultSet.next()){
-            statement.executeUpdate("update authors set name ='"+name+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
+            statement.executeUpdate("update authors set name ='"+name+"', surname = '"+surname+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
         }
         else {
-            statement.executeUpdate("insert into authors (name, documents) values ('" + name + "', '" + getDocumentsAsString() + "')");
-            resultSet = statement.executeQuery("select * from authors where name = '" + name + "'");
+            statement.executeUpdate("insert into authors (name, surname, documents) values ('" + name + "', '"+surname+"', '" + getDocumentsAsString() + "')");
+            resultSet = statement.executeQuery("select * from authors where name = '" + name + "' and surname = '"+surname+"'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
             }
+        }
+    }
+    public void setVariablesKnowingNameSurname() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");
+        if(resultSet.next()){
+            id = resultSet.getInt("id");
+            addDocumentsFromString(resultSet.getString("documents"));
         }
     }
     //Name
@@ -38,6 +45,13 @@ public class Author {
 
     public void setName(String name) throws SQLException {
         this.name = name;
+    }
+    //Surname
+    public String getSurname(){
+        return surname;
+    }
+    public void setSurname(String surname){
+        this.surname = surname;
     }
     //Documents
 
