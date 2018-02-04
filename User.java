@@ -25,13 +25,13 @@ public class User {
         address = new Address(connection, in);
     }
     public void read() throws SQLException {
-        GUI.print("Name: ");
+        System.out.println("Name: ");
         setName(in.next());
-        GUI.print("Surname: ");
+        System.out.println("Surname: ");
         setSurname(in.next());
-        GUI.print("Phone number: ");
+        System.out.println("Phone number: ");
         setPhone_number(in.next());
-        GUI.print("Password: ");
+        System.out.println("Password: ");
         setPassword(in.next());
         address = new Address(connection, in);
         address.readAddress();
@@ -53,21 +53,21 @@ public class User {
         }
     }
     public void login() throws SQLException {
-        GUI.print("Phone number: ");
+        System.out.println("Phone number: ");
         setPhone_number(in.next());
         ResultSet resultSet = statement.executeQuery("select * from users where phone_number = '"+phone_number+"'");
         if(resultSet.next()){
-            GUI.print("Password: ");
+            System.out.println("Password: ");
             password = in.next();
             if(password.equals(resultSet.getString("password"))){
                 setVariablesKnowingCard_number(resultSet.getLong("card_number"));
             }
             else{
-                GUI.print("Wrong password");
+                System.out.println("Wrong password");
             }
         }
         else{
-            GUI.print("There is no user with this phone number");
+            System.out.println("There is no user with this phone number");
         }
     }
     public void setVariablesKnowingNameSurname(String name, String surname) throws SQLException {
@@ -172,6 +172,9 @@ public class User {
     public void addDocument(Document document) throws SQLException {
         documents.add(document);
     }
+    public void removeDocument(Document document){
+        documents.remove(document);
+    }
     public void setDocumentsFromString(String s) throws SQLException {
         if(s!=null) {
             for (int i = 0; i < s.length(); i++) {
@@ -194,13 +197,18 @@ public class User {
         if(document.getAmount() > 0){
             addDocument(document);
             document.decreaseAmount();
+            document.save();
+            save();
         }
         else{
-            GUI.print("You can't book this document");
+            System.out.println("You can't book this document");
         }
     }
-    public void returnDocument(Document document){
-
+    public void returnDocument(Document document) throws SQLException {
+        removeDocument(document);
+        document.increaseAmount();
+        document.save();
+        save();
     }
     public Document getDocumentByTitle(String title) throws SQLException {
         return library.getDocumentByTitle(title);
