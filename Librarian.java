@@ -37,21 +37,23 @@ public class Librarian extends User {
 
     }
     //Document
-    public void addDocument(Document document) throws SQLException {
+    public void addDocument() throws SQLException {
         System.out.println("Type: ");
         String s = in.next();
-        if(s.equals("Book")){
+        if(s.equals("book")){
             Book book = new Book(connection, in);
             book.read();
             book.save();
         }
-        else if(s.equals("AV")){
+        else if(s.equals("av")){
             AVMaterial avMaterial = new AVMaterial(connection, in);
             avMaterial.read();
             avMaterial.save();
         }
-        else if(s.equals("JA")){
-
+        else if(s.equals("ja")){
+            JournalArticle journalArticle = new JournalArticle(connection, in);
+            journalArticle.read();
+            journalArticle.save();
         }
     }
     public void  removeDocument(Document document){
