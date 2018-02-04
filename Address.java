@@ -11,6 +11,7 @@ public class Address {
         this.connection = conn;
         this.in = in;
         statement = connection.createStatement();
+        id_address = -1;
     }
     public void readAddress() throws SQLException {
         System.out.println("Country: ");
@@ -27,11 +28,17 @@ public class Address {
         setPostcode(in.next());
     }
     public void save() throws SQLException {
-        statement.executeUpdate("insert into addresses(country, town, street, house_number, apartment_number, postcode) values('"+country+"', '"+town+"', '"+street+"', '"+house_number+"', '"+apartment_number+"','"+postcode+"')");
-        ResultSet resultSet = statement.executeQuery("select * from addresses where country = '"+country+"' and town = '"+town+"' and street = '"+street+"' and house_number = '"+house_number+"'and apartment_number = '"+apartment_number+"' and postcode = '"+postcode+"'");
-        if(resultSet.next()){
-            id_address = resultSet.getInt("id_address");
+        if(id_address >= 0) {
+            statement.executeUpdate("update addresses set country = '" + country + "', town = '" + town + "', street = '" + street + "', house_number = '" + house_number + "', apartment_number = '" + apartment_number + "', postcode = '" + postcode + "' where id_address = '"+id_address+"'");
         }
+        else{
+            statement.executeUpdate("insert into addresses(country, town, street, house_number, apartment_number, postcode) values('"+country+"', '"+town+"', '"+street+"', '"+house_number+"', '"+apartment_number+"','"+postcode+"')");
+            ResultSet resultSet = statement.executeQuery("select * from addresses where country = '"+country+"' and town = '"+town+"' and street = '"+street+"' and house_number = '"+house_number+"'and apartment_number = '"+apartment_number+"' and postcode = '"+postcode+"'");
+            if(resultSet.next()){
+                id_address = resultSet.getInt("id_address");
+            }
+        }
+
     }
     public void setVariablesKnowingId_address(int id_address) throws SQLException {
         this.id_address = id_address;
