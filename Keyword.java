@@ -31,6 +31,13 @@ public class Keyword {
             }
         }
     }
+    public void setVariablesKnowingKeyword() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from keywords where name = '"+keyword+"'");
+        if(resultSet.next()){
+            id = resultSet.getInt("id");
+            addDocumentsFromString(resultSet.getString("documents"));
+        }
+    }
     //Keyword
     public String getKeyword() {
         return keyword;
