@@ -21,10 +21,10 @@ public class Librarian extends User {
         ResultSet resultSet = statement.executeQuery("select * from users where id = '"+id+"'");
         if(resultSet.next()){
             if(resultSet.getString("type").equals("librarian")){
-                GUI.print("Successfully");
+                System.out.println("Successfully");
             }
             else{
-                GUI.print("Wrong card number");
+                System.out.println("Wrong card number");
             }
         }
     }
@@ -38,8 +38,8 @@ public class Librarian extends User {
     }
     //Document
     public void addDocument() throws SQLException {
-        GUI.print("Type: ");
-        String s = GUI.read();
+        System.out.println("Type: ");
+        String s = in.next();
         if(s.equals("book")){
             Book book = new Book(connection, in);
             book.read();
