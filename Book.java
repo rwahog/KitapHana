@@ -19,11 +19,11 @@ public class Book extends Document {
         GUI.print("Publisher: ");
         setPublisher(GUI.read());
         GUI.print("Year: ");
-        setYear(Integer.parseInt(GUI.read()));
+        setYear(GUI.readInt());
         GUI.print("Edition number: ");
-        setEdition_number(Integer.parseInt(GUI.read()));
+        setEdition_number(GUI.readInt());
         GUI.print("Best_seller: ");
-        setBest_seller(in.nextBoolean());
+        setBest_seller(GUI.readBoolean());
     }
 
     @Override
