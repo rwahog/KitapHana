@@ -32,10 +32,10 @@ public class Book extends Document {
         statement.executeUpdate("update documents set type = 'book' where id = '"+id+"'");
         ResultSet resultSet = statement.executeQuery("select * from books where id_document = '"+id+"'");
         if(resultSet.next()) {
-            statement.executeUpdate("update books set publisher = '" + publisher + "', year='" + year + "', edition_number = '" + edition_number + "', best_seller = '" + getBest_sellerAsInt() + "' where id_document = '" + id + "'");
+            statement.executeUpdate("update books set title = '"+title+"', publisher = '" + publisher + "', year='" + year + "', edition_number = '" + edition_number + "', best_seller = '" + getBest_sellerAsInt() + "' where id_document = '" + id + "'");
         }
         else{
-            statement.executeUpdate("insert into books (publisher, year, edition_number, best_seller, id_document) values('"+publisher+"', '"+year+"', '"+edition_number+"', '"+getBest_sellerAsInt()+"', '"+id+"')");
+            statement.executeUpdate("insert into books (title, publisher, year, edition_number, best_seller, id_document) values('"+title+"', '"+publisher+"', '"+year+"', '"+edition_number+"', '"+getBest_sellerAsInt()+"', '"+id+"')");
         }
     }
     @Override
