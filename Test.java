@@ -17,18 +17,18 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void test_case1() throws Exception{
         Librarian librarian = new Librarian(connection, in);
-        librarian.read();
-        librarian.save();
-        Patron patron = new Patron(connection,in);
-        patron.read();
-        patron.save();
+        librarian.login();
+        Patron patron = new Patron(connection, in);
+        patron.login();
         Book book1 = new Book(connection, in);
-        book1.read();
-        book1.save();
-        book1.amount = 2;
-        book1.title = "Touch Of Class";
-        Assertions.assertEquals(null, patron.getDocumentsAsString());
-        Assertions.assertEquals(book1, patron.searchDocumentByPossibleTitle("Touch Of Class"));
-
+        book1.setTitle("Touch Of Class");
+        book1.setVariablesKnowingTitle();
+        Assertions.assertEquals("", patron.getDocumentsAsString());
+        patron.checkOutDocument(book1);
+        Assertions.assertEquals("Touch Of Class", patron.getDocumentsAsString());
+        Assertions.assertEquals(book1.getTitle(), patron.searchDocumentByPossibleTitle("Touch Of Class"));
+        Library library = new Library(connection, in);
+        int n = library.getDocumentByTitle("Touch Of Class").getAmount();
+        Assertions.assertEquals(1, n);
     }
 }
