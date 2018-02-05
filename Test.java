@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.Assertions;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,7 +14,21 @@ public class Test {
         this.connection = connection;
         this.statement = connection.createStatement();
     }
-    test_case1(){
-        
+    @org.junit.jupiter.api.Test
+    public void test_case1() throws Exception{
+        Librarian librarian = new Librarian(connection, in);
+        librarian.read();
+        librarian.save();
+        Patron patron = new Patron(connection,in);
+        patron.read();
+        patron.save();
+        Book book1 = new Book(connection, in);
+        book1.read();
+        book1.save();
+        book1.amount = 2;
+        book1.title = "Touch Of Class";
+        Assertions.assertEquals(null, patron.getDocumentsAsString());
+        Assertions.assertEquals(book1, patron.searchDocumentByPossibleTitle("Touch Of Class"));
+
     }
 }
