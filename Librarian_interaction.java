@@ -11,8 +11,8 @@ public class Librarian_interaction {
     public static void command(Connection conn, Scanner in, Librarian librarianCur) throws SQLException {
         librarian = librarianCur;
         library = new Library(conn, in);
-        GUI.print("Choose your command: add/delete/modify/manage/check overdue/exit");
-        command = GUI.read();
+        System.out.println("Choose your command: add/delete/modify/manage/check overdue/exit");
+        command = in.nextLine();
         switch (command) {
             case ("manage"):
                 manage(conn, in);
@@ -33,35 +33,35 @@ public class Librarian_interaction {
                 GUI.exit();
                 break;
             default:
-                GUI.print("WRONG INPUT");
+                System.out.println("WRONG INPUT");
         }
         command(conn, in, librarian);
     }
 
     private static void modify(Connection conn, Scanner in) throws SQLException {
-        GUI.print("Get the title:");
-        Document doc = library.getDocumentByTitle(GUI.read());
+        System.out.println("Get the title:");
+        Document doc = library.getDocumentByTitle(in.nextLine());
         librarian.modifyDocument(doc);
         doc.save();
         librarian.save();
     }
 
     private static void delete(Connection conn, Scanner in) throws SQLException {
-        librarian.removeDocument(library.getDocumentByTitle(GUI.read()));
+        librarian.removeDocument(library.getDocumentByTitle(in.nextLine()));
         librarian.save();
     }
 
     public static void add(Connection conn, Scanner in) throws SQLException {
         Document newDoc = new Document(conn, in);
-        GUI.print("Set title:");
-        newDoc.setTitle(GUI.read());
+        System.out.println("Set title:");
+        newDoc.setTitle(in.nextLine());
         newDoc.setVariablesKnowingTitle();
         librarian.addDocument(newDoc);
     }
 
     public static void manage(Connection conn, Scanner in) throws SQLException {
-        GUI.print("DELETE or MODIFY");
-        command = GUI.read();
+        System.out.println("DELETE or MODIFY");
+        command = in.nextLine();
         switch (command) {
             case ("DELETE"):
                 librarian.removeUser(search(conn, in));
@@ -73,24 +73,24 @@ public class Librarian_interaction {
                 user.save();
                 librarian.save();
                 break;
-            default: GUI.print("WRONG INPUT"); manage(conn, in)    ;
+            default: System.out.println("WRONG INPUT"); manage(conn, in)    ;
         }
     }
     public static User search(Connection conn, Scanner in) throws SQLException {
-        GUI.print("Search by card number/name");
-        command = GUI.read();
+        System.out.println("Search by card number/name");
+        command = in.nextLine();
         switch (command){
             case("card number"):
-                GUI.print("Get the number:");
-                return library.searchUserByCard_number(Integer.parseInt(GUI.read()));
+                System.out.println("Get the number:");
+                return library.searchUserByCard_number(Integer.parseInt(in.nextLine()));
             case("name"):
-                GUI.print("Get the name, then get surname:");
-                return library.searchUserByNameSurname(GUI.read(), GUI.read());
+                System.out.println("Get the name, then get surname:");
+                return library.searchUserByNameSurname(in.nextLine(), in.nextLine());
         }
         return null;
     }
     public static void checkOverdue(Connection conn, Scanner in) throws SQLException {
-         librarian.checkOutDocument(library.getDocumentByTitle(GUI.read()));
+        librarian.checkOutDocument(library.getDocumentByTitle(in.nextLine()));
 
     }
 }
