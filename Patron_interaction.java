@@ -9,8 +9,8 @@ public class Patron_interaction {
     public static void command(Connection conn, Scanner in, Patron patronCur) throws SQLException {
         patron  = patronCur;
         library = new Library(conn, in);
-        GUI.print("Choose your command: search for/check out/return document/exit");
-        command = GUI.read();
+        System.out.println("Choose your command: search for/check out/return document/exit");
+        command = in.nextLine();
         switch (command){
             case("search for"):
                 searchFor(conn, in);
@@ -24,7 +24,7 @@ public class Patron_interaction {
             case("exit"):
                 GUI.exit();
                 break;
-            default: GUI.print("WRONG INPUT");
+            default: System.out.println("WRONG INPUT");
         }
         command(conn, in, patron);
     }
@@ -45,21 +45,28 @@ public class Patron_interaction {
     }
 
     public static Document searchFor(Connection conn, Scanner in) throws SQLException {
-        GUI.print("Author/Keyword/PossibleTitle");
-        command = GUI.read();
+        System.out.println("Author/Keyword/PossibleTitle");
+        command = in.nextLine();
         Document doc = new Document(conn, in);
         switch (command){
             case("Author"):
-                GUI.print("write the Author");
-                doc = patron.getDocumentByTitle(library.searchDocumentByAuthor(GUI.read()));
+                System.out.println("write the Author");
+                Author author = new Author(conn, in);
+                author.setName(in.next());
+                author.setSurname(in.next());
+                author.setVariablesKnowingNameSurname();
+                doc = patron.getDocumentByTitle(library.searchDocumentByAuthor(author));
                 break;
             case("PossibleTitle"):
-                GUI.print("write the Title");
-                doc = patron.getDocumentByTitle(GUI.read());
+                System.out.println("write the Title");
+                doc = patron.getDocumentByTitle(in.nextLine());
                 break;
             case("Keyword"):
-                GUI.print("write the keyword");
-                doc = patron.getDocumentByTitle(library.searchDocumentByKeyword(GUI.read()));
+                System.out.println("write the keyword");
+                Keyword keyword = new Keyword(conn, in);
+                keyword.setKeyword(in.nextLine());
+                keyword.setVariablesKnowingKeyword();
+                doc = patron.getDocumentByTitle(library.searchDocumentByKeyword(keyword));
                 break;
         }
         return doc;
