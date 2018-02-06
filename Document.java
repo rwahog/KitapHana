@@ -23,7 +23,7 @@ public class Document{
     }
     public void read() throws SQLException {
         System.out.println("Title: ");
-        setTitle(in.nextLine());setTitle(in.nextLine());
+        setTitle(in.nextLine());
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         if(resultSet.next()){
             System.out.println("This document already exists");
