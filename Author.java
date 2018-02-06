@@ -18,6 +18,12 @@ public class Author {
         statement = connection.createStatement();
         documents = new ArrayList<Document>();
     }
+    public void read() throws SQLException {
+        System.out.println("Name: ");
+        setName(in.next());
+        System.out.println("Surname: ");
+        setSurname(in.next());
+    }
     public void save() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");
         if(resultSet.next()){
