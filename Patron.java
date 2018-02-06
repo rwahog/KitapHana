@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Patron extends User {
     Patron(Connection connection, Scanner in) throws SQLException {
         super(connection, in);
-        maxdays = 14;
     }
 
     @Override
@@ -19,14 +18,5 @@ public class Patron extends User {
     @Override
     public void login() throws SQLException {
         super.login();
-        ResultSet resultSet = statement.executeQuery("select * from users where id = '"+id+"'");
-        if(resultSet.next()){
-            if(resultSet.getString("type").equals("patron")){
-                System.out.println("Successfully");
-            }
-            else{
-                System.out.println("Wrong card number");
-            }
-        }
     }
 }
