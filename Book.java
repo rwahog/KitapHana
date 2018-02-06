@@ -17,7 +17,7 @@ public class Book extends Document {
     public void read() throws SQLException {
         super.read();
         System.out.println("Publisher: ");
-        setPublisher(in.next());
+        setPublisher(in.nextLine()); setPublisher(in.nextLine());
         System.out.println("Year: ");
         setYear(in.nextInt());
         System.out.println("Edition number: ");
@@ -80,7 +80,7 @@ public class Book extends Document {
         return best_seller;
     }
     public int getBest_sellerAsInt(){
-        return best_seller?1:0;
+        return best_seller?0:1;
     }
     public void setBest_sellerFromInt(int best_seller){
         this.best_seller = (best_seller==0) ? true:false;
