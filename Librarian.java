@@ -5,8 +5,10 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Librarian extends User {
+    Library library;
     Librarian(Connection connection, Scanner in) throws SQLException {
         super(connection, in);
+        library = new Library(connection, in);
     }
 
     @Override
@@ -18,15 +20,6 @@ public class Librarian extends User {
     @Override
     public void login() throws SQLException {
         super.login();
-        ResultSet resultSet = statement.executeQuery("select * from users where id = '"+id+"'");
-        if(resultSet.next()){
-            if(resultSet.getString("type").equals("librarian")){
-                System.out.println("Successfully");
-            }
-            else{
-                System.out.println("Wrong card number");
-            }
-        }
     }
 
     //User
@@ -37,6 +30,9 @@ public class Librarian extends User {
 
     }
     //Document
+    public User searchUserByCard_Number(long card_number) throws SQLException {
+        return library.searchUserByCard_number(card_number);
+    }
     public void addDocument() throws SQLException {
         System.out.println("Type: ");
         String s = in.next();
