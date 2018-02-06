@@ -7,7 +7,7 @@ public class FacultyMember extends Patron {
 
     FacultyMember(Connection connection, Scanner in) throws SQLException {
         super(connection, in);
-        maxdays = 21;
+        maxdays = 28;
     }
 
     @Override
