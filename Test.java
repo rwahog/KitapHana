@@ -14,12 +14,11 @@ public class Test {
         this.connection = connection;
         this.statement = connection.createStatement();
     }
-
     @org.junit.jupiter.api.Test
     public void test_case1() throws Exception{
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
-        Patron patron = new Patron(connection, in);
+        Student patron = new Student(connection, in);
         patron.login();
         Book book1 = new Book(connection, in);
         book1.setTitle("Touch Of Class");
@@ -32,128 +31,146 @@ public class Test {
         int n = library.getDocumentByTitle("Touch Of Class").getAmount();
         Assertions.assertEquals(1, n);
     }
-
     @org.junit.jupiter.api.Test
     public void test_case2() throws Exception{
         Author Cormen = new Author(connection, in);
         Cormen.read();
         Cormen.save();
-        Patron patron = new Patron(connection, in);
+        Student patron = new Student(connection, in);
         patron.login();
-        Assertions.assertEquals("a", patron.searchDocumentByAuthor(Cormen));
+        Assertions.assertEquals("", patron.searchDocumentByAuthor(Cormen));
     }
 
     @org.junit.jupiter.api.Test
     public void test_case3() throws Exception{
-        FacultyMember Shilov = new FacultyMember(connection, in);
-        Shilov.login();
-        Student Ivanov = new Student(connection, in);
-        Ivanov.login();
-        Librarian librarian = new Librarian(connection, in);
-        librarian.login();
+        FacultyMember facultyMember = new FacultyMember(connection, in);
+     facultyMember.login();
+//        Student student = new Student(connection, in);
+//        student.login();
+//        Librarian librarian = new Librarian(connection, in);
+//        librarian.login();
 
         Book b = new Book(connection, in);
         b.setTitle("Touch Of Class");
         b.setVariablesKnowingTitle();
-        Shilov.checkOutDocument(b);
-        Assertions.assertEquals(28, Shilov.maxdays);
+        facultyMember.checkOutDocument(b);
+        Assertions.assertEquals(28, facultyMember.getDeadlineOfDocument(b));
     }
-
 
     @org.junit.jupiter.api.Test
     public void test_case4() throws Exception{
-        FacultyMember Shilov = new FacultyMember(connection, in);
-        Shilov.login();
-        Student Ivanov = new Student(connection, in);
-        Ivanov.login();
+        FacultyMember facultyMember = new FacultyMember(connection, in);
+        facultyMember.login();
+        Student student = new Student(connection, in);
+        student.login();
         Book b = new Book(connection, in);
-        b.read();
-        b.save();
-        Assertions.assertEquals(14, Shilov.maxdays);
+        b.setTitle("Touch Of Class");
+        b.setVariablesKnowingTitle();
+        facultyMember.checkOutDocument(b);
+        Assertions.assertEquals(14, facultyMember.getDeadlineOfDocument(b));
     }
 
     @org.junit.jupiter.api.Test
     public void test_case5() throws Exception {
         Book A = new Book(connection, in);
-        A.read();
-        A.save();
+        A.setTitle("Touch Of Class");
+        A.setVariablesKnowingTitle();
         Assertions.assertEquals(2, A.getAmount());
-        Patron patron1 = new Patron(connection, in);
+        Student patron1 = new Student(connection, in);
         patron1.login();
-        Patron patron2 = new Patron(connection, in);
+        Student patron2 = new Student(connection, in);
         patron2.login();
-        Patron patron3 = new Patron(connection, in);
+        FacultyMember patron3 = new FacultyMember(connection, in);
         patron3.login();
         patron1.checkOutDocument(A);
-        Assertions.assertEquals(A.getTitle(), patron1.getDocumentsAsString());
+        Assertions.assertEquals(true, patron1.hasDocument(A));
         patron2.checkOutDocument(A);
-        Assertions.assertEquals(A.getTitle(), patron2.getDocumentsAsString());
+        Assertions.assertEquals(true, patron2.hasDocument(A));
         patron3.checkOutDocument(A);
-        Assertions.assertEquals("", patron3.searchDocumentByPossibleTitle(A.getTitle()));
+        Assertions.assertEquals(false, patron3.hasDocument(A));
     }
+
     @org.junit.jupiter.api.Test
     public void test_case6() throws Exception {
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
-        Patron patron = new Patron(connection, in);
+        Student patron = new Student(connection, in);
         patron.login();
         Book book = new Book(connection, in);
-        book.read();
-        book.save();
+        book.setTitle("Touch Of Class");
+        book.setVariablesKnowingTitle();
         patron.checkOutDocument(book);
-        Assertions.assertEquals(book.getTitle(), patron.getDocumentsAsString());
+        Assertions.assertEquals(true, patron.hasDocument(book));
+        int amountOfBooksOfUser= patron.getDocuments().size();
+        int amountOfBooksInLibrary = book.getAmount();
         patron.checkOutDocument(book);
-        Assertions.assertEquals(1, patron.getDocuments().size());
-     //   Assertions.assertEquals(book, librarian.searchUserByCardNumber(patron.getCard_number()).getDocumentsAsString);
+        Assertions.assertEquals(amountOfBooksOfUser, patron.getDocuments().size());
+        Assertions.assertEquals(amountOfBooksInLibrary, book.getAmount());
     }
     @org.junit.jupiter.api.Test
     public void test_case7() throws Exception {
-        Patron p1 = new Patron(connection, in);
+        Student p1 = new Student(connection, in);
         p1.login();
-        Patron p2 = new Patron(connection, in);
+        Student p2 = new Student(connection, in);
         p2.login();
-        Librarian librarian = new Librarian(connection, in);
-        librarian.login();
+//        Librarian librarian = new Librarian(connection, in);
+////        librarian.login();
         Book book = new Book(connection, in);
-        book.read();
-        book.save();
+        book.setTitle("Touch Of Class");
+        book.setVariablesKnowingTitle();
         p1.checkOutDocument(book);
         p2.checkOutDocument(book);
-        Assertions.assertEquals(book.getTitle(), p1.getDocumentsAsString());
-        Assertions.assertEquals(book.getTitle(), p2.getDocumentsAsString());
-
+        Assertions.assertEquals(true, p1.hasDocument(book));
+        Assertions.assertEquals(true, p2.hasDocument(book));
     }
+
     @org.junit.jupiter.api.Test
     public void test_case8() throws Exception {
-        FacultyMember Shilov = new FacultyMember(connection, in);
-        Shilov.login();
-        Student Ivanov = new Student(connection, in);
-        Ivanov.login();
+        FacultyMember facultyMember = new FacultyMember(connection, in);
+        facultyMember.login();
+        Student student = new Student(connection, in);
+        student.login();
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
         Book book = new Book(connection, in);
-        book.read();
-        book.save();
-        Ivanov.checkOutDocument(book);
-        Assertions.assertEquals(21, Ivanov.maxdays);
+        book.setTitle("Touch Of Class");
+        book.setVariablesKnowingTitle();
+        student.checkOutDocument(book);
+        Assertions.assertEquals(21, student.getDeadlineOfDocument(book));
     }
     @org.junit.jupiter.api.Test
     public void test_case9() throws Exception {
-        FacultyMember Shilov = new FacultyMember(connection, in);
-        Shilov.login();
-        Student Ivanov = new Student(connection, in);
-        Ivanov.login();
+        FacultyMember facultyMember = new FacultyMember(connection, in);
+        facultyMember.login();
+        Student student = new Student(connection, in);
+        student.login();
+        Librarian librarian = new Librarian(connection, in);
+        librarian.login();
+        Book book = new Book(connection, in);
+        book.setTitle("Touch Of Class");
+        book.setVariablesKnowingTitle();
+        Assertions.assertEquals(1, book.getBest_sellerAsInt());
+        student.checkOutDocument(book);
+        Assertions.assertEquals(14, student.getDeadlineOfDocument(book));
+    }
+
+    @org.junit.jupiter.api.Test
+    public void test_case10() throws Exception {
+        Student student = new Student(connection, in);
+        student.login();
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
         Book book = new Book(connection, in);
         book.read();
         book.save();
-        Assertions.assertEquals(1, book.getBest_sellerAsInt());
-        Ivanov.checkOutDocument(book);
-        Assertions.assertEquals(14, Ivanov.maxdays);
+        Book book1 = new Book(connection, in);
+        book1.setTitle("Touch Of Class");
+        book1.setVariablesKnowingTitle();
+        student.checkOutDocument(book1);
+        Assertions.assertEquals(true, student.hasDocument(book1));
+        student.checkOutDocument(book);
+        Assertions.assertEquals(false, student.hasDocument(book));
     }
-    @org.junit.jupiter.api.Test
-    public void test_case10() throws Exception {
 
-    }
+
 }
