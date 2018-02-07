@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class User {
     protected String phone_number, name, surname, password;
     protected Address address;
-    protected long card_number, maxdays, day;
+    protected long card_number, maxdays, day = 24*60*60*1000;
     protected int id;
     protected ArrayList<Document> documents;
     protected ArrayList<Long> deadlines;
@@ -22,7 +22,6 @@ public class User {
         this.connection = connection;
         this.statement = connection.createStatement();
         this.in = in;
-        day = 24*60*60*1000;
         library = new Library(connection, in);
         documents = new ArrayList<Document>();
         deadlines = new ArrayList<Long>();
