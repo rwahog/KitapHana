@@ -13,6 +13,7 @@ public class Library {
         this.in = in;
         this.statement = connection.createStatement();
     }
+    //Document
     public Document getDocumentByTitle(String title) throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         Document document = new Document(connection, in);
@@ -55,6 +56,7 @@ public class Library {
             return "No documents with this keyword";
         }
     }
+    //User
     public User searchUserByNameSurname(String name, String surname) throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from users where name = '"+name+"', surname = '"+surname+"'");
         if(resultSet.next()){
