@@ -1,3 +1,4 @@
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,6 +73,17 @@ public class Document{
                 id = resultSet.getInt("id");
             }
         }
+    }
+    public void remove() throws SQLException {
+        for(int i = 0 ; i<authors.size(); i++){
+            authors.get(i).removeDocument(this);
+            authors.get(i).save();
+        }
+        for (int i = 0; i < keywords.size(); i++) {
+            keywords.get(i).removeDocument(this);
+            keywords.get(i).save();
+        }
+        statement.executeUpdate("delete from documents where id = '"+id+"'");
     }
     public void setVariablesKnowingTitle() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
