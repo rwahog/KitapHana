@@ -1,5 +1,7 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Librarian extends User {
@@ -21,16 +23,24 @@ public class Librarian extends User {
     }
 
     //User
-    public void removeUser(User user){
-
+    public void removeUser(User user) throws SQLException {
+        user.remove();
     }
-    public void modifyUser(User user){
+    public void modifyUser(User user) throws SQLException {
+        //chto modifayit'
 
+
+        user.save();
     }
-    //Document
+    public User searchUserByNameSurname(String name, String surname) throws SQLException {
+        return library.searchUserByNameSurname(name, surname);
+    }
     public User searchUserByCard_Number(long card_number) throws SQLException {
         return library.searchUserByCard_number(card_number);
     }
+
+    //Document
+
     public void addDocument() throws SQLException {
         System.out.println("Type: ");
         String s = in.next();
@@ -50,11 +60,13 @@ public class Librarian extends User {
             journalArticle.save();
         }
     }
-    public void  removeDocument(Document document){
-
+    public void  removeDocument(Document document) throws SQLException {
+        document.remove();
     }
-    public void modifyDocument(Document document){
+    public void modifyDocument(Document document) throws SQLException {
+        //chto modifayit'
 
+        document.save();
     }
 
 }
