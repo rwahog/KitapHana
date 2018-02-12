@@ -1,3 +1,4 @@
+import javax.print.Doc;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +8,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class User {
-    protected String phone_number, name, surname, password;
+    protected String phone_number, name, surname, password, possible_type;
     protected Address address;
     protected long card_number, maxdays, day = 24*60*60*1000;
     protected int id;
@@ -32,10 +33,14 @@ public class User {
         setName(in.next());
         System.out.println("Surname: ");
         setSurname(in.next());
+        System.out.println("Possible type: ");
+        setPossible_type(in.next());
         System.out.println("Phone number: ");
         setPhone_number(in.next());
         System.out.println("Password: ");
         setPassword(in.next());
+        System.out.println("Confirm password: ");
+        checkPassword(in.next());
         address = new Address(connection, in);
         address.readAddress();
         setCard_number(getPhone_number());
@@ -44,11 +49,11 @@ public class User {
         ResultSet resultSet = statement.executeQuery("select * from users where card_number = '"+card_number+"'");
         address.save();
         if(resultSet.next()){
-            statement.executeUpdate("update users set name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', password = '"+password+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+"', documents = '"+getDocumentsAsString()+"', deadlines = '"+getDeadlinesAsString()+"' where id = '"+id+"'");
+            statement.executeUpdate("update users set name = '"+name+"', surname = '"+surname+"', phone_number ='"+phone_number+"', password = '"+password+"', card_number = '"+card_number+"', id_address = '"+address.getId_address()+"', documents = '"+getDocumentsAsString()+"', deadlines = '"+getDeadlinesAsString()+"', possible_type = '"+possible_type+"' where id = '"+id+"'");
         }
         else {
             int id_address = address.getId_address();
-            statement.executeUpdate("insert into users (name, surname, phone_number, card_number, password, id_address, documents, deadlines) values('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '"+password+"', '" + id_address + "', '"+getDocumentsAsString()+"','"+getDeadlinesAsString()+"')");
+            statement.executeUpdate("insert into users (name, surname, phone_number, card_number, password, id_address, documents, deadlines, possible_type) values('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '"+password+"', '" + id_address + "', '"+getDocumentsAsString()+"','"+getDeadlinesAsString()+"', '"+possible_type+"')");
             resultSet = statement.executeQuery("select * from users where card_number = '" + card_number + "'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -76,6 +81,13 @@ public class User {
             System.out.println("There is no user with this phone number");
             login();
         }
+    }
+    public void remove() throws SQLException {
+        while(documents.size()>0){
+            returnDocument(documents.get(documents.size()-1));
+        }
+        address.remove();
+        statement.executeUpdate("delete from users where id = '"+id+"'");
     }
     public void setVariablesKnowingNameSurname(String name, String surname) throws SQLException {
         setName(name);
@@ -166,6 +178,9 @@ public class User {
     public String getPassword(){
         return password;
     }
+    public boolean checkPassword(String password){
+        return this.password.equals(password);
+    }
     //Documents
     public ArrayList<Document> getDocuments() {
         return documents;
@@ -195,7 +210,7 @@ public class User {
             addDeadline(date1.getTime() + maxdays * day);
         }
     }
-    public void removeDocument(Document document){
+    public void removeDocument(Document document) throws SQLException {
         for(int i = 0; i <documents.size(); i++){
             if(documents.get(i).equals(document)){
                 removeDeadline(deadlines.get(i));
@@ -220,6 +235,14 @@ public class User {
             }
         }
     }
+    //Type
+    public void setPossible_type(String possible_type) {
+        this.possible_type = possible_type;
+    }
+    public String getPossible_type() {
+        return possible_type;
+    }
+
     //Deadlines
     public void addDeadline(long deadline){
         deadlines.add(deadline);
