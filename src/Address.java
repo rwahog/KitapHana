@@ -40,6 +40,9 @@ public class Address {
         }
 
     }
+    public void remove() throws SQLException {
+        statement.executeUpdate("delete from addresses where id_address = '"+id_address+"'");
+    }
     public void setVariablesKnowingId_address(int id_address) throws SQLException {
         this.id_address = id_address;
         ResultSet resultSet = statement.executeQuery("select * from addresses where id_address = '"+id_address+"'");
