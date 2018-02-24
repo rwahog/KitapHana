@@ -79,4 +79,15 @@ public class Library {
             return null;
         }
     }
+    
+    public ArrayList<User> AllRegistredPatrons() throws SQLException {
+        ArrayList allRegistredPatrons = new ArrayList();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM users" );
+        while(resultSet.next()) {
+            User user = new User(connection, in);
+            user.setVariablesKnowingNameSurname(resultSet.getString("name"), resultSet.getString("surname"));
+            allRegistredPatrons.add(user);
+        }
+        return allRegistredPatrons;
+    }
 }
