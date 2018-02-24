@@ -34,6 +34,13 @@ body {
     transition: none 0s;
     border: none;
 }
+.a #btn:active{
+    background: #6b512f !important;
+}
+.a #btn:focus {
+    border-color: rgb(130, 93, 46);
+    box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
+}
 .btn-primary:active {
     background: #6b512f !important;
 }
@@ -74,3 +81,44 @@ label {
     right: 0;
     left: auto;
 }
+.navbar{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    left: 10%;
+    right: 10%;
+    width: 80%;
+    height: 10%;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 30px;
+    position: fixed;
+    z-index: 100;
+}
+.navbar .navbar-brand{
+    color: rgba(150, 140, 54, 0.84)
+}
+
+.bg-light{
+    background-color: rgba(0, 0, 0, 0.71) !important;
+
+}
+.navbar-brand{
+    content: normal;
+    font-size: 40px !important;
+    margin-left: 30px;
+    line-height: 68px;
+}
+.nav-link{
+    color: rgba(150, 140, 54, 0.84);
+}
+.nav-link:hover{
+    color: rgba(150, 140, 54, 0.55);
+}
+.dropdown-menu{
+    background-color: rgba(150, 140, 54, 0.85);
+    border-radius: 10px;
+}
+.dropdown-item:hover{
+    background-color: rgba(255, 247, 75, 0.85)
+
+}
+a.navbar-brand:hover {color: rgba(150, 140, 54, 0.55) !important;}

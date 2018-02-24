@@ -27,17 +27,13 @@ public class LoginServlet extends HttpServlet{
         String phone_number = request.getParameter("login");
         String password = request.getParameter("password");
         boolean isValidUser = false;
-
         isValidUser = service.loginCheck(phone_number, password);
-
-        if (isValidUser) {
-            request.setAttribute("login", phone_number);
-            request.getRequestDispatcher("/WEB-INF/views/mainPage.jsp").forward(request, response);
-
-        } else {
-
+        if (isValidUser){
+            request.getSession().setAttribute("login", phone_number);
+            response.sendRedirect("/mainpage");
+         }
+        else {
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
-
     }
 }
