@@ -21,7 +21,8 @@ public class Keyword {
     public void save() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from keywords where keyword = '"+keyword+"'");
         if(resultSet.next()){
-
+            statement.executeUpdate("update keywords set keyword ='"+keyword+"', documents = " +
+                    "'"+getDocumentsAsString()+"' where id = '"+id+"'");
         }
         else {
             statement.executeUpdate("insert into keywords (keyword, documents) values ('" + keyword + "', '" + getDocumentsAsString() + "')");
