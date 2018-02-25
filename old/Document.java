@@ -127,10 +127,15 @@ public class Document{
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
                 }
-                i = j + 1;
                 Author author = new Author(connection, in);
                 author.setName(cur);
+                cur = "";
+                while (j < s.length() && s.charAt(j) != ',') {
+                    cur = cur.concat(String.valueOf(s.charAt(j)));
+                    j++;
+                }
                 addAuthor(author);
+                i = j + 1;
             }
         }
     }
