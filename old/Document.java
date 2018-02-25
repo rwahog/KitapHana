@@ -130,6 +130,7 @@ public class Document{
                 Author author = new Author(connection, in);
                 author.setName(cur);
                 cur = "";
+                j++;
                 while (j < s.length() && s.charAt(j) != ',') {
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
