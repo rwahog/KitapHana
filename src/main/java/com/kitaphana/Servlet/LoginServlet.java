@@ -4,11 +4,14 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Service.LoginService;
 
 import java.io.IOException;
+import javax.mail.Session;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns="/login.do")
 public class LoginServlet extends HttpServlet{
@@ -28,10 +31,11 @@ public class LoginServlet extends HttpServlet{
         String password = request.getParameter("password");
         boolean isValidUser = false;
         isValidUser = service.loginCheck(phone_number, password);
+
         if (isValidUser){
             request.getSession().setAttribute("login", phone_number);
             response.sendRedirect("/mainpage");
-         }
+        }
         else {
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }

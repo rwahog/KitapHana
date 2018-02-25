@@ -12,6 +12,10 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/mainPage.css"
           rel="stylesheet">
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
@@ -23,7 +27,8 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Log out</a>
+            <a class="dropdown-item" href="#">My Books</a>
+            <a class="dropdown-item" href="/login.do">Log out</a>
         </div>
     </div>
 </nav>
@@ -34,7 +39,5 @@
     </ul>
 </section>
 </body>
-<script src="../js/jquery-3.2.1.slim.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+
 </html>

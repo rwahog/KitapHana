@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+         pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Kitaphana</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Kitaphana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
@@ -25,6 +25,7 @@
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
+
             <button class="btn btn-block btn-primary" type="submit">  Sign in</button>
             <h5> or </h5>
             <a class="btn btn-block" id = "button" href="/registration">Register</a>

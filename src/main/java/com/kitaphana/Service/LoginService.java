@@ -31,4 +31,22 @@ public class LoginService {
         }
         return login;
     }
+
+    public String getUserName(String phone_number){
+        String name = "A";
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet rs = db.runSql("SELECT users.name FROM users WHERE users.phone_number = '"+phone_number+"';");
+            name = rs.toString();
+            name = "a";
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
 }

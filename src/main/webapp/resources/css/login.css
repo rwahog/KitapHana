@@ -1,9 +1,8 @@
 .form-singin {
     display: inline-block;
-    margin: auto;
     width: 100%;
     max-width: 500px;
-    margin-top: 10%;
+    margin: 10% auto;
 }
 .form-singin h2, .form-singin label {
     color: #969548;
