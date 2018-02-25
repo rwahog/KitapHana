@@ -40,6 +40,7 @@ public class Document{
                 author.setVariablesKnowingNameSurname();
                 addAuthor(author);
             }
+            in.nextLine();
             System.out.println("Keywords: ");
             while (in.hasNext()) {
                 String word = in.next();
