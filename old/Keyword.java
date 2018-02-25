@@ -59,11 +59,14 @@ public class Keyword {
             String cur = "";
             int j = i;
             while(j<s.length() && s.charAt(j) != ','){
-                cur.concat(String.valueOf(s.charAt(j)));
+                cur = cur.concat(String.valueOf(s.charAt(j)));
                 j++;
             }
+            i = j + 1;
             Document document = new Document(connection, in);
             addDocument(document);
+            document.setTitle(cur);
+            document.setVariablesKnowingTitle();
         }
     }
     public void removeDocument(Document document) throws SQLException {
