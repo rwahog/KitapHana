@@ -135,6 +135,7 @@ public class Document{
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
                 }
+                author.setSurname(cur);
                 addAuthor(author);
                 i = j + 1;
             }
