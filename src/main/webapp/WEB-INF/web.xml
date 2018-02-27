@@ -17,14 +17,4 @@
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>MainPageServlet</servlet-name>
-		<servlet-class>com.kitaphana.Servlet.MainPageServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>MainPageServlet</servlet-name>
-		<url-pattern>/main</url-pattern>
-	</servlet-mapping>
 </web-app>
