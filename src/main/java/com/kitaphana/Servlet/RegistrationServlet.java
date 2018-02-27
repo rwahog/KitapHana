@@ -41,7 +41,9 @@ public class RegistrationServlet extends HttpServlet {
 //        String button = request.getParameter("button");
 //        if (isValidUser) {
             service.saveUser(name, surname, status, phone_number, password1, country, town, street, house_number, apartment_number, post_code);
-            response.sendRedirect("/main");
+        request.getSession().setAttribute("name", name);
+        request.getSession().setAttribute("surname", surname);
+        response.sendRedirect("/main");
         //}
 //        else {
 //            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);

@@ -27,7 +27,7 @@
     <div class="dropdown">
         <a class="nav-link dropdown-toggle" href="#"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Aygul Malikova
+            ${name} ${surname}
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="#">Profile</a>
