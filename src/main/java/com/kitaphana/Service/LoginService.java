@@ -2,6 +2,7 @@ package com.kitaphana.Service;
 import com.kitaphana.Database.Database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class LoginService {
     public Database db = new Database();
@@ -32,19 +33,20 @@ public class LoginService {
         return login;
     }
 
-    public String getUserName(String phone_number){
-        String name = "A";
-        System.out.print("aaaa");
+    public ArrayList getUserName(String phone_number){
+        ArrayList name = new ArrayList();
         try {
             db.connect();
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            ResultSet rs = db.runSql("SELECT users.name FROM users WHERE users.phone_number = '"+phone_number+"';");
-            name = rs.toString();
-            System.out.print("aaaa");
-            name = "a";
+            ResultSet rs = db.runSql("SELECT users.name, users.surname FROM users WHERE users.phone_number = '"+phone_number+"';");
+            while (rs.next()) {
+                name.add(rs.getString("name"));
+                name.add(rs.getString("surname"));
+            }
+
         }
         catch (Exception e) {
             e.printStackTrace();
