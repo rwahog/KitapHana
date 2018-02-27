@@ -19,7 +19,7 @@ body {
 .btn {
     border: 2px solid rgb(130, 93, 46);
     background: rgba(0, 0, 0, 0.83);
-    color: #eed6b7;
+    color: #eed6b7 !important;
     border-radius: 30px;
 }
 .btn.btn-primary {
@@ -37,9 +37,10 @@ body {
 .btn-primary:active {
     background: #6b512f !important;
 }
-
-.btn-primary:focus {
+.btn-primary:focus{
     border-color: rgb(130, 93, 46);
+}
+.btn:focus {;
     box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
 }
 .btn-outline-success:hover {
