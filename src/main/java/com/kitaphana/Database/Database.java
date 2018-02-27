@@ -1,13 +1,14 @@
 package com.kitaphana.Database;
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class Database {
 
     private Connection con;
 
-    public void connect()throws Exception{
+    public void connect() throws Exception {
 
-        if(con != null) return;
+        if (con != null) return;
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -17,8 +18,8 @@ public class Database {
         con = DriverManager.getConnection(connectionURL, "remote", "password");
     }
 
-    public void close(){
-        if(con != null){
+    public void close() {
+        if (con != null) {
             try {
                 con.close();
             } catch (SQLException e) {
@@ -26,8 +27,14 @@ public class Database {
             }
         }
     }
-    public ResultSet runSql(String sql) throws SQLException {
+
+    public ResultSet runSqlQuery(String sql) throws SQLException {
         Statement sta = con.createStatement();
         return sta.executeQuery(sql);
+    }
+
+    public void runSqlUpdate(String sql) throws SQLException {
+        Statement sta = con.createStatement();
+        sta.executeUpdate(sql);
     }
 }

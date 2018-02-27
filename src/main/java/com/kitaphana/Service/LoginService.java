@@ -17,7 +17,7 @@ public class LoginService {
         boolean login = false;
 
         try {
-            ResultSet rs = db.runSql("SELECT users.phone_number, users.password FROM users;");
+            ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.password FROM users;");
 
             while(rs.next()){
                 dbUsername = rs.getString("phone_number");
@@ -41,7 +41,7 @@ public class LoginService {
             e.printStackTrace();
         }
         try {
-            ResultSet rs = db.runSql("SELECT users.name, users.surname FROM users WHERE users.phone_number = '"+phone_number+"';");
+            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.phone_number = '"+phone_number+"';");
             while (rs.next()) {
                 name.add(rs.getString("name"));
                 name.add(rs.getString("surname"));
