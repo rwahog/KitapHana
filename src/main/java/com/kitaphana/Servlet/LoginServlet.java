@@ -34,9 +34,8 @@ public class LoginServlet extends HttpServlet{
 
         if (isValidUser){
             String name = service.getUserName(phone_number);
-            request.getSession().setAttribute("name", name);
             request.getSession().setAttribute("login", phone_number);
-            response.sendRedirect("/mainpage");
+            response.sendRedirect("/main");
         }
         else {
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
