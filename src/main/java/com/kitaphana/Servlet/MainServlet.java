@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(urlPatterns="/main")
-public class MainPageServlet extends HttpServlet {
+public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/mainPage.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
     }
 }
