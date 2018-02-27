@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Kitaphana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"

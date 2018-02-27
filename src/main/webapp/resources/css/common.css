@@ -19,7 +19,7 @@ body {
 .btn {
     border: 2px solid rgb(130, 93, 46);
     background: rgba(0, 0, 0, 0.83);
-    color: #eed6b7 !important;
+    color: #eed6b7;
     border-radius: 30px;
 }
 .btn.btn-primary {
@@ -38,11 +38,24 @@ body {
     background: #6b512f !important;
 }
 
-.btn:focus {;
-    box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
-}
 .btn-primary:focus {
     border-color: rgb(130, 93, 46);
+    box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
+}
+.btn-outline-success:hover {
+    color: rgb(130, 93, 46);
+    background-color: transparent;
+    background-image: none;
+    border-color: rgb(130, 93, 46);
+}
+.btn-outline-success:focus{
+    border-color: rgb(130, 93, 46) !important;
+}
+.btn-outline-success:active{
+    border-color: rgb(130, 93, 46) !important;
+    background: #6b512f !important;
+    color: rgb(130, 93, 46); !important;
+    box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
 }
 
 .form-control {

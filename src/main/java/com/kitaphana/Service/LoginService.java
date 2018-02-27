@@ -34,6 +34,7 @@ public class LoginService {
 
     public String getUserName(String phone_number){
         String name = "A";
+        System.out.print("aaaa");
         try {
             db.connect();
         } catch (Exception e) {
@@ -42,6 +43,7 @@ public class LoginService {
         try {
             ResultSet rs = db.runSql("SELECT users.name FROM users WHERE users.phone_number = '"+phone_number+"';");
             name = rs.toString();
+            System.out.print("aaaa");
             name = "a";
         }
         catch (Exception e) {

@@ -19,25 +19,49 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">KitapHana</a>
+    <a class="navbar-brand" href="/mainpage">KitapHana</a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
+    </form>
     <div class="dropdown">
         <a class="nav-link dropdown-toggle" href="#"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            ${login}
+            ${name} ${surname}
         </a>
         <div class="dropdown-menu dropdown-menu-right">
             <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">My Books</a>
+            <a class="dropdown-item" href="#">My books</a>
             <a class="dropdown-item" href="/login.do">Log out</a>
         </div>
     </div>
 </nav>
-<section>
-    <ul class="documents" action = "/mainpage" method="post">
-        <p *ngIf="document && documents.length === 0">No documents found for this category</p>
-        <app-document-item *ngFor="let document of documents" [document]="document"></app-document-item>
-    </ul>
-</section>
-</body>
+<div class="card-deck">
+    <div class="card">
+        <img class="card-img-top" src="/resources/images/touchOfClass.jpg" alt="Card image cap">
+        <div class="card-body">
+            <a class="card-title" href="">Touch Of Class</a>
+            <p class="card-text">Bertrand Meyer</p>
+            <p class="card-text"><small class="text-muted">Learning to Program Well with Objects and Contracts...</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="..." alt="Some pic">
+        <div class="card-body">
+            <h5 class="card-title" href="">${Title}</h5>
+            <p class="card-text">&{Author}</p>
+            <p class="card-text"><small class="text-muted">${Keywords}</small></p>
+        </div>
+    </div>
+    <div class="card">
+        <img class="card-img-top" src="..." alt="Some pic">
+        <div class="card-body">
+            <h5 class="card-title" href="">${Title}</h5>
+            <p class="card-text">&{Author}</p>
+            <p class="card-text"><small class="text-muted">${Keywords}</small></p>
+        </div>
+    </div>
+</div>
 
+</body>
 </html>

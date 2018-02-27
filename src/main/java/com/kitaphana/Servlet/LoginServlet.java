@@ -33,6 +33,8 @@ public class LoginServlet extends HttpServlet{
         isValidUser = service.loginCheck(phone_number, password);
 
         if (isValidUser){
+            String name = service.getUserName(phone_number);
+            request.getSession().setAttribute("name", name);
             request.getSession().setAttribute("login", phone_number);
             response.sendRedirect("/mainpage");
         }
