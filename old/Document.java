@@ -123,7 +123,7 @@ public class Document{
             for (int i = 0; i < s.length(); i++) {
                 int j = i;
                 String cur = "";
-                while (j < s.length() && s.charAt(j) != ',') {
+                while (j < s.length() && s.charAt(j) != ' ') {
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
                 }
@@ -135,6 +135,7 @@ public class Document{
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
                 }
+                author.setSurname(cur);
                 addAuthor(author);
                 i = j + 1;
             }
