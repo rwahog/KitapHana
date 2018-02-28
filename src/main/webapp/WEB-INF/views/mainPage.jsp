@@ -36,7 +36,7 @@
         </div>
     </div>
 </nav>
-<div class="card-deck" action ="/main" method="POST">
+<div class="card-deck">
     <div class="card">
         <div class="img-container">
             <img class="card-img-top" src="/resources/images/touchOfClass.jpg" alt="Card image cap">

@@ -38,13 +38,13 @@ public class RegistrationServlet extends HttpServlet {
 
         boolean isValidUser = true;
         isValidUser = service.checkIfPossibleToRegister(phone_number, password1, password2);
-        String button = request.getParameter("button");
-        if (isValidUser) {
+//        String button = request.getParameter("button");
+//        if (isValidUser) {
             service.saveUser(name, surname, status, phone_number, password1, country, town, street, house_number, apartment_number, post_code);
             response.sendRedirect("/main");
-        }
-        else {
-            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
-        }
+        //}
+//        else {
+//            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+//        }
     }
 }
