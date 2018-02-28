@@ -11,9 +11,8 @@
 .card{
     background-color: rgba(0, 0, 0,0.71) !important;
     border-radius: 20px;
-    overflow:  hidden;
+    overflow: hidden;
     margin-bottom: 80px;
-    overflow:  hidden;
     position: relative;
 }
 
