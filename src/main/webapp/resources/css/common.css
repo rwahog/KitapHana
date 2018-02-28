@@ -91,12 +91,13 @@ label {
     left: auto;
 }
 .navbar{
+    height: 70px;
+    top: 0;
     padding-top: 5px;
     padding-bottom: 5px;
     left: 10%;
     right: 10%;
     width: 80%;
-    height: 10%;
     border-bottom-right-radius: 30px;
     border-bottom-left-radius: 30px;
     position: fixed;
@@ -131,3 +132,15 @@ label {
 
 }
 a.navbar-brand:hover {color: rgba(150, 140, 54, 0.55) !important;}
+.cards {
+    margin-top: 140px;
+    padding: 0;
+}
+.rightside {
+    height: 40px;
+    width: 300px;
+}
+.nav-item{
+    position: relative;
+    float: left;
+}
