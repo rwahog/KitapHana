@@ -1,0 +1,21 @@
+.alert-success{
+    background-color: rgba(0, 0, 0,0.71) !important;
+    border-radius: 20px;
+    text-align: center;
+    top: 35%;
+    width: 40%;
+    height: 200px;
+    left: 30%;
+    right:30%;
+    border-color: black;
+}
+h2{
+    color:rgba(255, 247, 75, 0.55);
+    font-size: 40px;
+    line-height: 2;
+}
+.alert a{
+    color: rgb(130, 93, 46);
+    font-size: 20px;
+    line-height: 2;
+}
