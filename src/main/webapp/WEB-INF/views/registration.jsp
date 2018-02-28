@@ -13,7 +13,7 @@
           rel="stylesheet">
 </head>
 <body>
-<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" method="POST">
+<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="/registration" method="POST">
     <h1 class="logo">KitapHana</h1>
     <div class="container">
         <div class="form-row">
