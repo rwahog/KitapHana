@@ -1,4 +1,5 @@
 # KitapHana
+---
 <i> Installation</i>
 <div>
    <ul>
@@ -10,6 +11,14 @@
         <ul>
            <li> use <a href="https://www.jetbrains.com/help/idea/install-and-set-up-intellij-idea.html"> This guide</a>
         </ul>
-        
-    </ul>    
-</div 
+    <li>Install mySql
+        <ul>
+           <li> use <a href="ProvidedDoc/mysql.pdf">This guide</a>
+        </ul>
+    <li>Download and launch the project
+        <ul>
+           <li> use<a href="ProvidedDoc/project.docx">This guide</a>
+        </ul>
+   </ul>    
+</div >
+
