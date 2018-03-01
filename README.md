@@ -7,5 +7,5 @@
            <li> use <a>  ProvidedDoc/java.pdf</a>
         </ul>
     <li>Install Intellij IDEA 
-        
+    </ul>    
 </div 
