@@ -17,8 +17,9 @@
         </ul>
     <li>Download and launch the project
         <ul>
-           <li> use<a href="ProvidedDoc/project.docx">This guide</a>
+           <li> use<a href="ProvidedDoc/project.pdf">This guide</a>
         </ul>
-   </ul>    
+   </ul> 
+   <li> Repeat until it works   
 </div >
 
