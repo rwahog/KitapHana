@@ -16,69 +16,68 @@
 <body>
 <%@ include file = "header.jsp" %>
 <main class="body">
-    <div class="document-details container-fluid mx-auto px-0">
-        <div class="row" *ngIf="document != null; else documentNotFound">
-            <div class="document" itemscope
-                 itemtype="https://schema.org/CreativeWork">
-                <div class="row">
-                    <div class="col-md-4 col-12 document-cover" [class.fixed]="thumbIsFixed">
-                        <img itemprop="image"
-                             class="document-thumb-image"
-                             src="../images/touchOfClass.jpg">
-                    </div>
-                    <div class="col-md-8 document-info">
-                        <div itemprop="headline" class="document-title card-title">
-                            <h2>Touch Of Class</h2>
-                            <span class="badge badge-warning">Bestseller</span>
+    <c:forEach var="document" items="${list}">
+        <div class="document-details container-fluid mx-auto px-0">
+            <div class="row" *ngIf="document != null; else documentNotFound">
+                <div class="document" itemscope
+                     itemtype="https://schema.org/CreativeWork">
+                    <div class="row">
+                        <div class="col-md-4 col-12 document-cover" [class.fixed]="thumbIsFixed">
+                            <img itemprop="image"
+                                 class="document-thumb-image"
+                                 src="resources/images/${document.cover}">
                         </div>
-                        <ul class="document-authors">
-                            <li *ngFor="let author of document.authors"
-                                itemprop="author" class="document-author">Bertrand Meyer</li>
-                        </ul>
-                        <div itemprop="description"
-                             class="document-description card-text italic">
-                            Learning to Program Well with Objects and Contracts
-                        </div>
-                        <table class="document-extra col-12">
-                            <thead>
-                            <tr><th width="50%"></th><th width="50%"></th></tr>
-                            </thead>
-                            <tbody>
-                            <tr *ngIf="document.publisher">
-                                <td class="bold">Publisher</td>
-                                <td>Springer
-                                </td>
-                            </tr>
-                            <tr *ngIf="document.year">
-                                <td class="bold">Year of publication</td>
-                                <td>2009
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">Type</td>
-                                <td>Book
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="bold">Price</td>
-                                <td>800 ₽</td>
-                            </tr>
-                            <tr>
-                                <td class="bold">Copies available</td>
-                                <td>3</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-block col-12 col-md-3">Check out</button>
+                        <div class="col-md-8 document-info">
+                            <div itemprop="headline" class="document-title card-title">
+                                <h2>${document.title}</h2>
+                                <span class="badge badge-warning">Bestseller</span>
+                            </div>
+                            <ul class="document-authors">
+                                <li *ngFor="let author of document.authors"
+                                    itemprop="author" class="document-author">${document.authors}</li>
+                            </ul>
+                            <div itemprop="description"
+                                 class="document-description card-text italic">
+                                Learning to Program Well with Objects and Contracts //kakoy description delat'
+                            </div>
+                            <table class="document-extra col-12">
+                                <thead>
+                                <tr><th width="50%"></th><th width="50%"></th></tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngIf="document.publisher">
+                                    <td class="bold">Publisher</td>
+                                    <td>${document.publisher}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="document.year">
+                                    <td class="bold">Year of publication</td>
+                                    <td>${document.year}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">Type</td>
+                                    <td>${document.type}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">Price</td>
+                                    <td>${document.price} ₽</td> //podpravit' otobrazhenie rublya
+                                </tr>
+                                <tr>
+                                    <td class="bold">Copies available</td>
+                                    <td>${document.amount}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block col-12 col-md-3">Check out</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
-
-</main>
+    </main>
 </body>
 </html>
