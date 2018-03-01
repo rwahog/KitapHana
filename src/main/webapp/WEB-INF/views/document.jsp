@@ -30,7 +30,10 @@
                         <div class="col-md-8 document-info">
                             <div itemprop="headline" class="document-title card-title">
                                 <h2>${document.title}</h2>
+                                <c:set var="bestseller" value="${document.isBest_seller()}"/>
+                                <c:if test="${bestseller == 1}">
                                 <span class="badge badge-warning">Bestseller</span>
+                                </c:if>
                             </div>
                             <ul class="document-authors">
                                 <li *ngFor="let author of document.authors"
