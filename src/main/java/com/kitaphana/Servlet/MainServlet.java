@@ -31,4 +31,11 @@ public class MainServlet extends HttpServlet {
         request.getSession().setAttribute("is_librarian", isLiber);
         request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
     }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String id = request.getParameter("title");
+        request.getSession().setAttribute("name", request.getSession().getAttribute("name"));
+        request.getSession().setAttribute("surname", request.getSession().getAttribute("surname"));
+    }
 }
