@@ -15,10 +15,9 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<div class="alert alert-success" role="alert">
-    <h2>Successfully!</h2>
-    <a href="/main">Back to Kitaphana</a>
-</div>
-
+    <div class="alert alert-success" role="alert">
+        <h2>Successfully!</h2>
+        <a href="/main">Back to Kitaphana</a>
+    </div>
 </body>
 </html>
