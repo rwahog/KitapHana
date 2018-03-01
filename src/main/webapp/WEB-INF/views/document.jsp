@@ -66,7 +66,7 @@
                                 </tr>
                                 <tr>
                                     <td class="bold">Price</td>
-                                    <td>${document.price} ₽</td> //podpravit' otobrazhenie rublya
+                                    <td>${document.price} &#8381;</td> //podpravit' otobrazhenie rublya
                                 </tr>
                                 <tr>
                                     <td class="bold">Copies available</td>
@@ -74,9 +74,12 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <c:set var="available" value="${document.getAmount()}"/>
+                            <c:if test="${available > 0}">
                             <div class="form-group">
                                 <button class="btn btn-primary btn-block col-12 col-md-3">Check out</button>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
