@@ -19,7 +19,8 @@
         <ul>
            <li> use<a href="ProvidedDoc/project.pdf">This guide</a>
         </ul>
-   </ul> 
+    
    <li> Repeat until it works   
+   </ul> 
 </div >
 
