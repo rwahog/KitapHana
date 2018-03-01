@@ -78,6 +78,7 @@
                 </div>
             </div>
         </div>
+        </c:forEach>
     </main>
 </body>
 </html>
