@@ -39,8 +39,8 @@ public class Book extends Document {
         }
     }
     @Override
-    public void setVariablesKnowingTitle() throws SQLException {
-        super.setVariablesKnowingTitle();
+    public void setVariablesKnowingTitle(String title) throws SQLException {
+        super.setVariablesKnowingTitle(title);
         ResultSet resultSet = statement.executeQuery("select * from books where title = '"+title+"'");
         if(resultSet.next()){
             setId(resultSet.getInt("id_document"));

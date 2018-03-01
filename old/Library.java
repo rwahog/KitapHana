@@ -18,8 +18,7 @@ public class Library {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         Document document = new Document(connection, in);
         if(resultSet.next()){
-            document.setTitle(resultSet.getString("title"));
-            document.setVariablesKnowingTitle();
+            document.setVariablesKnowingTitle(resultSet.getString("title"));
             return document;
         }
         else{
@@ -78,16 +77,5 @@ public class Library {
         else{
             return null;
         }
-    }
-    
-    public ArrayList<User> AllRegistredPatrons() throws SQLException {
-        ArrayList allRegistredPatrons = new ArrayList();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users" );
-        while(resultSet.next()) {
-            User user = new User(connection, in);
-            user.setVariablesKnowingNameSurname(resultSet.getString("name"), resultSet.getString("surname"));
-            allRegistredPatrons.add(user);
-        }
-        return allRegistredPatrons;
     }
 }
