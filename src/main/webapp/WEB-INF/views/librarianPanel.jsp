@@ -47,10 +47,10 @@
                     <td>37383920</td>
                     <td>Student</td>
                     <td>
-                        <img itemprop="image" src="../images/ok.png">
+                        <img itemprop="image" src="/resources/images/ok.png">
                     </td>
                     <td>
-                        <a href=""><img itemprop="image" src="../images/pencil.png">
+                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                         </a>
                     </td>
                     </td>
@@ -64,7 +64,7 @@
                         <td>Faculty member</td>
                         <td></td>
                         <td>
-                            <a href=""><img itemprop="image" src="../images/pencil.png">
+                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
                     </tr>
@@ -93,7 +93,7 @@
                     <td>Book</td>
                     <td>2</td>
                     <td>
-                        <a href=""><img itemprop="image" src="../images/pencil.png">
+                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                         </a>
                     </td>
                     </td>
@@ -105,7 +105,7 @@
                         <td>Book</td>
                         <td>3</td>
                         <td>
-                            <a href=""><img itemprop="image" src="../images/pencil.png">
+                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
                     </tr>
