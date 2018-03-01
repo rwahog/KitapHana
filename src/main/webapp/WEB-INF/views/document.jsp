@@ -14,19 +14,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">KitapHana</a>
-    <div class="dropdown">
-        <a class="nav-link dropdown-toggle" href="#"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Aygul Malikova
-        </a>
-        <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Log out</a>
-        </div>
-    </div>
-</nav>
+<%@ include file = "header.jsp" %>
 <main class="body">
     <div class="document-details container-fluid mx-auto px-0">
         <div class="row" *ngIf="document != null; else documentNotFound">
