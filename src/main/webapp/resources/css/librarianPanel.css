@@ -1,0 +1,28 @@
+.body.container{
+    position: relative;
+    top: 80px;
+}
+.nav-tabs {
+    border-bottom: 2px solid rgba(150, 140, 54, 0.85);
+}
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background-color:  rgba(150, 140, 54, 0.85);
+    color: black !important;
+    margin-left: 5px;
+}
+.nav-tabs .nav-link.active {
+    color: black;
+    background-color: rgba(99, 89, 39, 0.84);
+    border-color:rgba(150, 140, 54, 0.84);
+}
+thead {
+    color: black;
+    background-color: rgba(99, 89, 39, 0.84);
+}
+tbody{
+    color: black;
+    background-color: rgba(200, 199, 89, 0.84);
+}

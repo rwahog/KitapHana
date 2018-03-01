@@ -20,34 +20,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">KitapHana</a>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
-    </form>
-    <div class="rightside">
-        <% if (MainService.isLiber){%>
-
-        <div class="nav-item">
-            <a class="nav-link" href="#">Librarian panel</a>
-        </div>
-        <%}%>
-        <div class="dropdown nav-item">
-            <a class="nav-link dropdown-toggle" href="#"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                ${name} ${surname}
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">My books</a>
-                <a class="dropdown-item" href="/login.do">Log out</a>
-            </div>
-        </div>
-    </div>
-</nav>
-
-
+<%@include file="header.jsp" %>
 <div class="cards container">
     <c:forEach var="document" items="${list}">
         <div class="col-lg-4 col-6 card-holder">
