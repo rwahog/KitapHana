@@ -1,7 +1,9 @@
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Librarian extends User {
@@ -27,9 +29,34 @@ public class Librarian extends User {
         user.remove();
     }
     public void modifyUser(User user) throws SQLException {
-        //chto modifayit'
-
-
+        System.out.println("What do you want to modify?");
+        String field = in.nextLine();
+        if(field.equals("Name")){
+            String name = in.nextLine();
+            user.setName(name);
+        }
+        else if (field.equals("Surname")){
+            String surname = in.nextLine();
+            user.setSurname(surname);
+        }
+        else if (field.equals("Phone number")){
+            String phone_number = in.nextLine();
+            user.setPhone_number(phone_number);
+        }
+        else if(field.equals("Email")){
+            String email = in.nextLine();
+            user.setEmail(email);
+        }
+        else if(field.equals("Type")){
+            String type = in.nextLine();
+            user.setType(type);
+        }
+        else if(field.equals("Delete document")){
+            Document document = new Document(connection, in);
+            String title = in.nextLine();
+            document = library.getDocumentByTitle(title);
+            user.returnDocument(document);
+        }
         user.save();
     }
     public User searchUserByNameSurname(String name, String surname) throws SQLException {
@@ -64,8 +91,53 @@ public class Librarian extends User {
         document.remove();
     }
     public void modifyDocument(Document document) throws SQLException {
-        //chto modifayit'
-
+        System.out.println("What do you want to modify?");
+        String field = in.nextLine();
+        if(field.equals("Title")){
+            String title = in.nextLine();
+            document.setTitle(title);
+            document.save();
+        }
+        else if (field.equals("Remove author")){
+            String name = in.nextLine();
+            String surname = in.nextLine();
+            Author author = new Author(connection, in);
+            author.setName(name);
+            author.setSurname(surname);
+            author.setVariablesKnowingNameSurname();
+            document.removeAuthor(author);
+        }
+        else if (field.equals("Add author")){
+            String name = in.nextLine();
+            String surname = in.nextLine();
+            Author author = new Author(connection, in);
+            author.setName(name);
+            author.setSurname(surname);
+            author.setVariablesKnowingNameSurname();
+            document.addAuthor(author);
+        }
+        else if (field.equals("Remove keyword")){
+            String word = in.nextLine();
+            Keyword keyword = new Keyword(connection, in);
+            keyword.setKeyword(word);
+            keyword.setVariablesKnowingKeyword();
+            document.removeKeyword(keyword);
+        }
+        else if (field.equals("Add keyword")){
+            String word = in.nextLine();
+            Keyword keyword = new Keyword(connection, in);
+            keyword.setKeyword(word);
+            keyword.setVariablesKnowingKeyword();
+            document.addKeyword(keyword);
+        }
+        else if(field.equals("Price")){
+            int price = in.nextInt();
+            document.setPrice(price);
+        }
+        else if(field.equals("Amount")){
+            int amount = in.nextInt();
+            document.setAmount(amount);
+        }
         document.save();
     }
 
