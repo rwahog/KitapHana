@@ -21,8 +21,7 @@ public class Test {
         Student patron = new Student(connection, in);
         patron.login();
         Book book1 = new Book(connection, in);
-        book1.setTitle("Touch Of Class");
-        book1.setVariablesKnowingTitle();
+        book1.setVariablesKnowingTitle("Touch Of Class");
         Assertions.assertEquals("", patron.getDocumentsAsString());
         patron.checkOutDocument(book1);
         Assertions.assertEquals("Touch Of Class", patron.getDocumentsAsString());
@@ -51,8 +50,7 @@ public class Test {
 //        librarian.login();
 
         Book b = new Book(connection, in);
-        b.setTitle("Touch Of Class");
-        b.setVariablesKnowingTitle();
+        b.setVariablesKnowingTitle("Touch Of Class");
         facultyMember.checkOutDocument(b);
         Assertions.assertEquals(28, facultyMember.getDeadlineOfDocument(b));
     }
@@ -64,8 +62,7 @@ public class Test {
         Student student = new Student(connection, in);
         student.login();
         Book b = new Book(connection, in);
-        b.setTitle("Touch Of Class");
-        b.setVariablesKnowingTitle();
+        b.setVariablesKnowingTitle("Touch Of Class");
         facultyMember.checkOutDocument(b);
         Assertions.assertEquals(14, facultyMember.getDeadlineOfDocument(b));
     }
@@ -73,8 +70,7 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void test_case5() throws Exception {
         Book A = new Book(connection, in);
-        A.setTitle("Touch Of Class");
-        A.setVariablesKnowingTitle();
+        A.setVariablesKnowingTitle("Touch Of Class");
         Assertions.assertEquals(2, A.getAmount());
         Student patron1 = new Student(connection, in);
         patron1.login();
@@ -97,8 +93,7 @@ public class Test {
         Student patron = new Student(connection, in);
         patron.login();
         Book book = new Book(connection, in);
-        book.setTitle("Touch Of Class");
-        book.setVariablesKnowingTitle();
+        book.setVariablesKnowingTitle("Touch Of Class");
         patron.checkOutDocument(book);
         Assertions.assertEquals(true, patron.hasDocument(book));
         int amountOfBooksOfUser= patron.getDocuments().size();
@@ -116,8 +111,7 @@ public class Test {
 //        Librarian librarian = new Librarian(connection, in);
 ////        librarian.login();
         Book book = new Book(connection, in);
-        book.setTitle("Touch Of Class");
-        book.setVariablesKnowingTitle();
+        book.setVariablesKnowingTitle("Touch Of Class");
         p1.checkOutDocument(book);
         p2.checkOutDocument(book);
         Assertions.assertEquals(true, p1.hasDocument(book));
@@ -133,8 +127,7 @@ public class Test {
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
         Book book = new Book(connection, in);
-        book.setTitle("Touch Of Class");
-        book.setVariablesKnowingTitle();
+        book.setVariablesKnowingTitle("Touch Of Class");
         student.checkOutDocument(book);
         Assertions.assertEquals(21, student.getDeadlineOfDocument(book));
     }
@@ -147,8 +140,7 @@ public class Test {
         Librarian librarian = new Librarian(connection, in);
         librarian.login();
         Book book = new Book(connection, in);
-        book.setTitle("Touch Of Class");
-        book.setVariablesKnowingTitle();
+        book.setVariablesKnowingTitle("Touch Of Class");
         Assertions.assertEquals(1, book.getBest_sellerAsInt());
         student.checkOutDocument(book);
         Assertions.assertEquals(14, student.getDeadlineOfDocument(book));
@@ -164,8 +156,7 @@ public class Test {
         book.read();
         book.save();
         Book book1 = new Book(connection, in);
-        book1.setTitle("Touch Of Class");
-        book1.setVariablesKnowingTitle();
+        book1.setVariablesKnowingTitle("Touch Of Class");
         student.checkOutDocument(book1);
         Assertions.assertEquals(true, student.hasDocument(book1));
         student.checkOutDocument(book);
