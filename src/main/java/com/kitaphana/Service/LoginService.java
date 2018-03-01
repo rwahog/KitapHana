@@ -6,24 +6,22 @@ import java.util.ArrayList;
 
 public class LoginService {
     public Database db = new Database();
-
     public boolean loginCheck(String username, String password){
         try {
             db.connect();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String dbUsername, dbPassword;
+        String dbUsername, dbSurname;
         boolean login = false;
-
         try {
             ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.password FROM users;");
 
             while(rs.next()){
                 dbUsername = rs.getString("phone_number");
-                dbPassword = rs.getString("password");
+                dbSurname = rs.getString("password");
 
-                if(dbUsername.equals(username) && dbPassword.equals(password)){
+                if(dbUsername.equals(username) && dbSurname.equals(password)){
                     login = true;
                 }
             }

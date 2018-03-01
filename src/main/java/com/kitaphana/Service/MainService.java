@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class MainService {
     public Database db = new Database();
-
+    public static boolean isLiber;
     public ArrayList<Document> fillPage() {
         ArrayList<Document> documents = new ArrayList<>();
         try {
@@ -32,6 +32,34 @@ public class MainService {
             e.printStackTrace();
         }
         return documents;
+    }
+    public boolean isLibrarian(String phone_number, String surname){
+        boolean isLib = false;
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String dbPhone, dbPass, dbStatus;
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.password, users.type FROM users;");
+
+            while(rs.next()){
+                dbPhone = rs.getString("phone_number");
+                dbPass = rs.getString("password");
+                dbStatus = rs.getString("type");
+                if(dbStatus==null){
+                    dbStatus = " ";
+                }
+                if(dbPhone.equals(phone_number) && dbPass.equals(surname) && dbStatus.equals("librarian")){
+                    isLib = true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        isLiber = isLib;
+        return isLib;
     }
 }
 

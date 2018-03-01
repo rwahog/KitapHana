@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns="/login.do")
 public class LoginServlet extends HttpServlet{
 
+    String phone_number;
+    String password;
     private LoginService service = new LoginService();
 
     @Override
@@ -27,14 +29,16 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException,  ServletException {
-        String phone_number = request.getParameter("login");
-        String password = request.getParameter("password");
+        phone_number = request.getParameter("login");
+        password = request.getParameter("password");
         boolean isValidUser = false;
         isValidUser = service.loginCheck(phone_number, password);
 
         if (isValidUser){
             request.getSession().setAttribute("name", service.getUserName(phone_number).get(0));
             request.getSession().setAttribute("surname", service.getUserName(phone_number).get(1));
+            request.getSession().setAttribute("login", phone_number);
+            request.getSession().setAttribute("password", password);
             response.sendRedirect("/main");
         }
         else {

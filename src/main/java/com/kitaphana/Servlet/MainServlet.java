@@ -13,15 +13,22 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns="/main")
+@WebServlet(urlPatterns = "/main")
 public class MainServlet extends HttpServlet {
     MainService mainService = new MainService();
+    public boolean isLiber;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        ArrayList<Document> arr = mainService.fillPage();
+
         HttpSession session = request.getSession();
+        ArrayList<Document> arr = mainService.fillPage();
         session.setAttribute("list", arr);
+        String phone_number = (String) session.getAttribute("login");
+        String password = (String) session.getAttribute("password");
+        isLiber = mainService.isLibrarian(phone_number, password);
+        request.getSession().setAttribute("is_librarian", isLiber);
         request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
     }
 }

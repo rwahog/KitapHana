@@ -7,3 +7,6 @@ $(document).ready(function (e) {
         percentPosition: true
     });
 })
+$(function(){
+
+})

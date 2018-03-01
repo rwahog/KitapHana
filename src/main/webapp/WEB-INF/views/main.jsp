@@ -1,3 +1,5 @@
+<%@ page import="com.kitaphana.Servlet.LoginServlet" %>
+<%@ page import="com.kitaphana.Service.MainService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
@@ -26,9 +28,11 @@
         <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
     </form>
     <div class="rightside">
+        <%if(MainService.isLiber){ %>
         <div class="nav-item">
             <a class="nav-link" href="#">Librarian panel</a>
         </div>
+        <% } %>
         <div class="dropdown nav-item">
             <a class="nav-link dropdown-toggle" href="#"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
