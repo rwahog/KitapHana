@@ -21,8 +21,7 @@ public class Keyword {
     public void save() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from keywords where keyword = '"+keyword+"'");
         if(resultSet.next()){
-            statement.executeUpdate("update keywords set keyword ='"+keyword+"', documents = " +
-                    "'"+getDocumentsAsString()+"' where id = '"+id+"'");
+            statement.executeUpdate("update keywords set keyword ='"+keyword+"', documents = '"+getDocumentsAsString()+"' where id = '"+id+"'");
         }
         else {
             statement.executeUpdate("insert into keywords (keyword, documents) values ('" + keyword + "', '" + getDocumentsAsString() + "')");
@@ -60,14 +59,11 @@ public class Keyword {
             String cur = "";
             int j = i;
             while(j<s.length() && s.charAt(j) != ','){
-                cur = cur.concat(String.valueOf(s.charAt(j)));
+                cur.concat(String.valueOf(s.charAt(j)));
                 j++;
             }
-            i = j + 1;
             Document document = new Document(connection, in);
             addDocument(document);
-            document.setTitle(cur);
-            document.setVariablesKnowingTitle();
         }
     }
     public void removeDocument(Document document) throws SQLException {
@@ -76,8 +72,8 @@ public class Keyword {
     public String getDocumentsAsString(){
         String s = "";
         for(int i = 0; i<documents.size(); i++){
-            if(i<documents.size()-1) s = s.concat(documents.get(i).getTitle() + ", ");
-            else s = s.concat(documents.get(i).getTitle());
+            if(i<documents.size()-1) s = s.concat(String.valueOf(documents.get(i).getId()) + ", ");
+            else s = s.concat(String.valueOf(documents.get(i).getId()));
         }
         return s;
     }
