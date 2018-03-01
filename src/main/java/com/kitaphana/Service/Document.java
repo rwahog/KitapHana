@@ -7,6 +7,7 @@ public class Document {
     protected String keywords;
     protected String authors;
     protected String cover;
+    protected String type;
     protected int price, amount, id;
 
     public void setId(int id) {
@@ -15,6 +16,10 @@ public class Document {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setAmount(int amount) {
@@ -43,6 +48,10 @@ public class Document {
 
     public String getAuthors() {
         return authors;
+    }
+    
+    public String getType() {
+        return type;
     }
 
     public String getKeywords() {

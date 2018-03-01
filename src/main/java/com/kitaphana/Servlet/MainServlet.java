@@ -21,7 +21,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
         HttpSession session = request.getSession();
         ArrayList<Document> arr = mainService.fillPage();
         session.setAttribute("list", arr);
@@ -30,5 +29,12 @@ public class MainServlet extends HttpServlet {
         isLiber = mainService.isLibrarian(phone_number, password);
         request.getSession().setAttribute("is_librarian", isLiber);
         request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String id = request.getParameter("title");
+        request.getSession().setAttribute("name", request.getSession().getAttribute("name"));
+        request.getSession().setAttribute("surname", request.getSession().getAttribute("surname"));
     }
 }
