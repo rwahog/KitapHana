@@ -70,6 +70,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block col-12 col-md-3">Add new User</button>
+                </div>
             </div>
         </div>
         <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
@@ -111,6 +114,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-block col-12 col-md-3">Add new Document</button>
+                </div>
             </div>
         </div>
     </div>
