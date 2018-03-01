@@ -18,10 +18,8 @@ public class DocumentService {
         }
         try {
             Book doc = new Book();
-            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.title = books.title WHERE books.title ='"+title+"'" +
-                    "");
+            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.title = books.title WHERE books.title ='" + title + "'");
             while (rs.next()) {
-                System.out.println("sdf");
                 doc.setTitle(rs.getString("title"));
                 doc.setAuthors(rs.getString("authors"));
                 doc.setCover(rs.getString("document_cover"));
@@ -39,8 +37,25 @@ public class DocumentService {
         }
         return docParam;
     }
-}
 
-//    public void checkOut() {
-//        
-//}
+
+    public boolean checkOut(String name, String surname, String title) {
+        boolean checkOut = false;
+        String docs = "";
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE name = '"+name+" AND surname = '"+surname+"'");
+            while (rs.next()) {
+                docs = rs.getString("documents");
+            }
+            checkOut = !docs.contains(title);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return checkOut;
+    }
+}

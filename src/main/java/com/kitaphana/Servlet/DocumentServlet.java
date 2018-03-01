@@ -16,7 +16,7 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns = "/document")
 public class DocumentServlet extends HttpServlet {
 
-    DocumentService service = new DocumentService();
+    private DocumentService service = new DocumentService();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<Book> arr = service.setDocInfo(request.getParameter("title"));
@@ -24,7 +24,16 @@ public class DocumentServlet extends HttpServlet {
         session.setAttribute("list", arr);
         request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
     }
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
-    //v processe
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String title = request.getParameter("title");
+        boolean checkOut = service.checkOut(name, surname, title);
+        if (checkOut) {
+            request.getSession().setAttribute("name", name);
+            request.getSession().setAttribute("surname", surname);
+            response.sendRedirect("/verification");
+        }
     }
 }

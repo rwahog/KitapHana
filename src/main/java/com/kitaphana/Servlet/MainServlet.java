@@ -21,7 +21,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
         HttpSession session = request.getSession();
         ArrayList<Document> arr = mainService.fillPage();
         session.setAttribute("list", arr);
