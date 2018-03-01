@@ -73,9 +73,12 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <c:set var="available" value="${document.getAmount()}"/>
+                            <c:if test="${available > 0}">
                             <div class="form-group">
                                 <button class="btn btn-primary btn-block col-12 col-md-3">Check out</button>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
