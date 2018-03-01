@@ -27,7 +27,6 @@
     </form>
     <div class="rightside">
         <% if (MainService.isLiber){%>
-
         <div class="nav-item">
             <a class="nav-link" href="#">Librarian panel</a>
         </div>

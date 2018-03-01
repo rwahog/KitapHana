@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +30,7 @@
                         </div>
                         <div class="col-md-8 document-info">
                             <div itemprop="headline" class="document-title card-title">
-                                <h2>${document.title}</h2>
+                                <h2 name = "title">${document.title}</h2>
                                 <c:set var="bestseller" value="${document.isBest_seller()}"/>
                                 <c:if test="${bestseller == 1}">
                                 <span class="badge badge-warning">Bestseller</span>
@@ -65,7 +66,7 @@
                                 </tr>
                                 <tr>
                                     <td class="bold">Price</td>
-                                    <td>${document.price} ₽</td> //podpravit' otobrazhenie rublya
+                                    <td>${document.price} &#8381;</td> //podpravit' otobrazhenie rublya
                                 </tr>
                                 <tr>
                                     <td class="bold">Copies available</td>
@@ -76,7 +77,7 @@
                             <c:set var="available" value="${document.getAmount()}"/>
                             <c:if test="${available > 0}">
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block col-12 col-md-3">Check out</button>
+                                <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
                             </div>
                             </c:if>
                         </div>
@@ -84,7 +85,7 @@
                 </div>
             </div>
         </div>
-        </c:forEach>
+    </c:forEach>
     </main>
 </body>
 </html>

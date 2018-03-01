@@ -11,7 +11,7 @@
     border-top-right-radius: .25rem;
     background-color:  rgba(150, 140, 54, 0.85);
     color: black !important;
-    margin-left: 5px;
+    margin-right: 5px;
 }
 .nav-tabs .nav-link.active {
     color: black;
