@@ -1,6 +1,6 @@
 # KitapHana
 ---
-<i> Installation</i>
+<i> Installation and launching</i>
 <div>
    <ul>
     <li>Install Java jdk according to your operation system
@@ -17,10 +17,11 @@
         </ul>
     <li>Download and launch the project
         <ul>
-           <li> use<a href="ProvidedDoc/project.pdf">This guide</a>
+           <li> use <a href="ProvidedDoc/project.pdf">This guide</a>
         </ul>
     
    <li> Repeat until it works   
    </ul> 
 </div >
+---
 
