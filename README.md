@@ -71,7 +71,7 @@ Below we have particular types of document extending from it:
 </a>
 
   + Patron 
-   *Could give requests to  search for, check out and return documents.*
+   *Could give requests to  ***search for, check out and return documents***.*
     + Student
    *Have permission to сheck out documents for ***3*** weeks* 
     + Faculty member 
@@ -171,6 +171,7 @@ To expect the library one can use one of pre-signed up users:
       <ul>
          <li> login - 89547456654
          <li> password  - 123
+     </ul>
 or simply provide registration
 
 
