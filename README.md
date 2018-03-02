@@ -63,39 +63,39 @@ To except the library one can use one of pre-signed up users:
 <%--## Testing--%>
 
 # Architecture of the website
-                    <img src="ProvidedDoc/scheme.jpg" alt="альтернативный текст"> 
+ <img src="ProvidedDoc/scheme.jpg" alt="альтернативный текст"> 
                     
 # Implementation
 ## Documents
 We store all documents in documents db. 
 
 
-public class Document {
-    protected String title;
-    protected String keywords;
-    protected String authors;
-    protected String cover;
-    protected String type;
-    protected int price, amount, id;
+         public class Document {
+             protected String title;
+             protected String keywords;
+             protected String authors;
+             protected String cover;
+             protected String type;
+             protected int price, amount, id;
 
 which is typicly the abstract class for all documents.
 Below we have particular types of document extending from it: 
 
-public class Book extends Document {
-    protected String publisher;
-    protected int year, edition_number;
-    protected int best_seller;
+         public class Book extends Document {
+             protected String publisher;
+             protected int year, edition_number;
+             protected int best_seller;
 
  
 
-public class AVMaterial extends Document {
+         public class AVMaterial extends Document {
 
 
  
 
-public class JournalArticle extends Document{
-    protected String journal_name, date;
-    protected ArrayList<String> editors;
+         public class JournalArticle extends Document{
+             protected String journal_name, date;
+             protected ArrayList<String> editors;
 
 
 
@@ -116,40 +116,40 @@ public class JournalArticle extends Document{
 
 We assign the loged in user with new exemplar of appropriate class:
 
-public class User {
-    protected String phone_number, name, surname, password, possible_type, type, email;
-    protected Address address;
-    protected long card_number, maxdays, day = 24*60*60*1000;
-    protected int id;
-    protected ArrayList<Document> documents;
-    protected ArrayList<Long> deadlines;
+         public class User {
+             protected String phone_number, name, surname, password, possible_type, type, email;
+             protected Address address;
+             protected long card_number, maxdays, day = 24*60*60*1000;
+             protected int id;
+             protected ArrayList<Document> documents;
+             protected ArrayList<Long> deadlines;
 
 
 ## Librarian features
 Librarian is a user with manage abilities. One's 3special features
 defined in class Librarian. 
 
-public void modifyDocument(Document document) throws SQLException {...
-public void  removeDocument(Document document) throws SQLException {...
-public void addDocument() throws SQLException {...
-public void modifyUser(User user) throws SQLException {...
-public void removeUser(User user) throws SQLException {...
+         public void modifyDocument(Document document) throws SQLException {...
+         public void  removeDocument(Document document) throws SQLException {...
+         public void addDocument() throws SQLException {...
+         public void modifyUser(User user) throws SQLException {...
+         public void removeUser(User user) throws SQLException {...
 
 
 
 ## Booking System (Document Copy)
-public void checkOutDocument(Document document) throws SQLException {
-        if(document.getAmount() > 0 && !this.hasDocument(document)){
-            addDocument(document);
-            document.decreaseAmount();
-            document.addUser(this);
-            document.save();
-            save();
-        }
-        else{
-            System.out.println("You can't book this document");
-        }
-    }
+         public void checkOutDocument(Document document) throws SQLException {
+                 if(document.getAmount() > 0 && !this.hasDocument(document)){
+                     addDocument(document);
+                     document.decreaseAmount();
+                     document.addUser(this);
+                     document.save();
+                     save();
+                 }
+                 else{
+                     System.out.println("You can't book this document");
+                 }
+             }
 
 Every time user check out document - mount of copies in the library decrease.
 
