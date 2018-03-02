@@ -104,6 +104,7 @@ defined in class Librarian.
 
 ## Booking System (Document Copy)
 </a>
+
          public void checkOutDocument(Document document) throws SQLException {
                  if(document.getAmount() > 0 && !this.hasDocument(document)){
                      addDocument(document);
@@ -147,8 +148,8 @@ Every time user check out document - mount of copies in the library decrease.
    
 ## Issues?
 </a>
-### <big> If something goes wrong:</big>
-  + Deinstall everything and try again
+### If something goes wrong:
++ Deinstall everything and try again
   + Still have some problems? Please contact one of us in Telegram:
     + Almir Mullanurov - @mir_lan
     + Georgy Khorushevsky - @georrgy
