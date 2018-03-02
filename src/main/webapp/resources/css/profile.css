@@ -1,0 +1,31 @@
+.container {
+    position: relative;
+    margin-top: 70px;
+}
+.form-control{
+    color:black!important;
+    background: rgba(150, 140, 54, 0.84);
+}
+.form-registration > .container:before {
+    content: "";
+    position: absolute;
+    width: 110%;
+    height: 102%;
+    left: -5%;
+    top: -1%;
+    border-radius: 30px;
+    background: rgba(0, 0, 0, 0.51);
+    box-shadow: 0 0 45px 15px rgba(0, 0, 0, 0.51);
+}
+#inputStatus option{
+    color: black;
+    background-color: rgba(150, 140, 54, 0.84) !important;
+}
+select:focus{
+    color: black;
+    background: rgba(0, 0, 0, 0.51) !important;
+}
+option:checked:hover, option:checked:focus{
+    background: rgba(0, 0, 0, 0.51) !important;
+    color: black !important;
+}
