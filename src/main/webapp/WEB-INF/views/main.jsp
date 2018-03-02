@@ -30,6 +30,8 @@
                 </div>
                 <div class="card-body">
                     <a class="card-title" href="<%=request.getContextPath()%>/document?title=${document.title}" name="title"><c:out value="${document.title}"/></a>
+                    
+
                     <p class="card-text"><c:out value="${document.authors}"/></p>
                     <p class="card-text">
                         <small class="text-muted"><c:out value="${document.keywords}"/></small>

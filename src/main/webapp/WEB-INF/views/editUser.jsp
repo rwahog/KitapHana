@@ -17,7 +17,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="/registration" method="POST">
+<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
 
     <div class="container">
         <div class="form-row">
