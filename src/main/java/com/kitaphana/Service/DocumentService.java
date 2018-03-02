@@ -10,7 +10,7 @@ public class DocumentService {
     public Database db = new Database();
 
     public ArrayList<Book> setDocInfo(String title) {
-        ArrayList<Book> docParam = new ArrayList<>();
+        ArrayList<Book> bookParam = new ArrayList<>();
         try {
             db.connect();
         } catch (Exception e) {
