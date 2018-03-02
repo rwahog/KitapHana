@@ -69,12 +69,14 @@ Below we have particular types of document extending from it:
    
 ## Users
 </a>
-+ Patron *Could give requests to  search for, check out and return documents.*
-  + Student<
+
+  + Patron 
+   *Could give requests to  search for, check out and return documents.*
+    + Student
    *Have permission to сheck out documents for ***3*** weeks* 
-  + Faculty member 
+    + Faculty member 
    *Have permission to сheck out documents for ***4*** weeks* 
-+ Librarian
+  + Librarian
    *Is allowed to ***modify/delete/add*** any document or patron.*
 
 We assign the loged in user with new exemplar of appropriate class:
@@ -158,7 +160,7 @@ Every time user check out document - mount of copies in the library decrease.
 
 ## Entrying
 </a>
-To except the library one can use one of pre-signed up users:
+To expect the library one can use one of pre-signed up users:
 <ul>
    <li> Patron:
       <ul>
@@ -169,6 +171,6 @@ To except the library one can use one of pre-signed up users:
       <ul>
          <li> login - 89547456654
          <li> password  - 123
-
+or simply provide registration
 
 
