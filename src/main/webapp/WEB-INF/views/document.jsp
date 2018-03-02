@@ -19,7 +19,7 @@
 <main class="body">
     <c:forEach var="document" items="${list}">
         <div class="document-details container-fluid mx-auto px-0">
-            <div class="row" *ngIf="document != null; else documentNotFound">
+            <div class="container" *ngIf="document != null; else documentNotFound">
                 <div class="document" itemscope
                      itemtype="https://schema.org/CreativeWork">
                         <div class="row">
@@ -75,11 +75,18 @@
                                 </tbody>
                             </table>
                             <c:set var="available" value="${document.getAmount()}"/>
-                            <c:if test="${available > 0}">
-                            <div class="form-group">
-                                <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
-                            </div>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${available > 0}">
+                                <div class="form-group">
+                                    <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
+                                </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="form-group col-12 col-md-3">
+                                        <button class="btn btn-block btn-primary" type="submit" disabled>Check out</button>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>
