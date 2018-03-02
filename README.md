@@ -21,27 +21,26 @@ Librarins are used to manage their moves and them as objects.
 
 #### Install Java jdk according to your operation system
 
-  <li>use <a href="ProvidedDoc/java.pdf"> This guide </a>
+  + use <a href="ProvidedDoc/java.pdf"> This guide </a>
 
 #### Install Intellij IDEA 
   + use <a href="https://www.jetbrains.com/help/idea/install-and-set-up-intellij-idea.html"> This guide</a> 
 #### Install mySql
 
-  use <a href="ProvidedDoc/mysql.pdf">This guide</a>
+  + use <a href="ProvidedDoc/mysql.pdf">This guide</a>
 
 ## Launching the project
-<li>Download and launch the project
-        <ul>
-           <li> use <a href="ProvidedDoc/project.pdf">This guide</a>
-        </ul>
+#### Download and launch the project
+  
+  + use <a href="ProvidedDoc/project.pdf">This guide</a>
    
 ## Issues?
-   <ul><big> If something goes wrong:</big>
-       <li> Deinstall everything and try again
-       <li> Still have some problems? Please contact one of us in Telegram:
-          <ul>
-             <li> Almir Mullanurov - @mir_lan
-             <li> Georgy Khorushevsky - @georrgy
+
+### <big> If something goes wrong:</big>
+  + Deinstall everything and try again
+  + Still have some problems? Please contact one of us in Telegram:
+    + Almir Mullanurov - @mir_lan
+    + Georgy Khorushevsky - @georrgy
 
 ## Entrying
 To except the library one can use one of pre-signed up users:
