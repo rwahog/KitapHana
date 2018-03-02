@@ -141,6 +141,7 @@ Every time user check out document - mount of copies in the library decrease.
    
 ## Launching the project
 </a>
+
 #### Download and launch the project
   
   + use <a href="ProvidedDoc/project.pdf">This guide</a>
@@ -148,8 +149,9 @@ Every time user check out document - mount of copies in the library decrease.
    
 ## Issues?
 </a>
+
 ### If something goes wrong:
-+ Deinstall everything and try again
+  + Deinstall everything and try again
   + Still have some problems? Please contact one of us in Telegram:
     + Almir Mullanurov - @mir_lan
     + Georgy Khorushevsky - @georrgy
@@ -169,6 +171,5 @@ To except the library one can use one of pre-signed up users:
          <li> login - 89547456654
          <li> password  - 123
 
-<%--## Testing--%>
 
 
