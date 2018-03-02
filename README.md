@@ -10,8 +10,8 @@ Victoria Zubrinkina, Georgy Khorushevsky
   + <a href="#imp">Implementation</a>
     + <a href="#doc">Documentation</a>
     + <a href="#user">Users</a>
-  + <a href="#lib">Librarian features</a>
-  + <a href="#book">Booking system</a>
+    + <a href="#lib">Librarian features</a>
+    + <a href="#book">Booking system</a>
   + <a href="#InstAndL">Usage</a>
     + <a href="#inst">Installation accompanying soft</a>
     + <a href="#launch">Launching the project</a>
