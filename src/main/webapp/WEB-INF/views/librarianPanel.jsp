@@ -41,33 +41,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <td>1</td>
-                    <td>Aygul</td>
-                    <td>Malikova</td>
-                    <td>37383920</td>
-                    <td>Student</td>
-                    <td>
-                        <img itemprop="image" src="/resources/images/ok.png">
-                    </td>
-                    <td>
-                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                        </a>
-                    </td>
-                    </td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>27585915</td>
-                        <td>Faculty member</td>
-                        <td></td>
-                        <td>
-                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                            </a>
-                        </td>
-                    </tr>
+                     <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.surname}</td>
+                            <td>${user.card_number}</td>
+                            <td>${user.possible_type}</td>
+                            <td></td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
@@ -89,29 +76,19 @@
                     </tr>
                     </thead>
                     <tbody>
-
-                    <td>1</td>
-                    <td>Touch of Class</td>
-                    <td>Bertrand Meyer</td>
-                    <td>Book</td>
-                    <td>2</td>
-                    <td>
-                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                        </a>
-                    </td>
-                    </td>
-                    </tr>
+                    <c:forEach var="doc" items="${docs}">
                     <tr>
-                        <td>2</td>
-                        <td>Algothims</td>
-                        <td>Cormen</td>
-                        <td>Book</td>
-                        <td>3</td>
+                        <td>${doc.id}</td>
+                        <td>${doc.title}</td>
+                        <td>${doc.authors}</td>
+                        <td>${doc.type}</td>
+                        <td>${doc.amount}</td>
                         <td>
                             <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
                     </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
@@ -121,6 +98,5 @@
         </div>
     </div>
 </main>
-
 </body>
 </html>
