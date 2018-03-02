@@ -82,8 +82,8 @@
                                 </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="form-group col-12 col-md-3">
-                                        <button class="btn btn-block btn-primary" type="submit" disabled>Check out</button>
+                                    <div class="form-group">
+                                        <button class="btn btn-block btn-primary col-12 col-md-3" disabled>Check out</button>
                                     </div>
                                 </c:otherwise>
                             </c:choose>

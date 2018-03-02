@@ -36,6 +36,7 @@
                         <th scope="col">Last</th>
                         <th scope="col">Card Number</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Documents</th>
                         <th scope="col">Confirmed</th>
                         <th scope="col">Edit</th>
                     </tr>
@@ -48,6 +49,10 @@
                             <td>${user.surname}</td>
                             <td>${user.card_number}</td>
                             <td>${user.possible_type}</td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/doc.png">
+                                </a>
+                            </td>
                             <td></td>
                             <td>
                                 <a href=""><img itemprop="image" src="/resources/images/pencil.png">
@@ -72,6 +77,7 @@
                         <th scope="col">Authors</th>
                         <th scope="col">Type</th>
                         <th scope="col">Amount</th>
+                        <th scope="col">Users</th>
                         <th scope="col">Edit</th>
                     </tr>
                     </thead>
@@ -84,9 +90,14 @@
                         <td>${doc.type}</td>
                         <td>${doc.amount}</td>
                         <td>
+                            <a href=""><img itemprop="image" src="/resources/images/user.png">
+                            </a>
+                        </td>
+                        <td>
                             <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
+
                     </tr>
                     </c:forEach>
                     </tbody>
