@@ -18,12 +18,18 @@ Librarins are used to manage their moves and them as objects.
 
 ## Installation accompanying soft:
 </a>
-+ Install Java jdk according to your operation system
-  + use <a href="ProvidedDoc/java.pdf"> This guide </a>
-+Install Intellij IDEA 
+Install Java jdk according to your operation system
+=========================
+  use <a href="ProvidedDoc/java.pdf"> This guide </a>
+-------------------------- 
+Install Intellij IDEA 
+=========================
   +use <a href="https://www.jetbrains.com/help/idea/install-and-set-up-intellij-idea.html"> This guide</a>
-+Install mySql
+-------------------------- 
+Install mySql
+=========================
   +use <a href="ProvidedDoc/mysql.pdf">This guide</a>
+--------------------------
 
 ## Launching the project
 <li>Download and launch the project
