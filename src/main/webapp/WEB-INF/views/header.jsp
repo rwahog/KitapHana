@@ -13,14 +13,14 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/main.css"
           rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
+    <script src="webjars/js/jquery-3.2.1.slim.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">KitapHana</a>
+    <a class="navbar-brand" href="/main">KitapHana</a>
     <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
