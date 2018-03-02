@@ -6,23 +6,23 @@
     <title>KitapHana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/common.css"
+    <link href="/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/document.css"
+    <link href="/resources/css/document.css"
           rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+    <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+    <script src="webjars/popper.js"></script>
+    <script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <%@ include file = "header.jsp" %>
 <main class="body">
     <c:forEach var="document" items="${list}">
         <div class="document-details container-fluid mx-auto px-0">
-            <div class="row" *ngIf="document != null; else documentNotFound">
+            <div class="container" *ngIf="document != null; else documentNotFound">
                 <div class="document" itemscope
                      itemtype="https://schema.org/CreativeWork">
-                    <div class="row">
+                        <div class="row">
                         <div class="col-md-4 col-12 document-cover" [class.fixed]="thumbIsFixed">
                             <img itemprop="image"
                                  class="document-thumb-image"
@@ -42,7 +42,7 @@
                             </ul>
                             <div itemprop="description"
                                  class="document-description card-text italic">
-                                Learning to Program Well with Objects and Contracts //kakoy description delat'
+                                Learning to Program Well with Objects and Contracts
                             </div>
                             <table class="document-extra col-12">
                                 <thead>
@@ -66,7 +66,7 @@
                                 </tr>
                                 <tr>
                                     <td class="bold">Price</td>
-                                    <td>${document.price} &#8381;</td> //podpravit' otobrazhenie rublya
+                                    <td>${document.price} &#8381;</td>
                                 </tr>
                                 <tr>
                                     <td class="bold">Copies available</td>
@@ -75,11 +75,18 @@
                                 </tbody>
                             </table>
                             <c:set var="available" value="${document.getAmount()}"/>
-                            <c:if test="${available > 0}">
-                            <div class="form-group">
-                                <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
-                            </div>
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${available > 0}">
+                                <div class="form-group">
+                                    <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
+                                </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="form-group">
+                                        <button class="btn btn-block btn-primary col-12 col-md-3" disabled>Check out</button>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

@@ -36,38 +36,30 @@
                         <th scope="col">Last</th>
                         <th scope="col">Card Number</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Documents</th>
                         <th scope="col">Confirmed</th>
                         <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <td>1</td>
-                    <td>Aygul</td>
-                    <td>Malikova</td>
-                    <td>37383920</td>
-                    <td>Student</td>
-                    <td>
-                        <img itemprop="image" src="/resources/images/ok.png">
-                    </td>
-                    <td>
-                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                        </a>
-                    </td>
-                    </td>
-                    </tr>
-
-                    <tr>
-                        <td>2</td>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>27585915</td>
-                        <td>Faculty member</td>
-                        <td></td>
-                        <td>
-                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                            </a>
-                        </td>
-                    </tr>
+                     <c:forEach var="user" items="${users}">
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.name}</td>
+                            <td>${user.surname}</td>
+                            <td>${user.card_number}</td>
+                            <td>${user.possible_type}</td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/doc.png">
+                                </a>
+                            </td>
+                            <td></td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                                </a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
@@ -85,33 +77,29 @@
                         <th scope="col">Authors</th>
                         <th scope="col">Type</th>
                         <th scope="col">Amount</th>
+                        <th scope="col">Users</th>
                         <th scope="col">Edit</th>
                     </tr>
                     </thead>
                     <tbody>
-
-                    <td>1</td>
-                    <td>Touch of Class</td>
-                    <td>Bertrand Meyer</td>
-                    <td>Book</td>
-                    <td>2</td>
-                    <td>
-                        <a href=""><img itemprop="image" src="/resources/images/pencil.png">
-                        </a>
-                    </td>
-                    </td>
-                    </tr>
+                    <c:forEach var="doc" items="${docs}">
                     <tr>
-                        <td>2</td>
-                        <td>Algothims</td>
-                        <td>Cormen</td>
-                        <td>Book</td>
-                        <td>3</td>
+                        <td>${doc.id}</td>
+                        <td>${doc.title}</td>
+                        <td>${doc.authors}</td>
+                        <td>${doc.type}</td>
+                        <td>${doc.amount}</td>
+                        <td>
+                            <a href=""><img itemprop="image" src="/resources/images/user.png">
+                            </a>
+                        </td>
                         <td>
                             <a href=""><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
+
                     </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
@@ -121,6 +109,5 @@
         </div>
     </div>
 </main>
-
 </body>
 </html>

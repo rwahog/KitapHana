@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Document{
-    protected String title, document_cover;
+    protected String title, document_cover, description;
     protected ArrayList<Keyword> keywords;
     protected ArrayList<Author> authors;
     protected ArrayList<User> users;
@@ -54,6 +54,8 @@ public class Document{
             setPrice(in.nextInt());
             System.out.println("Amount: ");
             setAmount(in.nextInt());
+            System.out.println("Description: ");
+            setDescription(in.nextLine());
         }
     }
     public void save() throws SQLException {
@@ -65,10 +67,10 @@ public class Document{
             keywords.get(i).save();
         }
         if(resultSet.next()){
-            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', users = '"+getUsersAsString()+"', price = '"+price+"', amount = '"+amount+"', document_cover = '"+document_cover+"' where id = '"+id+"'");
+            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', users = '"+getUsersAsString()+"', price = '"+price+"', amount = '"+amount+"', document_cover = '"+document_cover+"', description = '"+description+"' where id = '"+id+"'");
         }
         else {
-            statement.executeUpdate("insert into documents (title, authors, keywords, users, price, amount, document_cover) values ('" + title + "','" + getAuthorsAsString() + "', '" + getKeywordsAsString() + "', '"+getUsersAsString()+"', '" + price + "', '" + amount + "', '"+document_cover+"' )");
+            statement.executeUpdate("insert into documents (title, authors, keywords, users, price, amount, document_cover, description) values ('" + title + "','" + getAuthorsAsString() + "', '" + getKeywordsAsString() + "', '"+getUsersAsString()+"', '" + price + "', '" + amount + "', '"+document_cover+"', '"+description+"' )");
             resultSet = statement.executeQuery("select * from documents where title = '" + title + "'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -96,6 +98,7 @@ public class Document{
             setAuthorsFromString(resultSet.getString("authors"));
             setKeywordsFromString(resultSet.getString("keywords"));
             setDocument_cover(resultSet.getString("document_cover"));
+            setDescription(resultSet.getString("description"));
         }
     }
     public void setVariablesKnowingId(int id) throws SQLException {
@@ -108,6 +111,7 @@ public class Document{
             setAuthorsFromString(resultSet.getString("authors"));
             setKeywordsFromString(resultSet.getString("keywords"));
             setDocument_cover(resultSet.getString("document_cover"));
+            setDescription(resultSet.getString("description"));
         }
     }
     //Id
@@ -259,5 +263,13 @@ public class Document{
     }
     public String getDocument_cover(){
         return document_cover;
+    }
+    //Description
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
