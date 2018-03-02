@@ -28,7 +28,7 @@
     <div class="rightside">
         <% if (MainService.isLiber){%>
         <div class="nav-item">
-            <a class="nav-link" href="#">Librarian panel</a>
+            <a class="nav-link" href="/librarianPanel">Librarian panel</a>
         </div>
         <%}%>
 
