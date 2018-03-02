@@ -1,7 +1,7 @@
 
 # KitapHana
 ---
-Java-CSS-JavaScript implemetion of Library Management System webapp: 
+Java-CSS-HTML-JavaScript implemetion of Library Management System webapp: 
 Introduction to Programming project by students of BS1-6 group, team: Aygul Malikova, Almir Mullanurov,
 Victoria Zubrinkina, Georgy Khorushevsky 
 # Contents
