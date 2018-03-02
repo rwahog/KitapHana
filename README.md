@@ -15,8 +15,8 @@ Victoria Zubrinkina, Georgy Khorushevsky
   + <a href="#InstAndL">Usage</a>
     + <a href="#inst">Installation accompanying soft</a>
     + <a href="#launch">Launching the project</a>
-    + <a href="issue">Issues?</a>
-    + <a href="entry">Entrying</a>
+    + <a href="#issue">Issues?</a>
+    + <a href="#entry">Entrying</a>
 <a name="main">
 
 # Main scheme
@@ -27,7 +27,7 @@ Librarins are used to manage their moves and them as objects.
    
 # Architecture of the website
 </a> 
- <img src="ProvidedDoc/scheme.jpg" alt="альтернативный текст"> 
+ <img src="ProvidedDoc/scheme.jpg" alt="ProvidedDoc/scheme.jpg"> 
 <a name="imp">
    
 # Implementation
