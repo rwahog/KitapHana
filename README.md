@@ -63,9 +63,8 @@ To except the library one can use one of pre-signed up users:
 <%--## Testing--%>
 
 # Architecture of the website
-<div class="img-container">
-                    <img class="card-img-top" src="ProvidedDoc/scheme.jpg" alt="Card image cap">
-</div>
+                    <img src="ProvidedDoc/scheme.jpg" alt="альтернативный текст"> 
+                    
 # Implementation
 ## Documents
 We store all documents in documents db. 
