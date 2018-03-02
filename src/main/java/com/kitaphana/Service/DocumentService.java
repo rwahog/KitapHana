@@ -16,7 +16,15 @@ public class DocumentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
+         try {
+//            String type = "";
+//            ResultSet rs = db.runSqlQuery("SELECT documents.type FROM documents WHERE title = '"+title+"'");
+//            while (rs.next()) {
+//                type = rs.getString("type");
+//            }
+
+//            switch (type) {
+//                case "book":
             Book doc = new Book();
             ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.title = books.title WHERE books.title ='" + title + "'");
             while (rs.next()) {
@@ -31,11 +39,35 @@ public class DocumentService {
                 doc.setPublisher(rs.getString("publisher"));
                 doc.setYear(rs.getInt("year"));
             }
-            docParam.add(doc);
+
+            bookParam.add(doc);
+//                case "ja":
+//                    ArrayList<JournalArticle> jaParam = new ArrayList<>();
+//                    JournalArticle article = new JournalArticle();
+//                    rs = db.runSqlQuery("SELECT * FROM ja WHERE ja.title ='" + title + "'");
+//                    while (rs.next()) {
+//                        article.setJournal_name(rs.getString("journal_name"));
+//                        article.setEditors(rs.getString("editors"));
+//                        article.setTitle(rs.getString("title"));
+//                        article.setDate(rs.getString("date"));
+//                    }
+//                    jaParam.add(article);
+//                    return jaParam;
+//                case "av":
+//                    ArrayList<AVMaterial> avParam = new ArrayList<>();
+//                    AVMaterial av = new AVMaterial();
+//                    rs = db.runSqlQuery("SELECT * FROM av WHERE av.title ='" + title + "'");
+//                    while (rs.next()) {
+//                        av.setTitle(rs.getString("title"));
+//                        av.setId(rs.getInt("id"));
+//                    }
+//                    avParam.add(av);
+//                    return avParam;
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return docParam;
+        return bookParam;
     }
 
 
