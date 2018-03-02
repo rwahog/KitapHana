@@ -18,6 +18,7 @@ public class Main {
         Class.forName("com.mysql.jdbc.Driver");
         try (Connection conn = DriverManager.getConnection(url, userName, password);
              Statement statement = conn.createStatement()) {
+            //statement.executeUpdate("alter table documents add description varchar(256)");
 //            statement.executeUpdate("drop table if exists users");
 //            statement.executeUpdate("drop table if exists addresses");
 //            statement.executeUpdate("drop table if exists documents");
@@ -28,7 +29,7 @@ public class Main {
 //            statement.executeUpdate("drop table if exists ja");
             statement.executeUpdate("create table if not exists users (id mediumint not null auto_increment primary key, name varchar(256) not null, surname varchar(256) not null, card_number bigint not null, phone_number varchar(256) not null, password varchar(256) not null, email varchar(256), id_address mediumint not null, documents varchar(256), deadlines varchar(256), type varchar(256), possible_type varchar(256))");
             statement.executeUpdate("create table if not exists addresses(id_address mediumint not null auto_increment primary key, country varchar(256) not null, town varchar(256) not null, street varchar(256), house_number mediumint not null, apartment_number mediumint not null, postcode varchar(256) not null)");
-            statement.executeUpdate("create table if not exists documents (id mediumint not null auto_increment primary key, title varchar(256) not null, authors varchar(256), keywords varchar(256), users varchar(256), price mediumint, amount mediumint not null, type varchar(30), document_cover varchar(256))");
+            statement.executeUpdate("create table if not exists documents (id mediumint not null auto_increment primary key, title varchar(256) not null, authors varchar(256), keywords varchar(256), users varchar(256), price mediumint, amount mediumint not null, type varchar(30), document_cover varchar(256), description varchar(256))");
             statement.executeUpdate("create table if not exists authors (id mediumint not null auto_increment primary key, name varchar(256) not null, surname varchar(256) not null, documents varchar(256))");
             statement.executeUpdate("create table if not exists keywords (id mediumint not null auto_increment primary key, keyword varchar(256) not null, documents varchar(256))");
             statement.executeUpdate("create table if not exists books (id_document mediumint not null primary key, title varchar(256) not null, publisher varchar(256) not null, year mediumint, edition_number mediumint, best_seller mediumint)");
