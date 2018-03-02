@@ -40,7 +40,7 @@ public class DocumentService {
                 doc.setYear(rs.getInt("year"));
             }
 
-             docParam.add(doc);
+             bookParam.add(doc);
 //                case "ja":
 //                    ArrayList<JournalArticle> jaParam = new ArrayList<>();
 //                    JournalArticle article = new JournalArticle();
@@ -67,7 +67,7 @@ public class DocumentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return docParam;
+        return bookParam;
     }
 
 
