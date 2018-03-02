@@ -69,13 +69,12 @@ Below we have particular types of document extending from it:
    
 ## Users
 </a>
-  + Patron
-   *Could give requests to  search for, check out and return documents.*
-    + Student<
++ Patron *Could give requests to  search for, check out and return documents.*
+  + Student<
    *Have permission to сheck out documents for ***3*** weeks* 
-    + Faculty member 
+  + Faculty member 
    *Have permission to сheck out documents for ***4*** weeks* 
-  + Librarian
++ Librarian
    *Is allowed to ***modify/delete/add*** any document or patron.*
 
 We assign the loged in user with new exemplar of appropriate class:
