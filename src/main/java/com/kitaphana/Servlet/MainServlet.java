@@ -1,6 +1,6 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.Document;
+import com.kitaphana.Entities.Document;
 import com.kitaphana.Service.MainService;
 
 import javax.servlet.ServletException;
