@@ -8,6 +8,7 @@ public class Document {
     protected String authors;
     protected String cover;
     protected String type;
+    protected String description;
     protected int price, amount, id;
 
     public void setId(int id) {
@@ -41,6 +42,10 @@ public class Document {
     public void setTitle(String title) {
         this.title = title;
     }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public int getId() {
         return id;
@@ -72,5 +77,9 @@ public class Document {
 
     public String getCover() {
         return cover;
+    }
+    
+    public String getDescription() {
+        return description;
     }
 }
