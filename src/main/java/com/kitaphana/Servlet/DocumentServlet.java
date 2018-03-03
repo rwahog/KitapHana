@@ -1,7 +1,5 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.Book;
-import com.kitaphana.Service.Document;
 import com.kitaphana.Service.DocumentService;
 
 import javax.servlet.ServletException;
