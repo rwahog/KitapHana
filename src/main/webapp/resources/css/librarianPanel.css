@@ -26,3 +26,18 @@ tbody{
     color: black;
     background-color: rgba(200, 199, 89, 0.84);
 }
+a{
+    font-size: 17px;
+    color: #6b512f !important;
+    font-weight: bold;
+}
+.title a{
+    color: black;
+}
+.title a:hover{
+    color: rgba(99, 89, 39, 0.84);
+    text-decoration: none;
+}
+.table td{
+    vertical-align: middle !important;
+}

@@ -85,7 +85,9 @@
                     <c:forEach var="doc" items="${docs}">
                     <tr>
                         <td>${doc.id}</td>
-                        <td>${doc.title}</td>
+                        <td>
+                                <a class="title" href="">${doc.title}</a>
+                        </td>
                         <td>${doc.authors}</td>
                         <td>${doc.type}</td>
                         <td>${doc.amount}</td>
