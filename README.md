@@ -17,6 +17,7 @@ Victoria Zubrinkina, Georgy Khorushevsky
     + <a href="#launch">Launching the project</a>
     + <a href="#issue">Issues?</a>
     + <a href="#entry">Entrying</a>
+    + <a href="#soft">Soft in use</a>
 <a name="main">
 
 # Main scheme
@@ -173,5 +174,11 @@ To expect the library one can use one of pre-signed up users:
          <li> password  - 123
      </ul>
 or simply provide registration
+<a name="soft">
 
-
+# Soft in use:
+</a>
+  + <a href="http://maven.apache.org/POM/4.0.0">Maven</a>
+  + <a href="https://www.mysql.com/">MySQL</a>
+  + <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a>
+  + <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java JDK</a>
