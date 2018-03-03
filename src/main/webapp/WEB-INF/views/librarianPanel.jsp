@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block col-12 col-md-3">Add new User</button>
+                    <button class="btn btn-primary btn-block col-12 col-md-3" href="${pageContext.request.contextPath}/addUser">Add new User</button>
                 </div>
             </div>
         </div>
