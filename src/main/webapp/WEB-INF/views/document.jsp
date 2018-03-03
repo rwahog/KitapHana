@@ -42,7 +42,7 @@
                             </ul>
                             <div itemprop="description"
                                  class="document-description card-text italic">
-                                Learning to Program Well with Objects and Contracts
+                                ${document.description}
                             </div>
                             <table class="document-extra col-12">
                                 <thead>
