@@ -1,6 +1,7 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
+import com.kitaphana.Entities.Document;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
