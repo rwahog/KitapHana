@@ -12,6 +12,11 @@
     <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
     <script src="webjars/popper.js"></script>
     <script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 <body>
 <%@ include file = "header.jsp" %>
@@ -95,7 +100,7 @@
             <div class="form-group col-md-6">
             </div>
             <div class="form-group col-12 col-md-3">
-                <a class="btn btn-block" id = "button" href="">Cancel</a>
+                <a class="btn btn-block" id = "button" onclick="goBack()">Cancel</a>
             </div>
             <div class="form-group col-12 col-md-3">
                 <button class="btn btn-block btn-primary" type="submit">Save</button>
