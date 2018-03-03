@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Service.DocumentService;
+import com.kitaphana.Entities.Book;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
