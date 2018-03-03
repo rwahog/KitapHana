@@ -55,7 +55,7 @@
                             </td>
                             <td></td>
                             <td>
-                                <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                                <a href="/editUser?id=${user.id}"><img itemprop="image" src="/resources/images/pencil.png">
                                 </a>
                             </td>
                         </tr>
@@ -63,7 +63,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block col-12 col-md-3" href="${pageContext.request.contextPath}/addUser">Add new User</button>
+                    <a class="btn btn-primary btn-block col-12 col-md-3" href="${pageContext.request.contextPath}/addUser">Add new User</a>
                 </div>
             </div>
         </div>
