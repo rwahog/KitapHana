@@ -40,7 +40,7 @@ public class RegistrationServlet extends HttpServlet {
         isValidUser = service.checkIfPossibleToRegister(phone_number, password1, password2);
         String button = request.getParameter("button");
         if (isValidUser) {
-            service.saveUser(name, surname, status, phone_number, password1, country, town, street, house_number, apartment_number, post_code);
+            service.saveUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code);
             response.sendRedirect("/main");
         }
         else {
