@@ -1,8 +1,8 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.Document;
+import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LibrarianPanelService;
-import com.kitaphana.Service.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
