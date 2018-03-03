@@ -15,6 +15,22 @@
     <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/addDocument.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <script>
+        $(function() {
+           $('.hidden').hide();
+        });
+        $(function() {
+            $('#type').change(function(){
+                $('.hidden').hide();
+                $('#' + $(this).val()).show();
+            });
+        });
+    </script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -53,9 +69,9 @@
                 <label for="type">Type</label>
                 <select id="type" class="form-control document-type" name="document-type">
                     <option selected>Choose...</option>
-                    <option value="1">Book</option>
-                    <option value="2">Journal Article</option>
-                    <option value="3">AV material</option>
+                    <option value="book">Book</option>
+                    <option value="article">Journal Article</option>
+                    <option value="av">AV material</option>
                 </select>
             </div>
             <div class="form-group col-4">
@@ -66,7 +82,7 @@
                 <label for="inputSurname">Amount</label>
                 <input type="number" class="form-control" id="inputSurname" placeholder="Amount" required="">
             </div>
-            <div class="book-props row hidden">
+            <div class="book-props row hidden" id="book">
                 <div class="form-group col-3">
                     <label for="edition_number">Edition number</label>
                     <input type="text" class="form-control" id="edition_number" placeholder="Edition number"
@@ -85,7 +101,7 @@
                     <label class="custom-control-label" for="customControlInline">Bestseller</label>
                 </div>
             </div>
-            <div class="ja-props row hidden">
+            <div class="ja-props row hidden" id="article">
                 <div class="form-group col-5">
                     <label for="editors">Editors</label>
                     <input type="text" class="form-control" id="editors" placeholder="Editors" required="">
@@ -104,7 +120,7 @@
             <div class="form-group col-md-6">
             </div>
             <div class="form-group col-12 col-md-3">
-                <a class="btn btn-block" id="button" href="">Cancel</a>
+                <a class="btn btn-block" id="button" onclick="goBack()">Cancel</a>
             </div>
             <div class="form-group col-12 col-md-3">
                 <button class="btn btn-block btn-primary" type="submit">Save</button>
