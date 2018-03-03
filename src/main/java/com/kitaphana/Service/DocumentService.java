@@ -38,6 +38,7 @@ public class DocumentService {
                 doc.setEdition_number(rs.getInt("edition_number"));
                 doc.setPublisher(rs.getString("publisher"));
                 doc.setYear(rs.getInt("year"));
+                doc.setDescription(rs.getString("description"));
             }
 
              bookParam.add(doc);
