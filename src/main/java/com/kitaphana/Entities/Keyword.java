@@ -1,4 +1,4 @@
-package com.kitaphana.Service;
+package com.kitaphana.Entities;
 
 import java.util.ArrayList;
 
