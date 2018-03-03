@@ -23,3 +23,8 @@
 .custom-checkbox {
     margin-top: 39px !important
 }
+.file{
+    color: rgba(150, 140, 54, 0.84);
+    position: relative;
+    z-index: 1;
+}

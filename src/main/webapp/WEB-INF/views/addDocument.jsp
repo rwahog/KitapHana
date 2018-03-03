@@ -116,6 +116,12 @@
                 </div>
             </div>
         </div>
+        <form>
+            <div>
+                <label for="file"></label>
+                <input type="file" id="file" class="file">
+            </div>
+        </form>
         <div class="form-row">
             <div class="form-group col-md-6">
             </div>
