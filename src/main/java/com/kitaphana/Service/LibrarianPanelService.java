@@ -1,6 +1,7 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
+import com.kitaphana.Entities.User;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
