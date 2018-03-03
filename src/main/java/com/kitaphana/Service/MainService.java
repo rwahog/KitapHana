@@ -18,7 +18,6 @@ public class MainService {
         }
         try {
             ResultSet rs = db.runSqlQuery("SELECT documents.title, documents.authors, documents.keywords, documents.document_cover FROM documents;");
-            int i = 0;
             while (rs.next()) {
                 Document doc = new Document();
                 doc.setTitle(rs.getString("title"));
@@ -26,7 +25,6 @@ public class MainService {
                 doc.setKeywords(rs.getString("keywords"));
                 doc.setCover(rs.getString("document_cover"));
                 documents.add(doc);
-                i++;
             }
         } catch (Exception e) {
             e.printStackTrace();
