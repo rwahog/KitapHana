@@ -17,7 +17,7 @@ Victoria Zubrinkina, Georgy Khorushevsky
     + <a href="#launch">Launching the project</a>
     + <a href="#issue">Issues?</a>
     + <a href="#entry">Entrying</a>
-    + <a href="#soft">Soft in use</a>
+  + <a href="#soft">Soft in use</a>
 <a name="main">
 
 # Main scheme
