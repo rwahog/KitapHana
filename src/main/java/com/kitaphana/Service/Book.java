@@ -1,4 +1,4 @@
-package com.kitaphana.Service;
+package com.kitaphana.Entities;
 
 public class Book extends Document {
     protected String publisher;
