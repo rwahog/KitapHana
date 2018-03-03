@@ -38,7 +38,7 @@
                 ${name} ${surname}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">Profile</a>
+                <a class="dropdown-item" href="/profile">Profile</a>
                 <a class="dropdown-item" href="#">My books</a>
                 <a class="dropdown-item" href="/login.do">Log out</a>
             </div>

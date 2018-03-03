@@ -17,13 +17,10 @@ public class RegistrationService {
         String dbPhone_Number;
         boolean possible = false;
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.phone_number FROM users;");
-            while (rs.next()) {
-                dbPhone_Number = rs.getString("phone_number");
-                if (!dbPhone_Number.equals(phone_number) && password1.equals(password2)) {
+            ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
+            if (!rs.next() && password1.equals(password2)) {
                     possible = true;
                 }
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
