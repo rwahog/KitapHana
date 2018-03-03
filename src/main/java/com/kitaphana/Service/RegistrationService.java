@@ -31,7 +31,7 @@ public class RegistrationService {
     }
 
     public void saveUser(String name, String surname, String possible_type, String phone_number,
-                         String password, String country, String town, String street,
+                         String password, String email, String country, String town, String street,
                          String house_number, String apart_number, String post_code) {
         try {
             db.connect();
@@ -40,13 +40,13 @@ public class RegistrationService {
         }
         try {
             long card_number = setCard_number(phone_number);
-            db.runSqlUpdate("insert into addresses(country, town, street, house_number, apartment_number, postcode) values('" + country + "', '" + town + "', '" + street + "', '" + house_number + "', '" + apart_number + "','" + post_code + "')");
-            ResultSet resultSet = db.runSqlQuery("select * from addresses where country = '" + country + "' and town = '" + town + "' and street = '" + street + "' and house_number = '" + house_number + "'and apartment_number = '" + apart_number + "' and postcode = '" + post_code + "'");
+            db.runSqlUpdate("INSERT INTO addresses(country, town, street, house_number, apartment_number, postcode) VALUES('" + country + "', '" + town + "', '" + street + "', '" + house_number + "', '" + apart_number + "','" + post_code + "')");
+            ResultSet resultSet = db.runSqlQuery("SELECT * FROM addresses WHERE country = '" + country + "' AND town = '" + town + "' AND street = '" + street + "' AND house_number = '" + house_number + "' AND apartment_number = '" + apart_number + "' AND postcode = '" + post_code + "'");
             int id_address = -1;
             if (resultSet.next()) {
                 id_address = resultSet.getInt("id_address");
             }
-            db.runSqlUpdate("insert into users (name, surname, phone_number, card_number, password, id_address, possible_type) values('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '" + password + "', '" + id_address + "', '" + possible_type + "')");
+            db.runSqlUpdate("INSERT INTO users (name, surname, phone_number, card_number, password, email, id_address, possible_type) VALUES('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '" + password + "', '" + email + "', '" + id_address + "', '" + possible_type + "')");
         } catch (Exception e) {
             e.printStackTrace();
         }
