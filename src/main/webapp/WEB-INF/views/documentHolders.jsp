@@ -14,6 +14,11 @@
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -33,15 +38,22 @@
             </tr>
             </thead>
             <tbody>
+            <c:forEach var="user" items="${users}">
             <tr>
-                <td>1</td>
-                <td>Aygul</td>
-                <td>Malikova</td>
-                <td>Students</td>
-                <td>5 days</td>
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.surname}</td>
+                <td>${user.possible_type}</td>
+                <td>deadline</td>
             </tr>
+            </c:forEach>
             </tbody>
         </table>
+        <div class="form-row">
+            <div class="form-group col-12 col-md-3">
+                <a class="btn btn-block" id="button" onclick="goBack()">Back</a>
+            </div>
+        </div>
     </div>
 </main>
 </body>

@@ -98,7 +98,7 @@
                         <td>${doc.type}</td>
                         <td>${doc.amount}</td>
                         <td>
-                            <a href=""><img itemprop="image" src="/resources/images/user.png">
+                            <a href="/holders?id=${doc.id}"><img itemprop="image" src="/resources/images/user.png">
                             </a>
                         </td>
                         <td>
@@ -115,7 +115,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-block col-12 col-md-3">Add new Document</button>
+                    <a class="btn btn-primary btn-block col-12 col-md-3" href="/addDocument">Add new Document</a>
                 </div>
             </div>
         </div>

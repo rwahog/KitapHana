@@ -49,7 +49,25 @@ public class EditUserService {
         return user;
     }
 
-    public boolean isValid(String phone_number, String password1, String password2) {
+    public boolean isValid(int id, String phone_number, String password1, String password2) {
+        String previousPhoneNumber = "";
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.phone_number FROM users WHERE id ='" + id + "'");
+            while (rs.next()) {
+                previousPhoneNumber = rs.getString("phone_number");
+            }
+            if (phone_number.equals(previousPhoneNumber) && password1.equals(password2)) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return regService.checkIfPossibleToRegister(phone_number, password1, password2);
     }
 

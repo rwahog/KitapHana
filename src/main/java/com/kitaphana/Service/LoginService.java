@@ -45,7 +45,6 @@ public class LoginService {
                 name.add(rs.getString("surname"));
                 name.add(rs.getString("id"));
             }
-
         }
         catch (Exception e) {
             e.printStackTrace();

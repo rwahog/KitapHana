@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.EditUserService;
+import com.kitaphana.Service.ProfileService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,18 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/editUser")
-public class EditUserServlet extends HttpServlet {
-
-    EditUserService service = new EditUserService();
+@WebServlet(urlPatterns = "/profile")
+public class ProfileServlet extends HttpServlet {
+    EditUserService serviceEdit = new EditUserService();
+    ProfileService service = new ProfileService();
     User user = new User();
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        user = service.setUserInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
+        user = service.setUserInfo(session.getAttribute("id").toString());
         session.setAttribute("user", user);
-        request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
@@ -38,12 +41,12 @@ public class EditUserServlet extends HttpServlet {
         String apartment_number = request.getParameter("apartment_number");
         String post_code = request.getParameter("postcode");
 
-        boolean isValid = service.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
+        boolean isValid = serviceEdit.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
         if (isValid) {
-            service.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
-            response.sendRedirect("/librarianPanel");
+            serviceEdit.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
+            response.sendRedirect("/main");
         } else {
-            request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
         }
     }
 }

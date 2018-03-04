@@ -46,7 +46,7 @@
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="phone_number">Phone number</label>
-                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="${user.phone_number}" value = "89370037100" required="">
+                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="Phone number" value = "${user.phone_number}" required="">
             </div>
             <div class="form-group col-6">
                 <label for="email">E-mail</label>

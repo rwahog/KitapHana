@@ -60,7 +60,7 @@
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="phone_number">Phone number</label>
-                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="${user.phone_number}" value = "89370037100" required="">
+                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="Phone number" value = "${user.phone_number}" required="">
             </div>
             <div class="form-group col-6">
                 <label for="email">E-mail</label>
@@ -100,11 +100,11 @@
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="house_number">House number</label>
-                <input type="text" class="form-control" id="house_number" name = "house_number" placeholder="${user.address.house_number}" value = "1" required="">
+                <input type="text" class="form-control" id="house_number" name = "house_number" placeholder="House number" value = "${user.address.house_number}" required="">
             </div>
             <div class="form-group col-4">
                 <label for="apartment_number">Apartment number</label>
-                <input type="text" class="form-control" id="apartment_number"  name = "apartment_number" placeholder="${user.address.apartment_number}" value = "1" required="">
+                <input type="text" class="form-control" id="apartment_number"  name = "apartment_number" placeholder="Apartment number" value = "${user.address.apartment_number}" required="">
             </div>
             <div class="form-group col-4">
                 <label for="postcode">Post code</label>
@@ -115,7 +115,7 @@
             <div class="form-group col-md-6">
             </div>
             <div class="form-group col-12 col-md-3">
-                <a class="btn btn-block" id = "button" onclick="goBack()">Cancel</a>
+                <a class="btn btn-block" id = "button" onclick="">Cancel</a>
             </div>
             <div class="form-group col-12 col-md-3">
                 <button class="btn btn-block btn-primary" type="submit">Save</button>

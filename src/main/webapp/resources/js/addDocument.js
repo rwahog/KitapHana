@@ -13,7 +13,7 @@ $(document).ready(function () {
             '<button type="button" class="close float-right" aria-label="Close">\n' +
             '<span aria-hidden="true">&times;</span>\n' +
             '</button>' +
-            '</span>';
+            '</span>' + '</div>';
         $('.author-list').append(el).find('.close').click(function (e) {
             $(e.target).closest('.author').remove();
             if ($('.author-list .author').length == 0) {
@@ -38,7 +38,6 @@ $(document).ready(function () {
                 $('.book-props').addClass('hidden');
                 $('.ja-props').addClass('hidden')
                 break;
-
         }
     })
 });

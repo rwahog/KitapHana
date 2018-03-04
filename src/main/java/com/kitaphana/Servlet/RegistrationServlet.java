@@ -38,9 +38,13 @@ public class RegistrationServlet extends HttpServlet {
 
         boolean isValidUser = true;
         isValidUser = service.checkIfPossibleToRegister(phone_number, password1, password2);
-        String button = request.getParameter("button");
         if (isValidUser) {
             service.saveUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code);
+            request.getSession().setAttribute("name", name);
+            request.getSession().setAttribute("surname", surname);
+            request.getSession().setAttribute("id", service.getUserId(phone_number));
+            request.getSession().setAttribute("login", phone_number);
+            request.getSession().setAttribute("password", password1);
             response.sendRedirect("/main");
         }
         else {
