@@ -92,8 +92,10 @@ public class DocumentService {
             String kek = "";
             String users = "";
             boolean best = false;
+            String id = "";
             while(dks.next()){
                 System.out.println(kek);
+                id = dks.getString("id");
                 if(dks.getString("type").equals("book")){
                     ResultSet books = db.runSqlQuery("select * from books where title = '"+title+"'");
                     while(books.next()){
@@ -120,11 +122,12 @@ public class DocumentService {
                 deadlines = rs.getString("deadlines");
                 if(!deadlines.equals("")){deadlines = deadlines+","+cur;}
                 else deadlines = cur+"";
-                if(!docs.equals("")){docs = docs+","+title;}
-                else docs = title;
+                if(!docs.equals("")){docs = docs+","+id;}
+                else docs = id;
                 if(!users.equals("")) {users = users+","+rs.getString("id");}
                 else users = rs.getString("id");
                 statement.executeUpdate("Update users SET deadlines='"+deadlines+"' where name='"+name+"' and surname='"+surname+"'");
+                System.out.println(docs);
                 statement.executeUpdate("Update users SET documents='"+docs+"' where name='"+name+"' and surname='"+surname+"'");
             }
             statement.executeUpdate("UPDATE documents SET users='"+users+"' where title='"+title+"'");
