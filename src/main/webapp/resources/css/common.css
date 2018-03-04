@@ -124,11 +124,19 @@ label {
 }
 .nav-item {
     position: relative;
+}
+.dropdown.nav-item{
+    position: relative;
+    float: right!important;
+}
+.nav-link.dropdown-toggle{
+    position: relative;
     float: right !important;
 }
 .dropdown-menu{
     background-color: rgba(150, 140, 54, 0.85);
     border-radius: 10px;
+    float: right;
 }
 .dropdown-item:hover{
     background-color: rgba(255, 247, 75, 0.85);
