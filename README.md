@@ -178,6 +178,7 @@ or simply provide registration
 
 # Soft in use:
 </a>
+
   + <a href="http://maven.apache.org/POM/4.0.0">Maven</a>
   + <a href="https://www.mysql.com/">MySQL</a>
   + <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a>
