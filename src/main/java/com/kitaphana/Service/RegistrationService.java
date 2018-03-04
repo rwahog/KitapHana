@@ -59,4 +59,23 @@ public class RegistrationService {
         }
         return hash;
     }
+    
+    public String getUserId(String phone_number) {
+        String id = "";
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.id FROM users WHERE users.phone_number = '"+phone_number+"';");
+            while (rs.next()) {
+                id = rs.getString("id");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
