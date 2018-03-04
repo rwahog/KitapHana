@@ -39,6 +39,7 @@
                         <th scope="col">Documents</th>
                         <th scope="col">Confirmed</th>
                         <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -56,6 +57,10 @@
                             <td></td>
                             <td>
                                 <a href="/editUser?id=${user.id}"><img itemprop="image" src="/resources/images/pencil.png">
+                                </a>
+                            </td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/bin.png">
                                 </a>
                             </td>
                         </tr>
@@ -79,6 +84,7 @@
                         <th scope="col">Amount</th>
                         <th scope="col">Users</th>
                         <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -97,6 +103,10 @@
                         </td>
                         <td>
                             <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                            </a>
+                        </td>
+                        <td>
+                            <a href=""><img itemprop="image" src="/resources/images/bin.png">
                             </a>
                         </td>
 

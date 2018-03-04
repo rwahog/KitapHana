@@ -104,7 +104,7 @@ label {
     z-index: 100;
 }
 .navbar .navbar-brand{
-    color: rgba(150, 140, 54, 0.84)
+    color: rgba(150, 140, 54, 0.84) !important;
 }
 
 .bg-light{
