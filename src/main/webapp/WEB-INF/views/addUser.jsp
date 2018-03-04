@@ -21,7 +21,6 @@
 <body>
 <%@ include file = "header.jsp" %>
 <form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
-
     <div class="container">
         <div class="form-row">
             <div class="form-group col-4">
@@ -108,6 +107,5 @@
         </div>
     </div>
 </form>
-
 </body>
 </html>

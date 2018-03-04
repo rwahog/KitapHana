@@ -38,7 +38,7 @@ public class EditUserServlet extends HttpServlet {
         String apartment_number = request.getParameter("apartment_number");
         String post_code = request.getParameter("postcode");
 
-        boolean isValid = service.isValid(phone_number, password1, password2);
+        boolean isValid = service.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
         if (isValid) {
             service.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
             response.sendRedirect("/librarianPanel");

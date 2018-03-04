@@ -59,7 +59,7 @@ public class RegistrationService {
         }
         return hash;
     }
-    
+
     public String getUserId(String phone_number) {
         String id = "";
         try {
