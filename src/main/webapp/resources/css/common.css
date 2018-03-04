@@ -62,7 +62,7 @@ body {
 .form-control {
     border: 2px solid rgb(130, 93, 46);
     background: rgba(0, 0, 0, 0.43);
-    color: #969548 !important;
+    color: #969548;
     border-radius: 30px;
 }
 
@@ -109,7 +109,6 @@ label {
 
 .bg-light{
     background-color: rgba(0, 0, 0, 0.71) !important;
-
 }
 .navbar-brand{
     content: normal;

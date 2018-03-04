@@ -15,7 +15,10 @@ label{
     background: rgba(0, 0, 0, 0.51);
     box-shadow: 0 0 45px 15px rgba(0, 0, 0, 0.51);
 }
-#inputStatus option{
-    color: black;
-    background-color: rgba(150, 140, 54, 0.84);
+option{
+    color: black !important;
+    background: rgba(150, 140, 54, 0.84) !important;
+}
+#status option:focus{
+    background: rgba(150, 140, 54, 0.84) !important;
 }

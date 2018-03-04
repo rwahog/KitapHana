@@ -18,19 +18,19 @@
     <div class="container">
         <div class="form-row">
             <div class="form-group col-4">
-                <%--@declare id="name"--%><label for="name">Name</label>
-                <input type="text" class="form-control" name="name" placeholder="Name" required="" autofocus="">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id = "name" placeholder="Name" required="" autofocus="">
             </div>
             <div class="form-group col-4">
-                <%--@declare id="surname"--%><label for="surname">Surname</label>
-                <input type="text" class="form-control" name="surname" placeholder="Surname" required="">
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control" name="surname" id = "surname" placeholder="Surname" required="">
             </div>
             <div class="form-group col-4">
                 <label for="status">Status</label>
-                <select id="status" name = "status" class="form-control" required="">
-                    <option selected>Choose...</option>
-                    <option>Student</option>
-                    <option>Faculty member</option>
+                <select id="status" class="form-control" required="">
+                    <option style="background: black" selected>Choose...</option>
+                    <option style="background: black;">Student</option>
+                    <option style="background: black">Faculty member</option>
                 </select>
             </div>
         </div>
@@ -89,6 +89,7 @@
                 <input type="text" class="form-control" id="postcode" name = "postcode" placeholder="Post code" required="">
             </div>
         </div>
+
         <div class="form-row">
             <div class="form-group col-md-6">
             </div>
