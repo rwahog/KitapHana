@@ -16,9 +16,6 @@ label{
     box-shadow: 0 0 45px 15px rgba(0, 0, 0, 0.51);
 }
 option{
-    color: black !important;
-    background: rgba(150, 140, 54, 0.84) !important;
-}
-#status option:focus{
-    background: rgba(150, 140, 54, 0.84) !important;
+    color: rgba(150, 140, 54, 0.84) !important;
+    background: black !important;
 }

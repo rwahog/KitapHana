@@ -28,9 +28,9 @@
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" class="form-control" required="">
-                    <option style="background: black" selected>Choose...</option>
-                    <option style="background: black;">Student</option>
-                    <option style="background: black">Faculty member</option>
+                    <option selected>Choose...</option>
+                    <option>Student</option>
+                    <option>Faculty member</option>
                 </select>
             </div>
         </div>

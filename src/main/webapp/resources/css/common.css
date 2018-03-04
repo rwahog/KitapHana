@@ -3,6 +3,7 @@ html, body {
     height: 100%;
 }
 body {
+    color: #6b512f;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -58,18 +59,17 @@ body {
     color: rgb(130, 93, 46); !important;
     box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23) !important;
 }
-
 .form-control {
     border: 2px solid rgb(130, 93, 46);
     background: rgba(0, 0, 0, 0.43);
     color: #969548;
     border-radius: 30px;
 }
-
 .form-control:focus {
     border-color: rgb(130, 93, 46);
     box-shadow: 0 0 0 0.2rem rgba(130, 93, 46, 0.23);
     background: rgba(67, 62, 44, 0.53);
+    color: #969548;
 }
 label {
     color: rgb(118, 110, 44);
@@ -127,7 +127,7 @@ label {
     border-radius: 10px;
 }
 .dropdown-item:hover{
-    background-color: rgba(255, 247, 75, 0.85)
+    background-color: rgba(255, 247, 75, 0.85);
 
 }
 a.navbar-brand:hover {color: rgba(150, 140, 54, 0.55) !important;}

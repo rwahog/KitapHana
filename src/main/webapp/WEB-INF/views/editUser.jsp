@@ -23,7 +23,6 @@
 <body>
 <%@include file="header.jsp" %>
 <form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
-
     <div class="container">
         <div class="form-row">
             <div class="form-group col-4">
@@ -37,9 +36,9 @@
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name = "status" class="form-control" required="">
-                    <option selected style="background-color:black" >Choose...</option>
-                    <option style="background-color:black">Student</option>
-                    <option style="background-color:black">Faculty member</option>
+                    <option>Choose...</option>
+                    <option>Student</option>
+                    <option>Faculty member</option>
                 </select>
             </div>
         </div>
