@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class Database {
 
-    private Connection con;
+    public Connection con;
 
     public void connect() throws Exception {
 
