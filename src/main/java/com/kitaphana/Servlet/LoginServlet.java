@@ -35,8 +35,8 @@ public class LoginServlet extends HttpServlet{
         isValidUser = service.loginCheck(phone_number, password);
 
         if (isValidUser){
-            request.getSession().setAttribute("name", service.getUserName(phone_number).get(0));
-            request.getSession().setAttribute("surname", service.getUserName(phone_number).get(1));
+            request.getSession().setAttribute("name", service.getUserNameAndId(phone_number).get(0));
+            request.getSession().setAttribute("surname", service.getUserNameAndId(phone_number).get(1));
             request.getSession().setAttribute("id", service.getUserNameAndId(phone_number).get(2));
             request.getSession().setAttribute("login", phone_number);
             request.getSession().setAttribute("password", password);
