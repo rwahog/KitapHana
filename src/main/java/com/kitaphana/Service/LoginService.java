@@ -31,7 +31,7 @@ public class LoginService {
         return login;
     }
 
-    public ArrayList getUserName(String phone_number){
+    public ArrayList getUserNameAndId(String phone_number){
         ArrayList name = new ArrayList();
         try {
             db.connect();
@@ -39,10 +39,11 @@ public class LoginService {
             e.printStackTrace();
         }
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.phone_number = '"+phone_number+"';");
+            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname, users.id FROM users WHERE users.phone_number = '"+phone_number+"';");
             while (rs.next()) {
                 name.add(rs.getString("name"));
                 name.add(rs.getString("surname"));
+                name.add(rs.getString("id"));
             }
 
         }
