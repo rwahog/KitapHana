@@ -3,7 +3,7 @@
     top: 80px;
 }
 .nav-tabs {
-    border-bottom: 2px solid rgba(150, 140, 54, 0.85);
+    border-bottom: 2px solid rgba(150, 140, 54, 0.85) !important;
 }
 .nav-tabs .nav-link {
     border: 1px solid transparent;
@@ -12,32 +12,37 @@
     background-color:  rgba(150, 140, 54, 0.85);
     color: black !important;
     margin-right: 5px;
+
 }
 .nav-tabs .nav-link.active {
     color: black;
-    background-color: rgba(99, 89, 39, 0.84);
-    border-color:rgba(150, 140, 54, 0.84);
+    background-color: rgba(99, 89, 39, 1) !important;
+    border-color:rgba(150, 140, 54, 0.84) !important;
+    font-weight: bold;
+
+}
+.table thead th {
+    vertical-align: bottom;
+    border-bottom: none;
 }
 thead {
     color: black;
     background-color: rgba(99, 89, 39, 0.84);
+    border: none;
 }
 tbody{
     color: black;
     background-color: rgba(200, 199, 89, 0.84);
 }
-/*a{*/
-    /*font-size: 17px;*/
-    /*color: #6b512f !important;*/
-    /*font-weight: bold;*/
-/*}*/
-/*.title a{*/
-    /*color: black;*/
-/*}*/
-/*.title a:hover{*/
-    /*color: rgba(99, 89, 39, 0.84);*/
-    /*text-decoration: none;*/
-/*}*/
-/*.table td{*/
-    /*vertical-align: middle !important;*/
-/*}*/
+a{
+    color: black;
+}
+.title{
+    font-size: 17px;
+    color: #6b512f;
+    font-weight: bold;
+}
+a:hover{
+    color: rgba(99, 89, 39, 0.84) !important;
+    text-decoration: none !important;
+}
