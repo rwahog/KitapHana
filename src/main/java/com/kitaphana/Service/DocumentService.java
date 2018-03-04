@@ -87,8 +87,6 @@ public class DocumentService {
         }
         try {
             Statement statement = db.con.createStatement();
-            System.out.println(name);
-            System.out.println(surname);
             ResultSet rs = db.runSqlQuery("select * from users where name = '"+name+"' and surname = '"+surname+"'");
             ResultSet dks = db.runSqlQuery("SELECT * FROM documents WHERE title = '"+title+"'");
             String kek = "";
@@ -107,11 +105,8 @@ public class DocumentService {
                 kek+=dks.getString("amount");
                 if(dks.getString("users")!=null){
                 users=users+dks.getString("users");}
-                System.out.println(kek);
             }
             int kek1 = Integer.parseInt(kek)-1;
-            System.out.println("BILO:"+kek);
-            System.out.println(users);
             String deadlines = "";
             statement.executeUpdate("UPDATE documents SET amount='"+kek1+"' where title='"+title+"'");
             while (rs.next()) {
@@ -127,7 +122,6 @@ public class DocumentService {
                 else deadlines = cur+"";
                 if(!docs.equals("")){docs = docs+","+title;}
                 else docs = title;
-                System.out.println("ALLO YOBA ETO TI "+rs.getString("id"));
                 if(!users.equals("")) {users = users+","+rs.getString("id");}
                 else users = rs.getString("id");
                 statement.executeUpdate("Update users SET deadlines='"+deadlines+"' where name='"+name+"' and surname='"+surname+"'");
