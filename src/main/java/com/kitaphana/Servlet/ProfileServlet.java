@@ -12,6 +12,9 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        User user = service.setUserInfo(session.getAttribute("id").toString());
+        session.setAttribute("user", user);
         request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
     }
 }
