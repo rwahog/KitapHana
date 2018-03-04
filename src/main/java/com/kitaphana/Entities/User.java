@@ -3,7 +3,7 @@ package com.kitaphana.Entities;
 import java.util.ArrayList;
 
 public class User {
-    protected String phone_number, name, surname, password, possible_type, email;
+    protected String phone_number, name, surname, password, possible_type, email, type;
     protected Address address;
     protected long card_number, maxdays, day = 24 * 60 * 60 * 1000;
     protected int id;
@@ -45,6 +45,10 @@ public class User {
     public void setAddress(Address address) {
         this.address = address;
     }
+    
+     public void setType(String type) {
+        this.type = type;
+    }
 
     public int getId() {
         return id;
@@ -80,5 +84,9 @@ public class User {
 
     public Address getAddress() {
         return address;
+    }
+    
+    public String getType() {
+        return type;
     }
 }
