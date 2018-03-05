@@ -106,7 +106,7 @@ public class DocumentService {
                 }
                 kek+=dks.getString("amount");
                 if(dks.getString("users")!=null){
-                users=users+dks.getString("users");}
+                    users=users+dks.getString("users");}
             }
             int kek1 = Integer.parseInt(kek)-1;
             String deadlines = "";

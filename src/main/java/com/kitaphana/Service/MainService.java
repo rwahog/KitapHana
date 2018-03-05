@@ -41,16 +41,16 @@ public class MainService {
         }
         String dbPhone, dbPass, dbStatus;
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.password, users.type FROM users;");
+            ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.surname, users.type FROM users;");
 
             while(rs.next()){
                 dbPhone = rs.getString("phone_number");
-                dbPass = rs.getString("password");
+                dbPass = rs.getString("surname");
                 dbStatus = rs.getString("type");
                 if(dbStatus==null){
                     dbStatus = " ";
                 }
-                if(dbPhone.equals(phone_number) && dbPass.equals(surname) && dbStatus.equals("librarian")){
+                if(dbPhone.equals(phone_number) && dbPass.equals(surname) && dbStatus.equals("Librarian")){
                     isLib = true;
                 }
             }

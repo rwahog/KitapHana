@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 
 import com.kitaphana.Service.LoginService;
+import com.kitaphana.Service.MainService;
 
 import java.io.IOException;
 import javax.mail.Session;
@@ -19,6 +20,7 @@ public class LoginServlet extends HttpServlet{
     String phone_number;
     String password;
     private LoginService service = new LoginService();
+    private MainService main = new MainService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,11 +37,15 @@ public class LoginServlet extends HttpServlet{
         isValidUser = service.loginCheck(phone_number, password);
 
         if (isValidUser){
-            request.getSession().setAttribute("name", service.getUserNameAndId(phone_number).get(0));
-            request.getSession().setAttribute("surname", service.getUserNameAndId(phone_number).get(1));
-            request.getSession().setAttribute("id", service.getUserNameAndId(phone_number).get(2));
-            request.getSession().setAttribute("login", phone_number);
-            request.getSession().setAttribute("password", password);
+            HttpSession session = request.getSession();
+            if (main.isLibrarian(phone_number, service.getUserNameAndId(phone_number).get(1).toString())) {
+                session.setAttribute("libr", "true");
+            }
+            session.setAttribute("name", service.getUserNameAndId(phone_number).get(0));
+            session.setAttribute("surname", service.getUserNameAndId(phone_number).get(1));
+            session.setAttribute("id", service.getUserNameAndId(phone_number).get(2));
+            session.setAttribute("login", phone_number);
+            session.setAttribute("password", password);
             response.sendRedirect("/main");
         }
         else {

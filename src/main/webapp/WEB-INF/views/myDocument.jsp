@@ -34,19 +34,25 @@
             </tr>
             </thead>
             <tbody>
+            <c:set var="count" value="1" scope="page" />
+            <c:forEach var="doc" items="${myDocs}">
             <tr>
-                <td>1</td>
+                <td>${count}</td>
                 <td>
-                    <a class="title" href="">Touch of Class
+                    <a class="title" href="">${doc.getTitle()}
                     </a>
                 </td>
-                <td>Bertrand Meyer</td>
-                <td>Book</td>
+                <td>${doc.authors}</td>
+                <td>${doc.type}</td>
                 <td>5 days</td>
+                <form action="/myDocs" method="POST">
                 <td>
-                    <button class="btn btn-primary btn-block">Return</button>
+                    <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
                 </td>
+                </form>
+                <c:set var="count" value="${count + 1}" scope="page"/>
             </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

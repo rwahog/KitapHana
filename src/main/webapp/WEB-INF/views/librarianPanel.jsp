@@ -60,7 +60,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href=""><img itemprop="image" src="/resources/images/bin.png">
+                                <a href="/deleteUser?id=${user.id}"><img itemprop="image" src="/resources/images/bin.png">
                                 </a>
                             </td>
                         </tr>
@@ -102,11 +102,11 @@
                             </a>
                         </td>
                         <td>
-                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                            <a href="/editDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
                         <td>
-                            <a href=""><img itemprop="image" src="/resources/images/bin.png">
+                            <a href="/deleteDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/bin.png">
                             </a>
                         </td>
 
