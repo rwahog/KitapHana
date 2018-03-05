@@ -51,7 +51,7 @@
                             <td>${user.card_number}</td>
                             <td>${user.possible_type}</td>
                             <td>
-                                <a href=""><img itemprop="image" src="/resources/images/doc.png">
+                                <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/doc.png">
                                 </a>
                             </td>
                             <td></td>
