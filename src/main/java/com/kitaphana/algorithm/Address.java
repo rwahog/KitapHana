@@ -1,5 +1,3 @@
-package com.kitaphana.algorithm;
-
 import java.sql.*;
 import java.util.Scanner;
 
