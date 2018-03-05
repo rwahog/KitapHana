@@ -167,7 +167,7 @@ To expect the library one can use one of pre-signed up users:
 <ul>
    <li> Patron:
       <ul>
-         <li> login - 123
+         <li> login - 93700371002
          <li> password - 123
       </ul>
    <li> Librarian:
