@@ -43,7 +43,7 @@
                             <option selected style="background-color:black">Student</option>
                             <option style="background-color:black">Faculty member</option>
                         </c:when>
-                        <c:when test="${status == 'librarian'}">
+                        <c:when test="${status == 'Librarian'}">
                             <option selected style="background-color:black">Librarian</option>
                             <option style="background-color:black">Student</option>
                             <option style="background-color:black">Faculty member</option>

@@ -16,7 +16,8 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns = "/document")
 public class DocumentServlet extends HttpServlet {
 
-    String name, surname, title;
+    String name, surname;
+    String id;
     private DocumentService service = new DocumentService();
 
     @Override
@@ -31,10 +32,9 @@ public class DocumentServlet extends HttpServlet {
         boolean checkOut = false;
         name = (String) request.getSession().getAttribute("name");
         surname = (String) request.getSession().getAttribute("surname");
-        title = request.getParameter("title");
+        id = request.getParameter("id");
         System.out.println(name);
-        System.out.println(title);
-        checkOut = service.checkOut(name, surname, title);
+         checkOut = service.checkOut(name, surname, id);
         if (checkOut) {
             request.getSession().setAttribute("name", name);
             request.getSession().setAttribute("surname", surname);

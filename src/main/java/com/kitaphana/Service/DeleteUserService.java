@@ -25,8 +25,8 @@ public class DeleteUserService {
             String[] ids = id_docs.split(",");
             System.out.println(id_docs);
             for (int i = 0; i < ids.length; i++) {
-                rs.next();
                 rs = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
+                rs.next();
                 int amount = rs.getInt("amount");
                 String users = rs.getString("users");
                 System.out.println(amount);
