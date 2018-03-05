@@ -115,7 +115,7 @@ public class DocumentService {
                 boolean exist = false;
                 String[] ids = rs.getString("documents").split(",");
                 for (int i = 0; i<ids.length; i++){
-                    if(ids[i].equals(id)){
+                    if(Integer.parseInt(ids[i])==id){
                         exist = true;
                     }
                 }
