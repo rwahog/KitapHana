@@ -33,13 +33,15 @@
             </tr>
             </thead>
             <tbody>
+            <c:forEach var="doc" items="${docs}">
             <tr>
-                <td>1</td>
-                <td>Touch of Class</td>
-                <td>Betrand Meyer</td>
-                <td>Book</td>
+                <td>${doc.id}</td>
+                <td>${doc.title}</td>
+                <td>${doc.authors}</td>
+                <td>${doc.type}</td>
                 <td>5 days</td>
             </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

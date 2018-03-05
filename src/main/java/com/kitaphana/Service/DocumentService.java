@@ -106,12 +106,22 @@ public class DocumentService {
                 }
                 kek+=dks.getString("amount");
                 if(dks.getString("users")!=null){
-                users=users+dks.getString("users");}
+                    users=users+dks.getString("users");}
             }
             int kek1 = Integer.parseInt(kek)-1;
             String deadlines = "";
             statement.executeUpdate("UPDATE documents SET amount='"+kek1+"' where title='"+title+"'");
             while (rs.next()) {
+                boolean exist = false;
+                String[] ids = rs.getString("documents").split(",");
+                for (int i = 0; i<ids.length; i++){
+                    if(ids[i].equals(id)){
+                        exist = true;
+                    }
+                }
+                if(exist){
+                    return false;
+                }
                 if(best){
                     cur+=14*day;
                 }

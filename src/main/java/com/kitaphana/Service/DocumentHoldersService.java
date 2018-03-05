@@ -24,6 +24,9 @@ public class DocumentHoldersService {
                 String user_id = rs.getString("users");
                 String[] ids = user_id.split(",");
                 System.out.println(user_id);
+                if (ids.length == 0) {
+                    return null;
+                }
                 for (int i = 0; i < ids.length; i++) {
                     ResultSet rs1 = db.runSqlQuery("SELECT * FROM users WHERE id = '" + ids[i] + "'");
                     User user = new User();

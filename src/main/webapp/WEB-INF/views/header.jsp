@@ -1,3 +1,4 @@
+<%@ page session="true" %>
 <%@ page import="com.kitaphana.Service.MainService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -26,11 +27,14 @@
         <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
     </form>
     <div class="rightside">
-        <% if (MainService.isLiber){%>
-        <div class="nav-item">
-            <a class="nav-link" href="/librarianPanel">Librarian panel</a>
-        </div>
-        <%}%>
+        <%--<c:out value="${sessionScope.libr}"/>--%>
+        <%--<c:set value='${sessionScope.libr}' var="libr">--%>
+        <%if (session.getAttribute("libr") != null) {
+            if (session.getAttribute("libr").equals("true")) {%>
+            <div class="nav-item" >
+            <a class="nav-link" href = "/librarianPanel" > Librarian panel</a >
+            </div >
+        <%}}%>
 
         <div class="dropdown nav-item">
             <a class="nav-link dropdown-toggle" href="#"
@@ -40,7 +44,7 @@
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="/profile?id=${id}">Profile</a>
                 <a class="dropdown-item" href="/myDocs?id=${id}">My Docs</a>
-                <a class="dropdown-item" href="/login.do">Log out</a>
+                <a class="dropdown-item" href="/logout">Log out</a>
             </div>
         </div>
     </div>

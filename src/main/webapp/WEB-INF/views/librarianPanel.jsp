@@ -51,7 +51,7 @@
                             <td>${user.card_number}</td>
                             <td>${user.possible_type}</td>
                             <td>
-                                <a href=""><img itemprop="image" src="/resources/images/doc.png">
+                                <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/doc.png">
                                 </a>
                             </td>
                             <td></td>
@@ -60,7 +60,7 @@
                                 </a>
                             </td>
                             <td>
-                                <a href=""><img itemprop="image" src="/resources/images/bin.png">
+                                <a href="/deleteUser?id=${user.id}"><img itemprop="image" src="/resources/images/bin.png">
                                 </a>
                             </td>
                         </tr>
@@ -102,11 +102,11 @@
                             </a>
                         </td>
                         <td>
-                            <a href=""><img itemprop="image" src="/resources/images/pencil.png">
+                            <a href="/editDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/pencil.png">
                             </a>
                         </td>
                         <td>
-                            <a href=""><img itemprop="image" src="/resources/images/bin.png">
+                            <a href="/deleteDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/bin.png">
                             </a>
                         </td>
 
