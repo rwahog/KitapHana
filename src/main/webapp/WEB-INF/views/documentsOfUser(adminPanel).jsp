@@ -20,7 +20,7 @@
 <main class="body container">
     <div class="panel container-fluid mx-auto px-0">
         <h2>
-            Documents of ${name} ${surname}
+            Documents of ${user.name} ${user.surname}
         </h2>
         <table class="table table-hover table-dark documents">
             <thead>

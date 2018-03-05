@@ -1,6 +1,6 @@
 .container {
     position: relative;
-    margin-top: 70px;
+    margin-top: 140px;
 }
 .form-registration > .container:before {
     content: "";
