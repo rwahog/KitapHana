@@ -1,5 +1,3 @@
-package com.kitaphana.algorithm;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,9 +77,8 @@ public class Author {
             }
             i = j+1;
             Document document = new Document(connection, in);
+            document.setVariablesKnowingId(Integer.valueOf(cur));
             addDocument(document);
-            document.setTitle(cur);
-            document.setVariablesKnowingTitle();
         }
     }
     public void removeDocument(Document document) throws SQLException {
@@ -90,8 +87,8 @@ public class Author {
     public String getDocumentsAsString(){
         String s = "";
         for(int i = 0; i<documents.size(); i++){
-            if(i<documents.size()-1) s = s.concat(documents.get(i).getTitle() + ", ");
-            else s = s.concat(documents.get(i).getTitle());
+            if(i<documents.size()-1) s = s.concat(String.valueOf(documents.get(i).getId()) + ", ");
+            else s = s.concat(String.valueOf(documents.get(i).getId()));
         }
         return s;
     }
