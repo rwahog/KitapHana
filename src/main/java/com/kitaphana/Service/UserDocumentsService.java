@@ -23,6 +23,9 @@ public class UserDocumentsService {
             while (rs.next()) {
                 String docs_id = rs.getString("documents");
                 String[] ids = docs_id.split(",");
+                if (ids.length == 0) {
+                    return null;
+                }
                 for (int i = 0; i < ids.length; i++) {
                     ResultSet rs1 = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
                     Document doc = new Document();
