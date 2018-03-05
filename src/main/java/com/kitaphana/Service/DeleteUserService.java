@@ -23,13 +23,19 @@ public class DeleteUserService {
             db.runSqlUpdate("DELETE FROM users WHERE id ='" + id + "'");
             db.runSqlUpdate("DELETE FROM addresses WHERE id_address = '" + id_address + "'");
             String[] ids = id_docs.split(",");
+            System.out.println(id_docs);
             for (int i = 0; i < ids.length; i++) {
+                rs.next();
                 rs = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
                 int amount = rs.getInt("amount");
                 String users = rs.getString("users");
+                System.out.println(amount);
+                System.out.println(users);
                 users = users.replace(id, "");
                 amount += 1;
-                db.runSqlUpdate("UPDATE documents SET users = '" + users + "', amount = '" + amount + "'");
+                System.out.println(amount);
+                System.out.println(users);
+                db.runSqlUpdate("UPDATE documents SET users = '" + users + "', amount = '" + amount + "' WHERE id = '" + ids[i] + "'");
             }
         } catch (Exception e) {
             e.printStackTrace();

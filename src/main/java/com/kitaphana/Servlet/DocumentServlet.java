@@ -19,22 +19,28 @@ public class DocumentServlet extends HttpServlet {
     String name, surname, title;
     private DocumentService service = new DocumentService();
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<Book> arr = service.setDocInfo(request.getParameter("title"));
         HttpSession session = request.getSession();
         session.setAttribute("list", arr);
         request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
     }
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        boolean checkOut;
+        boolean checkOut = false;
         name = (String) request.getSession().getAttribute("name");
         surname = (String) request.getSession().getAttribute("surname");
         title = request.getParameter("title");
+        System.out.println(name);
+        System.out.println(title);
         checkOut = service.checkOut(name, surname, title);
         if (checkOut) {
             request.getSession().setAttribute("name", name);
             request.getSession().setAttribute("surname", surname);
             response.sendRedirect("/verification");
+        } else {
+            response.sendRedirect("/main");
         }
     }
 }

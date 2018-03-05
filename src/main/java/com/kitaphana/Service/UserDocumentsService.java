@@ -42,4 +42,41 @@ public class UserDocumentsService {
         }
         return documents;
     }
+
+    public ArrayList setNameAndSurname(String id) {
+        ArrayList name = new ArrayList();
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.id = '"+id+"';");
+            while (rs.next()) {
+                name.add(rs.getString("name"));
+                name.add(rs.getString("surname"));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
+
 }

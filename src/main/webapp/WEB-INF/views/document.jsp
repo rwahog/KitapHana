@@ -74,11 +74,12 @@
                                 </tr>
                                 </tbody>
                             </table>
+                            <form class="form-singin col-12" action="/document?id=${document.id}" method="POST">
                             <c:set var="available" value="${document.getAmount()}"/>
                             <c:choose>
                                 <c:when test="${available > 0}">
                                 <div class="form-group">
-                                    <a class="btn btn-primary btn-block col-12 col-md-3" href="/verification">Check out</a>
+                                    <button class="btn btn-primary btn-block col-12 col-md-3" type="submit" href="/verification">Check out</button>
                                 </div>
                                 </c:when>
                                 <c:otherwise>
@@ -87,6 +88,7 @@
                                     </div>
                                 </c:otherwise>
                             </c:choose>
+                            </form>
                         </div>
                     </div>
                 </div>

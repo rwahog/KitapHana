@@ -20,6 +20,8 @@ public class UserDocumentsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<Document> docs = service.fillPage(request.getParameter("id"));
         HttpSession session = request.getSession();
+        request.setAttribute("name", service.setNameAndSurname(request.getParameter("id")).get(0));
+        request.setAttribute("surname", service.setNameAndSurname(request.getParameter("id")).get(1));
         session.setAttribute("docs", docs);
         request.getRequestDispatcher("WEB-INF/views/documentsOfUser(adminPanel).jsp").forward(request, response);
     }

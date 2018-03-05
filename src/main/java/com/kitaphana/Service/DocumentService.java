@@ -30,6 +30,7 @@ public class DocumentService {
             Book doc = new Book();
             ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.title = books.title WHERE books.title ='" + title + "'");
             while (rs.next()) {
+                doc.setId(rs.getInt("id"));
                 doc.setTitle(rs.getString("title"));
                 doc.setAuthors(rs.getString("authors"));
                 doc.setCover(rs.getString("document_cover"));
