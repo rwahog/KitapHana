@@ -18,9 +18,10 @@ public class MainService {
             e.printStackTrace();
         }
         try {
-            ResultSet rs = db.runSqlQuery("SELECT documents.title, documents.authors, documents.keywords, documents.document_cover FROM documents;");
+            ResultSet rs = db.runSqlQuery("SELECT documents.id, documents.title, documents.authors, documents.keywords, documents.document_cover FROM documents;");
             while (rs.next()) {
                 Document doc = new Document();
+                doc.setId(rs.getInt("id"));
                 doc.setTitle(rs.getString("title"));
                 doc.setAuthors(rs.getString("authors"));
                 doc.setKeywords(rs.getString("keywords"));

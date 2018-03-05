@@ -21,7 +21,7 @@ public class DocumentServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ArrayList<Book> arr = service.setDocInfo(request.getParameter("title"));
+        ArrayList<Book> arr = service.setDocInfo(request.getParameter("id"));
         HttpSession session = request.getSession();
         session.setAttribute("list", arr);
         request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);

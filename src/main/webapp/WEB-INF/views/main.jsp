@@ -29,8 +29,8 @@
                     <img class="card-img-top" src="/resources/images/${document.cover}" alt="Card image cap">
                 </div>
                 <div class="card-body">
-                    <a class="card-title" href="<%=request.getContextPath()%>/document?title=${document.title}" name="title"><c:out value="${document.title}"/></a>
-                    
+                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.id}" name="title"><c:out value="${document.title}"/></a>
+
 
                     <p class="card-text"><c:out value="${document.authors}"/></p>
                     <p class="card-text">

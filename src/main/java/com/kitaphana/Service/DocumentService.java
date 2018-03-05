@@ -11,7 +11,7 @@ import java.util.Date;
 public class DocumentService {
     public Database db = new Database();
 
-    public ArrayList<Book> setDocInfo(String title) {
+    public ArrayList<Book> setDocInfo(String id) {
         ArrayList<Book> bookParam = new ArrayList<>();
         try {
             db.connect();
@@ -28,7 +28,8 @@ public class DocumentService {
 //            switch (type) {
 //                case "book":
             Book doc = new Book();
-            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.title = books.title WHERE books.title ='" + title + "'");
+            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.id = books.id_document WHERE books.id_doc" +
+                    "ument ='" + id + "'");
             while (rs.next()) {
                 doc.setId(rs.getInt("id"));
                 doc.setTitle(rs.getString("title"));
