@@ -1,5 +1,3 @@
-package com.kitaphana.algorithm;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Document{
-    protected String title;
+    protected String title, document_cover, description;
     protected ArrayList<Keyword> keywords;
     protected ArrayList<Author> authors;
+    protected ArrayList<User> users;
     protected int price, amount, id;
     protected Statement statement;
     protected Connection connection;
@@ -21,6 +20,7 @@ public class Document{
         this.in = in;
         keywords = new ArrayList<Keyword>();
         authors = new ArrayList<Author>();
+        users = new ArrayList<User>();
     }
     public void read() throws SQLException {
         System.out.println("Title: ");
@@ -41,7 +41,6 @@ public class Document{
                 author.setVariablesKnowingNameSurname();
                 addAuthor(author);
             }
-            in.nextLine();
             System.out.println("Keywords: ");
             while (in.hasNext()) {
                 String word = in.next();
@@ -55,6 +54,8 @@ public class Document{
             setPrice(in.nextInt());
             System.out.println("Amount: ");
             setAmount(in.nextInt());
+            System.out.println("Description: ");
+            setDescription(in.nextLine());
         }
     }
     public void save() throws SQLException {
@@ -66,10 +67,10 @@ public class Document{
             keywords.get(i).save();
         }
         if(resultSet.next()){
-            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', price = '"+price+"', amount = '"+amount+"' where id = '"+id+"'");
+            statement.executeUpdate("update documents set title = '"+title+"', authors = '"+getAuthorsAsString()+"', keywords = '"+getKeywordsAsString()+"', users = '"+getUsersAsString()+"', price = '"+price+"', amount = '"+amount+"', document_cover = '"+document_cover+"', description = '"+description+"' where id = '"+id+"'");
         }
         else {
-            statement.executeUpdate("insert into documents (title, authors, keywords, price, amount) values ('" + title + "','" + getAuthorsAsString() + "', '" + getKeywordsAsString() + "', '" + price + "', '" + amount + "' )");
+            statement.executeUpdate("insert into documents (title, authors, keywords, users, price, amount, document_cover, description) values ('" + title + "','" + getAuthorsAsString() + "', '" + getKeywordsAsString() + "', '"+getUsersAsString()+"', '" + price + "', '" + amount + "', '"+document_cover+"', '"+description+"' )");
             resultSet = statement.executeQuery("select * from documents where title = '" + title + "'");
             if (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -87,7 +88,8 @@ public class Document{
         }
         statement.executeUpdate("delete from documents where id = '"+id+"'");
     }
-    public void setVariablesKnowingTitle() throws SQLException {
+    public void setVariablesKnowingTitle(String title) throws SQLException {
+        this.title = title;
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         if(resultSet.next()){
             setPrice(resultSet.getInt("price"));
@@ -95,6 +97,21 @@ public class Document{
             setId(resultSet.getInt("id"));
             setAuthorsFromString(resultSet.getString("authors"));
             setKeywordsFromString(resultSet.getString("keywords"));
+            setDocument_cover(resultSet.getString("document_cover"));
+            setDescription(resultSet.getString("description"));
+        }
+    }
+    public void setVariablesKnowingId(int id) throws SQLException {
+        this.id = id;
+        ResultSet resultSet = statement.executeQuery("select * from documents where id = '"+id+"'");
+        if(resultSet.next()){
+            setPrice(resultSet.getInt("price"));
+            setAmount(resultSet.getInt("amount"));
+            setTitle(resultSet.getString("title"));
+            setAuthorsFromString(resultSet.getString("authors"));
+            setKeywordsFromString(resultSet.getString("keywords"));
+            setDocument_cover(resultSet.getString("document_cover"));
+            setDescription(resultSet.getString("description"));
         }
     }
     //Id
@@ -124,27 +141,21 @@ public class Document{
             for (int i = 0; i < s.length(); i++) {
                 int j = i;
                 String cur = "";
-                while (j < s.length() && s.charAt(j) != ' ') {
-                    cur = cur.concat(String.valueOf(s.charAt(j)));
-                    j++;
-                }
-                Author author = new Author(connection, in);
-                author.setName(cur);
-                cur = "";
-                j++;
                 while (j < s.length() && s.charAt(j) != ',') {
                     cur = cur.concat(String.valueOf(s.charAt(j)));
                     j++;
                 }
-                author.setSurname(cur);
-                addAuthor(author);
                 i = j + 1;
+                Author author = new Author(connection, in);
+                author.setName(cur);
+                addAuthor(author);
             }
         }
     }
     public void removeAuthor(Author author) throws SQLException {
         authors.remove(author);
         author.removeDocument(this);
+        author.save();
     }
     public String getAuthorsAsString(){
         String s = "";
@@ -181,6 +192,7 @@ public class Document{
     public void removeKeyword(Keyword keyword) throws SQLException {
         keywords.remove(keyword);
         keyword.removeDocument(this);
+        keyword.save();
     }
     public String getKeywordsAsString(){
         String s = "";
@@ -190,6 +202,41 @@ public class Document{
         }
         return s;
     }
+    //User
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+    public void addUser(User user) throws SQLException {
+        users.add(user);
+    }
+    public void setUsersFromString(String s) throws SQLException {
+        if(s!=null) {
+            for (int i = 0; i < s.length(); i++) {
+                int j = i;
+                String cur = "";
+                while (j < s.length() && s.charAt(j) != ',') {
+                    cur = cur.concat(String.valueOf(s.charAt(j)));
+                    j++;
+                }
+                i = j + 1;
+                User user = new User(connection, in);
+                user.setVariablesKnowingCard_number(Integer.valueOf(cur));
+            }
+        }
+    }
+    public void removeUser(User user) throws SQLException {
+        users.remove(user);
+    }
+    public String getUsersAsString(){
+        String s = "";
+        for(int i = 0; i<users.size(); i++){
+            if(i<users.size()-1)  s = s.concat(String.valueOf(users.get(i).getId()) + ", ");
+            else s = s.concat(String.valueOf(users.get(i).getId()));
+        }
+        return s;
+    }
+
+
     //Title
     public void setTitle(String title) throws SQLException {
         this.title = title;
@@ -209,5 +256,20 @@ public class Document{
     }
     public void decreaseAmount() throws SQLException {
         setAmount(amount - 1);
+    }
+    //Document_cover
+    public void setDocument_cover(String document_cover){
+        this.document_cover = document_cover;
+    }
+    public String getDocument_cover(){
+        return document_cover;
+    }
+    //Description
+    public void setDescription(String description){
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
