@@ -1,10 +1,7 @@
-package com.kitaphana.algorithm;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Library {
@@ -21,8 +18,7 @@ public class Library {
         ResultSet resultSet = statement.executeQuery("select * from documents where title = '"+title+"'");
         Document document = new Document(connection, in);
         if(resultSet.next()){
-            document.setTitle(resultSet.getString("title"));
-            document.setVariablesKnowingTitle();
+            document.setVariablesKnowingTitle(resultSet.getString("title"));
             return document;
         }
         else{
@@ -82,7 +78,6 @@ public class Library {
             return null;
         }
     }
-    
     public ArrayList<User> AllRegistredPatrons() throws SQLException {
         ArrayList allRegistredPatrons = new ArrayList();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM users" );
