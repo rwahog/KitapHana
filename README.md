@@ -157,6 +157,8 @@ Every time user check out document - mount of copies in the library decrease.
   + Still have some problems? Please contact one of us in Telegram:
     + Almir Mullanurov - @mir_lan
     + Georgy Khorushevsky - @georrgy
+    + Aygul Malikova - @Aygul_Malikova
+    + Victoria Zubrinkina - @foolonparade
 <a name="entry">
 
 ## Entrying
