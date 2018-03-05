@@ -37,8 +37,8 @@ public class Main {
             fcultyMember.read();
             facultyMember.save();
 
-            Test test = new Test(conn, scan2);
-            test.test_case5();*/
+            Test Main = new Test(conn, scan2);
+            Main.test_case5();*/
         }
 
     }
