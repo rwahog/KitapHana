@@ -36,5 +36,6 @@ public class MainServlet extends HttpServlet {
         String id = request.getParameter("title");
         request.getSession().setAttribute("name", request.getSession().getAttribute("name"));
         request.getSession().setAttribute("surname", request.getSession().getAttribute("surname"));
+        request.getSession().setAttribute("title", id);
     }
 }

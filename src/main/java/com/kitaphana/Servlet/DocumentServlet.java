@@ -15,32 +15,29 @@ import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/document")
 public class DocumentServlet extends HttpServlet {
-
+    boolean checkOut;
     String name, surname;
-    String id;
+    int id;
     private DocumentService service = new DocumentService();
 
-    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<Book> arr = service.setDocInfo(request.getParameter("id"));
         HttpSession session = request.getSession();
         session.setAttribute("list", arr);
         request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
+
+
     }
-    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        boolean checkOut = false;
         name = (String) request.getSession().getAttribute("name");
         surname = (String) request.getSession().getAttribute("surname");
-        id = request.getParameter("id");
-        System.out.println(name);
-         checkOut = service.checkOut(name, surname, id);
+        id = Integer.parseInt(request.getParameter("id"));
+        System.out.println(name+surname+id);
+        checkOut = service.checkOut(name, surname, id);
         if (checkOut) {
             request.getSession().setAttribute("name", name);
             request.getSession().setAttribute("surname", surname);
             response.sendRedirect("/verification");
-        } else {
-            response.sendRedirect("/main");
         }
     }
 }
