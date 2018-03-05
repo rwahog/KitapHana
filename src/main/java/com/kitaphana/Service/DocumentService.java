@@ -114,11 +114,13 @@ public class DocumentService {
             while (rs.next()) {
                 boolean exist = false;
                 String[] ids = rs.getString("documents").split(",");
+
+                if(!ids[0].equals("")){
                 for (int i = 0; i<ids.length; i++){
                     if(Integer.parseInt(ids[i])==id){
                         exist = true;
                     }
-                }
+                }}
                 if(exist){
                     return false;
                 }
