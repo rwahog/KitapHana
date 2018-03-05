@@ -1,7 +1,6 @@
-package com.kitaphana.algorithm;
-
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class FacultyMember extends Patron {
