@@ -119,7 +119,9 @@ public class DocumentService {
                         exist = true;
                     }
                 }
-                if(exist) return false;
+                if(exist){
+                    return false;
+                }
                 if(best){
                     cur+=14*day;
                 }

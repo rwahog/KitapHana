@@ -26,7 +26,6 @@ public class DocumentServlet extends HttpServlet {
         name = (String) request.getSession().getAttribute("name");
         surname = (String) request.getSession().getAttribute("surname");
         title = request.getParameter("title");
-        System.out.println(name+surname+title);
         checkOut = service.checkOut(name, surname, title);
         request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
     }
