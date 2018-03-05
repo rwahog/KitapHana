@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/myDocs")
 public class MyDocumentsServlet extends HttpServlet {
-
     MyDocumentsService service = new MyDocumentsService();
 
     @Override
