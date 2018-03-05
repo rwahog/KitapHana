@@ -39,7 +39,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="/profile?id=${id}">Profile</a>
-                <a class="dropdown-item" href="#">My books</a>
+                <a class="dropdown-item" href="/myDocs?id=${id}">My Docs</a>
                 <a class="dropdown-item" href="/login.do">Log out</a>
             </div>
         </div>
