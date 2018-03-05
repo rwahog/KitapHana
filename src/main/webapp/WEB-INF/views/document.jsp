@@ -79,7 +79,7 @@
                             <c:choose>
                                 <c:when test="${available > 0}">
                                 <div class="form-group">
-                                    <button class="btn btn-primary btn-block col-12 col-md-3" type="submit" href="/verification">Check out</button>
+                                    <button class="btn btn-primary btn-block col-12 col-md-3" type="submit">Check out</button>
                                 </div>
                                 </c:when>
                                 <c:otherwise>
