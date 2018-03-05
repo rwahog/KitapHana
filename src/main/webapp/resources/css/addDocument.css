@@ -2,10 +2,6 @@
     position: relative;
     margin-top: 140px;
 }
-.form-control{
-    color:black!important;
-    background: rgba(150, 140, 54, 0.84);
-}
 .form-registration > .container:before {
     content: "";
     position: absolute;

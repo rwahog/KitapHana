@@ -1,10 +1,6 @@
-.editDocument {
+.container {
     position: relative;
     margin-top: 140px;
-}
-.form-control{
-    color:black!important;
-    background: rgba(150, 140, 54, 0.84);
 }
 .form-registration > .container:before {
     content: "";
@@ -20,8 +16,9 @@
 .hidden {
     display: none;
 }
-.custom-checkbox {
-    margin-top: 39px !important
+option{
+    color: rgba(150, 140, 54, 0.84) !important;
+    background: black !important;
 }
 .file{
     color: rgba(150, 140, 54, 0.84);
