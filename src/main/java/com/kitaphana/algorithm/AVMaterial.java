@@ -1,3 +1,5 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +13,7 @@ public class AVMaterial extends Document {
     @Override
     public void save() throws SQLException {
         super.save();
+
         statement.executeUpdate("update documents set type = 'av' where id = '"+id+"'");
         ResultSet resultSet = statement.executeQuery("select * from av where id_document = '"+id+"'");
         if(resultSet.next()){

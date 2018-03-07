@@ -1,4 +1,9 @@
-import java.sql.*;
+package com.kitaphana.algorithm;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Address {
@@ -15,17 +20,18 @@ public class Address {
     }
     public void readAddress() throws SQLException {
         System.out.println("Country: ");
-        setCountry(in.next());
+        setCountry(in.nextLine());
         System.out.println("Town: ");
-        setTown(in.next());
+        setTown(in.nextLine());
         System.out.println("Street: ");
-        setStreet(in.next());
+        setStreet(in.nextLine());
         System.out.println("House number: ");
-        setHouse_number(in.nextInt());
+        setHouse_number(Integer.parseInt(in.nextLine()));
         System.out.println("Apartment number: ");
-        setApartment_number(in.nextInt());
+
+        setApartment_number(Integer.parseInt(in.nextLine()));
         System.out.println("Postcode: ");
-        setPostcode(in.next());
+        setPostcode(in.nextLine());
     }
     public void save() throws SQLException {
         if(id_address >= 0) {

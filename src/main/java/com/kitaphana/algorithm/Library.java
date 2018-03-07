@@ -1,3 +1,5 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,9 +57,35 @@ public class Library {
             return "No documents with this keyword";
         }
     }
+    
+    public int getNumberOfDocuments() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT documents.amount FROM documents");
+        int totalAmount = 0;
+        while(resultSet.next()){
+            totalAmount += resultSet.getInt("amount");
+        }
+        return totalAmount;
+    }
+    public int getNumberOfAVMaterials() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM documents where type = 'av'");
+        int totalAmount = 0;
+
+        while(resultSet.next()){
+            totalAmount ++;
+        }
+        return totalAmount;
+    }
+    public int getNumberOfBooks() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM documents where type = 'book'");
+        int totalAmount = 0;
+        while(resultSet.next()){
+            totalAmount ++;
+        }
+        return totalAmount;
+    }
     //User
     public User searchUserByNameSurname(String name, String surname) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from users where name = '"+name+"', surname = '"+surname+"'");
+        ResultSet resultSet = statement.executeQuery("select * from users where name = '"+name+"' AND surname = '"+surname+"'");
         if(resultSet.next()){
             User user = new User(connection, in);
             user.setVariablesKnowingNameSurname(name, surname);
@@ -78,14 +106,21 @@ public class Library {
             return null;
         }
     }
-    public ArrayList<User> AllRegistredPatrons() throws SQLException {
-        ArrayList allRegistredPatrons = new ArrayList();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM users" );
-        while(resultSet.next()) {
-            User user = new User(connection, in);
-            user.setVariablesKnowingNameSurname(resultSet.getString("name"), resultSet.getString("surname"));
-            allRegistredPatrons.add(user);
+    
+    public int getNumberOfUsers() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT users.id FROM users");
+        int total = 0;
+        while (resultSet.next()) {
+            total++;
         }
-        return allRegistredPatrons;
+        return total;
+    }
+    public int getNumberOfPatrons() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("SELECT id FROM users where type !='librarian'");
+        int total = 0;
+        while (resultSet.next()) {
+            total++;
+        }
+        return total;
     }
 }

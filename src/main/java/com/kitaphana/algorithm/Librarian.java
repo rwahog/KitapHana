@@ -1,14 +1,15 @@
-import java.security.Key;
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Librarian extends User {
     Library library;
     Librarian(Connection connection, Scanner in) throws SQLException {
+
         super(connection, in);
         library = new Library(connection, in);
     }
@@ -25,23 +26,33 @@ public class Librarian extends User {
     }
 
     //User
-    public void removeUser(User user) throws SQLException {
-        user.remove();
+    public String getUserDocumentsAndDeadlines(User user){
+        return user.getDocumentsAndDeadlines();
     }
+    public User removeUser(User user) throws SQLException {
+        user.remove();
+        user = null;
+        return null;
+    }
+    public void addUser(User user) throws SQLException {
+        user.save();
+    }
+
     public void addUser() throws SQLException {
         System.out.println("Type of user: ");
         String s = in.nextLine();
-        if(s.equals("Student")){
+        s.toLowerCase();
+        if(s.equals("student")){
             Student student = new Student(connection, in);
             student.read();
             student.save();
         }
-        else if(s.equals("Faculty member")){
+        else if(s.equals("faculty member")){
             FacultyMember facultyMember = new FacultyMember(connection, in);
             facultyMember.read();
             facultyMember.save();
         }
-        else if(s.equals("Librarian")){
+        else if(s.equals("librarian")){
             Librarian librarian = new Librarian(connection, in);
             librarian.read();
             librarian.save();
@@ -50,27 +61,28 @@ public class Librarian extends User {
     public void modifyUser(User user) throws SQLException {
         System.out.println("What do you want to modify?");
         String field = in.nextLine();
-        if(field.equals("Name")){
+        field.toLowerCase();
+        if(field.equals("name")){
             String name = in.nextLine();
             user.setName(name);
         }
-        else if (field.equals("Surname")){
+        else if (field.equals("surname")){
             String surname = in.nextLine();
             user.setSurname(surname);
         }
-        else if (field.equals("Phone number")){
+        else if (field.equals("phone number")){
             String phone_number = in.nextLine();
             user.setPhone_number(phone_number);
         }
-        else if(field.equals("Email")){
+        else if(field.equals("email")){
             String email = in.nextLine();
             user.setEmail(email);
         }
-        else if(field.equals("Type")){
+        else if(field.equals("type")){
             String type = in.nextLine();
             user.setType(type);
         }
-        else if(field.equals("Delete document")){
+        else if(field.equals("delete document")){
             Document document = new Document(connection, in);
             String title = in.nextLine();
             document = library.getDocumentByTitle(title);
@@ -84,12 +96,23 @@ public class Librarian extends User {
     public User searchUserByCard_Number(long card_number) throws SQLException {
         return library.searchUserByCard_number(card_number);
     }
-
+    public int getNumberOfUsers() throws SQLException {
+        return library.getNumberOfUsers();
+    }
+    public int getNumberOfPatrons() throws SQLException {
+        return library.getNumberOfPatrons();
+    }
+    public void checkRequestsForType() throws SQLException {
+        ResultSet resultSet = statement.executeQuery("select * from users where possible_type != ''");
+        while(resultSet.next()){
+            //reshaet chto delat'
+        }
+    }
     //Document
-
     public void addDocument() throws SQLException {
         System.out.println("Type: ");
-        String s = in.next();
+        String s = in.nextLine();
+        s.toLowerCase();
         if(s.equals("book")){
             Book book = new Book(connection, in);
             book.read();
@@ -106,18 +129,47 @@ public class Librarian extends User {
             journalArticle.save();
         }
     }
+    public void addDocument(Document document) throws SQLException {
+        document.save();
+    }
+    public void addBook(String title, ArrayList<Author> authors, ArrayList<Keyword> keywords, int price, int amount, String document_cover, String description, String publisher, int year, int edition_number, boolean best_seller) throws SQLException {
+        Book book = new Book(connection, in);
+        book.setTitle(title);
+        book.setAuthors(authors);
+        book.setKeywords(keywords);
+        book.setPrice(price);
+        book.setAmount(amount);
+        book.setDocument_cover(document_cover);
+        book.setDescription(description);
+        book.setPublisher(publisher);
+        book.setYear(year);
+        book.setEdition_number(edition_number);
+        book.setBest_seller(best_seller);
+        book.save();
+    }
+
     public void  removeDocument(Document document) throws SQLException {
         document.remove();
+        document = null;
+    }
+    public void decreaseAmountOfDocument(Document document, int amount) throws SQLException {
+        document.decreaseAmount(amount);
+        document.save();
+    }
+    public void increaseAmountOfDocument(Document document, int amount) throws SQLException {
+        document.increaseAmount(amount);
+        document.save();
     }
     public void modifyDocument(Document document) throws SQLException {
         System.out.println("What do you want to modify?");
         String field = in.nextLine();
-        if(field.equals("Title")){
+        field.toLowerCase();
+        if(field.equals("title")){
             String title = in.nextLine();
             document.setTitle(title);
             document.save();
         }
-        else if (field.equals("Remove author")){
+        else if (field.equals("remove author")){
             String name = in.nextLine();
             String surname = in.nextLine();
             Author author = new Author(connection, in);
@@ -126,7 +178,7 @@ public class Librarian extends User {
             author.setVariablesKnowingNameSurname();
             document.removeAuthor(author);
         }
-        else if (field.equals("Add author")){
+        else if (field.equals("add author")){
             String name = in.nextLine();
             String surname = in.nextLine();
             Author author = new Author(connection, in);
@@ -135,29 +187,37 @@ public class Librarian extends User {
             author.setVariablesKnowingNameSurname();
             document.addAuthor(author);
         }
-        else if (field.equals("Remove keyword")){
+        else if (field.equals("remove keyword")){
             String word = in.nextLine();
             Keyword keyword = new Keyword(connection, in);
             keyword.setKeyword(word);
             keyword.setVariablesKnowingKeyword();
             document.removeKeyword(keyword);
         }
-        else if (field.equals("Add keyword")){
+        else if (field.equals("add keyword")){
             String word = in.nextLine();
             Keyword keyword = new Keyword(connection, in);
             keyword.setKeyword(word);
             keyword.setVariablesKnowingKeyword();
             document.addKeyword(keyword);
         }
-        else if(field.equals("Price")){
-            int price = in.nextInt();
+        else if(field.equals("price")){
+            int price = Integer.parseInt(in.nextLine());
             document.setPrice(price);
         }
-        else if(field.equals("Amount")){
-            int amount = in.nextInt();
+        else if(field.equals("amount")){
+            int amount = Integer.parseInt(in.nextLine());
             document.setAmount(amount);
         }
         document.save();
     }
-
+    public int getNumberOfDocuments() throws SQLException {
+        return library.getNumberOfDocuments();
+    }
+    public int getNumberOfAVMaterials() throws SQLException {
+        return library.getNumberOfAVMaterials();
+    }
+    public int getNumberOfBooks() throws SQLException {
+        return library.getNumberOfBooks();
+    }
 }
