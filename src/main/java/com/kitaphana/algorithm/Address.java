@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Address {
-    //ochemn]dals
     protected String country, town, postcode, street;
     protected int house_number, apartment_number, id_address;
     protected Connection connection;
