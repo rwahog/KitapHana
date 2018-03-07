@@ -1,8 +1,9 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class JournalArticle extends Document{
@@ -16,6 +17,7 @@ public class JournalArticle extends Document{
 
     @Override
     public void read() throws SQLException {
+
         super.read();
         System.out.println("Journal name: ");
         setJournal_name(in.nextLine());setJournal_name(in.nextLine());

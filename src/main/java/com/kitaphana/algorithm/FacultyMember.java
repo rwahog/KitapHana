@@ -1,6 +1,7 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class FacultyMember extends Patron {
@@ -12,6 +13,7 @@ public class FacultyMember extends Patron {
 
     @Override
     public void save() throws SQLException {
+
         super.save();
         statement.executeUpdate("update users set type = 'faculty member' where id = '"+id+"'");
     }

@@ -1,3 +1,5 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +16,14 @@ public class Document{
     protected Statement statement;
     protected Connection connection;
     protected Scanner in;
+    protected String type;
     Document(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.statement = connection.createStatement();
         this.in = in;
         keywords = new ArrayList<Keyword>();
         authors = new ArrayList<Author>();
+
         users = new ArrayList<User>();
     }
     public void read() throws SQLException {
@@ -32,9 +36,9 @@ public class Document{
         else {
             System.out.println("Authors: ");
             while (in.hasNext()) {
-                String name = in.next();
+                String name = in.nextLine();
                 if (name.equals("end")) break;
-                String surname = in.next();
+                String surname = in.nextLine();
                 Author author = new Author(connection, in);
                 author.setName(name);
                 author.setSurname(surname);
@@ -43,7 +47,7 @@ public class Document{
             }
             System.out.println("Keywords: ");
             while (in.hasNext()) {
-                String word = in.next();
+                String word = in.nextLine();
                 if (word.equals("end")) break;
                 Keyword keyword = new Keyword(connection, in);
                 keyword.setKeyword(word);
@@ -51,9 +55,9 @@ public class Document{
                 addKeyword(keyword);
             }
             System.out.println("Price: ");
-            setPrice(in.nextInt());
+            setPrice(Integer.parseInt(in.nextLine()));
             System.out.println("Amount: ");
-            setAmount(in.nextInt());
+            setAmount(Integer.parseInt(in.nextLine()));
             System.out.println("Description: ");
             setDescription(in.nextLine());
         }
@@ -99,6 +103,7 @@ public class Document{
             setKeywordsFromString(resultSet.getString("keywords"));
             setDocument_cover(resultSet.getString("document_cover"));
             setDescription(resultSet.getString("description"));
+            setType(resultSet.getString("type"));
         }
     }
     public void setVariablesKnowingId(int id) throws SQLException {
@@ -112,8 +117,10 @@ public class Document{
             setKeywordsFromString(resultSet.getString("keywords"));
             setDocument_cover(resultSet.getString("document_cover"));
             setDescription(resultSet.getString("description"));
+            setType(resultSet.getString("type"));
         }
     }
+
     //Id
     public int getId(){
         return id;
@@ -125,10 +132,18 @@ public class Document{
     public void setPrice(int price) throws SQLException {
         this.price = price;
     }
+    public void setType(String type){
+        this.type = type;
+    }
     public int getPrice() {
         return price;
     }
     //Authors
+    public void setAuthors(ArrayList<Author> authors) throws SQLException {
+        for(int i =0; i<authors.size(); i++){
+            addAuthor(authors.get(i));
+        }
+    }
     public ArrayList<Author> getAuthors() {
         return authors;
     }
@@ -166,6 +181,11 @@ public class Document{
         return s;
     }
     //Keywords
+    public void setKeywords(ArrayList<Keyword> keywords) throws SQLException {
+        for(int i =0; i<keywords.size(); i++){
+            addKeyword(keywords.get(i));
+        }
+    }
     public ArrayList<Keyword> getKeywords() {
         return keywords;
     }
@@ -251,11 +271,11 @@ public class Document{
     public int getAmount() {
         return amount;
     }
-    public void increaseAmount() throws SQLException {
-        setAmount(amount + 1);
+    public void increaseAmount(int amount) throws SQLException {
+        setAmount(this.amount + amount);
     }
-    public void decreaseAmount() throws SQLException {
-        setAmount(amount - 1);
+    public void decreaseAmount(int amount) throws SQLException {
+        if(this.amount - amount >= 0) setAmount(this.amount - amount);
     }
     //Document_cover
     public void setDocument_cover(String document_cover){

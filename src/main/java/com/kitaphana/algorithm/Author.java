@@ -1,3 +1,5 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +14,7 @@ public class Author {
     protected Statement statement;
     protected Connection connection;
     protected Scanner in;
+
     Author(Connection connection, Scanner in) throws SQLException {
         this.connection = connection;
         this.in = in;
@@ -20,9 +23,9 @@ public class Author {
     }
     public void read() throws SQLException {
         System.out.println("Name: ");
-        setName(in.next());
+        setName(in.nextLine());
         System.out.println("Surname: ");
-        setSurname(in.next());
+        setSurname(in.nextLine());
     }
     public void save() throws SQLException {
         ResultSet resultSet = statement.executeQuery("select * from authors where name = '"+name+"' and surname = '"+surname+"'");

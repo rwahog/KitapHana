@@ -6,9 +6,9 @@ public class Database {
 
     public Connection con;
 
-    public void connect() throws Exception {
+    public Connection connect() throws Exception {
 
-        if (con != null) return;
+        if (con != null) return null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -16,6 +16,7 @@ public class Database {
         }
         String connectionURL = "jdbc:mysql://trainno.ru:3306/kh?autoReconnect=true&useSSL=false";
         con = DriverManager.getConnection(connectionURL, "remote", "password");
+        return con;
     }
 
     public void close() {

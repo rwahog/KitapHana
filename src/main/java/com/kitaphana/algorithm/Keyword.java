@@ -1,3 +1,5 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +18,7 @@ public class Keyword {
         this.connection = connection;
         this.in = in;
         statement = connection.createStatement();
+
         documents = new ArrayList<Document>();
     }
     public void save() throws SQLException {

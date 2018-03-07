@@ -1,7 +1,8 @@
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Scanner;
 
 public class Book extends Document {
@@ -17,13 +18,13 @@ public class Book extends Document {
     public void read() throws SQLException {
         super.read();
         System.out.println("Publisher: ");
-        setPublisher(in.nextLine()); setPublisher(in.nextLine());
+        setPublisher(in.nextLine());
         System.out.println("Year: ");
-        setYear(in.nextInt());
+        setYear(Integer.parseInt(in.nextLine()));
         System.out.println("Edition number: ");
-        setEdition_number(in.nextInt());
+        setEdition_number(Integer.parseInt(in.nextLine()));
         System.out.println("Best_seller: ");
-        setBest_seller(in.nextBoolean());
+        setBest_seller(Boolean.parseBoolean(in.nextLine()));
     }
 
     @Override
@@ -46,6 +47,7 @@ public class Book extends Document {
             setId(resultSet.getInt("id_document"));
             setYear(resultSet.getInt("year"));
             setBest_sellerFromInt(resultSet.getInt("best_seller"));
+
             setEdition_number(resultSet.getInt("edition_number"));
             setPublisher(resultSet.getString("publisher"));
         }
@@ -80,9 +82,9 @@ public class Book extends Document {
         return best_seller;
     }
     public int getBest_sellerAsInt(){
-        return best_seller?0:1;
+        return best_seller?1:0;
     }
     public void setBest_sellerFromInt(int best_seller){
-        this.best_seller = (best_seller==0) ? true:false;
+        this.best_seller = (best_seller==0) ? false:true;
     }
 }

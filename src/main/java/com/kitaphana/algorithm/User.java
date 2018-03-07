@@ -1,4 +1,5 @@
-import javax.print.Doc;
+package com.kitaphana.algorithm;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,19 +31,19 @@ public class User {
     }
     public void read() throws SQLException {
         System.out.println("Name: ");
-        setName(in.next());
+        setName(in.nextLine());
         System.out.println("Surname: ");
-        setSurname(in.next());
+        setSurname(in.nextLine());
         System.out.println("Possible type: ");
-        setPossible_type(in.next());
+        setPossible_type(in.nextLine());
         System.out.println("Phone number: ");
-        setPhone_number(in.next());
+        setPhone_number(in.nextLine());
         System.out.println("Password: ");
-        setPassword(in.next());
+        setPassword(in.nextLine());
         System.out.println("Confirm password: ");
-        checkPassword(in.next());
+        checkPassword(in.nextLine());
         System.out.println("Email: ");
-        setEmail(in.next());
+        setEmail(in.nextLine());
         address = new Address(connection, in);
         address.readAddress();
         setCard_number(getPhone_number());
@@ -103,6 +104,7 @@ public class User {
             setDeadlinesFromString(resultSet.getString("deadlines"));
             setEmail(resultSet.getString("email"));
             address.setVariablesKnowingId_address(resultSet.getInt("id_address"));
+            this.type = resultSet.getString("type");
         }
     }
     public void setVariablesKnowingCard_number(long card_number) throws SQLException {
@@ -227,20 +229,20 @@ public class User {
     public void addDocument(Document document) throws SQLException {
         documents.add(document);
         Date date1 = new Date();
-        if(document instanceof AVMaterial){
-            addDeadline(date1.getTime() + 14 * day);
+        if(document instanceof AVMaterial) {
+            addDeadline(date1.getTime() + Math.min(maxdays, 14) * day);
         }
         else if(document instanceof Book && ((Book) document).getBest_sellerAsInt() == 1) {
-            addDeadline(date1.getTime() + 14 * day);
+            addDeadline(date1.getTime() + Math.min(maxdays, 14) * day);
         }
         else{
-            long kek = date1.getTime() + maxdays * day;
             addDeadline(date1.getTime() + maxdays * day);
         }
     }
     public void removeDocument(Document document) throws SQLException {
         for(int i = 0; i <documents.size(); i++){
             if(documents.get(i).equals(document)){
+
                 removeDeadline(deadlines.get(i));
                 documents.remove(document);
                 break;
@@ -259,12 +261,12 @@ public class User {
                 i = j + 1;
                 Document document = new Document(connection, in);
                 document.setVariablesKnowingId(Integer.valueOf(cur));
-                addDocument(document);
             }
         }
     }
     //Type
     public void setPossible_type(String possible_type) {
+        possible_type.toLowerCase();
         this.possible_type = possible_type;
     }
     public String getPossible_type() {
@@ -285,6 +287,18 @@ public class User {
         return maxdays;
     }
     //Deadlines
+    public String getDocumentsAndDeadlines(){
+        String s = "";
+        for(int i = 0; i <documents.size(); i++){
+            if(i<documents.size()-1){
+                s = s.concat(documents.get(i).getTitle() + " " + deadlines.get(i).toString() + ", ");
+            }
+            else{
+                s = s.concat(documents.get(i).getTitle() + " " + deadlines.get(i).toString());
+            }
+        }
+        return s;
+    }
     public void addDeadline(long deadline){
         deadlines.add(deadline);
     }
@@ -325,12 +339,13 @@ public class User {
         left = deadline - date.getTime();
         return (long) Math.ceil((double)left / (double)day);
     }
+
     //Actions
 
     public void checkOutDocument(Document document) throws SQLException {
         if(document.getAmount() > 0 && !this.hasDocument(document)){
             addDocument(document);
-            document.decreaseAmount();
+            document.decreaseAmount(1);
             document.addUser(this);
             document.save();
             save();
@@ -344,7 +359,7 @@ public class User {
         maxdays = Math.min(maxdays, days);
         if(document.getAmount() > 0 && !this.hasDocument(document)){
             addDocument(document);
-            document.decreaseAmount();
+            document.decreaseAmount(1);
             document.addUser(this);
             document.save();
             save();
@@ -357,7 +372,7 @@ public class User {
     public void returnDocument(Document document) throws SQLException {
         if(hasDocument(document)) {
             removeDocument(document);
-            document.increaseAmount();
+            document.increaseAmount(1);
             document.removeUser(this);
             document.save();
             save();
