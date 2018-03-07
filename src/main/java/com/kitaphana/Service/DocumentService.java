@@ -75,7 +75,7 @@ public class DocumentService {
         return bookParam;
     }
 
-    int day = 1000*60*60;
+    long day = 24*1000*60*60;
     public boolean checkOut(String name, String surname, int id) {
         boolean checkOut = false;
         Date date = new Date();

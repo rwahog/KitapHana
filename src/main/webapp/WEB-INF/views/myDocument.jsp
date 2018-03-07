@@ -44,7 +44,7 @@
                 </td>
                 <td>${doc.authors}</td>
                 <td>${doc.type}</td>
-                <td>5 days</td>
+                <td>${doc.deadline}</td>
                 <form action="/myDocs" method="POST">
                 <td>
                     <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>

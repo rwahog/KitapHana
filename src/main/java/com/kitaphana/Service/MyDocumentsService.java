@@ -21,13 +21,15 @@ public class MyDocumentsService {
         }
 
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.documents FROM users WHERE id = '" + id + "'");
+            ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines FROM users WHERE id = '" + id + "'");
             while (rs.next()) {
                 String user_id = rs.getString("documents");
-                if (user_id.length() == 0) {
+                String user_deadlines = rs.getString("deadlines");
+                if (user_id.length() == 0 || user_deadlines.length() == 0) {
                     return null;
                 }
                 String[] ids = user_id.split(",");
+                String[] ids_dead = user_deadlines.split(",");
                 for (int i = 0; i < ids.length; i++) {
                     ResultSet rs1 = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
                     Document doc = new Document();
@@ -36,6 +38,7 @@ public class MyDocumentsService {
                     doc.setTitle(rs1.getString("title"));
                     doc.setAuthors(rs1.getString("authors"));
                     doc.setType(rs1.getString("type"));
+                    doc.setDeadline(doc.getDeadlineOfDocument(Long.parseLong(ids_dead[i])));
                     docs.add(doc);
                 }
             }

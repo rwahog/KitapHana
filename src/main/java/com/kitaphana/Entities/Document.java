@@ -1,6 +1,7 @@
 package com.kitaphana.Entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Document {
     protected String title;
@@ -9,6 +10,7 @@ public class Document {
     protected String cover;
     protected String type;
     protected String description;
+    protected long deadline;
     protected int price, amount, id;
 
     public void setId(int id) {
@@ -47,6 +49,10 @@ public class Document {
         this.description = description;
     }
 
+    public void setDeadline(long deadline) {
+        this.deadline = deadline;
+    }
+
     public int getId() {
         return id;
     }
@@ -81,5 +87,17 @@ public class Document {
     
     public String getDescription() {
         return description;
+    }
+
+    public long getDeadline() {
+        return deadline;
+    }
+
+    public long getDeadlineOfDocument(long deadline){
+        long day = 24*60*60*1000;
+        long left;
+        Date date = new Date();
+        left = deadline - date.getTime();
+        return (long) Math.ceil((double)left / (double)day);
     }
 }
