@@ -181,6 +181,7 @@ or simply provide registration
  
 # Testing:
 </a>
+
   + Go to com/kitaphana/algorithms
   + choose appropriate number of test
   + Run it
