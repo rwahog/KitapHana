@@ -17,6 +17,7 @@ Victoria Zubrinkina, Georgy Khorushevsky
     + <a href="#launch">Launching the project</a>
     + <a href="#issue">Issues?</a>
     + <a href="#entry">Entrying</a>
+  + <a href="#test">Testing</a>
   + <a href="#soft">Soft in use</a>
 <a name="main">
 
@@ -176,6 +177,13 @@ To expect the library one can use one of pre-signed up users:
          <li> password  - 123
      </ul>
 or simply provide registration
+<a name="test">
+ 
+# Testing:
+</a>
+  + Go to com/kitaphana/algorithms
+  + choose appropriate number of test
+  + Run it
 <a name="soft">
 
 # Soft in use:
