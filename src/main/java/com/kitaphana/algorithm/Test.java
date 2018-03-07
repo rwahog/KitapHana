@@ -17,6 +17,7 @@ public class Test {
     @org.junit.jupiter.api.Test
     public void test_case1() throws Exception{
         Librarian librarian = new Librarian(connection, in);
+
         librarian.login();
         Student patron = new Student(connection, in);
         patron.login();
