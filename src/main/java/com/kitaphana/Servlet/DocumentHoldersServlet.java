@@ -24,6 +24,7 @@ public class DocumentHoldersServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("users", users);
         new LoginService().redirect(request, response, "documentHolders");
-        //request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
+        //
+        // request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }
 }

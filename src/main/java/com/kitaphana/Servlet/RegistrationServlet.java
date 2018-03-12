@@ -18,7 +18,8 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         new LoginService().redirect(request, response, "registration");
-        //request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        //
+        // request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
     }
 
     @Override

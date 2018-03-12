@@ -26,7 +26,8 @@ public class DocumentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("list", arr);
         new LoginService().redirect(request, response, "document");
-        //request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
+        //
+        // request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
 
 
     }

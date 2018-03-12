@@ -64,6 +64,7 @@ public class LoginService {
         loginCheck(phone_number, password);
         if(!login){
             response.sendRedirect("/logout");
+
         }else {
             request.getRequestDispatcher("/WEB-INF/views/"+red+".jsp").forward(request, response);
         }

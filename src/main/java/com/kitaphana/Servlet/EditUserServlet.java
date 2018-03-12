@@ -22,6 +22,7 @@ public class EditUserServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
         new LoginService().redirect(request, response, "editUser");
+
         request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
     }
 

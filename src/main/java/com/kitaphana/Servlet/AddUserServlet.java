@@ -17,6 +17,7 @@ public class AddUserServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         new LoginService().redirect(request, response, "addUser");
+
         //request.getRequestDispatcher("WEB-INF/views/addUser.jsp").forward(request, response);
     }
 

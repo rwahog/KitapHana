@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class MainService {
     public Database db = new Database();
     public static boolean isLiber;
+
     public ArrayList<Document> fillPage() {
         ArrayList<Document> documents = new ArrayList<>();
         try {

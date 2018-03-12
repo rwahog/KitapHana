@@ -16,6 +16,7 @@ public class VerificationServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         new LoginService().redirect(request, response, "verification");
 
+
         //request.getRequestDispatcher("/WEB-INF/views/verification.jsp").forward(request, response);
     }
     

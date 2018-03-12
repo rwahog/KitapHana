@@ -23,6 +23,7 @@ public class DeleteUserServlet extends HttpServlet {
             service.deleteUser(request.getParameter("id"));
             response.sendRedirect("/librarianPanel");
         }
+
     }
 
 }

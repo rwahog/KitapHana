@@ -25,6 +25,7 @@ public class LibrarianPanelServlet extends HttpServlet {
         session.setAttribute("docs", arr2);
         session.setAttribute("users", arr);
         new LoginService().redirect(request, response, "librarianPanel");
+
         request.getRequestDispatcher("/WEB-INF/views/librarianPanel.jsp").forward(request, response);
     }
 }

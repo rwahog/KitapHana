@@ -24,6 +24,7 @@ public class UserDocumentsServlet extends HttpServlet {
         request.setAttribute("name", service.setNameAndSurname(request.getParameter("id")).get(0));
         request.setAttribute("surname", service.setNameAndSurname(request.getParameter("id")).get(1));
         session.setAttribute("docs", docs);
+
         new LoginService().redirect(request, response, "documentsOfUser(adminPanel)");
         //request.getRequestDispatcher("WEB-INF/views/documentsOfUser(adminPanel).jsp").forward(request, response);
     }

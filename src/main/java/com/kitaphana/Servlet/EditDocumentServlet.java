@@ -24,6 +24,7 @@ public class EditDocumentServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("doc", doc);
         new LoginService().redirect(request, response, "editDocument");
-        //request.getRequestDispatcher("WEB-INF/views/editDocument.jsp").forward(request, response);
+        //
+        // request.getRequestDispatcher("WEB-INF/views/editDocument.jsp").forward(request, response);
     }
 }

@@ -24,7 +24,8 @@ public class ProfileServlet extends HttpServlet {
         user = service.setUserInfo(session.getAttribute("id").toString());
         session.setAttribute("user", user);
         new LoginService().redirect(request, response, "profile");
-        //request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
+        //
+        // request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
 //        String name = request.getParameter("name");
 //        String surname = request.getParameter("surname");
 //        String status = request.getParameter("status");

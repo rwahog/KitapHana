@@ -24,6 +24,7 @@ public class MyDocumentsServlet extends HttpServlet {
         ArrayList<Document> docs = service.setDocs(session.getAttribute("id").toString());
         session.setAttribute("myDocs", docs);
         new LoginService().redirect(request, response, "myDocument");
+
         request.getRequestDispatcher("WEB-INF/views/myDocument.jsp").forward(request, response);
     }
 

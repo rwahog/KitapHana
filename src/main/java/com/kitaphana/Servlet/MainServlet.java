@@ -32,6 +32,7 @@ public class MainServlet extends HttpServlet {
         isLiber = mainService.isLibrarian(phone_number, password);
         request.getSession().setAttribute("is_librarian", isLiber);
         new LoginService().redirect(request, response, "main");
+
     }
     
     @Override
