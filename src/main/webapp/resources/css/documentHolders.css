@@ -11,5 +11,7 @@ tbody{
     background-color: rgba(200, 199, 89, 0.84);
 }
 h2{
-    color: rgba(200, 199, 89, 0.84)
+    color: rgba(200, 199, 89, 0.84);
+    background-color: rgba(0, 0, 0, 0.81) !important;
+    border-radius: 20px !important;
 }
