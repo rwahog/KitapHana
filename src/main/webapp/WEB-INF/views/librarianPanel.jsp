@@ -24,6 +24,12 @@
         <li class="nav-item">
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="false">Orders</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab" aria-controls="waitinglist" aria-selected="false">Waiting list</a>
+        </li>
     </ul>
     <div class="tab-content users" id="myTabContent">
         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
@@ -37,6 +43,7 @@
                         <th scope="col">Card Number</th>
                         <th scope="col">Type</th>
                         <th scope="col">Documents</th>
+                        <th scope="col">Waiting</th>
                         <th scope="col">Confirmed</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
@@ -54,7 +61,13 @@
                                 <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/doc.png">
                                 </a>
                             </td>
-                            <td></td>
+                            <td>
+                                <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/clock.png">
+                                </a>
+                            </td>
+                            <td>
+
+                            </td>
                             <td>
                                 <a href="/editUser?id=${user.id}"><img itemprop="image" src="/resources/images/pencil.png">
                                 </a>
@@ -117,6 +130,64 @@
                 <div class="form-group">
                     <a class="btn btn-primary btn-block col-12 col-md-3" href="/addDocument">Add new Document</a>
                 </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+            <div class="panel container-fluid mx-auto px-0">
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name Surname</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Approval</th>
+                        <th scope="col">Disapproval</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Lol lolovich</td>
+                            <td>Student</td>
+                            <td>
+                                <a class="title" href="">Touch of class</a>
+                            </td>
+                            <td>Book</td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/ok.png">
+                                </a>
+                            </td>
+                            <td>
+                                <a href=""><img itemprop="image" src="/resources/images/remove.png">
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="waitinglist" role="tabpanel" aria-labelledby="waitinglist-tab">
+            <div class="panel container-fluid mx-auto px-0">
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <a class="title" href="">Touch of class</a>
+                        </td>
+                        <td>Book</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
