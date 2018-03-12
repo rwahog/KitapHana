@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.DocumentHoldersService;
+import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +23,8 @@ public class DocumentHoldersServlet extends HttpServlet {
         ArrayList<User> users = service.fillPage(request.getParameter("id"));
         HttpSession session = request.getSession();
         session.setAttribute("users", users);
-        request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "documentHolders");
+        //
+        // request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }
 }
