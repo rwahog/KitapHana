@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.EditUserService;
+import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.ProfileService;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,8 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = request.getSession();
         user = service.setUserInfo(session.getAttribute("id").toString());
         session.setAttribute("user", user);
-        request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "profile");
+        //request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
 //        String name = request.getParameter("name");
 //        String surname = request.getParameter("surname");
 //        String status = request.getParameter("status");

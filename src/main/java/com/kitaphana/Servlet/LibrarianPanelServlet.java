@@ -3,6 +3,7 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LibrarianPanelService;
+import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +24,7 @@ public class LibrarianPanelServlet extends HttpServlet {
         ArrayList<Document> arr2 = service.setDocsInfo();
         session.setAttribute("docs", arr2);
         session.setAttribute("users", arr);
+        new LoginService().redirect(request, response, "librarianPanel");
         request.getRequestDispatcher("/WEB-INF/views/librarianPanel.jsp").forward(request, response);
     }
 }

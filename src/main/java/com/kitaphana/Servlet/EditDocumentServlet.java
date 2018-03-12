@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Service.EditDocumentService;
+import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +23,7 @@ public class EditDocumentServlet extends HttpServlet {
         doc = service.setDocInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
         session.setAttribute("doc", doc);
-        request.getRequestDispatcher("WEB-INF/views/editDocument.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "editDocument");
+        //request.getRequestDispatcher("WEB-INF/views/editDocument.jsp").forward(request, response);
     }
 }

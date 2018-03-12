@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.EditUserService;
+import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,7 @@ public class EditUserServlet extends HttpServlet {
         user = service.setUserInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
+        new LoginService().redirect(request, response, "editUser");
         request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
     }
 

@@ -1,5 +1,6 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.RegistrationService;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,8 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "registration");
+        //request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
     }
 
     @Override

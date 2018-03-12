@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.MyDocumentsService;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ public class MyDocumentsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ArrayList<Document> docs = service.setDocs(session.getAttribute("id").toString());
         session.setAttribute("myDocs", docs);
+        new LoginService().redirect(request, response, "myDocument");
         request.getRequestDispatcher("WEB-INF/views/myDocument.jsp").forward(request, response);
     }
 

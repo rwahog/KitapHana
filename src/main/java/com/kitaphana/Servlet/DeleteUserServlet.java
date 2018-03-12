@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Service.DeleteUserService;
+import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +17,12 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        service.deleteUser(request.getParameter("id"));
-        response.sendRedirect("/librarianPanel");
+        if(request.getSession().getAttribute("phone_number")==null){
+            new LoginService().redirect(request,response, "main");
+        }else {
+            service.deleteUser(request.getParameter("id"));
+            response.sendRedirect("/librarianPanel");
+        }
     }
 
 }

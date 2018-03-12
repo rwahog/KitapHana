@@ -1,5 +1,7 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Service.LoginService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +14,9 @@ public class VerificationServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/verification.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "verification");
+
+        //request.getRequestDispatcher("/WEB-INF/views/verification.jsp").forward(request, response);
     }
     
     @Override

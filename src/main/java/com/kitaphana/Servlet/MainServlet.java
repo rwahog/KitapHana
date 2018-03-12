@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.MainService;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 @WebServlet(urlPatterns = "/main")
 public class MainServlet extends HttpServlet {
     MainService mainService = new MainService();
+    LoginService loginService = new LoginService();
     public boolean isLiber;
 
     @Override
@@ -24,11 +26,12 @@ public class MainServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ArrayList<Document> arr = mainService.fillPage();
         session.setAttribute("list", arr);
+
         String phone_number = (String) session.getAttribute("login");
         String password = (String) session.getAttribute("password");
         isLiber = mainService.isLibrarian(phone_number, password);
         request.getSession().setAttribute("is_librarian", isLiber);
-        request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
+        new LoginService().redirect(request, response, "main");
     }
     
     @Override

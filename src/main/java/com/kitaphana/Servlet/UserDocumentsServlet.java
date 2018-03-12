@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.UserDocumentsService;
 
 import javax.servlet.ServletException;
@@ -23,7 +24,8 @@ public class UserDocumentsServlet extends HttpServlet {
         request.setAttribute("name", service.setNameAndSurname(request.getParameter("id")).get(0));
         request.setAttribute("surname", service.setNameAndSurname(request.getParameter("id")).get(1));
         session.setAttribute("docs", docs);
-        request.getRequestDispatcher("WEB-INF/views/documentsOfUser(adminPanel).jsp").forward(request, response);
+        new LoginService().redirect(request, response, "documentsOfUser(adminPanel)");
+        //request.getRequestDispatcher("WEB-INF/views/documentsOfUser(adminPanel).jsp").forward(request, response);
     }
 
 
