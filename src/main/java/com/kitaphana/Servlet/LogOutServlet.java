@@ -18,6 +18,7 @@ public class LogOutServlet  extends HttpServlet{
         if (session != null) {
             session.invalidate();
         }
+        session.setMaxInactiveInterval(2*60*60);
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 }

@@ -25,7 +25,8 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-
+        HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(2*60*60);
 
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
@@ -35,11 +36,15 @@ public class LoginServlet extends HttpServlet{
             throws IOException,  ServletException {
         phone_number = request.getParameter("login");
         password = request.getParameter("password");
+        HttpSession session = request.getSession();
+        String check = request.getParameter("remember");
+        if(check!=null){
+            session.setMaxInactiveInterval(24*60*60);
+        }
         boolean isValidUser = false;
         isValidUser = service.loginCheck(phone_number, password);
 
         if (isValidUser){
-            HttpSession session = request.getSession();
             if (main.isLibrarian(phone_number, service.getUserNameAndId(phone_number).get(1).toString())) {
                 session.setAttribute("libr", "true");
             }
