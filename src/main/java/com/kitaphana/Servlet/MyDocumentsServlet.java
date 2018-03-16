@@ -25,7 +25,6 @@ public class MyDocumentsServlet extends HttpServlet {
         session.setAttribute("myDocs", docs);
         new LoginService().redirect(request, response, "myDocument");
 
-        request.getRequestDispatcher("WEB-INF/views/myDocument.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

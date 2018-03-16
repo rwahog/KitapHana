@@ -18,10 +18,13 @@ public class ProfileServlet extends HttpServlet {
     EditUserService serviceEdit = new EditUserService();
     ProfileService service = new ProfileService();
     User user = new User();
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        user = service.setUserInfo(session.getAttribute("id").toString());
+        if (session.getAttribute("id") != null) {
+            user = service.setUserInfo(session.getAttribute("id").toString());
+        }
         session.setAttribute("user", user);
         new LoginService().redirect(request, response, "profile");
         //
