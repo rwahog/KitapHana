@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/profile")
 public class ProfileServlet extends HttpServlet {
@@ -70,7 +71,11 @@ public class ProfileServlet extends HttpServlet {
 
         boolean isValid = serviceEdit.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
         if (isValid) {
-            serviceEdit.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
+            try {
+                serviceEdit.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             response.sendRedirect("/main");
         } else {
             request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
