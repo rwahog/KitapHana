@@ -84,7 +84,6 @@ public class EditUserService {
         rs.next();
         id_address = rs.getInt("id_address");
         try {
-            System.out.println("YA TUT YOBA ALLO "+ town+" "+id_address+" "+id);
             db.runSqlUpdate("UPDATE addresses SET country = '" + country +"', town = '" + town + "', street = '" + street + "', house_number = '" + house_number + "', apartment_number = '" + apart_number + "', postcode = '" + post_code + "' WHERE id_address = '" + id_address + "'");
             db.runSqlUpdate("UPDATE users SET name = '" + name + "', surname = '" + surname + "', phone_number = '" + phone_number + "', password = '" + password + "', email = '" + email + "', type = '" + possible_type + "' WHERE id = '" + id + "'");
         } catch (Exception e) {
