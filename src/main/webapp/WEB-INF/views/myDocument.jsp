@@ -13,7 +13,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -37,7 +36,8 @@
                         <th scope="col">Authors</th>
                         <th scope="col">Type</th>
                         <th scope="col">Deadline</th>
-                        <th scope="col"></th>
+                        <th scope="col">Return</th>
+                        <th scope="col">Renew</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -58,6 +58,9 @@
                         </td>
                         </form>
                         <c:set var="count" value="${count + 1}" scope="page"/>
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="">Renew</button>
+                        </td>
                     </tr>
                     </c:forEach>
                     </tbody>
@@ -73,8 +76,6 @@
                         <th scope="col">Title</th>
                         <th scope="col">Authors</th>
                         <th scope="col">Type</th>
-                        <th scope="col"></th>
-
                     </tr>
                     </thead>
                     <tbody>
@@ -87,7 +88,6 @@
                             <td>Ber Meyer</td>
                             <td>Book</td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
