@@ -28,6 +28,9 @@
             <a class="nav-link" id="checkouts-tab" data-toggle="tab" href="#checkouts" role="tab" aria-controls="checkouts" aria-selected="false">Checkouts</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" id="renews-tab" data-toggle="tab" href="#renews" role="tab" aria-controls="renews" aria-selected="false">Renews</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id="returns-tab" data-toggle="tab" href="#returns" role="tab" aria-controls="returns" aria-selected="false">Returns</a>
         </li>
         <li class="nav-item">
@@ -145,8 +148,8 @@
                         <th scope="col">Status</th>
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
-                        <th scope="col">Approval</th>
-                        <th scope="col">Disapproval</th>
+                        <th scope="col">Approve</th>
+                        <th scope="col">Disapprove</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -171,6 +174,42 @@
                 </table>
             </div>
         </div>
+        <div class="tab-pane fade" id="renews" role="tabpanel" aria-labelledby="renews-tab">
+            <div class="panel container-fluid mx-auto px-0">
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name Surname</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Approve</th>
+                        <th scope="col">Disapprove</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Lol lolovich</td>
+                        <td>Student</td>
+                        <td>
+                            <a class="title" href="">Touch of class</a>
+                        </td>
+                        <td>Book</td>
+                        <td>
+                            <a href=""><img itemprop="image" src="/resources/images/ok.png">
+                            </a>
+                        </td>
+                        <td>
+                            <a href=""><img itemprop="image" src="/resources/images/remove.png">
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="tab-pane fade" id="returns" role="tabpanel" aria-labelledby="returns-tab">
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark">
@@ -181,8 +220,8 @@
                         <th scope="col">Status</th>
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
-                        <th scope="col">Approval</th>
-                        <th scope="col">Disapproval</th>
+                        <th scope="col">Approve</th>
+                        <th scope="col">Disapprove</th>
                     </tr>
                     </thead>
                     <tbody>

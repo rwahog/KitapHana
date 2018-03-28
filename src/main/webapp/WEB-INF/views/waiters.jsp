@@ -7,7 +7,7 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/documentsOfUser(adminPanel).css"
+    <link href="${pageContext.request.contextPath}/resources/css/waiters.css"
           rel="stylesheet">
     <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
@@ -25,33 +25,33 @@
 <main class="body container">
     <div class="panel container-fluid mx-auto px-0">
         <h2>
-            Documents ${user.name} ${user.surname}
+            Document waiters
         </h2>
         <table class="table table-hover table-dark documents">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Authors</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
                 <th scope="col">Type</th>
-                <th scope="col">Deadline</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="doc" items="${docs}">
-            <tr>
-                <td>${doc.id}</td>
-                <td>${doc.title}</td>
-                <td>${doc.authors}</td>
-                <td>${doc.type}</td>
-                <td>5 days</td>
-            </tr>
+            <c:forEach var="user" items="${users}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.surname}</td>
+                    <td>${user.possible_type}</td>
+                </tr>
             </c:forEach>
             </tbody>
         </table>
-    </div>
-    <div class="form-group col-12 col-md-3">
-        <a class="btn btn-block" id = "button" onclick="goBack()">Cancel</a>
+        <div class="form-row">
+            <div class="form-group col-12 col-md-3">
+                <a class="btn btn-block" id="button" onclick="goBack()">Back</a>
+            </div>
+        </div>
     </div>
 </main>
 </body>

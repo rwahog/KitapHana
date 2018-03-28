@@ -17,7 +17,7 @@
 <%@include file="header.jsp" %>
     <div class="alert alert-success" role="alert">
         <h2 class="text-center">Successfully!</h2>
-        <a class="link" href="/main">Back to Kitaphana</a>
+        <a class="ref" href="/main">Back to Kitaphana</a>
     </div>
 </body>
 </html>

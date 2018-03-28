@@ -14,12 +14,12 @@
 h2{
     font-size: 50px !important;
 }
-.link a{
+.alert-success a{
     font-size: 20px;
     color: rgb(118, 110, 44) !important;
     text-decoration: none !important;
 }
-.link a:hover{
+.alert-success a:hover{
     color: rgb(130, 93, 46) !important;
     text-decoration: none !important;
 }

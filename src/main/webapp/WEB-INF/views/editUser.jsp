@@ -33,12 +33,34 @@
                 <label for="surname">Surname</label>
                 <input type="text" class="form-control" name="surname" id = "surname" placeholder="Surname" value = "${user.surname}" required="">
             </div>
+            <%--<div class="form-group col-4">--%>
+
+                <%--<label for="status">Status</label>--%>
+                <%--<select id="status" name = "status" class="form-control" required="">--%>
+                    <%--<option>Choose...</option>--%>
+                    <%--<option>Student</option>--%>
+                    <%--<option>Faculty member</option>--%>
+                <%--</select>--%>
+            <%--</div>--%>
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name = "status" class="form-control" required="">
-                    <option>Choose...</option>
-                    <option>Student</option>
-                    <option>Faculty member</option>
+                    <c:set var="status" value="${user.type}"/>
+                    <c:choose>
+                        <c:when test="${status == 'Student'}">
+                            <option selected style="background-color:black">Student</option>
+                            <option style="background-color:black">Faculty member</option>
+                        </c:when>
+                        <c:when test="${status == 'Librarian'}">
+                            <option selected style="background-color:black">Librarian</option>
+                            <option style="background-color:black">Student</option>
+                            <option style="background-color:black">Faculty member</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option style="background-color:black">Student</option>
+                            <option selected style="background-color:black">Faculty member</option>
+                        </c:otherwise>
+                    </c:choose>
                 </select>
             </div>
         </div>

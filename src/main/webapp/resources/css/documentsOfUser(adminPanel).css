@@ -10,6 +10,8 @@ tbody{
     color: black;
     background-color: rgba(200, 199, 89, 0.84);
 }
+
 h2{
-    color: rgba(200, 199, 89, 0.84)
+    margin-right: 100px;
+    color: rgba(200, 199, 89, 0.84) !important;
 }

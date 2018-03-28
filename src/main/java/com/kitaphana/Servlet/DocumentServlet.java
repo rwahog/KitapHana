@@ -28,8 +28,6 @@ public class DocumentServlet extends HttpServlet {
         new LoginService().redirect(request, response, "document");
         //
         // request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
-
-
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         name = (String) request.getSession().getAttribute("name");

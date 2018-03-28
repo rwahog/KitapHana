@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Algerian';
+    src: url('../fonts/ALGER.eot');
+    src: local('ALGER'), url('../fonts/ALGER.woff') format('woff'), url('../fonts/ALGER.ttf') format('truetype');
+}
 html, body {
     width: 100%;
     height: 100%;
@@ -11,7 +16,7 @@ body {
     background-image: url("../images/bg.jpg");
 }
 .logo, .navbar-brand{
-    font-family: Algerian;
+    font-family: 'Algerian';
     font-style: normal;
     text-align: center;
     font-size: 80px;
