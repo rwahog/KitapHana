@@ -9,28 +9,6 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/addDocument.css"
           rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/addDocument.js"></script>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
-    <script>
-        $(function() {
-           $('.hidden').hide();
-        });
-        $(function() {
-            $('#type').change(function(){
-                $('.hidden').hide();
-                $('#' + $(this).val()).show();
-            });
-        });
-    </script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -137,4 +115,26 @@
     </div>
 </form>
 </body>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/addDocument.js"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+<script>
+    $(function() {
+        $('.hidden').hide();
+    });
+    $(function() {
+        $('#type').change(function(){
+            $('.hidden').hide();
+            $('#' + $(this).val()).show();
+        });
+    });
+</script>
 </html>
