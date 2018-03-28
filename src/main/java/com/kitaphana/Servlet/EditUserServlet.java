@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/editUser")
 public class EditUserServlet extends HttpServlet {
@@ -41,7 +42,11 @@ public class EditUserServlet extends HttpServlet {
 
         boolean isValid = service.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
         if (isValid) {
-            service.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
+            try {
+                service.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             response.sendRedirect("/librarianPanel");
         } else {
             request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);

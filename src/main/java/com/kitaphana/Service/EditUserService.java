@@ -5,6 +5,7 @@ import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.User;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class EditUserService {
 
@@ -73,12 +74,15 @@ public class EditUserService {
 
     public void editUser(String name, String surname, String possible_type, String phone_number,
                          String password, String email, String country, String town, String street,
-                         String house_number, String apart_number, String post_code, int id, int id_address) {
+                         String house_number, String apart_number, String post_code, int id, int id_address) throws SQLException {
         try {
             db.connect();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ResultSet rs = db.runSqlQuery("SELECT users.id, users.id_address, users.name, users.surname, users.card_number, users.possible_type FROM users WHERE id = '"+ id+"';");
+        rs.next();
+        id_address = rs.getInt("id_address");
         try {
             db.runSqlUpdate("UPDATE addresses SET country = '" + country +"', town = '" + town + "', street = '" + street + "', house_number = '" + house_number + "', apartment_number = '" + apart_number + "', postcode = '" + post_code + "' WHERE id_address = '" + id_address + "'");
             db.runSqlUpdate("UPDATE users SET name = '" + name + "', surname = '" + surname + "', phone_number = '" + phone_number + "', password = '" + password + "', email = '" + email + "', type = '" + possible_type + "' WHERE id = '" + id + "'");
