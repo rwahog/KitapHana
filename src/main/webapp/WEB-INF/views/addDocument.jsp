@@ -7,7 +7,7 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/addDocument.css"
+    <link href="${pageContext.request.contextPath}/resources/css/forms.css"
           rel="stylesheet">
 </head>
 <body>

@@ -7,7 +7,7 @@
           rel="stylesheet">
     <link href="/resources/css/common.css"
           rel="stylesheet">
-    <link href="/resources/css/document2.css"
+    <link href="/resources/css/document.css"
           rel="stylesheet">
     <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
     <script src="webjars/popper.js"></script>
