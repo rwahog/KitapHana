@@ -13,11 +13,6 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/main.css"
           rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -41,21 +36,10 @@
         </div>
     </c:forEach>
 </div>
-<%--<div class="card">--%>
-<%--<img class="card-img-top" src="..." alt="Some pic">--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title" href="">${Title}</h5>--%>
-<%--<p class="card-text">&{Author}</p>--%>
-<%--<p class="card-text"><small class="text-muted">${Keywords}</small></p>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<div class="card">--%>
-<%--<img class="card-img-top" src="..." alt="Some pic">--%>
-<%--<div class="card-body">--%>
-<%--<h5 class="card-title" href="">${Title}</h5>--%>
-<%--<p class="card-text">&{Author}</p>--%>
-<%--<p class="card-text"><small class="text-muted">${Keywords}</small></p>--%>
-<%--</div>--%>
-<%--</div>--%>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 </body>
 </html>

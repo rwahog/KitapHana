@@ -9,9 +9,6 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/verification.css"
           rel="stylesheet">
-    <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -19,5 +16,8 @@
         <h2 class="text-center">Successfully!</h2>
         <a class="ref" href="/main">Back to Kitaphana</a>
     </div>
+<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

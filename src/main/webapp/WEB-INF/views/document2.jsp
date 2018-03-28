@@ -9,9 +9,6 @@
           rel="stylesheet">
     <link href="/resources/css/document.css"
           rel="stylesheet">
-    <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
-    <script src="webjars/popper.js"></script>
-    <script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -75,5 +72,8 @@
         </div>
     </div>
 </main>
+<script src="webjars/jquery/3.2.1/jquery.min.js"></script>
+<script src="webjars/popper.js"></script>
+<script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

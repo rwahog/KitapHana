@@ -15,7 +15,7 @@
 <body>
 <form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="/registration" method="POST">
     <h1 class="logo">KitapHana</h1>
-    <div class="container">
+    <div class="container" style="margin-top: 0">
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="name">Name</label>

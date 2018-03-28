@@ -14,10 +14,6 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/main.css"
           rel="stylesheet">
-    <script src="webjars/js/jquery-3.2.1.slim.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-    <script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
@@ -49,4 +45,9 @@
         </div>
     </div>
 </nav>
+<script src="webjars/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
+<script src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 </body>
+</html>

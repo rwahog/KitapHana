@@ -3,7 +3,7 @@ label{
 }
 .container {
     position: relative;
-    /*margin-top: 140px;*/
+    margin-top: 140px;
 }
 .form-registration > .container:before {
     content: "";
