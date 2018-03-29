@@ -30,6 +30,7 @@ public class EditUserService {
                 user.setPhone_number(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setType(rs.getString("type"));
                 id_address = rs.getInt("id_address");
                 user.setPossible_type(rs.getString("possible_type"));
             }

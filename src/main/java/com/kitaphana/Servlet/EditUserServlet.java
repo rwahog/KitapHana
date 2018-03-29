@@ -22,6 +22,7 @@ public class EditUserServlet extends HttpServlet {
         user = service.setUserInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
+        System.out.println("+"+user.getType()+"+"+user.getName());
         new LoginService().redirect(request, response, "editUser");
         }
 
@@ -29,6 +30,7 @@ public class EditUserServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String status = request.getParameter("status");
+
         String phone_number = request.getParameter("phone_number");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
