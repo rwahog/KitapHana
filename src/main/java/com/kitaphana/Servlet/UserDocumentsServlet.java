@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/docsOfUser")
@@ -25,7 +26,11 @@ public class UserDocumentsServlet extends HttpServlet {
         request.setAttribute("surname", service.setNameAndSurname(request.getParameter("id")).get(1));
         session.setAttribute("docs", docs);
 
-        new LoginService().redirect(request, response, "documentsOfUser(adminPanel)");
+        try {
+            new LoginService().redirect(request, response, "documentsOfUser(adminPanel)", true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //request.getRequestDispatcher("WEB-INF/views/documentsOfUser(adminPanel).jsp").forward(request, response);
     }
 

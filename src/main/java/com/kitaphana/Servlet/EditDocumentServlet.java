@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 @WebServlet(urlPatterns = "/editDoc")
@@ -23,7 +24,11 @@ public class EditDocumentServlet extends HttpServlet {
         doc = service.setDocInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
         session.setAttribute("doc", doc);
-        new LoginService().redirect(request, response, "editDocument");
+        try {
+            new LoginService().redirect(request, response, "editDocument", true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //
         // request.getRequestDispatcher("WEB-INF/views/editDocument.jsp").forward(request, response);
     }

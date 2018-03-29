@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/myDocs")
@@ -23,7 +24,11 @@ public class MyDocumentsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ArrayList<Document> docs = service.setDocs(session.getAttribute("id").toString());
         session.setAttribute("myDocs", docs);
-        new LoginService().redirect(request, response, "myDocument");
+        try {
+            new LoginService().redirect(request, response, "myDocument", false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 

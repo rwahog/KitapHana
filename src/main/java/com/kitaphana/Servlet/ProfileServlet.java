@@ -27,7 +27,11 @@ public class ProfileServlet extends HttpServlet {
             user = service.setUserInfo(session.getAttribute("id").toString());
         }
         session.setAttribute("user", user);
-        new LoginService().redirect(request, response, "profile");
+        try {
+            new LoginService().redirect(request, response, "profile", false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //
         // request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
 //        String name = request.getParameter("name");

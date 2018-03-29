@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/main")
@@ -31,7 +32,11 @@ public class MainServlet extends HttpServlet {
         String password = (String) session.getAttribute("password");
         isLiber = mainService.isLibrarian(phone_number, password);
         request.getSession().setAttribute("is_librarian", isLiber);
-        new LoginService().redirect(request, response, "main");
+        try {
+            new LoginService().redirect(request, response, "main", false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
     

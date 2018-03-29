@@ -25,7 +25,11 @@ public class DocumentServlet extends HttpServlet {
         ArrayList<Book> arr = service.setDocInfo(request.getParameter("id"));
         HttpSession session = request.getSession();
         session.setAttribute("list", arr);
-        new LoginService().redirect(request, response, "document");
+        try {
+            new LoginService().redirect(request, response, "document", false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //
         // request.getRequestDispatcher("/WEB-INF/views/document.jsp").forward(request, response);
     }
