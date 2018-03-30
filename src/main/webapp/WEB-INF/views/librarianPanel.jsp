@@ -107,7 +107,7 @@
                     <tr>
                         <td>${doc.id}</td>
                         <td>
-                                <a class="title" href="">${doc.title}</a>
+                                <a class="title" href="/document?id=${doc.id}">${doc.title}</a>
                         </td>
                         <td>${doc.authors}</td>
                         <td>${doc.type}</td>
