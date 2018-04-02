@@ -39,25 +39,32 @@
                     <tbody>
                     <c:set var="count" value="1" scope="page" />
                     <c:forEach var="doc" items="${myDocs}">
-                    <tr>
-                        <td>${count}</td>
-                        <td>
-                            <a class="title" href="">${doc.getTitle()}
-                            </a>
-                        </td>
-                        <td>${doc.authors}</td>
-                        <td>${doc.type}</td>
-                        <td>${doc.deadline}</td>
-                        <form action="/myDocs" method="POST">
-                        <td>
-                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
-                        </td>
-                        </form>
-                        <c:set var="count" value="${count + 1}" scope="page"/>
-                        <td>
-                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="">Renew</button>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>${count}</td>
+                            <td>
+                                <a class="title" href="">${doc.getTitle()}
+                                </a>
+                            </td>
+                            <td>${doc.authors}</td>
+                            <td>${doc.type}</td>
+                            <c:choose>
+                                <c:when test="${doc.fine != null && doc.fine != 0}">
+                                    <td>${doc.fine} &#8381;</td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>${doc.deadline} days</td>
+                                </c:otherwise>
+                            </c:choose>
+                            <form action="/myDocs" method="POST">
+                                <td>
+                                    <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
+                                </td>
+                            </form>
+                            <c:set var="count" value="${count + 1}" scope="page"/>
+                            <td>
+                                <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Renew</button>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -75,15 +82,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <a class="title" href="">Touch of class
-                                </a>
-                            </td>
-                            <td>Ber Meyer</td>
-                            <td>Book</td>
-                        </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <a class="title" href="">Touch of class
+                            </a>
+                        </td>
+                        <td>Ber Meyer</td>
+                        <td>Book</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

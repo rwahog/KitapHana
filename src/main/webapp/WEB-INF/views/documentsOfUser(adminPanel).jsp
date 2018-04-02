@@ -29,20 +29,20 @@
             </thead>
             <tbody>
             <c:forEach var="doc" items="${docs}">
-            <tr>
-                <td>${doc.id}</td>
-                <td>${doc.title}</td>
-                <td>${doc.authors}</td>
-                <td>${doc.type}</td>
-                <c:choose>
-                    <c:when test="${doc.fine != null && doc.fine != 0}">
-                    <td>${doc.fine} &#8381;</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>${doc.deadline} days</td>
-                    </c:otherwise>
-                </c:choose>
-            </tr>
+                <tr>
+                    <td>${doc.id}</td>
+                    <td>${doc.title}</td>
+                    <td>${doc.authors}</td>
+                    <td>${doc.type}</td>
+                    <c:choose>
+                        <c:when test="${doc.fine != null && doc.fine != 0}">
+                            <td>${doc.fine} &#8381;</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${doc.deadline} days</td>
+                        </c:otherwise>
+                    </c:choose>
+                </tr>
             </c:forEach>
             </tbody>
         </table>

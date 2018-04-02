@@ -27,12 +27,13 @@
             </div>
             <div class="form-group col-4">
                 <label for="status">Status</label>
-                <select id="status" class="form-control" required="">
+                <select id="status" name="status" class="form-control" required="">
                     <%--<option selected>Patron</option>--%>
                     <option>Student</option>
                     <option>Instructor</option>
                     <option>Teacher Assistant</option>
                     <option>Professor</option>
+                    <option>Visiting Professor</option>
                 </select>
             </div>
         </div>

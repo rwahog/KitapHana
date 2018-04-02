@@ -27,20 +27,50 @@
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name = "status" class="form-control" required="">
-                    <c:set var="status" value="${user.type}"/>
+                    <c:set var="status" value="${user.possible_type}"/>
                     <c:choose>
-                        <c:when test="${status == 'Student'}">
-                            <option selected style="background-color:black">Student</option>
-                            <option style="background-color:black">Faculty member</option>
-                        </c:when>
                         <c:when test="${status == 'Librarian'}">
                             <option selected style="background-color:black">Librarian</option>
                             <option style="background-color:black">Student</option>
-                            <option style="background-color:black">Faculty member</option>
+                            <option style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Visiting Professor</option>
+                            <option style="background-color:black">Professor</option>
+                        </c:when>
+                        <c:when test="${status == 'Teacher Assistant'}">
+                            <option selected style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Student</option>
+                            <option style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Visiting Professor</option>
+                            <option style="background-color:black">Professor</option>
+                        </c:when>
+                        <c:when test="${status == 'Instructor'}">
+                            <option selected style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Student</option>
+                            <option style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Visiting Professor</option>
+                            <option style="background-color:black">Professor</option>
+                        </c:when>
+                        <c:when test="${status == 'Visiting Professor'}">
+                            <option selected style="background-color:black">Visiting Professor</option>
+                            <option style="background-color:black">Student</option>
+                            <option style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Professor</option>
+                        </c:when>
+                        <c:when test="${status == 'Professor'}">
+                            <option selected style="background-color:black">Professor</option>
+                            <option style="background-color:black">Student</option>
+                            <option style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Visiting Professor</option>
                         </c:when>
                         <c:otherwise>
-                            <option style="background-color:black">Student</option>
-                            <option selected style="background-color:black">Faculty member</option>
+                            <option selected style="background-color:black">Student</option>
+                            <option style="background-color:black">Instructor</option>
+                            <option style="background-color:black">Teacher Assistant</option>
+                            <option style="background-color:black">Visiting Professor</option>
+                            <option style="background-color:black">Professor</option>
                         </c:otherwise>
                     </c:choose>
                 </select>

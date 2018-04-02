@@ -27,9 +27,9 @@
         <%--<c:set value='${sessionScope.libr}' var="libr">--%>
         <%if (session.getAttribute("libr") != null) {
             if (session.getAttribute("libr").equals("true")) {%>
-            <div class="nav-item" >
+        <div class="nav-item" >
             <a class="nav-link" href = "/librarianPanel" > Librarian panel</a >
-            </div >
+        </div >
         <%}}%>
 
         <div class="dropdown nav-item">

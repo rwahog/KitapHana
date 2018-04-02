@@ -8,6 +8,7 @@ import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.userDAOImpl;
 
+import javax.print.Doc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

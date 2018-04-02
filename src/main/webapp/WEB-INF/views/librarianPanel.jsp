@@ -57,7 +57,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                     <c:forEach var="user" items="${users}">
+                    <c:forEach var="user" items="${users}">
                         <tr>
                             <td>${user.id}</td>
                             <td>${user.name}</td>
@@ -76,8 +76,8 @@
                                 <c:set var="type" value="${user.type}"/>
                                 <c:set var="possible_type" value="${user.possible_type}"/>
                                 <c:if test="${!type.equals('Patron') && type.equals(possible_type)}">
-                                <a href=""><img itemprop="image" src="/resources/images/ok.png">
-                                </a>
+                                    <a href=""><img itemprop="image" src="/resources/images/ok.png">
+                                    </a>
                                 </c:if>
                             </td>
                             <td>
@@ -114,28 +114,28 @@
                     </thead>
                     <tbody>
                     <c:forEach var="doc" items="${docs}">
-                    <tr>
-                        <td>${doc.id}</td>
-                        <td>
+                        <tr>
+                            <td>${doc.id}</td>
+                            <td>
                                 <a class="title" href="/document2?id=${doc.id}">${doc.title}</a>
-                        </td>
-                        <td>${doc.authors}</td>
-                        <td>${doc.type}</td>
-                        <td>${doc.amount}</td>
-                        <td>
-                            <a href="/holders?id=${doc.id}"><img itemprop="image" src="/resources/images/user.png">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/editDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/pencil.png">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/deleteDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/bin.png">
-                            </a>
-                        </td>
+                            </td>
+                            <td>${doc.authors}</td>
+                            <td>${doc.type}</td>
+                            <td>${doc.amount}</td>
+                            <td>
+                                <a href="/holders?id=${doc.id}"><img itemprop="image" src="/resources/images/user.png">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/editDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/pencil.png">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/deleteDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/bin.png">
+                                </a>
+                            </td>
 
-                    </tr>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -159,28 +159,28 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user_checkout" items="${users_checkout}">
-                            <c:forEach var="user_checkout_doc" items="${user_checkout.documents}">
-                        <tr>
-                            <td>${user_checkout.id}</td>
-                            <td>${user_checkout.name} ${user_checkout.surname}</td>
-                            <td>${user_checkout.type}</td>
-                            <td>
-                                <a class="title" href="">${user_checkout_doc.title}</a>
-                            </td>
-                            <td>${user_checkout_doc.type}</td>
-                            <td>
-                                <a href="/librarianPanel?id_user=${user_checkout.id}&id_doc=${user_checkout_doc.id}">
-                                    <image itemprop="image" src="/resources/images/ok.png">
-                                </a>
-                            </td>
-                            <td>
-                                <a href=""><img itemprop="image" src="/resources/images/remove.png">
-                                </a>
-                            </td>
-                        </tr>
-                            </c:forEach>
-                            </c:forEach>
+                    <c:forEach var="user_checkout" items="${users_checkout}">
+                        <c:forEach var="user_checkout_doc" items="${user_checkout.documents}">
+                            <tr>
+                                <td>${user_checkout.id}</td>
+                                <td>${user_checkout.name} ${user_checkout.surname}</td>
+                                <td>${user_checkout.type}</td>
+                                <td>
+                                    <a class="title" href="">${user_checkout_doc.title}</a>
+                                </td>
+                                <td>${user_checkout_doc.type}</td>
+                                <td>
+                                    <a href="/librarianPanel?id_user=${user_checkout.id}&id_doc=${user_checkout_doc.id}">
+                                        <image itemprop="image" src="/resources/images/ok.png">
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href=""><img itemprop="image" src="/resources/images/remove.png">
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -279,18 +279,18 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${waiting_list}" var="doc">
-                    <tr>
-                        <td>${doc.id}</td>
-                        <td>
-                            <a class="title" href="/document2?id=${doc.id}">${doc.title}</a>
-                        </td>
-                        <td>${doc.type}</td>
-                        <td>${doc.requests}</td>
-                        <td>
-                            <a href="/awaiters?doc_id=${doc.id}"><img itemprop="image" src="/resources/images/people.png">
-                            </a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>${doc.id}</td>
+                            <td>
+                                <a class="title" href="/document2?id=${doc.id}">${doc.title}</a>
+                            </td>
+                            <td>${doc.type}</td>
+                            <td>${doc.requests}</td>
+                            <td>
+                                <a href="/awaiters?doc_id=${doc.id}"><img itemprop="image" src="/resources/images/people.png">
+                                </a>
+                            </td>
+                        </tr>
                     </c:forEach>
                     </tbody>
                 </table>

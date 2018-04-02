@@ -25,12 +25,12 @@
             </div>
             <%--<div class="form-group col-4">--%>
 
-                <%--<label for="status">Status</label>--%>
-                <%--<select id="status" name = "status" class="form-control" required="">--%>
-                    <%--<option>Choose...</option>--%>
-                    <%--<option>Student</option>--%>
-                    <%--<option>Faculty member</option>--%>
-                <%--</select>--%>
+            <%--<label for="status">Status</label>--%>
+            <%--<select id="status" name = "status" class="form-control" required="">--%>
+            <%--<option>Choose...</option>--%>
+            <%--<option>Student</option>--%>
+            <%--<option>Faculty member</option>--%>
+            <%--</select>--%>
             <%--</div>--%>
             <div class="form-group col-4">
                 <label for="status">Status</label>
