@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class EditUserService {
 
-    private Database db = new Database();
+    private Database db = Database.getInstance();
     private RegistrationService regService = new RegistrationService();
 
     public User setUserInfo(int id) {
@@ -30,6 +30,7 @@ public class EditUserService {
                 user.setPhone_number(rs.getString("phone_number"));
                 user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setType(rs.getString("type"));
                 id_address = rs.getInt("id_address");
                 user.setPossible_type(rs.getString("possible_type"));
             }
@@ -74,7 +75,7 @@ public class EditUserService {
 
     public void editUser(String name, String surname, String possible_type, String phone_number,
                          String password, String email, String country, String town, String street,
-                         String house_number, String apart_number, String post_code, int id, int id_address) throws SQLException {
+                         String house_number, String apart_number, String post_code, int id, long id_address) throws SQLException {
         try {
             db.connect();
         } catch (Exception e) {

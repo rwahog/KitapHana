@@ -8,13 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/verification")
 public class VerificationServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        new LoginService().redirect(request, response, "verification");
+        try {
+            new LoginService().redirect(request, response, "verification", true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
         //request.getRequestDispatcher("/WEB-INF/views/verification.jsp").forward(request, response);

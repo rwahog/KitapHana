@@ -10,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class LoginService {
-    public Database db = new Database();
+    public Database db = Database.getInstance();
     public boolean login;
     public boolean loginCheck(String username, String password){
         try {
@@ -57,16 +57,22 @@ public class LoginService {
         }
         return name;
     }
-    public void redirect(HttpServletRequest request, HttpServletResponse response, String red) throws IOException, ServletException {
+    public void redirect(HttpServletRequest request, HttpServletResponse response, String red, boolean libCheck) throws IOException, ServletException, SQLException {
         HttpSession session = request.getSession();
         String phone_number = (String) session.getAttribute("login");
         String password = (String) session.getAttribute("password");
         loginCheck(phone_number, password);
         if(!login){
             response.sendRedirect("/logout");
-
-        }else {
-            request.getRequestDispatcher("/WEB-INF/views/"+red+".jsp").forward(request, response);
+        } else {
+            ResultSet rs = db.runSqlQuery("SELECT users.name, users.type, users.id FROM users WHERE users.phone_number = '" + phone_number + "';");
+            rs.next();
+            String status = rs.getString("type");
+            if (libCheck && !status.equals("Librarian")) {
+                response.sendRedirect("/main");
+            } else {
+                request.getRequestDispatcher("/WEB-INF/views/" + red + ".jsp").forward(request, response);
+            }
         }
     }
 }

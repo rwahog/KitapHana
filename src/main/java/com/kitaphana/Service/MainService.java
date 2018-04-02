@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MainService {
-    public Database db = new Database();
+    public Database db = Database.getInstance();
     public static boolean isLiber;
 
     public ArrayList<Document> fillPage() {

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegistrationService {
-    public Database db = new Database();
+    public Database db = Database.getInstance();
 
     public boolean checkIfPossibleToRegister(String phone_number, String password1, String password2) {
         try {
@@ -19,8 +19,8 @@ public class RegistrationService {
         try {
             ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
             if (!rs.next() && password1.equals(password2)) {
-                    possible = true;
-                }
+                possible = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.kitaphana.Entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Document {
@@ -9,18 +10,34 @@ public class Document {
     protected String authors;
     protected String cover;
     protected String type;
-    protected String description;
-    protected long deadline;
-    protected int price, amount, id;
+    protected String users;
+    protected String description, awaiters;
+    protected long id, deadline, fine;
+    protected int price, amount, requests;
+    protected ArrayList<User> waiting_list;
 
-    public void setId(int id) {
+    public Document(String title, String authors, String keywords, int price,
+                    int amount, String type, String description) {
+        this.title = title;
+        this.authors = authors;
+        this.keywords = keywords;
+        this.price = price;
+        this.amount = amount;
+        this.type = type;
+        this.description = description;
+    }
+
+    public Document() {
+    }
+
+    public void setId(long id) {
         this.id = id;
     }
 
     public void setCover(String cover) {
         this.cover = cover;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
@@ -44,7 +61,7 @@ public class Document {
     public void setTitle(String title) {
         this.title = title;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -53,14 +70,34 @@ public class Document {
         this.deadline = deadline;
     }
 
-    public int getId() {
+    public void setUsers(String users) {
+        this.users = users;
+    }
+
+    public void setAwaiters(String awaiters) {
+        this.awaiters = awaiters;
+    }
+
+    public void setWaiting_list(ArrayList<User> waiting_list) {
+        this.waiting_list = waiting_list;
+    }
+
+    public void setRequests(int requests) {
+        this.requests = requests;
+    }
+
+    public void setFine(long fine) {
+        this.fine = fine;
+    }
+
+    public long getId() {
         return id;
     }
 
     public String getAuthors() {
         return authors;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -84,7 +121,7 @@ public class Document {
     public String getCover() {
         return cover;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -93,11 +130,58 @@ public class Document {
         return deadline;
     }
 
+    public String getUsers() {
+        return users;
+    }
+
+    public long getFine() {
+        return fine;
+    }
+
+    public ArrayList<User> getWaiting_list() {
+        return waiting_list;
+    }
+
+    public int getRequests() {
+        return requests;
+    }
+
+    public String getAwaiters() {
+        return awaiters;
+    }
+
+    public ArrayList<String> getAuthorsAsArray() {
+        ArrayList<String> authors = new ArrayList<>(Arrays.asList(getAuthors().split(", ")));
+        return authors;
+    }
+
+    public ArrayList<String> getKeywordsAsArray() {
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList(getKeywords().split(", ")));
+        return keywords;
+    }
+
     public long getDeadlineOfDocument(long deadline){
         long day = 24*60*60*1000;
         long left;
         Date date = new Date();
         left = deadline - date.getTime();
-        return (long) Math.ceil((double)left / (double)day);
+        if (left > 0) {
+            return (long) Math.ceil((double)left / (double)day);
+        } else {
+            return getFine(left);
+        }
+    }
+
+    public long getFine(long left) {
+        long day = 24*60*60*1000;
+        long docPrice = getPrice();
+        long fine = (long) Math.ceil((double)left / (double)day)*(-1)*100;
+        if (fine > docPrice) {
+            setFine(docPrice);
+            return docPrice;
+        } else {
+            setFine(fine);
+            return fine;
+        }
     }
 }

@@ -2,9 +2,32 @@ package com.kitaphana.Entities;
 
 public class Address {
     protected String country, town, postcode, street;
-    protected int house_number, apartment_number, id_address;
+    protected int house_number, apartment_number;
+    protected long id_address;
 
-    public void setId_address(int id_address) {
+    public Address(String country, String town, String street, int house_number, int apartment_number, String postcode, long id_address) {
+        this.country = country;
+        this.town = town;
+        this.street = street;
+        this.house_number = house_number;
+        this.apartment_number = apartment_number;
+        this.postcode = postcode;
+        this.id_address = id_address;
+    }
+
+    public Address(String country, String town, String street, int house_number, int apartment_number, String postcode) {
+        this.country = country;
+        this.town = town;
+        this.street = street;
+        this.house_number = house_number;
+        this.apartment_number = apartment_number;
+        this.postcode = postcode;
+    }
+
+    public Address() {
+    }
+
+    public void setId_address(long id_address) {
         this.id_address = id_address;
     }
 
@@ -32,7 +55,7 @@ public class Address {
         this.postcode = postcode;
     }
 
-    public int getId_address() {
+    public long getId_address() {
         return id_address;
     }
 

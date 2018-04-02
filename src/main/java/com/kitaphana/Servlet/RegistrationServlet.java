@@ -1,6 +1,5 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.RegistrationService;
 
 import javax.servlet.ServletException;

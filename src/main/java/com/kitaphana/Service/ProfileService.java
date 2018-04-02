@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 public class ProfileService {
 
-    Database db = new Database();
+    Database db = Database.getInstance();
 
     public User setUserInfo(String id) {
         try {
@@ -25,7 +25,7 @@ public class ProfileService {
             while(rs.next()) {
                 user.setName(rs.getString("name"));
                 user.setSurname(rs.getString("surname"));
-                user.setType(rs.getString("type"));
+                user.setPossible_type(rs.getString("possible_type"));
                 user.setPhone_number(rs.getString("phone_number"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));

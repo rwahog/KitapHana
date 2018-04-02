@@ -2,15 +2,19 @@ package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.User;
+import com.kitaphana.dao.userDAOImpl;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MyDocumentsService {
 
-    Database db = new Database();
+    Database db = Database.getInstance();
+    userDAOImpl userDAO = new userDAOImpl();
 
     public ArrayList<Document> setDocs(String id) {
         ArrayList<Document> docs = new ArrayList<>();
@@ -19,7 +23,6 @@ public class MyDocumentsService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines FROM users WHERE id = '" + id + "'");
             while (rs.next()) {
@@ -38,6 +41,7 @@ public class MyDocumentsService {
                     doc.setTitle(rs1.getString("title"));
                     doc.setAuthors(rs1.getString("authors"));
                     doc.setType(rs1.getString("type"));
+                    doc.setPrice(rs1.getInt("price"));
                     doc.setDeadline(doc.getDeadlineOfDocument(Long.parseLong(ids_dead[i])));
                     docs.add(doc);
                 }
@@ -46,6 +50,34 @@ public class MyDocumentsService {
             e.printStackTrace();
         }
         return docs;
+    }
+
+    public void renewDoc(String doc_id, String user_id) throws SQLException {
+        User user = userDAO.findById(Long.parseLong(user_id));
+        ArrayList<String> docs = new ArrayList(Arrays.asList(user.getId_documents().split(",")));
+        ArrayList<String> deadlines = new ArrayList<>(Arrays.asList(user.getDeadlines().split(",")));
+        int index = docs.indexOf(doc_id);
+        docs.remove(index);
+        deadlines.remove(index);
+        String docs_str = "";
+        String deadlines_str = "";
+        if (docs.size() == 1) {
+            docs_str = docs.get(0);
+            deadlines_str = deadlines.get(0);
+        } else {
+            for (int i = 0; i < docs.size(); i++) {
+                docs_str = docs_str.concat(","+docs.get(i));
+                deadlines_str = deadlines_str.concat(","+deadlines.get(i));
+            }
+        }
+        user.setId_documents(docs_str);
+        String user_renews = user.getRenews();
+        if (user_renews != null && user_renews.length() != 0) {
+            user.setRenews(user_renews.concat("," + doc_id));
+        } else {
+            user.setRenews(doc_id);
+        }
+        userDAO.update(user);
     }
 
     public void returnDoc(String DocId, String id) {
@@ -81,5 +113,24 @@ public class MyDocumentsService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList setNameAndSurname(String id) {
+        ArrayList name = new ArrayList();
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.id = '"+id+"';");
+            while (rs.next()) {
+                name.add(rs.getString("name"));
+                name.add(rs.getString("surname"));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
     }
 }

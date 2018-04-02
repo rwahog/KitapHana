@@ -14,7 +14,7 @@
 <body>
 <%@ include file = "header.jsp" %>
 <main class="body">
-    <c:forEach var="document" items="${list}">
+    <c:set var="document" value="${document}"/>
         <div class="document-details container-fluid mx-auto px-0">
             <div class="container" *ngIf="document != null; else documentNotFound">
                 <div class="document" itemscope
@@ -91,7 +91,6 @@
                 </div>
             </div>
         </div>
-    </c:forEach>
     </main>
 <script src="webjars/jquery/3.2.1/jquery.min.js"></script>
 <script src="webjars/popper.js"></script>

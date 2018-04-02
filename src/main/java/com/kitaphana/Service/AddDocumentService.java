@@ -1,12 +1,25 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
+import com.kitaphana.Entities.Author;
+import com.kitaphana.Entities.Book;
+import com.kitaphana.Entities.JournalArticle;
+import com.kitaphana.Entities.Keyword;
+import com.kitaphana.dao.*;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AddDocumentService {
 
-    Database db = new Database();
+    Database db = Database.getInstance();
+    userDAOImpl userDAO = new userDAOImpl();
+    documentDAOImpl documentDAO = new documentDAOImpl();
+    bookDAOImpl bookDAO = new bookDAOImpl();
+    authorDAOImpl authorDAO = new authorDAOImpl();
+    journalArticleDAOImpl journalArticleDAO = new journalArticleDAOImpl();
+    keywordDAOImpl keywordDAO = new keywordDAOImpl();
 
     public boolean checkUnique(String title, String authors, String type) {
         boolean unique = false;
@@ -16,35 +29,69 @@ public class AddDocumentService {
             e.printStackTrace();
         }
         try {
-            ResultSet rs = db.runSqlQuery("SELECT * FROM documents WHERE title = '" + title + "', authors = '" + authors + "', type = '" + type +"';");
+            ResultSet rs = db.runSqlQuery("SELECT * FROM documents WHERE title = '" + title + "' AND authors = '" + authors + "' AND type = '" + type +"';");
             if (!rs.next()) {
                 unique = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-         return unique;
+        return unique;
     }
 
-    public void saveBook(String title, String authors, String description, String keywords, String price, String amount, String edition_number, String publisher, String year, String bestseller) {
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void saveKeywords(ArrayList<String> keywords, long id) throws SQLException {
+        for (String keyword: keywords) {
+            Keyword key = keywordDAO.findByKeyword(keyword);
+            if (key == null) {
+                Keyword keyword1 = new Keyword(keyword);
+                keyword1.setId_documents(String.valueOf(id));
+                keywordDAO.insert(keyword1);
+            } else {
+                key.setId_documents(key.getId_documents().concat(", " + id));
+                keywordDAO.update(key);
+            }
         }
-        try {
-            db.runSqlUpdate("INSERT INTO documents (title, authors, keywords, description, price, amount, type) VALUES ('" + title + "','" + authors + "', '" + description + "', '" + keywords + "', '" + price + "', '" + amount + "', 'book')");
-            db.runSqlUpdate("INSERT INTO books (title, publisher, year, edition_number, best_seller, id_document) VALUES('"+title+"', '"+publisher+"', '"+year+"', '"+edition_number+"', '"+bestseller+"')");
-        } catch (Exception e) {
-            e.printStackTrace();
+    }
+
+    public void saveAuthors(ArrayList<String> authors, long id) throws SQLException {
+        for (String author: authors) {
+            int i = 0;
+            String name = "";
+            String surname;
+            while (author.charAt(i) != ' ') {
+                name = name + author.charAt(i);
+                i = i + 1;
+            }
+            surname = author.substring(i + 1);
+            Author author1 = authorDAO.findByNameAndSurname(name, surname);
+            if (author1 == null) {
+                Author author_obj = new Author(name, surname);
+                author_obj.setId_documents(String.valueOf(id));
+                authorDAO.insert(author_obj);
+            } else {
+                author1.setId_documents(author1.getId_documents().concat(", " + id));
+                authorDAO.update(author1);
+            }
         }
     }
 
-    public void saveJournalArticle(String title, String authors, String description, String keywords, int price, int amount, String editors, String journal_name, String date) {
-
+    public void saveBook(Book book) throws SQLException {
+        documentDAO.insert(book);
+        book.setId_document(documentDAO.findLastId());
+        bookDAO.insert(book);
+        ArrayList<String> authors_list = book.getAuthorsAsArray();
+        ArrayList<String> keywords_list = book.getKeywordsAsArray();
+        saveAuthors(authors_list, documentDAO.findLastId());
+        saveKeywords(keywords_list, documentDAO.findLastId());
     }
 
-    public void saveAV(String title, String authors, String description, String keywords, int price, int amount) {
-
+    public void saveJournalArticle(JournalArticle article) throws SQLException {
+        documentDAO.insert(article);
+        article.setDocument_id(documentDAO.findLastId());
+        journalArticleDAO.insert(article);
+        ArrayList<String> authors_list = article.getAuthorsAsArray();
+        ArrayList<String> keywords_list = article.getKeywordsAsArray();
+        saveAuthors(authors_list, documentDAO.findLastId());
+        saveKeywords(keywords_list, documentDAO.findLastId());
     }
 }

@@ -15,7 +15,7 @@
 <main class="body container">
     <div class="panel container-fluid mx-auto px-0">
         <h2>
-            Document holders
+            Document Awaiters
         </h2>
         <table class="table table-hover table-dark documents">
             <thead>
@@ -24,25 +24,16 @@
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col">Type</th>
-                <th scope="col">Deadline</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="user" items="${users}">
-            <tr>
-                <td>${user.id}</td>
-                <td>${user.name}</td>
-                <td>${user.surname}</td>
-                <td>${user.type}</td>
-                <c:choose>
-                    <c:when test="${doc.fine != null && doc.fine != 0}">
-                        <td>${doc.fine} &#8381;</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>${doc.deadline} days</td>
-                    </c:otherwise>
-                </c:choose>
-            </tr>
+            <c:forEach var="user" items="${awaiters}">
+                <tr>
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.surname}</td>
+                    <td>${user.type}</td>
+                </tr>
             </c:forEach>
             </tbody>
         </table>

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class UserDocumentsService {
 
-    Database db = new Database();
+    Database db = Database.getInstance();
 
     public ArrayList<Document> fillPage(String id) {
         ArrayList<Document> documents = new ArrayList<>();
@@ -22,10 +22,10 @@ public class UserDocumentsService {
             ResultSet rs = db.runSqlQuery("SELECT documents FROM users WHERE id = '" + id + "'");
             while (rs.next()) {
                 String docs_id = rs.getString("documents");
-                String[] ids = docs_id.split(",");
-                if (ids.length == 0) {
+                if (docs_id.length() == 0) {
                     return null;
                 }
+                String[] ids = docs_id.split(",");
                 for (int i = 0; i < ids.length; i++) {
                     ResultSet rs1 = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
                     Document doc = new Document();
@@ -50,22 +50,6 @@ public class UserDocumentsService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         try {
             ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.id = '"+id+"';");
             while (rs.next()) {

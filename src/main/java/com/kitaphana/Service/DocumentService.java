@@ -2,17 +2,28 @@ package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Book;
+import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.User;
+import com.kitaphana.dao.bookDAOImpl;
+import com.kitaphana.dao.documentDAOImpl;
+import com.kitaphana.dao.userDAOImpl;
 
+import javax.resource.spi.RetryableUnavailableException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 public class DocumentService {
-    public Database db = new Database();
+    public Database db = Database.getInstance();
+    private documentDAOImpl documentDAO = new documentDAOImpl();
+    private bookDAOImpl bookDAO = new bookDAOImpl();
+    private userDAOImpl userDAO = new userDAOImpl();
 
-    public ArrayList<Book> setDocInfo(String id) {
-        ArrayList<Book> bookParam = new ArrayList<>();
+    public Document setDocInfo(String id) {
+        Document docParam = new Document();
         try {
             db.connect();
         } catch (Exception e) {
@@ -28,9 +39,9 @@ public class DocumentService {
 //            switch (type) {
 //                case "book":
             Book doc = new Book();
-            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.id = books.id_document WHERE books.id_doc" +
-                    "ument ='" + id + "'");
-            while (rs.next()) {
+            ResultSet rs = db.runSqlQuery("SELECT * FROM documents INNER JOIN books ON documents.id = books.document_id WHERE books.doc" +
+                    "ument_id ='" + id + "'");
+            if (rs.next()) {
                 doc.setId(rs.getInt("id"));
                 doc.setTitle(rs.getString("title"));
                 doc.setAuthors(rs.getString("authors"));
@@ -45,7 +56,7 @@ public class DocumentService {
                 doc.setDescription(rs.getString("description"));
             }
 
-            bookParam.add(doc);
+            docParam = doc;
 //                case "ja":
 //                    ArrayList<JournalArticle> jaParam = new ArrayList<>();
 //                    JournalArticle article = new JournalArticle();
@@ -72,16 +83,11 @@ public class DocumentService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return bookParam;
+        return docParam;
     }
 
     long day = 24*1000*60*60;
-    public boolean checkOut(String name, String surname, int id) {
-        boolean checkOut = false;
-        Date date = new Date();
-        long cur = date.getTime();
-        String docs = "";
-
+    public boolean checkOut(long id_user, int id) {
         try {
             db.connect();
         } catch (Exception e) {
@@ -89,63 +95,170 @@ public class DocumentService {
         }
         try {
             Statement statement = db.con.createStatement();
-            ResultSet rs = db.runSqlQuery("select * from users where name = '"+name+"' and surname = '"+surname+"'");
+            ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE id = '" + id_user + "'");
             ResultSet dks = db.runSqlQuery("SELECT * FROM documents WHERE id = '"+id+"'");
             String kek = "";
+            while(dks.next()){
+                kek+=dks.getString("amount");
+
+            }
+            int kek1 = Integer.parseInt(kek)-1;
+            statement.executeUpdate("UPDATE documents SET amount='"+kek1+"' where id='"+id+"'");
+            while (rs.next()) {
+                boolean exist = false;
+                String[] ids = rs.getString("documents").split(",");
+                if(!ids[0].equals("")){
+                    for (int i = 0; i<ids.length; i++) {
+                        if(Integer.parseInt(ids[i])==id) {
+                            exist = true;
+                        }
+                    }
+                }
+                if (exist) {
+                    return false;
+                }
+                String checkouts = rs.getString("checkouts");
+                if (checkouts.length() == 0) {
+                    statement.executeUpdate("UPDATE users SET checkouts='" + checkouts.concat(String.valueOf(id)) + "' WHERE id ='" + id_user +"'");
+                } else {
+                    statement.executeUpdate("UPDATE users SET checkouts='" + checkouts.concat("," + String.valueOf(id)) + "' WHERE id ='" + id_user +"'");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public boolean checkout_approval(String id_user, String id_document) {
+        Date date = new Date();
+        long cur = date.getTime();
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
             String users = "";
             boolean best = false;
-            while(dks.next()){
-                System.out.println(kek);
+            ResultSet dks = db.runSqlQuery("SELECT * FROM documents WHERE id = '"+id_document+"'");
+            while (dks.next()) {
                 if(dks.getString("type").equals("book")){
-                    ResultSet books = db.runSqlQuery("select * from books where id_document = '"+id+"'");
+                    ResultSet books = db.runSqlQuery("select * from books where id_document = '"+id_document+"'");
                     while(books.next()){
                         if(books.getInt("best_seller")==1){
                             best = true;
                         }
                     }
                 }
-                kek+=dks.getString("amount");
-                if(dks.getString("users")!=null){
-                    users=users+dks.getString("users");}
+                if (dks.getString("users")!=null) {
+                    users = dks.getString("users");
+                }
             }
-            int kek1 = Integer.parseInt(kek)-1;
-            String deadlines = "";
-            statement.executeUpdate("UPDATE documents SET amount='"+kek1+"' where id='"+id+"'");
+            ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE id ='" + id_user +"'");
             while (rs.next()) {
-                boolean exist = false;
-                String[] ids = rs.getString("documents").split(",");
-
-                if(!ids[0].equals("")){
-                for (int i = 0; i<ids.length; i++){
-                    if(Integer.parseInt(ids[i])==id){
-                        exist = true;
-                    }
-                }}
-                if(exist){
-                    return false;
+                if (best) {
+                    cur += 14 * day;
+                } else if (rs.getString("type").equals("Student")) {
+                    cur += 21 * day;
+                } else if (rs.getString("type").equals("Visiting Professor")) {
+                    cur += 7 * day;
+                } else {
+                    cur += 28 * day;
                 }
-                if(best){
-                    cur+=14*day;
-                }
-                else if(rs.getString("type").equals("Student")){
-                    cur+=21*day;
-                }else cur+=28*day;
+                Statement statement = db.con.createStatement();
+                String docs = "";
+                String deadlines = "";
+                String checkouts = "";
                 docs = rs.getString("documents");
                 deadlines = rs.getString("deadlines");
-                if(!deadlines.equals("")){deadlines = deadlines+","+cur;}
-                else deadlines = cur+"";
-                if(!docs.equals("")){docs = docs+","+id;}
-                else docs = id+"";
-                if(!users.equals("")) {users = users+","+rs.getString("id");}
-                else users = rs.getString("id");
-                statement.executeUpdate("Update users SET deadlines='"+deadlines+"' where name='"+name+"' and surname='"+surname+"'");
-                System.out.println(docs);
-                statement.executeUpdate("Update users SET documents='"+docs+"' where name='"+name+"' and surname='"+surname+"'");
+                checkouts = rs.getString("checkouts");
+                if (!deadlines.equals("")) {
+                    deadlines = deadlines + "," + cur;
+                } else {
+                    deadlines = cur + "";
+                }
+                if (!docs.equals("")) {
+                    docs = docs + "," + id_document;
+                } else {
+                    docs = id_document + "";
+                }
+                ArrayList<String> arrayList = new ArrayList(Arrays.asList(checkouts.split(",")));
+                arrayList.remove(arrayList.indexOf(id_document));
+                checkouts = "";
+                if (arrayList.size() == 1) {
+                    checkouts = arrayList.get(0);
+                } else {
+                    for (String id : arrayList) {
+                        checkouts = checkouts.concat("," + id);
+                    }
+                }
+                if (!users.equals("")) {
+                    users = users + "," + rs.getString("id");
+                } else {
+                    users = rs.getString("id");
+                }
+                statement.executeUpdate("UPDATE users SET deadlines='"+deadlines+"' WHERE id = '" +id_user + "'");
+                statement.executeUpdate("UPDATE users SET documents='"+docs+"' WHERE id = '" +id_user + "'");
+                statement.executeUpdate("UPDATE documents SET users='"+users+"' WHERE id='"+id_document+"'");
+                statement.executeUpdate("UPDATE  users SET checkouts='" + checkouts + "' WHERE id = '" + id_user +"'");
             }
-            statement.executeUpdate("UPDATE documents SET users='"+users+"' where id='"+id+"'");
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return true;
+    }
+
+    public void deleteBook(long id) throws SQLException {
+        bookDAO.deleteByDocumentId(id);
+    }
+
+    public void deleteJournalArticle(long id) throws SQLException {
+
+    }
+
+    public void deleteAV(long id) throws SQLException {
+
+    }
+
+    public void deleteDocument(long id) throws SQLException {
+        Document document = documentDAO.findById(id);
+        if (document.getUsers() != null && document.getUsers().length() != 0) {
+            return;
+        } else {
+            if (document.getAwaiters() != null && document.getAwaiters().length() != 0) {
+                String[] awaiters = document.getAwaiters().split(",");
+                for (String user_id: awaiters) {
+                    User user = userDAO.findById(Long.parseLong(user_id));
+                    ArrayList<String> waiting_list = new ArrayList(Arrays.asList(user.getWaiting_list().split(",")));
+                    waiting_list.remove(waiting_list.indexOf(String.valueOf(id)));
+                    String waiting = "";
+                    if (waiting_list.size() == 1) {
+                        waiting = waiting_list.get(0);
+                    } else {
+                        for (String id_doc : waiting_list) {
+                            waiting = waiting.concat(","+id_doc);
+                        }
+                    }
+                    user.setWaiting_list(waiting);
+                    userDAO.update(user);
+                }
+            }
+            switch (document.getType()) {
+                case "book":
+                    deleteBook(id);
+                    documentDAO.delete(id);
+                    break;
+                case "journal article":
+                    deleteJournalArticle(id);
+                    documentDAO.delete(id);
+                    break;
+                case "av":
+                    deleteAV(id);
+                    documentDAO.delete(id);
+                    break;
+            }
+        }
     }
 }

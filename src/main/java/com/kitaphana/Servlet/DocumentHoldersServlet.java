@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/holders")
@@ -22,8 +23,12 @@ public class DocumentHoldersServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<User> users = service.fillPage(request.getParameter("id"));
         HttpSession session = request.getSession();
-        session.setAttribute("users", users);
-        new LoginService().redirect(request, response, "documentHolders");
+        request.setAttribute("users", users);
+        try {
+            new LoginService().redirect(request, response, "documentHolders", true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         //
         // request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }

@@ -22,13 +22,18 @@ public class EditUserServlet extends HttpServlet {
         user = service.setUserInfo(Integer.parseInt(request.getParameter("id")));
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
-        new LoginService().redirect(request, response, "editUser");
+        try {
+            new LoginService().redirect(request, response, "editUser", true);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String status = request.getParameter("status");
+
         String phone_number = request.getParameter("phone_number");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");

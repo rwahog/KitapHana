@@ -12,36 +12,26 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto">
+<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
     <div class="container addDocument">
         <div class="form-row">
             <div class="form-group col-12">
                 <label for="title">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Title" required="" autofocus="">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required="" autofocus="">
             </div>
             <div class="form-group col-12">
                 <label>Authors</label>
-                <div class="form-row">
-                    <div class="col-4">
-                        <input class="form-control" type="text" name="author_name" placeholder="First name">
-                    </div>
-                    <div class="col-4">
-                        <input class="form-control" type="text" name="author_lastname" placeholder="Last name">
-                    </div>
-                    <div class="col-3">
-                        <input class="btn btn-primary px-4" id="addNewAuthor" type="button" value="Add author">
-                    </div>
-                </div>
-                <div class="author-list my-3"></div>
+                <textarea type="text" class="form-control" name="authors" id="authors" placeholder="Authors"
+                          required=""></textarea>
             </div>
             <div class="form-group col-12">
                 <label for="description">Description</label>
-                <textarea type="text" class="form-control" id="description" placeholder="Description"
+                <textarea type="text" class="form-control" name="description" id="description" placeholder="Description"
                           required=""></textarea>
             </div>
             <div class="form-group col-12">
                 <label for="keywords">Keywords</label>
-                <input type="text" class="form-control" id="keywords" placeholder="Keywords" required="">
+                <input type="text" class="form-control" name="keywords" id="keywords" placeholder="Keywords" required="">
             </div>
             <div class="form-group col-4">
                 <label for="type">Type</label>
@@ -54,43 +44,43 @@
             </div>
             <div class="form-group col-4">
                 <label for="inputName">Price</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Price" required="">
+                <input type="text" class="form-control" id="inputName" name="price" placeholder="Price" required="">
             </div>
             <div class="form-group col-4">
                 <label for="inputSurname">Amount</label>
-                <input type="number" class="form-control" id="inputSurname" placeholder="Amount" required="">
+                <input type="number" class="form-control" id="inputSurname" name="amount" placeholder="Amount" required="">
             </div>
             <div class="book-props row hidden" id="book">
                 <div class="form-group col-3">
                     <label for="edition_number">Edition number</label>
-                    <input type="text" class="form-control" id="edition_number" placeholder="Edition number"
+                    <input type="text" class="form-control" id="edition_number" name="edition_number" placeholder="Edition number"
                            required="">
                 </div>
                 <div class="form-group col-4">
                     <label for="publisher">Publisher</label>
-                    <input type="text" class="form-control" id="publisher" placeholder="Publisher" required="">
+                    <input type="text" class="form-control" id="publisher" name="publisher" placeholder="Publisher" required="">
                 </div>
                 <div class="form-group col-3">
                     <label for="year">Year</label>
-                    <input type="text" class="form-control" id="year" placeholder="Year" required="">
+                    <input type="text" class="form-control" id="year" name="year" placeholder="Year" required="">
                 </div>
                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                    <input type="checkbox" class="custom-control-input" id="customControlInline">
+                    <input type="checkbox" name="bestseller" value="1" class="custom-control-input" id="customControlInline">
                     <label class="custom-control-label" for="customControlInline">Bestseller</label>
                 </div>
             </div>
             <div class="ja-props row hidden" id="article">
                 <div class="form-group col-5">
                     <label for="editors">Editors</label>
-                    <input type="text" class="form-control" id="editors" placeholder="Editors" required="">
+                    <input type="text" class="form-control" name="editors" id="editors" placeholder="Editors" required="">
                 </div>
                 <div class="form-group col-4">
                     <label for="journal_name">Journal name</label>
-                    <input type="text" class="form-control" id="journal_name" placeholder="Journal name" required="">
+                    <input type="text" class="form-control" name="journal_name" id="journal_name" placeholder="Journal name" required="">
                 </div>
                 <div class="form-group col-3">
                     <label for="date">Date</label>
-                    <input type="text" class="form-control" id="date" placeholder="Date" required="">
+                    <input type="text" class="form-control" name="date" id="date" placeholder="Date" required="">
                 </div>
             </div>
         </div>

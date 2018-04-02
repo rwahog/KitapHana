@@ -4,15 +4,26 @@ import java.sql.*;
 
 public class Database {
 
+    private static Database db;
     public Connection con;
 
-    public Connection connect() throws Exception {
+    private Database() {
+    }
+
+    public static Database getInstance() {
+        if (db == null) {
+            db = new Database();
+        }
+        return db;
+    }
+
+    public Connection connect() throws SQLException {
 
         if (con != null) return null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            throw new Exception("No database");
+            throw new SQLException("No database");
         }
         String connectionURL = "jdbc:mysql://trainno.ru:3306/kh?autoReconnect=true&useSSL=false";
         con = DriverManager.getConnection(connectionURL, "remote", "password");

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EditDocumentService {
 
-    Database db = new Database();
+    Database db = Database.getInstance();
 
     public Document setDocInfo(int id) {
         Document doc = new Document();

@@ -26,9 +26,11 @@
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name = "status" class="form-control" required="">
-                    <option selected style="background-color:black" >Choose...</option>
                     <option style="background-color:black">Student</option>
-                    <option style="background-color:black">Faculty member</option>
+                    <option style="background-color:black">Instructor</option>
+                    <option style="background-color:black">Teacher Assistant</option>
+                    <option style="background-color:black">Visiting Professor</option>
+                    <option style="background-color:black">Professor</option>
                 </select>
             </div>
         </div>
