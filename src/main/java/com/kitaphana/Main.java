@@ -1,9 +1,24 @@
 package com.kitaphana;
 
+import com.kitaphana.Service.TelegramBot;
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
+
 import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        ApiContextInitializer.init();
 
+        TelegramBotsApi botsApi = new TelegramBotsApi();
+        TelegramBot ourCoolBot = new TelegramBot();
+        try {
+            botsApi.registerBot(ourCoolBot);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Bot started!");
+        //ourCoolBot.sendMessage((long)184990280, "Чувак, у тебя просрочка по книге!!!!!!!1");
     }
 }

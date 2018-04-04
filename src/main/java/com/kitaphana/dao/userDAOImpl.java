@@ -14,9 +14,10 @@ public class userDAOImpl implements userDAO {
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id=?";
     private static final String FIND_ALL = "SELECT * FROM users";
     private static final String INSERT = "INSERT INTO users (name, surname, card_number, phone_number, password, email, id_address, documents, deadlines, type, possible_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE users SET name=?, surname=?, card_number=?, phone_number=?, password=?, email=?, possible_type=?, waiting_list=?, renews=? WHERE id=?";
+    private static final String UPDATE = "UPDATE users SET name=?, surname=?, card_number=?, phone_number=?, password=?, email=?, possible_type=?, waiting_list=?, renews=?, chat_id=? WHERE id=?";
     private static final String DELETE = "DELETE FROM users WHERE id=?";
     private static final String FIND_BY_PHONE_NUMBER = "SELECT * FROM users WHERE phone_number=?";
+    private static final String FIND_BY_CHATID = "SELECT * FROM users WHERE chat_id=?";
 
     @Override
     public User findById(long id) throws SQLException {
@@ -43,7 +44,6 @@ public class userDAOImpl implements userDAO {
                 user.setWaiting_list(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
             }
-
             rs.close();
             ps.close();
         } catch (SQLException e) {
@@ -75,8 +75,8 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getInt("fine"));
                 user.setWaiting_list(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
+                user.setChat_id(rs.getLong("chat_id"));
             }
-
             rs.close();
             ps.close();
         } catch (SQLException e) {
@@ -84,6 +84,40 @@ public class userDAOImpl implements userDAO {
         }
         return user;
     }
+
+    public User findByCharId(long chatId) throws SQLException {
+        User user = null;
+        try {
+            PreparedStatement ps = db.con.prepareStatement(FIND_BY_CHATID);
+            ps.setLong(1, chatId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getLong("id"));
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setCard_number(rs.getInt("card_number"));
+                user.setPhone_number(rs.getString("phone_number"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setId_address(rs.getInt("id_address"));
+                user.setId_documents(rs.getString("documents"));
+                user.setDeadlines(rs.getString("deadlines"));
+                user.setType(rs.getString("type"));
+                user.setPossible_type(rs.getString("possible_type"));
+                user.setFine(rs.getInt("fine"));
+                user.setWaiting_list(rs.getString("waiting_list"));
+                user.setRenews(rs.getString("renews"));
+                user.setChat_id(rs.getLong("chat_id"));
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
 
     @Override
     public ArrayList<User> findAll() throws SQLException {
@@ -111,7 +145,7 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getInt("fine"));
                 user.setWaiting_list(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
-
+                user.setChat_id(rs.getLong("chat_id"));
                 users.add(user);
             }
 
@@ -139,6 +173,7 @@ public class userDAOImpl implements userDAO {
             ps.setString(9, object.getDeadlines());
             ps.setString(10, object.getType());
             ps.setString(11, object.getPossible_type());
+//            ps.setLong(12, object.getChat_id());
 
             ps.executeUpdate();
             ps.close();
@@ -161,8 +196,8 @@ public class userDAOImpl implements userDAO {
             ps.setString(7, object.getPossible_type());
             ps.setString(8, object.getWaiting_list());
             ps.setString(9, object.getRenews());
-            ps.setLong(10, object.getId());
-
+            ps.setLong(10, object.getChat_id());
+            ps.setLong(11, object.getId());
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -175,7 +210,6 @@ public class userDAOImpl implements userDAO {
         try {
             PreparedStatement ps = db.con.prepareStatement(DELETE);
             ps.setLong(1, id);
-
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {

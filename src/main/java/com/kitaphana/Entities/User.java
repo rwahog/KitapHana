@@ -14,6 +14,7 @@ public class User {
     //    protected ArrayList<Long> deadlines;
     protected int priority;
     protected int fine;
+    protected long chat_id;
 
     public User(String name, String surname, String phone_number, String password,
                 String email, Address address, String possible_type) {
@@ -85,6 +86,8 @@ public class User {
     public void setRenews(String renews) {
         this.renews = renews;
     }
+
+    public void setChat_id(long chat_id){ this.chat_id = chat_id; }
 
     public void setPriority() {
         switch (type) {
@@ -181,6 +184,8 @@ public class User {
     public ArrayList<Document> getDocuments() {
         return documents;
     }
+
+    public long getChat_id(){ return chat_id;}
 
     public long getDeadline() {
         return deadline;

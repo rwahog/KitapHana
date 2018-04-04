@@ -41,6 +41,22 @@ public class UserService {
         return id;
     }
 
+    public long getCharId(String phone) {
+        final String query = "SELECT users.id FROM users WHERE users.chat_id=?";
+        long char_id = 0;
+        try {
+            PreparedStatement ps = db.connect().prepareStatement(query);
+            ps.setString(1, phone);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                char_id = rs.getLong("char_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return char_id;
+    }
+
     public long getUserId_address(long id) {
         final String query = "SELECT users.id_address FROM users WHERE users.id=?";
         long id_address = 0;
@@ -65,6 +81,10 @@ public class UserService {
     public User findUserById(long id) throws SQLException {
         User user = userDAO.findById(id);
         user.setAddress(addressDAO.findById(user.getId_address()));
+        return user;
+    }
+    public User findUserByChatId(long chatId) throws SQLException {
+        User user = userDAO.findByCharId(chatId);
         return user;
     }
 

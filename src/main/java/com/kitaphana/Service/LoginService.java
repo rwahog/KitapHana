@@ -1,5 +1,6 @@
 package com.kitaphana.Service;
 import com.kitaphana.Database.Database;
+import com.kitaphana.Main;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class LoginService {
         String dbUsername, dbSurname;
         login = false;
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.phone_number, users.password FROM users;");
+            ResultSet rs = db.runSqlQuery("SELECT users.chat_id, users.phone_number, users.password FROM users;");
 
             while(rs.next()){
                 dbUsername = rs.getString("phone_number");
@@ -29,6 +30,8 @@ public class LoginService {
 
                 if(dbUsername.equals(username) && dbSurname.equals(password)){
                     login = true;
+                    TelegramBot ourCoolBot = new TelegramBot();
+                    ourCoolBot.sendMessage(rs.getLong("chat_id"), "You have logged in KitapHana successfully!");
                 }
             }
         } catch (Exception e) {
