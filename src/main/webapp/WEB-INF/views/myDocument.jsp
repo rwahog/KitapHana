@@ -70,7 +70,7 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane fade show active" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
+        <div class="tab-pane fade" id="waiting" role="tabpanel" aria-labelledby="waiting-tab">
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark docs">
                     <thead>
