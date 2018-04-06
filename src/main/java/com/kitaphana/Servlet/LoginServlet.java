@@ -51,6 +51,7 @@ public class LoginServlet extends HttpServlet{
             session.setAttribute("id", service.getUserNameAndId(phone_number).get(2));
             session.setAttribute("login", phone_number);
             session.setAttribute("password", password);
+
             response.sendRedirect("/main");
         }
         else {

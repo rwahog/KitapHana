@@ -72,6 +72,7 @@ public class ProfileServlet extends HttpServlet {
         String house_number = request.getParameter("house_number");
         String apartment_number = request.getParameter("apartment_number");
         String post_code = request.getParameter("postcode");
+        String chat_id = request.getParameter("chat_id");
 
         boolean isValid = serviceEdit.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
         if (isValid) {

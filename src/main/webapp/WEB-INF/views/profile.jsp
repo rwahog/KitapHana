@@ -14,6 +14,11 @@
 <%@include file="header.jsp" %>
 <form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
     <c:set var="user" value="${user}"/>
+    <%--<script>--%>
+        <%--if (${user.chat_id} == 0){--%>
+            <%--alert("Join our Telegram Bot @KitapHanaBot to receive notifications!");--%>
+        <%--}--%>
+    <%--</script>--%>
     <div class="container">
         <div class="form-row">
             <div class="form-group col-4">
