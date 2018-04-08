@@ -17,6 +17,7 @@ public class DocumentServlet extends HttpServlet {
     boolean checkOut;
     long id_user;
     int id;
+    long chat_id;
     private DocumentService service = new DocumentService();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -33,9 +34,15 @@ public class DocumentServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         id_user = Long.parseLong(String.valueOf(request.getSession().getAttribute("id")));
         id = Integer.parseInt(request.getParameter("id"));
+        chat_id = Long.parseLong(String.valueOf(request.getSession().getAttribute("chat_id")));
         checkOut = service.checkOut(id_user, id);
         if (checkOut) {
             response.sendRedirect("/verification");
+            try {
+                service.sendMsg(service.getChatId(id), "You have checked out new book successfully!");
+            }
+            catch (Exception e){
+            }
         }
     }
 }

@@ -51,7 +51,14 @@ public class LoginServlet extends HttpServlet{
             session.setAttribute("id", service.getUserNameAndId(phone_number).get(2));
             session.setAttribute("login", phone_number);
             session.setAttribute("password", password);
-
+            session.setAttribute("chat_id", service.getChatId(phone_number));
+            if (service.getChatId(phone_number)!=0){
+                try {
+                    service.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
+                }
+            catch (Exception e){
+                }
+            }
             response.sendRedirect("/main");
         }
         else {
@@ -59,4 +66,5 @@ public class LoginServlet extends HttpServlet{
         }
 
     }
+
 }

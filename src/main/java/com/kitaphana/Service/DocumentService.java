@@ -7,6 +7,13 @@ import com.kitaphana.Entities.User;
 import com.kitaphana.dao.bookDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.userDAOImpl;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import javax.resource.spi.RetryableUnavailableException;
 import java.sql.ResultSet;
@@ -15,6 +22,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class DocumentService {
     public Database db = Database.getInstance();
@@ -203,6 +211,7 @@ public class DocumentService {
                 statement.executeUpdate("UPDATE users SET documents='"+docs+"' WHERE id = '" +id_user + "'");
                 statement.executeUpdate("UPDATE documents SET users='"+users+"' WHERE id='"+id_document+"'");
                 statement.executeUpdate("UPDATE  users SET checkouts='" + checkouts + "' WHERE id = '" + id_user +"'");
+
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -260,5 +269,38 @@ public class DocumentService {
                     break;
             }
         }
+    }
+    public long getChatId(long id) {
+        long chat_id = 0;
+        try {
+            db.connect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet rs = db.runSqlQuery("SELECT users.chat_id FROM users WHERE users.id = '"+id+"';");
+            while (rs.next()) {
+                chat_id = rs.getLong("chat_id");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chat_id;
+    }
+    public static void sendMsg(long chatId, String message) throws Exception {
+        String postURL = "https://api.telegram.org/bot577066011:AAFK2TXevqQRFXkJjS_eAIEEaPH2MOcXJ_s/sendMessage";
+
+        HttpPost post = new HttpPost(postURL);
+
+        HttpClient client = new DefaultHttpClient();
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("chat_id", Long.toString(chatId)));
+        params.add(new BasicNameValuePair("text", message));
+
+        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, "UTF-8");
+        post.setEntity(ent);
+        HttpResponse responsePOST = client.execute(post);
+        System.out.println(chatId + message);
     }
 }

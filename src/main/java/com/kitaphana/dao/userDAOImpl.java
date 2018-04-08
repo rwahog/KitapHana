@@ -43,6 +43,7 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getInt("fine"));
                 user.setWaiting_list(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
+                user.setChat_id(rs.getLong("chat_id"));
             }
             rs.close();
             ps.close();

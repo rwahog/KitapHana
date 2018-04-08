@@ -29,6 +29,7 @@ public class ProfileService {
                 user.setPhone_number(rs.getString("phone_number"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
+                user.setChat_id(rs.getLong("chat_id"));
                 id_address = rs.getInt("id_address");
             }
             rs = db.runSqlQuery("SELECT * FROM addresses WHERE id_address = '" + id_address +"'");
