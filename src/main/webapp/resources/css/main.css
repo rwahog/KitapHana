@@ -57,6 +57,17 @@
 }
 .search-menu label {
     color: #969548 !important;
+    margin-bottom: 55px;
+}
+.search-menu{
+    position: relative;
+    top: 80px;
+}
+.search-menu .form-control{
+    margin-bottom: 45px;
+}
+.search-menu .btn{
+    margin-bottom: 45px;
 }
 
 option{
