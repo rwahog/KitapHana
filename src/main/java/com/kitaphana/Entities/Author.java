@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Author {
     protected long id;
     protected ArrayList<Document> documents;
-    protected String name, surname, id_documents;
+    protected String name, surname, documentsId;
 
     public Author(String name, String surname) {
         this.name = name;
@@ -13,6 +13,7 @@ public class Author {
     }
 
     public Author() {
+
     }
 
     public void setDocuments(ArrayList<Document> documents) {
@@ -31,8 +32,8 @@ public class Author {
         this.surname = surname;
     }
 
-    public void setId_documents(String id_documents) {
-        this.id_documents = id_documents;
+    public void setDocumentsId(String documentsId) {
+        this.documentsId = documentsId;
     }
 
     public long getId() {
@@ -51,7 +52,7 @@ public class Author {
         return surname;
     }
 
-    public String getId_documents() {
-        return id_documents;
+    public String getDocumentsId() {
+        return documentsId;
     }
 }
