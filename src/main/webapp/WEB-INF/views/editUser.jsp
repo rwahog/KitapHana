@@ -17,25 +17,16 @@
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" id = "name" placeholder="Name" value = "${user.name}" required="" autofocus="">
+                <input type="text" class="form-control" name="name" id = "name" placeholder="Name" value = "${user.getName()}" required="" autofocus="">
             </div>
             <div class="form-group col-4">
                 <label for="surname">Surname</label>
-                <input type="text" class="form-control" name="surname" id = "surname" placeholder="Surname" value = "${user.surname}" required="">
+                <input type="text" class="form-control" name="surname" id = "surname" placeholder="Surname" value = "${user.getSurname()}" required="">
             </div>
-            <%--<div class="form-group col-4">--%>
-
-            <%--<label for="status">Status</label>--%>
-            <%--<select id="status" name = "status" class="form-control" required="">--%>
-            <%--<option>Choose...</option>--%>
-            <%--<option>Student</option>--%>
-            <%--<option>Faculty member</option>--%>
-            <%--</select>--%>
-            <%--</div>--%>
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name = "status" class="form-control" required="">
-                    <c:set var="status" value="${user.type}"/>
+                    <c:set var="status" value="${user.getType()}"/>
                     <c:choose>
                         <c:when test="${status == 'Patron'}">
                             <option selected style="background-color:black">Patron</option>
@@ -96,55 +87,55 @@
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="phone_number">Phone number</label>
-                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="Phone number" value = "${user.phone_number}" required="">
+                <input type="text" class="form-control" id = phone_number name="phone_number" placeholder="Phone number" value = "${user.getPhoneNumber()}" required="">
             </div>
             <div class="form-group col-6">
                 <label for="email">E-mail</label>
-                <input type="email" class="form-control" id="email" name = "email" placeholder="E-mail" value = "${user.email}" required="">
+                <input type="email" class="form-control" id="email" name = "email" placeholder="E-mail" value = "${user.getEmail()}" required="">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="password1">Password</label>
-                <input type="text" class="form-control" id="password1" name="password1" placeholder="Password" value = "${user.password}" required="">
+                <input type="text" class="form-control" id="password1" name="password1" placeholder="Password" value = "${user.getPassword()}" required="">
             </div>
             <div class="form-group col-6">
                 <label for="password2">Confirm your password</label>
-                <input type="text" class="form-control" id="password2" name="password2" placeholder="Confirm password" value = "${user.password}" required="">
+                <input type="text" class="form-control" id="password2" name="password2" placeholder="Confirm password" value = "${user.getPassword()}" required="">
             </div>
         </div>
-
+        <c:set value="${user.getAddress()}" var="address"/>
         <div class="form-row">
             <div class="form-group col-6">
                 <label for="country">Country</label>
-                <input type="text" class="form-control" id="country" name="country" placeholder="Country" value = "${user.address.country}" required="">
+                <input type="text" class="form-control" id="country" name="country" placeholder="Country" value = "${address.getCountry()}" required="">
             </div>
             <div class="form-group col-6">
                 <label for="town">Town</label>
-                <input type="text" class="form-control" id="town" name = "town" placeholder="Town" value = "${user.address.town}" required="">
+                <input type="text" class="form-control" id="town" name = "town" placeholder="Town" value = "${address.getTown()}" required="">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-12">
                 <label for="street">Street</label>
-                <input type="text" class="form-control" id="street" name = "street" placeholder="Street" value = "${user.address.street}" required="">
+                <input type="text" class="form-control" id="street" name = "street" placeholder="Street" value = "${address.getStreet()}" required="">
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-4">
                 <label for="house_number">House number</label>
-                <input type="text" class="form-control" id="house_number" name = "house_number" placeholder="House number" value = "${user.address.house_number}" required="">
+                <input type="text" class="form-control" id="house_number" name = "house_number" placeholder="House number" value = "${address.getHouseNumber()}" required="">
             </div>
             <div class="form-group col-4">
                 <label for="apartment_number">Apartment number</label>
-                <input type="text" class="form-control" id="apartment_number"  name = "apartment_number" placeholder="Apartment number" value = "${user.address.apartment_number}" required="">
+                <input type="text" class="form-control" id="apartment_number"  name = "apartment_number" placeholder="Apartment number" value = "${address.getApartmentNumber()}" required="">
             </div>
             <div class="form-group col-4">
                 <label for="postcode">Post code</label>
-                <input type="text" class="form-control" id="postcode" name = "postcode" placeholder="Post code" value = "${user.address.postcode}" required="">
+                <input type="text" class="form-control" id="postcode" name = "postcode" placeholder="Post code" value = "${address.getPostcode()}" required="">
             </div>
         </div>
         <div class="form-row">
