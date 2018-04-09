@@ -166,7 +166,8 @@ To expect the library one can use one of pre-signed up users:
          <li> password  - 123
      </ul>
 or simply provide registration
-     Also run Telegram bot using <a href="ProvidedDoc/tg.pdf">this guide</a>
+</ul>
+Also run Telegram bot using <a href="ProvidedDoc/tg.pdf">this guide</a>
 <a name="test">
  
 # Testing:
