@@ -33,7 +33,7 @@
             <a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab" aria-controls="waitinglist" aria-selected="false">Waiting list</a>
         </li>
     </ul>
-    <div class="tab-content users" id="myTabContent">
+    <div class="tab-content users" id="myTabContent" style="position: relative !important; top:0px !important; margin-left: 0px !important;">
         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark">
