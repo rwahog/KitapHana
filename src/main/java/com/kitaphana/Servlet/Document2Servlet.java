@@ -1,5 +1,6 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.Book;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Service.DocumentService;
 import com.kitaphana.Service.LoginService;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/document2")
 public class Document2Servlet extends HttpServlet {
