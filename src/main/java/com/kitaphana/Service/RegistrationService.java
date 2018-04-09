@@ -19,8 +19,8 @@ public class RegistrationService {
         try {
             ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
             if (!rs.next() && password1.equals(password2)) {
-                possible = true;
-            }
+                    possible = true;
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -41,7 +41,7 @@ public class RegistrationService {
             ResultSet resultSet = db.runSqlQuery("SELECT * FROM addresses WHERE country = '" + country + "' AND town = '" + town + "' AND street = '" + street + "' AND house_number = '" + house_number + "' AND apartment_number = '" + apart_number + "' AND postcode = '" + post_code + "'");
             int id_address = -1;
             if (resultSet.next()) {
-                id_address = resultSet.getInt("id_address");
+                id_address = resultSet.getInt("id");
             }
             db.runSqlUpdate("INSERT INTO users (name, surname, phone_number, card_number, password, email, id_address, possible_type) VALUES('" + name + "', '" + surname + "', '" + phone_number + "', '" + card_number + "', '" + password + "', '" + email + "', '" + id_address + "', '" + possible_type + "')");
         } catch (Exception e) {
