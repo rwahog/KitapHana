@@ -14,9 +14,9 @@
 <%@include file="header.jsp" %>
 <form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
     <c:set var="user" value="${user}"/>
-
-    <c:set var="chat_id" value="${user.chat_id}"/>
-    <c:if test="${chat_id==0}">
+    <c:set var="type" value="${user.getType()}"/>
+    <c:set var="chat_id" value="${user.getChatId()}"/>
+    <c:if test="${chat_id==0 && !type.equals('Librarian')}">
         <script>
             alert("Join our Telegram Bot @KitapHanaBot to receive notifications!");
         </script>
