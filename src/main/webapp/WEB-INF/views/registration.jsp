@@ -28,7 +28,6 @@
             <div class="form-group col-4">
                 <label for="status">Status</label>
                 <select id="status" name="status" class="form-control" required="">
-                    <%--<option selected>Patron</option>--%>
                     <option>Student</option>
                     <option>Instructor</option>
                     <option>Teacher Assistant</option>
