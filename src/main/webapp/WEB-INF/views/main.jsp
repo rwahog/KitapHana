@@ -16,6 +16,45 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
+<nav class="navbar search-menu">
+    <form class="form-group col-4">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    </form>
+    <div class="form-group col-3">
+        <select id="searchBy" class="form-control">
+            <option selected>Title</option>
+            <option>Author</option>
+            <option>Keywords</option>
+        </select>
+    </div>
+    <div class="checkbox col-2">
+        <label>
+            <input type="checkbox" value="notref" id = "notref"> Not reference
+        </label>
+    </div>
+    <div class="checkbox col-2">
+        <label>
+            <input type="checkbox" value="bestseller" id = "bestseller"> Bestseller
+        </label>
+    </div>
+
+    <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
+</nav>
+
+<div class="tab-content">
+    <ul class="nav type" id="myTab" role="tablist">
+        <li class="type">
+            <a class="nav-link active" id="books-tab" data-toggle="tab" href="#books" role="tab" aria-controls="books" aria-selected="true">Books</a>
+        </li>
+        <li class="type">
+            <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals" role="tab" aria-controls="journals" aria-selected="false">Journals</a>
+        </li>
+        <li class="type">
+            <a class="nav-link" id="AVmaterials-tab" data-toggle="tab" href="#AVmaterials" role="tab" aria-controls="AVmaterials" aria-selected="false">AV Materials</a>
+        </li>
+    </ul>
+</div>
+
 <div class="cards container">
     <c:forEach var="document" items="${list}">
         <div class="col-lg-4 col-6 card-holder">
