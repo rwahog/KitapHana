@@ -42,43 +42,86 @@
 </nav>
 
 <main class="body container">
-<div class="tab-content">
-    <ul class="nav type" id="myTab" role="tablist">
-        <li class="type">
+    <ul class="nav nav-tabs type" id="myTab" role="tablist" style="position: relative; margin-top: 10px">
+        <li class="nav-item docs">
             <a class="nav-link active" id="books-tab" data-toggle="tab" href="#books" role="tab" aria-controls="books" aria-selected="true">Books</a>
         </li>
-        <li class="type">
+        <li class="nav-item docs">
             <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals" role="tab" aria-controls="journals" aria-selected="false">Journals</a>
         </li>
-        <li class="type">
+        <li class="nav-item docs">
             <a class="nav-link" id="AVmaterials-tab" data-toggle="tab" href="#AVmaterials" role="tab" aria-controls="AVmaterials" aria-selected="false">AV Materials</a>
         </li>
     </ul>
     <div class="tab-content books" id="myTabContent">
-        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
-        </div>
-    </div>
-</div>
-
-<div class="cards container">
-    <c:forEach var="document" items="${list}">
-        <div class="col-lg-4 col-6 card-holder">
-            <div class="card">
-                <div class="img-container">
-                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
-                </div>
-                <div class="card-body">
-                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
-                        <c:out value="${document.getTitle()}"/></a>
-                    <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
-                    <p class="card-text">
-                        <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
-                    </p>
-                </div>
+        <div class="tab-pane fade show active" id="books" role="tabpanel" aria-labelledby="books-tab">
+            <div class="cards container">
+                <c:forEach var="document" items="${list}">
+                    <div class="col-lg-4 col-6 card-holder">
+                        <div class="card">
+                            <div class="img-container">
+                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                            </div>
+                            <div class="card-body">
+                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                    <c:out value="${document.getTitle()}"/></a>
+                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
+                                <p class="card-text">
+                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
         </div>
-    </c:forEach>
-</div>
+
+        <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
+            <div class="cards container">
+                <c:forEach var="document" items="${list}">
+                    <div class="col-lg-4 col-6 card-holder">
+                        <div class="card">
+                            <div class="img-container">
+                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                            </div>
+                            <div class="card-body">
+                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                    <c:out value="${document.getTitle()}"/></a>
+                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
+                                <p class="card-text">
+                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="AV" role="tabpanel" aria-labelledby="AV-tab">
+            <div class="cards container">
+                <c:forEach var="document" items="${list}">
+                    <div class="col-lg-4 col-6 card-holder">
+                        <div class="card">
+                            <div class="img-container">
+                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                            </div>
+                            <div class="card-body">
+                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                    <c:out value="${document.getTitle()}"/></a>
+                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
+                                <p class="card-text">
+                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+    </div>
+    </div>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
