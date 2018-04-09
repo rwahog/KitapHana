@@ -2,33 +2,33 @@ package com.kitaphana.Entities;
 
 public class Address {
     protected String country, town, postcode, street;
-    protected int house_number, apartment_number;
-    protected long id_address;
+    protected int houseNumber, apartmentNumber;
+    protected long addressId;
 
-    public Address(String country, String town, String street, int house_number, int apartment_number, String postcode, long id_address) {
+    public Address(String country, String town, String street, int houseNumber, int apartmentNumber, String postcode, long addressId) {
         this.country = country;
         this.town = town;
         this.street = street;
-        this.house_number = house_number;
-        this.apartment_number = apartment_number;
+        this.houseNumber = houseNumber;
+        this.apartmentNumber = apartmentNumber;
         this.postcode = postcode;
-        this.id_address = id_address;
+        this.addressId = addressId;
     }
 
-    public Address(String country, String town, String street, int house_number, int apartment_number, String postcode) {
+    public Address(String country, String town, String street, int houseNumber, int apartmentNumber, String postcode) {
         this.country = country;
         this.town = town;
         this.street = street;
-        this.house_number = house_number;
-        this.apartment_number = apartment_number;
+        this.houseNumber = houseNumber;
+        this.apartmentNumber = apartmentNumber;
         this.postcode = postcode;
     }
 
     public Address() {
     }
 
-    public void setId_address(long id_address) {
-        this.id_address = id_address;
+    public void setAddressId(long addressId) {
+        this.addressId = addressId;
     }
 
     public void setCountry(String country) {
@@ -43,20 +43,20 @@ public class Address {
         this.street = street;
     }
 
-    public void setHouse_number(int house_number) {
-        this.house_number = house_number;
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
     }
 
-    public void setApartment_number(int apartment_number) {
-        this.apartment_number = apartment_number;
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
     }
 
     public void setPostcode(String postcode) {
         this.postcode = postcode;
     }
 
-    public long getId_address() {
-        return id_address;
+    public long getAddressId() {
+        return addressId;
     }
 
     public String getCountry() {
@@ -71,12 +71,12 @@ public class Address {
         return street;
     }
 
-    public int getHouse_number() {
-        return house_number;
+    public int getHouseNumber() {
+        return houseNumber;
     }
 
-    public int getApartment_number() {
-        return apartment_number;
+    public int getApartmentNumber() {
+        return apartmentNumber;
     }
 
     public String getPostcode() {
