@@ -4,6 +4,7 @@ import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.User;
 import com.kitaphana.dao.documentDAOImpl;
+import com.kitaphana.dao.userDAOImpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,46 +13,31 @@ import java.util.Arrays;
 
 public class DocumentHoldersService {
     documentDAOImpl documentDAO = new documentDAOImpl();
+    userDAOImpl userDAO = new userDAOImpl();
     Database db = Database.getInstance();
-
+    DBService dbService = new DBService();
+    DocumentService documentService = new DocumentService();
     public ArrayList<User> fillPage(String id) {
         ArrayList<User> users = new ArrayList<>();
         try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT users FROM documents WHERE id = '" + id + "' AND users IS NOT NULL AND users != ''");
-            if (rs.next()) {
-                String user_id = rs.getString("users");
-                if (user_id.length() == 0) {
-                    return null;
-                }
-                String[] ids = user_id.split(",");
-                for (String id_user : ids) {
-                    ResultSet rs1 = db.runSqlQuery("SELECT * FROM users WHERE id = '" + id_user + "'");
-                    if (rs1.next()) {
-                        User user = new User();
-                        user.setId(Long.parseLong(id_user));
-                        user.setName(rs1.getString("name"));
-                        user.setSurname(rs1.getString("surname"));
-                        user.setType(rs1.getString("type"));
-                        String doc_id = rs1.getString("documents");
-                        ArrayList<String> docs = new ArrayList<>(Arrays.asList(doc_id.split(",")));
-                        int index = docs.indexOf(id);
-                        String deadlines_id = rs1.getString("deadlines");
-                        ArrayList<String> deadlines = new ArrayList<>(Arrays.asList(deadlines_id.split(",")));
-                        long deadline = Long.parseLong(deadlines.get(index));
-                        Document doc = new Document();
-                        doc = documentDAO.findById(Long.parseLong(id));
-                        deadline = doc.getDeadlineOfDocument(deadline);
-                        user.setDeadline(deadline);
-                        users.add(user);
-                    }
-                }
+            String usersStr = dbService.findColumn(id, "documents", "users");
+            if (usersStr == null) {
+                return null;
             }
+            ArrayList<String> usersId = documentService.fromDBStringToArray(usersStr);
+                for (String userId : usersId) {
+                    User user = userDAO.findById(Long.parseLong(userId));
+                        if (user != null) {
+                            ArrayList<String> docs = documentService.fromDBStringToArray(user.getDocuments());
+                            ArrayList<String> deadlines = documentService.fromDBStringToArray(user.getDeadlines());
+                            int index = docs.indexOf(id);
+                            long deadline = Long.parseLong(deadlines.get(index));
+                            Document doc = documentDAO.findById(Long.parseLong(id));
+                            deadline = doc.getDeadlineOfDocument(deadline);
+                            user.setDeadline(deadline);
+                            users.add(user);
+                        }
+                }
         } catch (Exception e) {
             e.printStackTrace();
         }
