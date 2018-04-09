@@ -1,37 +1,37 @@
 package com.kitaphana.Entities;
 
 public class Book extends Document {
-    protected String publisher;
-    protected int year, edition_number;
-    protected int best_seller;
-    protected long id_document;
+    private String publisher;
+    private int year, editionNumber;
+    private int bestseller;
+    private long documentId;
 
     public Book(String publisher, int year, int edition_number, int bestseller) {
         this.publisher = publisher;
         this.year = year;
-        this.edition_number = edition_number;
-        this.best_seller = bestseller;
+        this.editionNumber = edition_number;
+        this.bestseller = bestseller;
     }
 
     public Book(String title, String authors, String keywords, int price, int amount,
                 String type, String description, String publisher,
-                int year, int edition_number, int bestseller) {
+                int year, int editionNumber, int bestseller) {
         super(title, authors, keywords, price, amount, type, description);
         this.publisher = publisher;
         this.year = year;
-        this.edition_number = edition_number;
-        this.best_seller = bestseller;
+        this.editionNumber = editionNumber;
+        this.bestseller = bestseller;
     }
 
     public Book(){
     }
 
-    public void setEdition_number(int edition_number) {
-        this.edition_number = edition_number;
+    public void setEditionNumber(int editionNumber) {
+        this.editionNumber = editionNumber;
     }
 
-    public void setBest_seller(int best_seller) {
-        this.best_seller = best_seller;
+    public void setBestseller(int bestseller) {
+        this.bestseller = bestseller;
     }
 
     public void setPublisher(String publisher) {
@@ -42,12 +42,12 @@ public class Book extends Document {
         this.year = year;
     }
 
-    public void setId_document(long id_document) {
-        this.id_document = id_document;
+    public void setDocumentId(long documentId) {
+        this.documentId = documentId;
     }
 
-    public int getEdition_number() {
-        return edition_number;
+    public int getEditionNumber() {
+        return editionNumber;
     }
 
     public int getYear() {
@@ -58,11 +58,11 @@ public class Book extends Document {
         return publisher;
     }
 
-    public int isBest_seller() {
-        return best_seller;
+    public int isBestseller() {
+        return bestseller;
     }
 
-    public long getId_document() {
-        return id_document;
+    public long getDocumentId() {
+        return documentId;
     }
 }

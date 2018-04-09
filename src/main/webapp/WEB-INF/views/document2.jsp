@@ -6,9 +6,9 @@
     <title>KitapHana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="/resources/css/common.css"
+    <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
-    <link href="/resources/css/document.css"
+    <link href="${pageContext.request.contextPath}/resources/css/document.css"
           rel="stylesheet">
 </head>
 <body>
@@ -16,58 +16,60 @@
 <main class="body">
     <c:set var="document" value="${document}"/>
     <div class="document-details container-fluid mx-auto px-0">
-        <div class="row" *ngIf="document != null; else documentNotFound">
+        <div class="container" *ngIf="document != null; else documentNotFound">
             <div class="document" itemscope
                  itemtype="https://schema.org/CreativeWork">
                 <div class="row">
                     <div class="col-md-4 col-12 document-cover" [class.fixed]="thumbIsFixed">
                         <img itemprop="image"
                              class="document-thumb-image"
-                             src="resources/images/${document.cover}">
+                             src="resources/images/${document.getCover()}">
                     </div>
                     <div class="col-md-8 document-info">
                         <div itemprop="headline" class="document-title card-title">
-                            <h2>${document.title}</h2>
-                            <c:set var="bestseller" value="${document.isBest_seller()}"/>
-                            <c:if test="${bestseller == 1}">
-                                <span class="badge badge-warning">Bestseller</span>
+                            <h2>${document.getTitle()}</h2>
+                            <c:set value="${document.getType()}" var="type"/>
+                            <c:if test="${type.equals('book')}">
+                                <c:set var="bestseller" value="${document.isBestseller()}"/>
+                                <c:if test="${bestseller == 1}">
+                                    <span class="badge badge-warning">Bestseller</span>
+                                </c:if>
                             </c:if>
                         </div>
                         <ul class="document-authors">
                             <li *ngFor="let author of document.authors"
-                                itemprop="author" class="document-author">${document.authors}</li>
+                                itemprop="author" class="document-author">${document.getAuthors()}</li>
                         </ul>
                         <div itemprop="description"
                              class="document-description card-text italic">
-                            ${document.description}
+                            ${document.getDescription()}
                         </div>
                         <table class="document-extra col-12">
                             <thead>
                             <tr><th width="50%"></th><th width="50%"></th></tr>
                             </thead>
                             <tbody>
-                            <tr *ngIf="document.publisher">
-                                <td class="bold">Publisher</td>
-                                <td>${document.publisher}
-                                </td>
-                            </tr>
-                            <tr *ngIf="document.year">
-                                <td class="bold">Year of publication</td>
-                                <td>${document.year}
-                                </td>
-                            </tr>
+                            <c:if test="${type.equals('book')}">
+                                <tr *ngIf="document.publisher">
+                                    <td class="bold">Publisher</td>
+                                    <td>${document.getPublisher()}</td>
+                                </tr>
+                                <tr *ngIf="document.year">
+                                    <td class="bold">Year of publication</td>
+                                    <td>${document.getYear()}</td>
+                                </tr>
+                            </c:if>
                             <tr>
                                 <td class="bold">Type</td>
-                                <td>${document.type}
-                                </td>
+                                <td>${document.getType()}</td>
                             </tr>
                             <tr>
                                 <td class="bold">Price</td>
-                                <td>${document.price} &#8381;</td>
+                                <td>${document.getPrice()} &#8381;</td>
                             </tr>
                             <tr>
                                 <td class="bold">Copies available</td>
-                                <td>${document.amount}</td>
+                                <td>${document.getAmount()}</td>
                             </tr>
                             </tbody>
                         </table>

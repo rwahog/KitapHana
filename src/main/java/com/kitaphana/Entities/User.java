@@ -5,32 +5,41 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class User {
-    protected String phone_number, name, surname, password, possible_type, type, email, id_documents, deadlines, waiting_list, renews;
-    protected Address address;
-    protected long deadline;
-    protected long card_number, maxdays, day = 24 * 60 * 60 * 1000;
-    protected long id, id_address;
-    protected ArrayList<Document> documents;
-    //    protected ArrayList<Long> deadlines;
-    protected int priority;
-    protected int fine;
-    protected long chat_id;
+    private String phoneNumber, name, surname, password, possibleType, type,
+                   email, documents, deadlines, waitingList, renews, checkouts,
+                   returns, fine;
+    private Address address;
+    private ArrayList<Document> documentsArray;
+    private long cardNumber, maxDays, id, addressId;
+    public long deadline, chatId;
+    private int priority;
 
     public User(String name, String surname, String phone_number, String password,
-                String email, Address address, String possible_type) {
+                String email, Address address, String possibleType) {
         this.name = name;
         this.surname = surname;
-        this.phone_number = phone_number;
+        this.phoneNumber = phone_number;
         this.password = password;
         this.email = email;
-        this.possible_type = possible_type;
-        this.card_number = setCard_number(phone_number);
+        this.possibleType = possibleType;
+        this.cardNumber = setCardNumber(phone_number);
         this.address = address;
     }
 
     public User() {
     }
 
+    public User(String name, String surname, String phone_number, String password,
+                String email, Address address) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phone_number;
+        this.password = password;
+        this.email = email;
+        this.cardNumber = setCardNumber(phone_number);
+        this.address = address;
+    }
+    
     public void setId(long id) {
         this.id = id;
     }
@@ -43,20 +52,24 @@ public class User {
         this.surname = surname;
     }
 
-    public void setCard_number(long card_number) {
-        this.card_number = card_number;
+    public void setCardNumber(long cardNumber) {
+        this.cardNumber = cardNumber;
     }
 
-    public void setPossible_type(String possible_type) {
-        this.possible_type = possible_type;
+    public void setPossibleType(String possibleType) {
+        this.possibleType = possibleType;
     }
-
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setDocumentsArray(ArrayList<Document> documentsArray) {
+        this.documentsArray = documentsArray;
     }
 
     public void setEmail(String email) {
@@ -67,8 +80,8 @@ public class User {
         this.address = address;
     }
 
-    public void setId_address(long id_address) {
-        this.id_address = id_address;
+    public void setAddressId(long addressId) {
+        this.addressId = addressId;
     }
 
     public void setDeadlines(String deadlines) {
@@ -80,46 +93,75 @@ public class User {
         this.type = type;
     }
 
-    public void setId_documents(String id_documents) {
-        this.id_documents = id_documents;
+    public void setDocuments(String documents) {
+        this.documents = documents;
     }
 
     public void setRenews(String renews) {
         this.renews = renews;
     }
 
-    public void setChat_id(long chat_id){ this.chat_id = chat_id; }
+    public void setReturns(String returns) {
+        this.returns = returns;
+    }
+
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
 
     public void setPriority() {
         switch (type) {
             case "Student":
-                this.priority = 5;
+                this.priority = 1;
+                break;
             case "Instructor":
-                this.priority = 4;
+                this.priority = 2;
+                break;
             case "Teacher Assistant":
                 this.priority = 3;
+                break;
             case "Visiting Professor":
-                this.priority = 2;
+                this.priority = 4;
+                break;
             case "Professor":
-                this.priority = 1;
+                this.priority = 5;
+                break;
         }
 
+    }
+
+    public void setMaxDays() {
+        switch (type) {
+            case "Student":
+                this.maxDays = 21;
+                break;
+            case "Visiting Professor":
+                this.maxDays = 7;
+                break;
+            default:
+                this.maxDays = 28;
+        }
     }
 
     public void setDeadline(long deadline) {
         this.deadline = deadline;
     }
 
-    public void setDocuments(ArrayList<Document> documents) {
-        this.documents = documents;
+    public void setCheckouts(String checkouts) {
+        this.checkouts = checkouts;
     }
 
-    public void setFine(int fine) {
+    public void setFine(String fine) {
         this.fine = fine;
     }
 
-    public void setWaiting_list(String waiting_list) {
-        this.waiting_list = waiting_list;
+    public void setWaitingList(String waitingList) {
+        this.waitingList = waitingList;
     }
 
     public long getId() {
@@ -134,16 +176,16 @@ public class User {
         return surname;
     }
 
-    public long getCard_number() {
-        return card_number;
+    public long getCardNumber() {
+        return cardNumber;
     }
 
-    public String getPossible_type() {
-        return possible_type;
+    public String getPossibleType() {
+        return possibleType;
     }
-
-    public String getPhone_number() {
-        return phone_number;
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getPassword() {
@@ -158,8 +200,8 @@ public class User {
         return address;
     }
 
-    public long getId_address() {
-        return id_address;
+    public long getAddressId() {
+        return addressId;
     }
 
     public String getDeadlines() {
@@ -174,41 +216,39 @@ public class User {
         return type;
     }
 
-    public String getId_documents() {
-        return id_documents;
+    public String getDocuments() {
+        return documents;
     }
 
     public String getRenews() {
         return renews;
     }
 
-    public ArrayList<Document> getDocuments() {
-        return documents;
-    }
-
-    public long getChat_id(){ return chat_id;}
-
-    public long getDeadline() {
-        return deadline;
-    }
-
-    public int getFine() {
+    public String getFine() {
         return fine;
     }
 
-    public String getWaiting_list() {
-        return waiting_list;
+    public String getReturns() {
+        return returns;
     }
 
-    public ArrayList<String> getDocumentsAsArray() {
-        ArrayList<String> documents = null;
-        if (id_documents.length() > 0) {
-            documents = new ArrayList<>(Arrays.asList(getId_documents().split(",")));
-        }
-        return documents;
+    public long getMaxDays() {
+        return maxDays;
     }
 
-    public long setCard_number(String phone_number) {
+    public String getWaitingList() {
+        return waitingList;
+    }
+
+    public String getCheckouts() {
+        return checkouts;
+    }
+
+    public ArrayList<Document> getDocumentsArray() {
+        return documentsArray;
+    }
+
+    public long setCardNumber(String phone_number) {
         long p = 31, hash = 0, mod = 1000000007;
         for (int i = 0; i < phone_number.length(); i++) {
             hash *= p;
@@ -218,5 +258,4 @@ public class User {
         }
         return hash;
     }
-
 }

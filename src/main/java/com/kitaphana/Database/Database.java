@@ -1,5 +1,4 @@
 package com.kitaphana.Database;
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class Database {
@@ -17,7 +16,7 @@ public class Database {
         return db;
     }
 
-    public Connection connect() throws SQLException {
+    public Connection connect() throws SQLException  {
 
         if (con != null) return null;
         try {

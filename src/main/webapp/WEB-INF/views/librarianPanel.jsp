@@ -9,11 +9,6 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/tables.css"
           rel="stylesheet">
-    <script>
-        function submitMyForm(){
-            document.forms["approval"].submit();
-        }
-    </script>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -38,7 +33,7 @@
             <a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab" aria-controls="waitinglist" aria-selected="false">Waiting list</a>
         </li>
     </ul>
-    <div class="tab-content users" id="myTabContent">
+    <div class="tab-content users" id="myTabContent" style="position: relative !important; top:0px !important; margin-left: 0px !important;">
         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark">
@@ -57,35 +52,34 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="user" items="${users}">
+                     <c:forEach var="user" items="${users}">
                         <tr>
-                            <td>${user.id}</td>
-                            <td>${user.name}</td>
-                            <td>${user.surname}</td>
-                            <td>${user.card_number}</td>
-                            <td>${user.possible_type}</td>
+                            <td>${user.getId()}</td>
+                            <td>${user.getName()}</td>
+                            <td>${user.getSurname()}</td>
+                            <td>${user.getCardNumber()}</td>
+                            <td>${user.getPossibleType()}</td>
                             <td>
-                                <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/doc.png">
+                                <a href="/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/doc.png">
                                 </a>
                             </td>
                             <td>
-                                <a href="/docsOfUser?id=${user.id}"><img itemprop="image" src="/resources/images/clock.png">
+                                <a href="/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/clock.png">
                                 </a>
                             </td>
                             <td>
-                                <c:set var="type" value="${user.type}"/>
-                                <c:set var="possible_type" value="${user.possible_type}"/>
-                                <c:if test="${!type.equals('Patron') && type.equals(possible_type)}">
-                                    <a href=""><img itemprop="image" src="/resources/images/ok.png">
-                                    </a>
+                                <c:set var="type" value="${user.getType()}"/>
+                                <c:set var="possibleType" value="${user.getPossibleType()}"/>
+                                <c:if test="${!type.equals('Patron') && type.equals(possibleType)}">
+                                    <img itemprop="image" src="/resources/images/ok.png">
                                 </c:if>
                             </td>
                             <td>
-                                <a href="/editUser?id=${user.id}"><img itemprop="image" src="/resources/images/pencil.png">
+                                <a href="/editUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/pencil.png">
                                 </a>
                             </td>
                             <td>
-                                <a href="/deleteUser?id=${user.id}"><img itemprop="image" src="/resources/images/bin.png">
+                                <a href="/deleteUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/bin.png">
                                 </a>
                             </td>
                         </tr>
@@ -93,7 +87,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-primary btn-block col-12 col-md-3" id = "btn" href="${pageContext.request.contextPath}/addUser">Add new User</a>
+                    <a class="btn btn-primary btn-block col-12 col-md-3 link" id = "btn" href="/addUser">Add new User</a>
                 </div>
             </div>
         </div>
@@ -114,33 +108,29 @@
                     </thead>
                     <tbody>
                     <c:forEach var="doc" items="${docs}">
-                        <tr>
-                            <td>${doc.id}</td>
-                            <td>
-                                <a class="title" href="/document2?id=${doc.id}">${doc.title}</a>
-                            </td>
-                            <td>${doc.authors}</td>
-                            <td>${doc.type}</td>
-                            <td>${doc.amount}</td>
-                            <td>
-                                <a href="/holders?id=${doc.id}"><img itemprop="image" src="/resources/images/user.png">
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/editDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/pencil.png">
-                                </a>
-                            </td>
-                            <td>
-                                <a href="/deleteDoc?id=${doc.id}"><img itemprop="image" src="/resources/images/bin.png">
-                                </a>
-                            </td>
-
-                        </tr>
+                    <tr>
+                        <td>${doc.getId()}</td>
+                        <td>
+                            <a class="title" href="/document2?id=${doc.getId()}">${doc.getTitle()}</a>
+                        </td>
+                        <td>${doc.getAuthors()}</td>
+                        <td>${doc.getType()}</td>
+                        <td>${doc.getAmount()}</td>
+                        <td>
+                            <a href="/holders?id=${doc.getId()}"><img itemprop="image" src="/resources/images/user.png"></a>
+                        </td>
+                        <td>
+                            <a href="/editDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a>
+                        </td>
+                        <td>
+                            <a href="/deleteDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/bin.png"></a>
+                        </td>
+                    </tr>
                     </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-primary btn-block col-12 col-md-3" href="/addDocument">Add new Document</a>
+                    <a class="btn btn-primary btn-block col-12 col-md-3 link"  href="/addDocument">Add new Document</a>
                 </div>
             </div>
         </div>
@@ -148,39 +138,46 @@
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark">
                     <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name Surname</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Approve</th>
-                        <th scope="col">Disapprove</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name Surname</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Approve</th>
+                            <th scope="col">Disapprove</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="user_checkout" items="${users_checkout}">
-                        <c:forEach var="user_checkout_doc" items="${user_checkout.documents}">
-                            <tr>
-                                <td>${user_checkout.id}</td>
-                                <td>${user_checkout.name} ${user_checkout.surname}</td>
-                                <td>${user_checkout.type}</td>
-                                <td>
-                                    <a class="title" href="">${user_checkout_doc.title}</a>
-                                </td>
-                                <td>${user_checkout_doc.type}</td>
-                                <td>
-                                    <a href="/librarianPanel?id_user=${user_checkout.id}&id_doc=${user_checkout_doc.id}">
-                                        <image itemprop="image" src="/resources/images/ok.png">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href=""><img itemprop="image" src="/resources/images/remove.png">
-                                    </a>
-                                </td>
-                            </tr>
+                        <c:forEach var="user" items="${usersCheckouts}">
+                            <c:forEach var="doc" items="${user.getDocumentsArray()}">
+                                <tr>
+                                    <td>${user.getId()}</td>
+                                    <td>${user.getName()} ${user.getSurname()}</td>
+                                    <td>${user.getType()}</td>
+                                    <td>
+                                        <a class="title" href="/document2?id=${doc.getId()}">${doc.getTitle()}</a>
+                                    </td>
+                                    <td>${doc.getType()}</td>
+                                    <td>
+                                        <form method="POST" action="/librarianPanel">
+                                            <input type="hidden" name="checkout_approval" value="1">
+                                            <input type="hidden" name="doc_id" value="${doc.getId()}">
+                                            <input type="hidden" name="user_id" value="${user.getId()}">
+                                            <input type="image" style="border-style: none" src="/resources/images/ok.png"/>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="POST" action="/librarianPanel">
+                                            <input type="hidden" name="checkout_disapproval" value="1">
+                                            <input type="hidden" name="doc_id" value="${doc.getId()}">
+                                            <input type="hidden" name="user_id" value="${user.getId()}">
+                                            <input type="image" style="border-style: none" src="/resources/images/remove.png"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </c:forEach>
-                    </c:forEach>
                     </tbody>
                 </table>
             </div>
@@ -201,22 +198,30 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${renews}" var="user">
-                        <c:forEach items="${user.documents}" var="doc">
+                        <c:forEach items="${user.getDocumentsArray()}" var="doc">
                             <tr>
-                                <td>${user.id}</td>
-                                <td>${user.name} ${user.surname}</td>
-                                <td>${user.type}</td>
+                                <td>${user.getId()}</td>
+                                <td>${user.getName()} ${user.getSurname()}</td>
+                                <td>${user.getType()}</td>
                                 <td>
-                                    <a class="title" href="">${doc.title}</a>
+                                    <a class="title" href="">${doc.getTitle()}</a>
                                 </td>
-                                <td>${doc.type}</td>
+                                <td>${doc.getType()}</td>
                                 <td>
-                                    <a href=""><img itemprop="image" src="/resources/images/ok.png">
-                                    </a>
+                                    <form method="POST" action="/librarianPanel">
+                                        <input type="hidden" name="renew_approval" value="1">
+                                        <input type="hidden" name="doc_id" value="${doc.getId()}">
+                                        <input type="hidden" name="user_id" value="${user.getId()}">
+                                        <input type="image" style="border-style: none" src="/resources/images/ok.png"/>
+                                    </form>
                                 </td>
                                 <td>
-                                    <a href=""><img itemprop="image" src="/resources/images/remove.png">
-                                    </a>
+                                    <form method="POST" action="/librarianPanel">
+                                        <input type="hidden" name="renew_disapproval" value="1">
+                                        <input type="hidden" name="doc_id" value="${doc.getId()}">
+                                        <input type="hidden" name="user_id" value="${user.getId()}">
+                                        <input type="image" style="border-style: none" src="/resources/images/remove.png"/>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -236,27 +241,26 @@
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
                         <th scope="col">Approve</th>
-                        <th scope="col">Disapprove</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${returns}" var="user">
-                        <c:forEach items="${user.documents}" var="doc">
+                        <c:forEach items="${user.getDocumentsArray()}" var="doc">
                             <tr>
-                                <td>${user.id}</td>
-                                <td>${user.name} ${user.surname}</td>
-                                <td>${user.type}</td>
+                                <td>${user.getId()}</td>
+                                <td>${user.getName()} ${user.getSurname()}</td>
+                                <td>${user.getType()}</td>
                                 <td>
-                                    <a class="title" href="">${doc.title}</a>
+                                    <a class="title" href="">${doc.getTitle()}</a>
                                 </td>
-                                <td>${doc.type}</td>
+                                <td>${doc.getType()}</td>
                                 <td>
-                                    <a href=""><img itemprop="image" src="/resources/images/ok.png">
-                                    </a>
-                                </td>
-                                <td>
-                                    <a href=""><img itemprop="image" src="/resources/images/remove.png">
-                                    </a>
+                                    <form method="POST" action="/librarianPanel">
+                                        <input type="hidden" name="return_approval" value="1">
+                                        <input type="hidden" name="doc_id" value="${doc.getId()}">
+                                        <input type="hidden" name="user_id" value="${user.getId()}">
+                                        <input type="image" style="border-style: none" src="/resources/images/ok.png"/>
+                                    </form>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -278,19 +282,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${waiting_list}" var="doc">
-                        <tr>
-                            <td>${doc.id}</td>
-                            <td>
-                                <a class="title" href="/document2?id=${doc.id}">${doc.title}</a>
-                            </td>
-                            <td>${doc.type}</td>
-                            <td>${doc.requests}</td>
-                            <td>
-                                <a href="/awaiters?doc_id=${doc.id}"><img itemprop="image" src="/resources/images/people.png">
-                                </a>
-                            </td>
-                        </tr>
+                    <c:forEach items="${waitingList}" var="doc">
+                    <tr>
+                        <td>${doc.getId()}</td>
+                        <td>
+                            <a class="title" href="/document2?id=${doc.getId()}">${doc.getTitle()}</a>
+                        </td>
+                        <td>${doc.getType()}</td>
+                        <td>${doc.getRequests()}</td>
+                        <td>
+                            <a href="/awaiters?doc_id=${doc.getId()}"><img itemprop="image" src="/resources/images/people.png">
+                            </a>
+                        </td>
+
+                    </tr>
                     </c:forEach>
                     </tbody>
                 </table>

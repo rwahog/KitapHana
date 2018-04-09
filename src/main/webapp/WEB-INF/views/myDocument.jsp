@@ -39,32 +39,32 @@
                     <tbody>
                     <c:set var="count" value="1" scope="page" />
                     <c:forEach var="doc" items="${myDocs}">
-                        <tr>
-                            <td>${count}</td>
-                            <td>
-                                <a class="title" href="">${doc.getTitle()}
-                                </a>
-                            </td>
-                            <td>${doc.authors}</td>
-                            <td>${doc.type}</td>
-                            <c:choose>
-                                <c:when test="${doc.fine != null && doc.fine != 0}">
-                                    <td>${doc.fine} &#8381;</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td>${doc.deadline} days</td>
-                                </c:otherwise>
-                            </c:choose>
-                            <form action="/myDocs" method="POST">
-                                <td>
-                                    <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
-                                </td>
-                            </form>
-                            <c:set var="count" value="${count + 1}" scope="page"/>
-                            <td>
-                                <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Renew</button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>${count}</td>
+                        <td>
+                            <a class="title" href="">${doc.getTitle()}
+                            </a>
+                        </td>
+                        <td>${doc.getAuthors()}</td>
+                        <td>${doc.getType()}</td>
+                        <c:choose>
+                            <c:when test="${doc.fine != null && doc.fine != 0}">
+                                <td>${doc.getFine()} &#8381;</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>${doc.deadline} days</td>
+                            </c:otherwise>
+                        </c:choose>
+                        <form action="/myDocs" method="POST">
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
+                        </td>
+                        <c:set var="count" value="${count + 1}" scope="page"/>
+                        <td>
+                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="renew" value="${doc.id}">Renew</button>
+                        </td>
+                        </form>
+                    </tr>
                     </c:forEach>
                     </tbody>
                 </table>
@@ -82,24 +82,31 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <a class="title" href="">Touch of class
-                            </a>
-                        </td>
-                        <td>Ber Meyer</td>
-                        <td>Book</td>
-                    </tr>
+                        <c:set var="count" value="1" scope="page" />
+                        <c:forEach var="doc" items="${myWaitings}">
+                        <tr>
+                            <td>${count}</td>
+                            <td>
+                                <form method="POST">
+                                    <input type="hidden" name="doc_button_available" value="true"/>
+                                    <a class="title" href="/document?id=${doc.getId()}" target="_blank" >${doc.getTitle()}</a>
+                                </form>
+                            </td>
+                            <td>${doc.getAuthors()}</td>
+                            <td>${doc.getType()}</td>
+                        </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </main>
+
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/librarianPanel.js"></script>
 </body>
 </html>

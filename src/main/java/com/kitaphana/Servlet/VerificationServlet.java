@@ -20,9 +20,6 @@ public class VerificationServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
-        //request.getRequestDispatcher("/WEB-INF/views/verification.jsp").forward(request, response);
     }
     
     @Override

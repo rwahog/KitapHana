@@ -3,6 +3,7 @@ package com.kitaphana.Service;
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.User;
+import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.userDAOImpl;
 
 import java.sql.ResultSet;
@@ -15,14 +16,11 @@ public class MyDocumentsService {
 
     Database db = Database.getInstance();
     userDAOImpl userDAO = new userDAOImpl();
+    documentDAOImpl documentDAO = new documentDAOImpl();
+    DBService dbService = new DBService();
 
     public ArrayList<Document> setDocs(String id) {
         ArrayList<Document> docs = new ArrayList<>();
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         try {
             ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines FROM users WHERE id = '" + id + "'");
             while (rs.next()) {
@@ -52,25 +50,22 @@ public class MyDocumentsService {
         return docs;
     }
 
-    public void renewDoc(String doc_id, String user_id) throws SQLException {
-        User user = userDAO.findById(Long.parseLong(user_id));
-        ArrayList<String> docs = new ArrayList(Arrays.asList(user.getId_documents().split(",")));
-        ArrayList<String> deadlines = new ArrayList<>(Arrays.asList(user.getDeadlines().split(",")));
-        int index = docs.indexOf(doc_id);
-        docs.remove(index);
-        deadlines.remove(index);
-        String docs_str = "";
-        String deadlines_str = "";
-        if (docs.size() == 1) {
-            docs_str = docs.get(0);
-            deadlines_str = deadlines.get(0);
-        } else {
-            for (int i = 0; i < docs.size(); i++) {
-                docs_str = docs_str.concat(","+docs.get(i));
-                deadlines_str = deadlines_str.concat(","+deadlines.get(i));
+    public ArrayList<Document> setWaitingsInfo(Long user_id) throws SQLException {
+        ArrayList<Document> waitings = new ArrayList<>();
+        User user = userDAO.findById(user_id);
+        String user_waitlist = user.getWaitingList();
+        if (user_waitlist != null && user_waitlist.length() != 0) {
+            ArrayList<String> docs = new ArrayList<>(Arrays.asList(user_waitlist.split(",")));
+            for (String id_doc : docs) {
+                Document document = documentDAO.findById(Long.parseLong(id_doc));
+                waitings.add(document);
             }
         }
-        user.setId_documents(docs_str);
+        return waitings;
+    }
+
+    public void renewDoc(String doc_id, String user_id) {
+        User user = userDAO.findById(Long.parseLong(user_id));
         String user_renews = user.getRenews();
         if (user_renews != null && user_renews.length() != 0) {
             user.setRenews(user_renews.concat("," + doc_id));
@@ -80,57 +75,27 @@ public class MyDocumentsService {
         userDAO.update(user);
     }
 
-    public void returnDoc(String DocId, String id) {
-        List<String> deadlines;
-        List<String> docs;
-        List<String> users;
-        int amount;
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void returnDoc(String docId, String userId) {
+        String returns = dbService.findColumn(userId, "users", "returns");
+        if (returns != null && returns.length() != 0) {
+            returns = returns.concat("," + docId);
+        } else {
+            returns = docId;
         }
-
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines FROM users WHERE id = '" + id + "'");
-            while (rs.next()) {
-                docs = new ArrayList<String>(Arrays.asList(rs.getString("documents").split(",")));
-                deadlines = new ArrayList<String>(Arrays.asList(rs.getString("deadlines").split(",")));
-                deadlines.remove(docs.indexOf(DocId));
-                docs.remove(docs.indexOf(DocId));
-                String newDocs = String.join(",", docs);
-                String newDeadlines = String.join(",", deadlines);
-                db.runSqlUpdate("UPDATE users SET documents = '" + newDocs + "', deadlines = '" + newDeadlines + "' WHERE id = '" + id + "'");
-            }
-            rs = db.runSqlQuery("SELECT documents.users, documents.amount FROM documents WHERE id = '" + DocId + "'");
-            while (rs.next()) {
-                users = new ArrayList<String>(Arrays.asList(rs.getString("users").split(",")));
-                users.remove(users.indexOf(id));
-                String newUsers = String.join(",", users);
-                amount = rs.getInt("amount") + 1;
-                db.runSqlUpdate("UPDATE documents SET users = '" + newUsers + "', amount = '" + amount + "' WHERE id = '" + DocId + "'");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        dbService.updateColumn(userId, returns, "users", "returns");
     }
-    public ArrayList setNameAndSurname(String id) {
-        ArrayList name = new ArrayList();
+
+    public ArrayList<String> setNameAndSurname(String id) {
+        ArrayList<String> nameAndSurname = new ArrayList<>();
         try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.id = '"+id+"';");
-            while (rs.next()) {
-                name.add(rs.getString("name"));
-                name.add(rs.getString("surname"));
-            }
+            String name = dbService.findColumn(id, "users", "name");
+            String surname = dbService.findColumn(id, "users", "surname");
+            nameAndSurname.add(name);
+            nameAndSurname.add(surname);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return name;
+        return nameAndSurname;
     }
 }

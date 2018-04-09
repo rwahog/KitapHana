@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @WebServlet(urlPatterns = "/myDocs")
 public class MyDocumentsServlet extends HttpServlet {
@@ -23,7 +24,13 @@ public class MyDocumentsServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         ArrayList<Document> docs = service.setDocs(session.getAttribute("id").toString());
-        session.setAttribute("myDocs", docs);
+        try {
+            ArrayList<Document> waitings = service.setWaitingsInfo(Long.parseLong(session.getAttribute("id").toString()));
+            request.setAttribute("myWaitings", waitings);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("myDocs", docs);
         try {
             new LoginService().redirect(request, response, "myDocument", false);
         } catch (SQLException e) {
@@ -39,9 +46,9 @@ public class MyDocumentsServlet extends HttpServlet {
         if (button != null) {
             service.returnDoc(button, session.getAttribute("id").toString());
             response.sendRedirect("/myDocs?id=" + session.getAttribute("id"));
-        }
-        else if (renew_button != null) {
-
+        } else if (renew_button != null) {
+            service.renewDoc(renew_button, session.getAttribute("id").toString());
+            response.sendRedirect("myDocs?id=" + session.getAttribute("id") );
         }
     }
 }

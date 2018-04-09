@@ -41,12 +41,17 @@ public class TelegramBot extends TelegramLongPollingBot {
                 sendMsg(chatId, "Enter your phone number in KitapHana library system to attach your account");
             } else if (mes.matches("[0-9]+")) {
                 try {
-                    User user = userDAO.findByPhoneNumber(mes);
-                    user.setChat_id(chatId);
+                    User user = userDAO.findByChatId(chatId);
+                    if (user != null) {
+                        user.setChatId(0);
+                        userDAO.update(user);
+                    }
+                    user = userDAO.findByPhoneNumber(mes);
+                    user.setChatId(chatId);
                     userDAO.update(user);
                     sendMsg(chatId, "Dear " + user.getName() +
                                             "\nYou have successfully attached your account. All important notifications will be sent there!");
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     sendMsg(chatId, "Sorry we cannot find this account in KitapHana");
                 }
             } else {

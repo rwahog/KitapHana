@@ -1,14 +1,12 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.User;
 import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.userDAOImpl;
 
-import javax.print.Doc;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,29 +17,24 @@ public class UserService {
     userDAOImpl userDAO = new userDAOImpl();
     addressDAOImpl addressDAO = new addressDAOImpl();
     documentDAOImpl documentDAO = new documentDAOImpl();
-
-    public ArrayList<User> setUsersInfo() throws SQLException {
-        ArrayList<User> users = userDAO.findAll();
-        return users;
-    }
+    DBService dbService = new DBService();
 
     public long getUserId(String phone) {
-        final String query = "SELECT users.id FROM users WHERE users.phone_number=?";
-        long id = 0;
-        try {
-            PreparedStatement ps = db.connect().prepareStatement(query);
-            ps.setString(1, phone);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                id = rs.getLong("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
+        return Long.parseLong(dbService.findColumn(phone, "users", "id", "phone_number"));
     }
 
-    public long getCharId(String phone) {
+    public long getUserAddressId(long id) {
+        return Long.parseLong(dbService.findColumn(String.valueOf(id), "users", "id_address"));
+    }
+
+    public User findUserById(long id) {
+        User user;
+        user = userDAO.findById(id);
+        user.setAddress(addressDAO.findById(user.getAddressId()));
+        return user;
+    }
+
+    public long getChatId(String phone) {
         final String query = "SELECT users.id FROM users WHERE users.chat_id=?";
         long char_id = 0;
         try {
@@ -57,86 +50,30 @@ public class UserService {
         return char_id;
     }
 
-    public long getUserId_address(long id) {
-        final String query = "SELECT users.id_address FROM users WHERE users.id=?";
-        long id_address = 0;
-        try {
-            PreparedStatement ps = db.con.prepareStatement(query);
-            ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                id_address = rs.getLong("id_address");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id_address;
-    }
-
-    public User createUser(String name, String surname, String phone_number, String password,
-                           String email, Address address, String possible_type) {
-        return new User(name, surname, phone_number, password, email, address, possible_type);
-    }
-
-    public User findUserById(long id) throws SQLException {
-        User user = userDAO.findById(id);
-        user.setAddress(addressDAO.findById(user.getId_address()));
-        return user;
-    }
-    public User findUserByChatId(long chatId) throws SQLException {
-        User user = userDAO.findByCharId(chatId);
+    public User findUserByPhoneNumber(String phone) {
+        User user;
+        user = userDAO.findByPhoneNumber(phone);
+        user.setAddress(addressDAO.findById(user.getAddressId()));
         return user;
     }
 
-    public User findUserByPhoneNumber(String phone) throws SQLException {
-        User user = userDAO.findByPhoneNumber(phone);
-        user.setAddress(addressDAO.findById(user.getId_address()));
-        return user;
-    }
-
-    public ArrayList<User> findAlL() throws SQLException {
+    public ArrayList<User> findAll() {
         return userDAO.findAll();
     }
 
-//    public void deleteUserDocs(long id) throws SQLException {
-//         User user = userDAO.findById(id);
-//         String docs_id = user.getId_documents();
-//         if (docs_id == null || docs_id.length() == 0) {
-//             return;
-//         }
-//         ArrayList<String> docs_id_arr = user.getDocumentsAsArray();
-//         for (int i = 0; i < docs_id_arr.size(); i++) {
-//             Document doc = documentDAO.findById(Long.parseLong(docs_id_arr.get(i)));
-//             doc.setAmount(doc.getAmount() + 1);
-//             ArrayList<String> docs = doc.getUsersAsArray();
-//             docs.remove(String.valueOf(id));
-//             String full = "";
-//             for (String usr: docs) {
-//                 full = full.concat(usr);
-//             }
-//             doc.setUsers();
-//             documentDAO.update(doc);
-//         }
-//    }
 
-    public void deleteUserAddress(long id) throws SQLException {
-        addressDAO.delete(getUserId_address(id));
+    public void deleteUserAddress(long id) {
+        addressDAO.delete(getUserAddressId(id));
     }
 
-    public void deleteUser(long id) throws SQLException {
+    public void deleteUser(long id) {
         User user = userDAO.findById(id);
-        if ((user.getId_documents() != null && user.getId_documents().length() != 0) || (user.getFine() != 0)) {
+        if ((user.getDocuments() != null && user.getDocuments().length() != 0) || (user.getFine() != "")) {
             return;
         } else {
             deleteUserAddress(id);
             userDAO.delete(id);
         }
-    }
-
-    public User setUserInfo(long id) throws SQLException {
-        User user = userDAO.findById(id);
-        user.setAddress(addressDAO.findById(user.getId_address()));
-        return user;
     }
 
     public boolean isValid(long id, String phone_number, String password1, String password2) {
@@ -155,14 +92,24 @@ public class UserService {
         return false;
     }
 
-    public void editUser(User user) throws SQLException {
+    public void editUser(User user) {
         addressDAO.update(user.getAddress());
         userDAO.update(user);
     }
 
-    public ArrayList<Document> fillPage(long id) throws SQLException {
+    public void editUserInfo(User user, String type) {
+        addressDAO.update(user.getAddress());
+        userDAO.updateUserInfo(user, type);
+        if (!user.getType().equals(user.getPossibleType())) {
+            dbService.sendMessageToLibrarians("User" + user.getName() + " " +
+                            user.getSurname() + "(id: " + user.getId() + ")" +
+                            "has unconfirmed type.");
+        }
+    }
+
+    public ArrayList<Document> fillPage(long id) {
         ArrayList<Document> documents = new ArrayList<>();
-        String ids = userDAO.findById(id).getId_documents();
+        String ids = userDAO.findById(id).getDocuments();
         if (ids == null || ids.length() == 0) {
             return null;
         }
@@ -174,28 +121,6 @@ public class UserService {
         }
         return documents;
     }
-
-    public ArrayList setNameAndSurname(String id) {
-        ArrayList name = new ArrayList();
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT users.name, users.surname FROM users WHERE users.id = '"+id+"';");
-            while (rs.next()) {
-                name.add(rs.getString("name"));
-                name.add(rs.getString("surname"));
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return name;
-    }
-
-
 
     public boolean checkIfPossibleToRegister(String phone_number, String password1, String password2) {
         boolean possible = false;
@@ -211,9 +136,18 @@ public class UserService {
         return possible;
     }
 
-    public void saveUser(User user) throws SQLException {
+    public void saveUser(User user) {
         addressDAO.insert(user.getAddress());
-        user.setId_address(addressDAO.findLastId());
+        user.setAddressId(addressDAO.findLastId());
         userDAO.insert(user);
+    }
+
+    public boolean isLibrarian(String phone_number) {
+        boolean isLib = false;
+            User user = userDAO.findByPhoneNumber(phone_number);
+            if (user.getType().equals("Librarian")) {
+                isLib = true;
+            }
+        return isLib;
     }
 }

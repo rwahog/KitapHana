@@ -15,7 +15,7 @@
 <main class="body container">
     <div class="panel container-fluid mx-auto px-0">
         <h2>
-            Documents ${user.name} ${user.surname}
+            Documents ${name} ${surname}
         </h2>
         <table class="table table-hover table-dark documents">
             <thead>
@@ -29,20 +29,20 @@
             </thead>
             <tbody>
             <c:forEach var="doc" items="${docs}">
-                <tr>
-                    <td>${doc.id}</td>
-                    <td>${doc.title}</td>
-                    <td>${doc.authors}</td>
-                    <td>${doc.type}</td>
-                    <c:choose>
-                        <c:when test="${doc.fine != null && doc.fine != 0}">
-                            <td>${doc.fine} &#8381;</td>
-                        </c:when>
-                        <c:otherwise>
-                            <td>${doc.deadline} days</td>
-                        </c:otherwise>
-                    </c:choose>
-                </tr>
+            <tr>
+                <td>${doc.getId()}</td>
+                <td>${doc.getTitle()}</td>
+                <td>${doc.getAuthors()}</td>
+                <td>${doc.getType()}</td>
+                <c:choose>
+                    <c:when test="${doc.fine != null && doc.fine != 0}">
+                    <td>${doc.getFine()} &#8381;</td>
+                    </c:when>
+                    <c:otherwise>
+                        <td>${doc.deadline} days</td>
+                    </c:otherwise>
+                </c:choose>
+            </tr>
             </c:forEach>
             </tbody>
         </table>

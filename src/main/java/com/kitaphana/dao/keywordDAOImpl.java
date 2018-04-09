@@ -11,14 +11,14 @@ import java.util.ArrayList;
 public class keywordDAOImpl implements keywordDAO {
 
     Database db = Database.getInstance();
+    commonDAOImpl commonDAO = new commonDAOImpl();
     private static final String FIND_BY_ID = "SELECT * FROM keywords WHERE id=?";
     private static final String FIND_BY_KEYWORD = "SELECT * FROM keywords WHERE keyword=?";
     private static final String FIND_ALL = "SELECT * FROM keywords";
     private static final String INSERT = "INSERT INTO keywords (keyword, documents) VALUES (?,?)";
-    private static final String DELETE = "DELETE FROM keywords WHERE id=?";
     private static final String UPDATE = "UPDATE keywords SET keyword=?, documents=? WHERE id=?";
 
-    public Keyword findByKeyword(String key) throws SQLException {
+    public Keyword findByKeyword(String key) {
         Keyword keyword = null;
 
         try {
@@ -30,7 +30,8 @@ public class keywordDAOImpl implements keywordDAO {
             if (rs.next()) {
                 keyword = new Keyword(key);
                 keyword.setId(rs.getLong("id"));
-                keyword.setId_documents(rs.getString("documents"));
+                keyword.setDocumentsId(rs.getString("documents"));
+                keyword.setKeyword(rs.getString("keyword"));
             }
 
             ps.close();
@@ -43,7 +44,7 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     @Override
-    public Keyword findById(long id) throws SQLException {
+    public Keyword findById(long id) {
         Keyword keyword = null;
 
         try {
@@ -54,7 +55,8 @@ public class keywordDAOImpl implements keywordDAO {
             if (rs.next()) {
                 keyword = new Keyword();
                 keyword.setKeyword(rs.getString("keyword"));
-                keyword.setId_documents(rs.getString("documents"));
+                keyword.setId(rs.getLong("id"));
+                keyword.setDocumentsId(rs.getString("documents"));
             }
 
             rs.close();
@@ -67,7 +69,7 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     @Override
-    public ArrayList<Keyword> findAll() throws SQLException {
+    public ArrayList<Keyword> findAll() {
         ArrayList<Keyword> keywords = new ArrayList<>();
 
         try {
@@ -77,7 +79,7 @@ public class keywordDAOImpl implements keywordDAO {
                 Keyword keyword = new Keyword();
 
                 keyword.setKeyword(rs.getString("keyword"));
-                keyword.setId_documents(rs.getString("documents"));
+                keyword.setDocumentsId(rs.getString("documents"));
                 keyword.setId(rs.getInt("id"));
 
                 keywords.add(keyword);
@@ -93,11 +95,11 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     @Override
-    public void insert(Keyword object) throws SQLException {
+    public void insert(Keyword object) {
         try {
             PreparedStatement ps = db.con.prepareStatement(INSERT);
             ps.setString(1, object.getKeyword());
-            ps.setString(2, object.getId_documents());
+            ps.setString(2, object.getDocumentsId());
 
             ps.executeUpdate();
             ps.close();
@@ -107,11 +109,11 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     @Override
-    public void update(Keyword object) throws SQLException {
+    public void update(Keyword object) {
         try {
             PreparedStatement ps = db.con.prepareStatement(UPDATE);
             ps.setString(1, object.getKeyword());
-            ps.setString(2, object.getId_documents());
+            ps.setString(2, object.getDocumentsId());
             ps.setLong(3, object.getId());
 
             ps.executeUpdate();
@@ -122,15 +124,7 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     @Override
-    public void delete(long id) throws SQLException {
-        try {
-            PreparedStatement ps = db.con.prepareStatement(DELETE);
-            ps.setLong(1, id);
-
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(long id) {
+        commonDAO.delete(id, "keywords", "id");
     }
 }

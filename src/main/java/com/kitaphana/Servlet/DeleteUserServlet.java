@@ -17,12 +17,8 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            try {
-                service.deleteUser(Long.parseLong(request.getParameter("id")));
-                response.sendRedirect("/librarianPanel");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+        service.deleteUser(Long.parseLong(request.getParameter("id")));
+        response.sendRedirect("/librarianPanel");
     }
 }
 

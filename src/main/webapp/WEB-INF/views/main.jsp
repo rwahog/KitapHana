@@ -1,4 +1,4 @@
-<%@ page import="com.kitaphana.Service.MainService" %>
+<%@ page import="com.kitaphana.Service.UserService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
@@ -16,26 +16,70 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
+<nav class="navbar search-menu">
+    <form class="form-group col-4">
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    </form>
+    <div class="form-group col-3">
+        <select id="searchBy" class="form-control">
+            <option selected>Title</option>
+            <option>Author</option>
+            <option>Keywords</option>
+        </select>
+    </div>
+    <div class="checkbox col-2">
+        <label>
+            <input type="checkbox" value="notref" id = "notref"> Not reference
+        </label>
+    </div>
+    <div class="checkbox col-2">
+        <label>
+            <input type="checkbox" value="bestseller" id = "bestseller"> Bestseller
+        </label>
+    </div>
+
+    <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
+</nav>
+
+<main class="body container">
+<div class="tab-content">
+    <ul class="nav type" id="myTab" role="tablist">
+        <li class="type">
+            <a class="nav-link active" id="books-tab" data-toggle="tab" href="#books" role="tab" aria-controls="books" aria-selected="true">Books</a>
+        </li>
+        <li class="type">
+            <a class="nav-link" id="journals-tab" data-toggle="tab" href="#journals" role="tab" aria-controls="journals" aria-selected="false">Journals</a>
+        </li>
+        <li class="type">
+            <a class="nav-link" id="AVmaterials-tab" data-toggle="tab" href="#AVmaterials" role="tab" aria-controls="AVmaterials" aria-selected="false">AV Materials</a>
+        </li>
+    </ul>
+    <div class="tab-content books" id="myTabContent">
+        <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+        </div>
+    </div>
+</div>
+
 <div class="cards container">
     <c:forEach var="document" items="${list}">
         <div class="col-lg-4 col-6 card-holder">
             <div class="card">
                 <div class="img-container">
-                    <img class="card-img-top" src="/resources/images/${document.cover}" alt="Card image cap">
+                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
                 </div>
                 <div class="card-body">
-                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.id}" name="title"><c:out value="${document.title}"/></a>
-
-
-                    <p class="card-text"><c:out value="${document.authors}"/></p>
+                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                        <c:out value="${document.getTitle()}"/></a>
+                    <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
                     <p class="card-text">
-                        <small class="text-muted"><c:out value="${document.keywords}"/></small>
+                        <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
                     </p>
                 </div>
             </div>
         </div>
     </c:forEach>
 </div>
+</main>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
