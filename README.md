@@ -6,7 +6,7 @@ Introduction to Programming project by students of BS1-6 group, team: Aygul Mali
 Victoria Zubrinkina, Georgy Khorushevsky 
 # Contents
   + <a href="#main">Main scheme</a>
-  + <a href="#arc">Architecture of the website</a>
+  + <a href="#arc">Users hierarchy</a>
   + <a href="#imp">Implementation</a>
     + <a href="#doc">Documentation</a>
     + <a href="#user">Users</a>
@@ -27,7 +27,7 @@ Patrons are able survey diffrent documents on the main page and check them out f
 Librarins are used to manage their moves and them as objects. 
 <a name="arc"> 
    
-# Architecture of the website
+# Users hierarchy
 </a> 
  <img src="ProvidedDoc/scheme.jpg" alt="ProvidedDoc/scheme.jpg"> 
 <a name="imp">
@@ -107,7 +107,8 @@ defined in a few special Librarian servlets.
  <img src="ProvidedDoc/checkout.jpg" alt="ProvidedDoc/scheme.jpg"> 
 <a name="imp">
   
-Every time user check out document - mount of copies in the library decrease.
+Every time user check out document. Then Librarian should approve it. After that patron receive appropriate document or 
+goes to the queue. Also there is an option to renew document (only once!).
 <a name="InstAndL">
   
 # Usage
@@ -126,6 +127,8 @@ Every time user check out document - mount of copies in the library decrease.
 #### Install mySql
 
   + use <a href="ProvidedDoc/mysql.pdf">This guide</a>
+#### Install Telegram
+  + use <a href="https://desktop.telegram.org/">This guide</a>
 <a name="launch"> 
    
 ## Launching the project
@@ -163,6 +166,7 @@ To expect the library one can use one of pre-signed up users:
          <li> password  - 123
      </ul>
 or simply provide registration
+     Also run Telegram bot using <a href="ProvidedDoc/tg.pdf">this guide</a>
 <a name="test">
  
 # Testing:
