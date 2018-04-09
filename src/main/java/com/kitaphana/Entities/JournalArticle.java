@@ -3,12 +3,12 @@ package com.kitaphana.Entities;
 import java.util.ArrayList;
 
 public class JournalArticle extends Document {
-    protected String journal_name, date, title;
+    protected String journalName, date, title;
     protected String editors;
-    protected long id, document_id;
+    protected long id, documentId;
 
-    public JournalArticle(String journal_name, String date, String title, String editors) {
-        this.journal_name = journal_name;
+    public JournalArticle(String journalName, String date, String title, String editors) {
+        this.journalName = journalName;
         this.date = date;
         this.title = title;
         this.editors = editors;
@@ -16,9 +16,9 @@ public class JournalArticle extends Document {
 
     public JournalArticle(String title, String authors, String keywords, int price,
                           int amount, String type, String description,
-                          String journal_name, String date, String editors) {
+                          String journalName, String date, String editors) {
         super(title, authors, keywords, price, amount, type, description);
-        this.journal_name = journal_name;
+        this.journalName = journalName;
         this.date = date;
         this.title = title;
         this.editors = editors;
@@ -35,8 +35,8 @@ public class JournalArticle extends Document {
         this.title = title;
     }
 
-    public void setJournal_name(String journal_name) {
-        this.journal_name = journal_name;
+    public void setJournalName(String journal_name) {
+        this.journalName = journal_name;
     }
 
     public void setDate(String date) {
@@ -47,12 +47,12 @@ public class JournalArticle extends Document {
         this.editors = editors;
     }
 
-    public void setDocument_id(long document_id) {
-        this.document_id = document_id;
+    public void setDocumentId(long document_id) {
+        this.documentId = document_id;
     }
 
-    public String getJournal_name() {
-        return journal_name;
+    public String getJournalName() {
+        return journalName;
     }
 
     public String getDate() {
@@ -71,7 +71,7 @@ public class JournalArticle extends Document {
         return id;
     }
 
-    public long getDocument_id() {
-        return document_id;
+    public long getDocumentId() {
+        return documentId;
     }
 }
