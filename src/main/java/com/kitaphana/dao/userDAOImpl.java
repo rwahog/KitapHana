@@ -80,6 +80,7 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getString("fine"));
                 user.setWaitingList(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
+                user.setReturns(rs.getString("returns"));
                 user.setChatId(rs.getLong("chat_id"));
             }
 
@@ -117,6 +118,7 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getString("fine"));
                 user.setWaitingList(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
+                user.setReturns(rs.getString("returns"));
                 user.setChatId(rs.getLong("chat_id"));
                 users.add(user);
             }

@@ -294,6 +294,7 @@
                             <a href="/awaiters?doc_id=${doc.getId()}"><img itemprop="image" src="/resources/images/people.png">
                             </a>
                         </td>
+
                     </tr>
                     </c:forEach>
                     </tbody>
