@@ -34,7 +34,7 @@ public class UserService {
         return user;
     }
 
-    public long getCharId(String phone) {
+    public long getChatId(String phone) {
         final String query = "SELECT users.id FROM users WHERE users.chat_id=?";
         long char_id = 0;
         try {
@@ -97,9 +97,14 @@ public class UserService {
         userDAO.update(user);
     }
 
-    public void editUserInfo(User user) {
+    public void editUserInfo(User user, String type) {
         addressDAO.update(user.getAddress());
-        userDAO.updateUserInfo(user);
+        userDAO.updateUserInfo(user, type);
+        if (!user.getType().equals(user.getPossibleType())) {
+            dbService.sendMessageToLibrarians("User" + user.getName() + " " +
+                            user.getSurname() + "(id: " + user.getId() + ")" +
+                            "has unconfirmed type.");
+        }
     }
 
     public ArrayList<Document> fillPage(long id) {

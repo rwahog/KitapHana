@@ -2,6 +2,7 @@ package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.User;
+import com.kitaphana.Service.DBService;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,12 +13,14 @@ public class userDAOImpl implements userDAO {
 
     Database db = Database.getInstance();
     commonDAOImpl commonDAO = new commonDAOImpl();
+    DBService dbService = new DBService();
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id=?";
+    private static final String FIND_BY_CHAT_ID = "SELECT * FROM users WHERE chat_id=?";
     private static final String FIND_ALL = "SELECT * FROM users";
-    private static final String INSERT = "INSERT INTO users (name, surname, card_number, phone_number, password, email, id_address, documents, deadlines, type, possible_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT = "INSERT INTO users (name, surname, card_number, phone_number, password, email, id_address, possible_type) VALUES (?,?,?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE users SET name=?, surname=?, card_number=?, phone_number=?, password=?, email=?, documents=?, deadlines=?, type=?, possible_type=?, waiting_list=?, fine=?, renews=?, returns=?, checkouts=?, chat_id=? WHERE id=?";
     private static final String FIND_BY_PHONE_NUMBER = "SELECT * FROM users WHERE phone_number=?";
-    private static final String UPDATE_INFO = "UPDATE users SET name=?, surname=?, card_number=?, phone_number=?, password=?, email=?, possible_type=? WHERE id=?";
+    private static final String UPDATE_INFO = "UPDATE users SET name=?, surname=?, card_number=?, phone_number=?, password=?, email=? WHERE id=?";
 
     @Override
     public User findById(long id) {
@@ -93,6 +96,43 @@ public class userDAOImpl implements userDAO {
         return user;
     }
 
+    public User findByChatId(long id) {
+        User user = null;
+        try {
+            PreparedStatement ps = db.con.prepareStatement(FIND_BY_CHAT_ID);
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setId(rs.getLong("id"));
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setCardNumber(rs.getInt("card_number"));
+                user.setPhoneNumber(rs.getString("phone_number"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setAddressId(rs.getInt("id_address"));
+                user.setDocuments(rs.getString("documents"));
+                user.setDeadlines(rs.getString("deadlines"));
+                user.setType(rs.getString("type"));
+                user.setPossibleType(rs.getString("possible_type"));
+                user.setFine(rs.getString("fine"));
+                user.setWaitingList(rs.getString("waiting_list"));
+                user.setRenews(rs.getString("renews"));
+                user.setReturns(rs.getString("returns"));
+                user.setCheckouts(rs.getString("checkouts"));
+                user.setChatId(rs.getLong("chat_id"));
+                user.setPriority();
+            }
+
+            rs.close();
+            ps.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return user;
+    }
+
     @Override
     public ArrayList<User> findAll() {
         ArrayList<User> users = new ArrayList<>();
@@ -145,10 +185,7 @@ public class userDAOImpl implements userDAO {
             ps.setString(5, object.getPassword());
             ps.setString(6, object.getEmail());
             ps.setLong(7, object.getAddressId());
-            ps.setString(8, object.getDocuments());
-            ps.setString(9, object.getDeadlines());
-            ps.setString(10, object.getType());
-            ps.setString(11, object.getPossibleType());
+            ps.setString(8, object.getPossibleType());
 
             ps.executeUpdate();
             ps.close();
@@ -187,7 +224,7 @@ public class userDAOImpl implements userDAO {
         }
     }
 
-    public void updateUserInfo(User user) {
+    public void updateUserInfo(User user, String type) {
         try {
             PreparedStatement ps = db.con.prepareStatement(UPDATE_INFO);
             ps.setString(1, user.getName());
@@ -196,11 +233,16 @@ public class userDAOImpl implements userDAO {
             ps.setString(4, user.getPhoneNumber());
             ps.setString(5, user.getPassword());
             ps.setString(6, user.getEmail());
-            ps.setString(7, user.getPossibleType());
-            ps.setLong(8, user.getId());
+            ps.setLong(7, user.getId());
 
             ps.executeUpdate();
             ps.close();
+
+            if (type.equals("Librarian")) {
+                dbService.updateColumn(String.valueOf(user.getId()),  user.getType(), "users", "type");
+            } else {
+                dbService.updateColumn(String.valueOf(user.getId()),  user.getPossibleType(), "users", "possible_type");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
