@@ -14,7 +14,6 @@ public class Document {
     protected String description, awaiters;
     protected long id, deadline, fine;
     protected int price, amount, requests;
-    protected ArrayList<User> waiting_list;
 
     public Document(String title, String authors, String keywords, int price,
                     int amount, String type, String description) {
@@ -37,7 +36,7 @@ public class Document {
     public void setCover(String cover) {
         this.cover = cover;
     }
-
+    
     public void setType(String type) {
         this.type = type;
     }
@@ -61,7 +60,7 @@ public class Document {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public void setDescription(String description) {
         this.description = description;
     }
@@ -76,10 +75,6 @@ public class Document {
 
     public void setAwaiters(String awaiters) {
         this.awaiters = awaiters;
-    }
-
-    public void setWaiting_list(ArrayList<User> waiting_list) {
-        this.waiting_list = waiting_list;
     }
 
     public void setRequests(int requests) {
@@ -97,7 +92,7 @@ public class Document {
     public String getAuthors() {
         return authors;
     }
-
+    
     public String getType() {
         return type;
     }
@@ -121,7 +116,7 @@ public class Document {
     public String getCover() {
         return cover;
     }
-
+    
     public String getDescription() {
         return description;
     }
@@ -138,10 +133,6 @@ public class Document {
         return fine;
     }
 
-    public ArrayList<User> getWaiting_list() {
-        return waiting_list;
-    }
-
     public int getRequests() {
         return requests;
     }
@@ -151,12 +142,12 @@ public class Document {
     }
 
     public ArrayList<String> getAuthorsAsArray() {
-        ArrayList<String> authors = new ArrayList<>(Arrays.asList(getAuthors().split(", ")));
+        ArrayList<String> authors = new ArrayList<>(Arrays.asList(getAuthors().split(",")));
         return authors;
     }
 
     public ArrayList<String> getKeywordsAsArray() {
-        ArrayList<String> keywords = new ArrayList<>(Arrays.asList(getKeywords().split(", ")));
+        ArrayList<String> keywords = new ArrayList<>(Arrays.asList(getKeywords().split(",")));
         return keywords;
     }
 
