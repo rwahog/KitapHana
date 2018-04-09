@@ -1,6 +1,6 @@
 .body.container{
-    position: relative;
-    top: 80px;
+    position: relative !important;
+    top: 80px !important;
 }
 .nav-tabs {
     border-bottom: none !important;
@@ -57,3 +57,4 @@ a:hover{
 .btn.btn-primary a:hover{
     color: white;
 }
+

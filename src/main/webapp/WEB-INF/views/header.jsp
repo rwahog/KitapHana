@@ -18,10 +18,6 @@
 <body>
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="/main">KitapHana</a>
-    <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
-    </form>
     <div class="rightside">
         <%--<c:out value="${sessionScope.libr}"/>--%>
         <%--<c:set value='${sessionScope.libr}' var="libr">--%>
