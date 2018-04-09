@@ -71,7 +71,7 @@
                                 <c:set var="type" value="${user.getType()}"/>
                                 <c:set var="possibleType" value="${user.getPossibleType()}"/>
                                 <c:if test="${!type.equals('Patron') && type.equals(possibleType)}">
-                                    <a href=""><img itemprop="image" src="/resources/images/ok.png"></a>
+                                    <img itemprop="image" src="/resources/images/ok.png">
                                 </c:if>
                             </td>
                             <td>

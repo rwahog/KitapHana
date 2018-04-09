@@ -15,7 +15,7 @@
 <main class="body container">
     <div class="panel container-fluid mx-auto px-0">
         <h2>
-            Documents ${user.getName()} ${user.getSurname()}
+            Documents ${name} ${surname}
         </h2>
         <table class="table table-hover table-dark documents">
             <thead>
