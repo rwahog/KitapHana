@@ -19,6 +19,5 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("Bot started!");
-        //ourCoolBot.sendMessage((long)184990280, "Чувак, у тебя просрочка по книге!!!!!!!1");
     }
 }

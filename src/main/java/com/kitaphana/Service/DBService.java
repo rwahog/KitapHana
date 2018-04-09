@@ -5,6 +5,13 @@ import com.kitaphana.Entities.AVMaterial;
 import com.kitaphana.Entities.Book;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.JournalArticle;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class DBService {
 
@@ -106,7 +114,6 @@ public class DBService {
         return findColumnFromTable(id, statement, column);
     }
 
-
     private String findColumnFromTable(String id, String statement, String column) {
         String info = "";
         try {
@@ -173,5 +180,56 @@ public class DBService {
             }
         }
         return string;
+    }
+
+    public ArrayList<String> getLibrariansChatId() {
+        ArrayList<String> librariansId = new ArrayList<>();
+        final String query = "SELECT chat_id FROM users WHERE type='Librarian' AND chat_id != 0";
+        try {
+            PreparedStatement ps = db.con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                long chatId = rs.getLong("chat_id");
+                librariansId.add(String.valueOf(chatId));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return librariansId;
+    }
+
+    public void sendMessageToLibrarians(String message) {
+        ArrayList<String> librariansId = getLibrariansChatId();
+        for (String librarianId : librariansId) {
+            try {
+                sendMsg(Long.parseLong(librarianId), message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendMessageToUser(String message, String userId) {
+        try {
+            sendMsg(Long.parseLong(userId), message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMsg(long chatId, String message) throws Exception {
+        String postURL = "https://api.telegram.org/bot577066011:AAFK2TXevqQRFXkJjS_eAIEEaPH2MOcXJ_s/sendMessage";
+
+        HttpPost post = new HttpPost(postURL);
+
+        HttpClient client = new DefaultHttpClient();
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("chat_id", Long.toString(chatId)));
+        params.add(new BasicNameValuePair("text", message));
+
+        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, "UTF-8");
+        post.setEntity(ent);
+        HttpResponse responsePOST = client.execute(post);
     }
 }

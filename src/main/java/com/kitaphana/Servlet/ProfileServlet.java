@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.User;
+import com.kitaphana.Service.DBService;
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.UserService;
 
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/profile")
 public class ProfileServlet extends HttpServlet {
     UserService userService = new UserService();
+    DBService dbService = new DBService();
     User user = new User();
 
     @Override
@@ -53,12 +55,15 @@ public class ProfileServlet extends HttpServlet {
         if (isValid) {
             Address address = new Address(country, town, street, house_number, apartment_number, post_code);
             address.setAddressId(userService.getUserAddressId(Long.parseLong(request.getParameter("id"))));
-            User user = new User(name, surname, phone_number, password1, email, address, status);
+            User user = new User(name, surname, phone_number, password1, email, address);
             user.setId(Long.parseLong(request.getParameter("id")));
-            userService.editUserInfo(user);
+            user.setPossibleType(status);
+            user.setType(dbService.findColumn(request.getParameter("id"), "users", "type"));
+            userService.editUserInfo(user, "user");
+            dbService.updateColumn(request.getParameter("id"), status, "users", "possible_type");
             response.sendRedirect("/main");
         } else {
-            request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/profile.jsp").forward(request, response);
         }
     }
 }

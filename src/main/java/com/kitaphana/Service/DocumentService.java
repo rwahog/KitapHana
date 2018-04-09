@@ -25,6 +25,7 @@ public class DocumentService {
     authorDAOImpl authorDAO = new authorDAOImpl();
     journalArticleDAOImpl journalArticleDAO = new journalArticleDAOImpl();
     keywordDAOImpl keywordDAO = new keywordDAOImpl();
+    avMaterialDAOImpl avMaterialDAO = new avMaterialDAOImpl();
     DBService DBService = new DBService();
     long day = 24*1000*60*60;
 
@@ -70,16 +71,18 @@ public class DocumentService {
                 return false;
             }
         }
+        if (!user.getPossibleType().equals(user.getType())) {
+            return false;
+        }
         Document document = documentDAO.findById(id_doc);
         String awaiters = document.getAwaiters();
         if (awaiters != null && awaiters.length() != 0) {
             PriorityComparator comparator = new PriorityComparator();
             PriorityQueue<User> priorityQueue = new PriorityQueue<>(10, comparator);
-            ArrayList<String> awaiters_arr = new ArrayList(Arrays.asList(awaiters.split(",")));
+            ArrayList<String> awaiters_arr = DBService.fromDBStringToArray(awaiters);
             for (String user_id : awaiters_arr) {
                 User awaiter = userDAO.findById(Long.parseLong(user_id));
                 awaiter.setPriority();
-                System.out.println(awaiter.getPriority() +" "+ awaiter.getName());
                 priorityQueue.add(awaiter);
             }
             user.setPriority();
@@ -116,6 +119,9 @@ public class DocumentService {
                 if (docs != null && docs.contains(id)) {
                     return false;
                 }
+                if (!user.getPossibleType().equals(user.getType())) {
+                    return false;
+                }
                 String checkouts = user.getCheckouts();
                 if (checkouts.length() == 0) {
                     DBService.updateColumn(String.valueOf(id_user), checkouts.concat(String.valueOf(id)), "users", "checkouts");
@@ -124,6 +130,7 @@ public class DocumentService {
                 }
             }
             DBService.updateColumn(String.valueOf(id), String.valueOf(amount), "documents", "amount");
+            DBService.sendMessageToLibrarians("You have some work to do (new checkout)");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,7 +177,7 @@ public class DocumentService {
             }
             ArrayList<String> arrayList = fromDBStringToArray(checkouts);
             arrayList.remove(arrayList.indexOf(id_document));
-            checkouts = fromArrayToDBString(arrayList);
+            checkouts = DBService.fromArrayToDBString(arrayList);
             if (users.length() != 0) {
                 users = users + "," + id_user;
             } else {
@@ -192,28 +199,15 @@ public class DocumentService {
         return arrayList;
     }
 
-    public String fromArrayToDBString(ArrayList<String> sample) {
-        String string = "";
-        if (sample != null && sample.size() != 0) {
-            int n = sample.size();
-            if (n == 1) {
-                string = sample.get(0);
-            } else {
-                for (int i = 0; i < n - 1; i++) {
-                    string = string.concat(sample.get(i) + ",");
-                }
-                string = string.concat(sample.get(n - 1));
-            }
-        }
-        return string;
-    }
-
     public void checkOutDisapproval(String user_id, String doc_id) {
        ArrayList<String> checkouts = fromDBStringToArray(DBService.findColumn(user_id, "users", "checkouts"));
             if (checkouts != null) {
                 checkouts.remove(checkouts.indexOf(doc_id));
-                DBService.updateColumn(user_id, fromArrayToDBString(checkouts), "users", "checkouts");
+                DBService.updateColumn(user_id, DBService.fromArrayToDBString(checkouts), "users", "checkouts");
             }
+       int amount = Integer.parseInt(DBService.findColumn(doc_id, "documents", "amount"));
+       amount++;
+       DBService.updateColumn(doc_id, String.valueOf(amount), "documents", "amount");
     }
 
     public boolean renewDocApproval(String id_user, String id_doc) {
@@ -343,7 +337,7 @@ public class DocumentService {
                     } else {
                         ArrayList<String> keyword_docs = fromDBStringToArray(key.getDocumentsId());
                         keyword_docs.remove(keyword_docs.indexOf(String.valueOf(id)));
-                        key.setDocumentsId(fromArrayToDBString(keyword_docs));
+                        key.setDocumentsId(DBService.fromArrayToDBString(keyword_docs));
                         keywordDAO.update(key);
                     }
                 }
@@ -367,7 +361,7 @@ public class DocumentService {
                     } else {
                         ArrayList<String> author_docs = fromDBStringToArray(author.getDocumentsId());
                         author_docs.remove(author_docs.indexOf(id));
-                        author.setDocumentsId(fromArrayToDBString(author_docs));
+                        author.setDocumentsId(DBService.fromArrayToDBString(author_docs));
                         authorDAO.update(author);
                     }
                 }
@@ -422,14 +416,24 @@ public class DocumentService {
 
     public void saveAuthors(ArrayList<String> authors, long id) {
         for (String author: authors) {
-            int i = 0;
             String name = "";
             String surname;
-            while (author.charAt(i) != ' ') {
-                name = name + author.charAt(i);
-                i = i + 1;
+            if (author.contains(".")) {
+                int i = 0;
+                while (author.charAt(i) != '.') {
+                    name = name + author.charAt(i);
+                    i++;
+                }
+                name = name.concat(".");
+                surname = author.substring(i + 1);
+            } else {
+                int i = 0;
+                while (author.charAt(i) != ' ') {
+                    name = name + author.charAt(i);
+                    i++;
+                }
+                surname = author.substring(i + 1);
             }
-            surname = author.substring(i + 1);
             Author author1 = authorDAO.findByNameAndSurname(name, surname);
             if (author1 == null) {
                 Author author_obj = new Author(name, surname);
@@ -477,26 +481,6 @@ public class DocumentService {
         saveKeywords(keywordsList, documentDAO.findLastId());
     }
 
-//    public void saveBook(Book book) {
-//        documentDAO.insert(book);
-//        book.setDocumentId(documentDAO.findLastId());
-//        bookDAO.insert(book);
-//        ArrayList<String> authors_list = book.getAuthorsAsArray();
-//        ArrayList<String> keywords_list = book.getKeywordsAsArray();
-//        saveAuthors(authors_list, documentDAO.findLastId());
-//        saveKeywords(keywords_list, documentDAO.findLastId());
-//    }
-//
-//    public void saveJournalArticle(JournalArticle article) throws SQLException {
-//        documentDAO.insert(article);
-//        article.setDocumentId(documentDAO.findLastId());
-//        journalArticleDAO.insert(article);
-//        ArrayList<String> authors_list = article.getAuthorsAsArray();
-//        ArrayList<String> keywords_list = article.getKeywordsAsArray();
-//        saveAuthors(authors_list, documentDAO.findLastId());
-//        saveKeywords(keywords_list, documentDAO.findLastId());
-//    }
-
     public void deleteBook(long id) {
         bookDAO.deleteByDocumentId(id);
     }
@@ -505,8 +489,8 @@ public class DocumentService {
         journalArticleDAO.delete(id);
     }
 
-    public void deleteAV(long id) throws SQLException {
-
+    public void deleteAV(long id) {
+        avMaterialDAO.delete(String.valueOf(id));
     }
 
     public void deleteDocument(long id) throws SQLException {
@@ -520,7 +504,7 @@ public class DocumentService {
                     User user = userDAO.findById(Long.parseLong(user_id));
                     ArrayList<String> waiting_list = fromDBStringToArray(user.getWaitingList());
                     waiting_list.remove(waiting_list.indexOf(String.valueOf(id)));
-                    String waiting = fromArrayToDBString(waiting_list);
+                    String waiting = DBService.fromArrayToDBString(waiting_list);
                     user.setWaitingList(waiting);
                     userDAO.update(user);
                 }
@@ -561,20 +545,5 @@ public class DocumentService {
             e.printStackTrace();
         }
         return chat_id;
-    }
-    public static void sendMsg(long chatId, String message) throws Exception {
-        String postURL = "https://api.telegram.org/bot577066011:AAFK2TXevqQRFXkJjS_eAIEEaPH2MOcXJ_s/sendMessage";
-
-        HttpPost post = new HttpPost(postURL);
-
-        HttpClient client = new DefaultHttpClient();
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("chat_id", Long.toString(chatId)));
-        params.add(new BasicNameValuePair("text", message));
-
-        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, "UTF-8");
-        post.setEntity(ent);
-        HttpResponse responsePOST = client.execute(post);
-        System.out.println(chatId + message);
     }
 }

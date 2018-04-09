@@ -74,20 +74,4 @@ public class LoginService {
         }
         return chat_id;
     }
-
-    public static void sendMsg(long chatId, String message) throws Exception {
-        String postURL = "https://api.telegram.org/bot577066011:AAFK2TXevqQRFXkJjS_eAIEEaPH2MOcXJ_s/sendMessage";
-
-        HttpPost post = new HttpPost(postURL);
-
-        HttpClient client = new DefaultHttpClient();
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("chat_id", Long.toString(chatId)));
-        params.add(new BasicNameValuePair("text", message));
-
-        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, "UTF-8");
-        post.setEntity(ent);
-        HttpResponse responsePOST = client.execute(post);
-        System.out.println(chatId + message);
-    }
 }

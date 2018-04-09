@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.User;
+import com.kitaphana.Service.DBService;
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.UserService;
 
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 public class EditUserServlet extends HttpServlet {
 
     UserService userService = new UserService();
+    DBService dbService = new DBService();
     User user = new User();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -49,9 +51,12 @@ public class EditUserServlet extends HttpServlet {
         if (isValid) {
             Address address = new Address(country, town, street, house_number, apartment_number, post_code);
             address.setAddressId(userService.getUserAddressId(Long.parseLong(request.getParameter("id"))));
-            User user = new User(name, surname, phone_number, password1, email, address, status);
+            User user = new User(name, surname, phone_number, password1, email, address);
             user.setId(Long.parseLong(request.getParameter("id")));
-            userService.editUserInfo(user);
+            user.setType(status);
+            user.setPossibleType(dbService.findColumn(request.getParameter("id"), "users", "possible_type"));
+            userService.editUserInfo(user, "Librarian");
+            dbService.updateColumn(request.getParameter("id"), status, "users", "type");
             response.sendRedirect("/librarianPanel");
         } else {
             request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);

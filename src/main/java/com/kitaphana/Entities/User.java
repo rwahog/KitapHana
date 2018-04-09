@@ -28,6 +28,17 @@ public class User {
 
     public User() {
     }
+
+    public User(String name, String surname, String phone_number, String password,
+                String email, Address address) {
+        this.name = name;
+        this.surname = surname;
+        this.phoneNumber = phone_number;
+        this.password = password;
+        this.email = email;
+        this.cardNumber = setCardNumber(phone_number);
+        this.address = address;
+    }
     
     public void setId(long id) {
         this.id = id;
@@ -74,6 +85,7 @@ public class User {
     }
 
     public void setDeadlines(String deadlines) {
+
         this.deadlines = deadlines;
     }
 

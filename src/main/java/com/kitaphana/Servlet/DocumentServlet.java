@@ -41,12 +41,20 @@ public class DocumentServlet extends HttpServlet {
             checkOut = service.checkOut(id_user, id);
             if (checkOut) {
                 response.sendRedirect("/verification");
+            } else {
+                String message = "You cannot check out documents due to the fact that your type is not confirmed.";
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("/WEB-INF/views/failure.jsp").forward(request, response);
             }
         } else if (checkout_button.equals("queue")) {
             try {
                 checkOut = service.queue(id_user, id);
                 if (checkOut) {
                     response.sendRedirect("/verification");
+                } else {
+                    String message = "You cannot be enqueued due to the fact that your type is not confirmed.";
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("/WEB-INF/views/failure.jsp").forward(request, response);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
