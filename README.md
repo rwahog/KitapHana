@@ -48,25 +48,8 @@ We store all documents in documents db.
              protected String cover;
              protected String type;
              protected int price, amount, id;
-
+             ...
 which is typicly the abstract class for all documents.
-Below we have particular types of document extending from it: 
-
-         public class Book extends Document {
-             protected String publisher;
-             protected int year, edition_number;
-             protected int best_seller;
-
- 
-
-         public class AVMaterial extends Document {
-
-
- 
-
-         public class JournalArticle extends Document{
-             protected String journal_name, date;
-             protected ArrayList<String> editors;
 <a name="user">
    
 ## Users
@@ -76,8 +59,9 @@ Below we have particular types of document extending from it:
    *Could give requests to  ***search for, check out and return documents***.*
     + Student
    *Have permission to сheck out documents for ***3*** weeks* 
-    + Faculty member 
+    + Faculty member (Instructor, TA, Professor)
    *Have permission to сheck out documents for ***4*** weeks* 
+    + VP (Visiting Professor)
   + Librarian
    *Is allowed to ***modify/delete/add*** any document or patron.*
 
@@ -95,31 +79,26 @@ We assign the loged in user with new exemplar of appropriate class:
 ## Librarian features
 </a>
 Librarian is a user with manage abilities. One's 3special features
-defined in class Librarian. 
+defined in a few special Librarian servlets. 
 
-         public void modifyDocument(Document document) throws SQLException {...
-         public void  removeDocument(Document document) throws SQLException {...
-         public void addDocument() throws SQLException {...
-         public void modifyUser(User user) throws SQLException {...
-         public void removeUser(User user) throws SQLException {...
+         public class AddDocumentService {...
+         public class EditDocumentService {...
+         public class EditUserService {...
+         public class DocumentHoldersService {...
+         ...
 
 <a name="book">
 
 ## Booking System (Document Copy)
 </a>
+  + First the document should be chozen:
 
-         public void checkOutDocument(Document document) throws SQLException {
-                 if(document.getAmount() > 0 && !this.hasDocument(document)){
-                     addDocument(document);
-                     document.decreaseAmount();
-                     document.addUser(this);
-                     document.save();
-                     save();
-                 }
-                 else{
-                     System.out.println("You can't book this document");
-                 }
-             }
+         public boolean checkOut(long id_user, int id) {
+         ...
+  + Then approved by Librarian:
+  
+         public boolean checkout_approval(String id_user, String id_document) {
+         ...
 
 Every time user check out document - mount of copies in the library decrease.
 <a name="InstAndL">
@@ -182,7 +161,7 @@ or simply provide registration
 # Testing:
 </a>
 
-  + Go to com/kitaphana/algorithms
+  + Go to com/kitaphana/Testing
   + choose appropriate number of test
   + Run it
 <a name="soft">
@@ -194,3 +173,4 @@ or simply provide registration
   + <a href="https://www.mysql.com/">MySQL</a>
   + <a href="https://www.jetbrains.com/idea/">Intellij IDEA</a>
   + <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java JDK</a>
+  + <a href="https://telegram.org/">Telegram (bot)</a>
