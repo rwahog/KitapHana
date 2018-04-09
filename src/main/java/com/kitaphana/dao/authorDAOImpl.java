@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class authorDAOImpl implements authorDAO {
 
     Database db = Database.getInstance();
+    commonDAOImpl commonDAO = new commonDAOImpl();
     private static final String FIND_BY_ID = "SELECT * FROM authors WHERE id=?";
     private static final String FIND_BY_NAME_AND_SURNAME = "SELECT * FROM authors WHERE name=? AND surname=?";
     private static final String FIND_ALL = "SELECT * FROM authors";
@@ -18,7 +19,11 @@ public class authorDAOImpl implements authorDAO {
     private static final String DELETE = "DELETE FROM authors WHERE id=?";
     private static final String UPDATE = "UPDATE authors SET name=?, surname=?, documents=? WHERE id=?";
 
-    public Author findByNameAndSurname(String name, String surname) throws SQLException {
+    public long findLastId() {
+        return commonDAO.findLastId("authors");
+    }
+
+    public Author findByNameAndSurname(String name, String surname) {
         Author author = null;
 
         try {
@@ -28,9 +33,10 @@ public class authorDAOImpl implements authorDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 author = new Author();
+                author.setId(rs.getLong("id"));
                 author.setName(rs.getString("name"));
                 author.setSurname(rs.getString("surname"));
-                author.setId_documents(rs.getString("documents"));
+                author.setDocumentsId(rs.getString("documents"));
             }
 
             rs.close();
@@ -43,7 +49,7 @@ public class authorDAOImpl implements authorDAO {
     }
 
     @Override
-    public Author findById(long id) throws SQLException {
+    public Author findById(long id) {
         Author author = null;
 
         try {
@@ -54,7 +60,7 @@ public class authorDAOImpl implements authorDAO {
                 author = new Author();
                 author.setName(rs.getString("name"));
                 author.setSurname(rs.getString("surname"));
-                author.setId_documents(rs.getString("documents"));
+                author.setDocumentsId(rs.getString("documents"));
             }
 
             rs.close();
@@ -67,7 +73,7 @@ public class authorDAOImpl implements authorDAO {
     }
 
     @Override
-    public ArrayList<Author> findAll() throws SQLException {
+    public ArrayList<Author> findAll() {
         ArrayList<Author> authors = new ArrayList<>();
 
         try {
@@ -79,7 +85,7 @@ public class authorDAOImpl implements authorDAO {
                 author.setId(rs.getLong("id"));
                 author.setName(rs.getString("name"));
                 author.setSurname(rs.getString("surname"));
-                author.setId_documents(rs.getString("documents"));
+                author.setDocumentsId(rs.getString("documents"));
 
                 authors.add(author);
             }
@@ -93,12 +99,12 @@ public class authorDAOImpl implements authorDAO {
     }
 
     @Override
-    public void insert(Author object) throws SQLException {
+    public void insert(Author object) {
         try {
             PreparedStatement ps = db.con.prepareStatement(INSERT);
             ps.setString(1, object.getName());
             ps.setString(2, object.getSurname());
-            ps.setString(3, object.getId_documents());
+            ps.setString(3, object.getDocumentsId());
 
             ps.executeUpdate();
             ps.close();
@@ -108,12 +114,12 @@ public class authorDAOImpl implements authorDAO {
     }
 
     @Override
-    public void update(Author object) throws SQLException {
+    public void update(Author object) {
         try{
             PreparedStatement ps = db.con.prepareStatement(UPDATE);
             ps.setString(1, object.getName());
             ps.setString(2, object.getSurname());
-            ps.setString(3, object.getId_documents());
+            ps.setString(3, object.getDocumentsId());
             ps.setLong(4, object.getId());
 
             ps.executeUpdate();
@@ -124,15 +130,7 @@ public class authorDAOImpl implements authorDAO {
     }
 
     @Override
-    public void delete(long id) throws SQLException {
-        try {
-            PreparedStatement ps = db.con.prepareStatement(DELETE);
-            ps.setLong(1, id);
-
-            ps.executeUpdate();
-            ps.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public void delete(long id) {
+        commonDAO.delete(id, "authors", "id");
     }
 }
