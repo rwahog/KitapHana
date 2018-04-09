@@ -60,7 +60,7 @@ public class userDAOImpl implements userDAO {
     public User findByPhoneNumber(String phone) {
         User user = null;
         try {
-            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_PHONE_NUMBER);
+            PreparedStatement ps = db.con.prepareStatement(FIND_BY_PHONE_NUMBER);
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
