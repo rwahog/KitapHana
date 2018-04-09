@@ -32,29 +32,6 @@ public class ProfileServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //
-        // request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
-//        String name = request.getParameter("name");
-//        String surname = request.getParameter("surname");
-//        String status = request.getParameter("status");
-//        String phone_number = request.getParameter("phone_number");
-//        String email = request.getParameter("email");
-//        String password1 = request.getParameter("password1");
-//        String password2 = request.getParameter("password2");
-//        String country = request.getParameter("country");
-//        String town = request.getParameter("town");
-//        String street = request.getParameter("street");
-//        String house_number = request.getParameter("house_number");
-//        String apartment_number = request.getParameter("apartment_number");
-//        String post_code = request.getParameter("postcode");
-
-//        boolean isValid = serviceEdit.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
-//        if (isValid) {
-//            serviceEdit.editUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code, Integer.parseInt(request.getParameter("id")), user.getAddress().getId_address());
-//            response.sendRedirect("/main");
-//        } else {
-//            request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
-//        }
     }
 
     @Override
