@@ -29,10 +29,10 @@
             <tbody>
             <c:forEach var="user" items="${users}">
                 <tr>
-                    <td>${user.id}</td>
-                    <td>${user.name}</td>
-                    <td>${user.surname}</td>
-                    <td>${user.possible_type}</td>
+                    <td>${user.getId()}</td>
+                    <td>${user.getName()}</td>
+                    <td>${user.getSurname()}</td>
+                    <td>${user.getType()}</td>
                 </tr>
             </c:forEach>
             </tbody>
