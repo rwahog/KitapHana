@@ -29,7 +29,5 @@ public class DocumentHoldersServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        //
-        // request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }
 }
