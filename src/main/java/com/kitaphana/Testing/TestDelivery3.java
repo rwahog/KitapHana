@@ -1,9 +1,7 @@
 package com.kitaphana.Testing;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.Book;
 import com.kitaphana.Entities.User;
-import com.kitaphana.Service.EditUserService;
 import com.kitaphana.Service.LoginService;
 
 import java.sql.Connection;
@@ -12,7 +10,6 @@ import java.util.Scanner;
 public class TestDelivery3 {
     public Database db = Database.getInstance();
     LoginService loginService = new LoginService();
-    EditUserService service = new EditUserService();
     //d1:
     User p1, p2, p3, s, v;
     String d1_Title = "Introduction to Algorithms";
