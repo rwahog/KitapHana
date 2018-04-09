@@ -1,10 +1,12 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Book;
-import com.kitaphana.Service.AddDocumentService;
+import com.kitaphana.Service.DBService;
+import com.kitaphana.Service.DocumentService;
 import com.kitaphana.Service.LoginService;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,8 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = "/addDocument")
 public class AddDocumentServlet extends HttpServlet {
 
-    AddDocumentService service = new AddDocumentService();
+    DocumentService service = new DocumentService();
+    DBService dbService = new DBService();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -37,13 +40,13 @@ public class AddDocumentServlet extends HttpServlet {
         String type = request.getParameter("document-type");
         int price = Integer.parseInt(request.getParameter("price"));
         int amount = Integer.parseInt(request.getParameter("amount"));
-        boolean unique = service.checkUnique(title, authors, type);
+        boolean unique = dbService.checkUnique(title, authors, type);
         switch (type) {
             case "book":
                 int edition_number = Integer.parseInt(request.getParameter("edition_number"));
                 String publisher = request.getParameter("publisher");
                 int year = Integer.parseInt(request.getParameter("year"));
-                int bestseller = 0;
+                int bestseller;
                 if (request.getParameter("bestseller") == null) {
                     bestseller = 0;
                 } else {
@@ -51,11 +54,7 @@ public class AddDocumentServlet extends HttpServlet {
                 }
                 if (unique) {
                     Book book = new Book(title, authors, keywords, price, amount, type, description, publisher, year, edition_number, bestseller);
-                    try {
-                        service.saveBook(book);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    service.saveDocument(book);
                     response.sendRedirect("/librarianPanel");
                 }
                 break;
