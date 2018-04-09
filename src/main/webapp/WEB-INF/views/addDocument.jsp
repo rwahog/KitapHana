@@ -12,7 +12,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" action="" method="POST">
+<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" method="post">
     <div class="container addDocument">
         <div class="form-row">
             <div class="form-group col-12">
@@ -36,7 +36,7 @@
             <div class="form-group col-4">
                 <label for="type">Type</label>
                 <select id="type" class="form-control document-type" name="document-type">
-                    <option selected>Choose...</option>
+                    <option value="" selected>Choose...</option>
                     <option value="book">Book</option>
                     <option value="article">Journal Article</option>
                     <option value="av">AV material</option>
@@ -50,6 +50,7 @@
                 <label for="inputSurname">Amount</label>
                 <input type="number" class="form-control" id="inputSurname" name="amount" placeholder="Amount" required="">
             </div>
+            <form method="POST" name="book">
             <div class="book-props row hidden" id="book">
                 <div class="form-group col-3">
                     <label for="edition_number">Edition number</label>
@@ -69,6 +70,8 @@
                     <label class="custom-control-label" for="customControlInline">Bestseller</label>
                 </div>
             </div>
+            </form>
+            <form method="POST" name="article">
             <div class="ja-props row hidden" id="article">
                 <div class="form-group col-5">
                     <label for="editors">Editors</label>
@@ -83,13 +86,14 @@
                     <input type="text" class="form-control" name="date" id="date" placeholder="Date" required="">
                 </div>
             </div>
+            </form>
         </div>
-        <form>
-            <div>
-                <label for="file"></label>
-                <input type="file" id="file" class="file">
-            </div>
-        </form>
+        <%--<form>--%>
+            <%--<div>--%>
+                <%--<label for="file"></label>--%>
+                <%--<input type="file" id="file" class="file">--%>
+            <%--</div>--%>
+        <%--</form>--%>
         <div class="form-row">
             <div class="form-group col-md-6">
             </div>
