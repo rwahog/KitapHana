@@ -91,6 +91,7 @@ defined in a few special Librarian servlets.
 
 ## Booking System (Document Copy)
 </a>
+
   + First the document should be chozen:
 
          public boolean checkOut(long id_user, int id) {
@@ -100,6 +101,12 @@ defined in a few special Librarian servlets.
          public boolean checkout_approval(String id_user, String id_document) {
          ...
 
+  + Scheme looks as follows:
+  
+  </a> 
+ <img src="ProvidedDoc/checkout.jpg" alt="ProvidedDoc/scheme.jpg"> 
+<a name="imp">
+  
 Every time user check out document - mount of copies in the library decrease.
 <a name="InstAndL">
   
