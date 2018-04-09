@@ -199,4 +199,10 @@ public class LibrarianPanelService {
         }
         return docs;
     }
+
+    public void returnDoc(User p1, Document d2) {
+    }
+
+    public void renew(User p1, Document d1) {
+    }
 }
