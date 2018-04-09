@@ -1,4 +1,4 @@
-<%@ page import="com.kitaphana.Service.MainService" %>
+<%@ page import="com.kitaphana.Service.UserService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1" %>
@@ -21,15 +21,14 @@
         <div class="col-lg-4 col-6 card-holder">
             <div class="card">
                 <div class="img-container">
-                    <img class="card-img-top" src="/resources/images/${document.cover}" alt="Card image cap">
+                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
                 </div>
                 <div class="card-body">
-                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.id}" name="title"><c:out value="${document.title}"/></a>
-
-
-                    <p class="card-text"><c:out value="${document.authors}"/></p>
+                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                        <c:out value="${document.getTitle()}"/></a>
+                    <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
                     <p class="card-text">
-                        <small class="text-muted"><c:out value="${document.keywords}"/></small>
+                        <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
                     </p>
                 </div>
             </div>
