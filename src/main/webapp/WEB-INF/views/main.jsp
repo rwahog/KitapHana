@@ -65,9 +65,9 @@
                             <div class="card-body">
                                 <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
                                     <c:out value="${document.getTitle()}"/></a>
-                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
+                                <p class="card-text"><c:out value="${document.getAuthorsAsString()}"/></p>
                                 <p class="card-text">
-                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
+                                    <small class="text-muted"><c:out value="${document.getKeywordsAsString()}"/></small>
                                 </p>
                             </div>
                         </div>

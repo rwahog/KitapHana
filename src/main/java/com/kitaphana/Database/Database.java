@@ -6,26 +6,31 @@ public class Database {
     private static Database db;
     public Connection con;
 
-    private Database() {
+    private Database() throws SQLException {
+        connect();
     }
 
     public static Database getInstance() {
         if (db == null) {
-            db = new Database();
+            try {
+                db = new Database();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return db;
     }
 
     public Connection connect() throws SQLException  {
-
-        if (con != null) return null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("No database");
+        if (con == null) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                throw new SQLException("No database");
+            }
+            String connectionURL = "jdbc:mysql://trainno.ru:3306/kh?autoReconnect=true&useSSL=false";
+            con = DriverManager.getConnection(connectionURL, "remote", "password");
         }
-        String connectionURL = "jdbc:mysql://trainno.ru:3306/kh?autoReconnect=true&useSSL=false";
-        con = DriverManager.getConnection(connectionURL, "remote", "password");
         return con;
     }
 

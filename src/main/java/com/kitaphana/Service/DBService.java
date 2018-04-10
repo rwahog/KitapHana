@@ -26,7 +26,7 @@ public class DBService {
     Database db = Database.getInstance();
 
     public Document findDocumentAndTypeInfo(String doc_id, String table) {
-        String statement = String.format("SELECT * FROM documents INNER JOIN books ON documents.id = %s.document_id WHERE %s.document_id=?", table, table);
+        String statement = String.format("SELECT * FROM documents INNER JOIN %s ON documents.id = %s.document_id WHERE %s.document_id=?", table, table, table);
         Document document = new Document();
         try {
             PreparedStatement ps = db.con.prepareStatement(statement);
@@ -39,7 +39,7 @@ public class DBService {
                         Book book = new Book();
                         book.setId(rs.getInt("id"));
                         book.setTitle(rs.getString("title"));
-                        book.setAuthors(rs.getString("authors"));
+                        book.setAuthorsId(rs.getString("authors"));
                         book.setCover(rs.getString("document_cover"));
                         book.setAmount(rs.getInt("amount"));
                         book.setPrice(rs.getInt("price"));
@@ -49,14 +49,14 @@ public class DBService {
                         book.setPublisher(rs.getString("publisher"));
                         book.setYear(rs.getInt("year"));
                         book.setDescription(rs.getString("description"));
-                        book.setKeywords(rs.getString("keywords"));
+                        book.setKeywordsId(rs.getString("keywords"));
                         document = book;
                         break;
                     case "ja":
                         JournalArticle journalArticle = new JournalArticle();
                         journalArticle.setId(rs.getInt("id"));
                         journalArticle.setTitle(rs.getString("title"));
-                        journalArticle.setAuthors(rs.getString("authors"));
+                        journalArticle.setAuthorsId(rs.getString("authors"));
                         journalArticle.setCover(rs.getString("document_cover"));
                         journalArticle.setAmount(rs.getInt("amount"));
                         journalArticle.setPrice(rs.getInt("price"));
@@ -71,7 +71,7 @@ public class DBService {
                         AVMaterial avMaterial = new AVMaterial();
                         avMaterial.setId(rs.getInt("id"));
                         avMaterial.setTitle(rs.getString("title"));
-                        avMaterial.setAuthors(rs.getString("authors"));
+                        avMaterial.setAuthorsId(rs.getString("authors"));
                         avMaterial.setCover(rs.getString("document_cover"));
                         avMaterial.setAmount(rs.getInt("amount"));
                         avMaterial.setPrice(rs.getInt("price"));

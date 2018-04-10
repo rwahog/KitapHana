@@ -5,21 +5,23 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Document {
-    protected String title;
-    protected String keywords;
-    protected String authors;
-    protected String cover;
-    protected String type;
-    protected String users;
-    protected String description, awaiters;
+    private String title;
+    private String keywordsId;
+    private String authorsId;
+    private String cover;
+    private String type;
+    private String users;
+    private String description, awaiters;
     protected long id, deadline, fine;
-    protected int price, amount, requests;
+    private int price, amount, requests;
+    private ArrayList<Keyword> keywords;
+    private ArrayList<Author> authors;
 
-    public Document(String title, String authors, String keywords, int price,
+    public Document(String title, String authorsId, String keywordsId, int price,
                     int amount, String type, String description) {
         this.title = title;
-        this.authors = authors;
-        this.keywords = keywords;
+        this.authorsId = authorsId;
+        this.keywordsId = keywordsId;
         this.price = price;
         this.amount = amount;
         this.type = type;
@@ -45,12 +47,12 @@ public class Document {
         this.amount = amount;
     }
 
-    public void setAuthors(String authors) {
-        this.authors = authors;
+    public void setAuthorsId(String authorsId) {
+        this.authorsId = authorsId;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
+    public void setKeywordsId(String keywordsId) {
+        this.keywordsId = keywordsId;
     }
 
     public void setPrice(int price) {
@@ -85,20 +87,28 @@ public class Document {
         this.fine = fine;
     }
 
+    public void setKeywords(ArrayList<Keyword> keywords) {
+        this.keywords = keywords;
+    }
+
+    public void setAuthors(ArrayList<Author> authors) {
+        this.authors = authors;
+    }
+
     public long getId() {
         return id;
     }
 
-    public String getAuthors() {
-        return authors;
+    public String getAuthorsId() {
+        return authorsId;
     }
     
     public String getType() {
         return type;
     }
 
-    public String getKeywords() {
-        return keywords;
+    public String getKeywordsId() {
+        return keywordsId;
     }
 
     public int getAmount() {
@@ -141,15 +151,46 @@ public class Document {
         return awaiters;
     }
 
-    public ArrayList<String> getAuthorsAsArray() {
-        ArrayList<String> authors = new ArrayList<>(Arrays.asList(getAuthors().split(",")));
+    public ArrayList<Keyword> getKeywords() {
+        return keywords;
+    }
+
+    public ArrayList<Author> getAuthors() {
         return authors;
     }
 
-    public ArrayList<String> getKeywordsAsArray() {
-        ArrayList<String> keywords = new ArrayList<>(Arrays.asList(getKeywords().split(",")));
-        return keywords;
+    public String getKeywordsAsString() {
+        String keys = "";
+        if (keywords.size() == 1) {
+            keys = keywords.get(0).getKeyword();
+        } else if (keywords.size() == 0) {
+            keys = "";
+        }
+        else {
+            for (int i = 0; i < keywords.size() - 1; i++) {
+                keys = keys.concat(keywords.get(i).getKeyword() + ", ");
+            }
+            keys = keys.concat(keywords.get(keywords.size() - 1).getKeyword());
+        }
+        return keys;
     }
+
+    public String getAuthorsAsString() {
+        String authorsStr = "";
+        if (authors.size() == 1) {
+            authorsStr = authors.get(0).getName() + " " + authors.get(0).getSurname();
+        } else if (authors.size() == 0) {
+            authorsStr = "";
+        } else {
+            for (int i = 0; i < authors.size() - 1; i++) {
+                authorsStr = authorsStr.concat(authors.get(i).getName() + " " + authors.get(i).getSurname() + ", ");
+            }
+            authorsStr = authorsStr.concat(authors.get(authors.size() - 1).getName() + " " + authors.get(authors.size() - 1).getSurname());
+        }
+        return authorsStr;
+    }
+
+
 
     public long getDeadlineOfDocument(long deadline){
         long day = 24*60*60*1000;

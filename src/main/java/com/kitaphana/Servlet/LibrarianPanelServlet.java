@@ -44,28 +44,30 @@ public class LibrarianPanelServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String userChatId = dbService.findColumn(request.getParameter("user_id"), "users", "chat_id");
+        String userId = request.getParameter("user_id");
+        String docId = request.getParameter("doc_id");
         if (request.getParameter("checkout_approval") != null && Integer.parseInt(request.getParameter("checkout_approval")) == 1) {
-            documentService.checkOutApproval(request.getParameter("user_id"), request.getParameter("doc_id"));
+            documentService.checkOutApproval(userId, docId);
             String message = "You have checked out new book successfully!";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if (request.getParameter("checkout_disapproval") != null && Integer.parseInt(request.getParameter("checkout_disapproval")) == 1) {
-            documentService.checkOutDisapproval(request.getParameter("user_id"), request.getParameter("doc_id"));
+            documentService.checkOutDisapproval(userId, docId);
             String message = "You have checked out new book unsuccessfully! :(";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if (request.getParameter("renew_approval") != null && Integer.parseInt(request.getParameter("renew_approval")) == 1) {
-            documentService.renewDocApproval(request.getParameter("user_id"), request.getParameter("doc_id"));
+            documentService.renewDocApproval(userId, docId);
             String message = "Renew was approved :)";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("renew_disapproval") != null && Integer.parseInt(request.getParameter("renew_disapproval")) == 1)){
-            documentService.renewDocDisApproval(request.getParameter("user_id"), request.getParameter("doc_id"));
+            documentService.renewDocDisApproval(userId, docId);
             String message = "Renew wasn't approved :(";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("return_approval") != null && Integer.parseInt(request.getParameter("return_approval")) == 1)) {
-            documentService.returnDocApproval(request.getParameter("user_id"), request.getParameter("doc_id"));
+            documentService.returnDocApproval(userId, docId);
             response.sendRedirect("/main");
         }
     }

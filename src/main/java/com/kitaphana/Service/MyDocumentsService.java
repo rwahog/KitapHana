@@ -37,7 +37,7 @@ public class MyDocumentsService {
                     rs1.next();
                     doc.setId(Integer.parseInt(ids[i]));
                     doc.setTitle(rs1.getString("title"));
-                    doc.setAuthors(rs1.getString("authors"));
+                    doc.setAuthorsId(rs1.getString("authors"));
                     doc.setType(rs1.getString("type"));
                     doc.setPrice(rs1.getInt("price"));
                     doc.setDeadline(doc.getDeadlineOfDocument(Long.parseLong(ids_dead[i])));

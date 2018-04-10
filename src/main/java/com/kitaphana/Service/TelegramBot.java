@@ -36,7 +36,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String mes = update.getMessage().getText();
-            Message msg = update.getMessage();
             long chatId = update.getMessage().getChatId();
             if (mes.equals("/start")){
                 sendMsg(chatId, "Enter your phone number in KitapHana library system to attach your account");
@@ -60,7 +59,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             }
 
             //sendMessage(update.getMessage().getChatId(), update.getMessage().getText());
-            System.out.println(update.getMessage().getChatId() + "\n" + update.getMessage().getText());
+//            System.out.println(update.getMessage().getChatId() + "\n" + update.getMessage().getText());
         }
     }
 

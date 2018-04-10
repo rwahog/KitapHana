@@ -35,8 +35,8 @@ public class documentDAOImpl implements documentDAO {
                 document = new Document();
                 document.setId(rs.getLong("id"));
                 document.setTitle(rs.getString("title"));
-                document.setAuthors(rs.getString("authors"));
-                document.setKeywords(rs.getString("keywords"));
+                document.setAuthorsId(rs.getString("authors"));
+                document.setKeywordsId(rs.getString("keywords"));
                 document.setUsers(rs.getString("users"));
                 document.setPrice(rs.getInt("price"));
                 document.setAmount(rs.getInt("amount"));
@@ -67,8 +67,8 @@ public class documentDAOImpl implements documentDAO {
 
                 document.setId(rs.getLong("id"));
                 document.setTitle(rs.getString("title"));
-                document.setAuthors(rs.getString("authors"));
-                document.setKeywords(rs.getString("keywords"));
+                document.setAuthorsId(rs.getString("authors"));
+                document.setKeywordsId(rs.getString("keywords"));
                 document.setUsers(rs.getString("users"));
                 document.setPrice(rs.getInt("price"));
                 document.setAmount(rs.getInt("amount"));
@@ -92,8 +92,8 @@ public class documentDAOImpl implements documentDAO {
         try {
             PreparedStatement ps = db.con.prepareStatement(INSERT);
             ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthors());
-            ps.setString(3, object.getKeywords());
+            ps.setString(2, object.getAuthorsId());
+            ps.setString(3, object.getKeywordsId());
             ps.setInt(4, object.getPrice());
             ps.setInt(5, object.getAmount());
             ps.setString(6, object.getType());
@@ -112,8 +112,8 @@ public class documentDAOImpl implements documentDAO {
         try {
             PreparedStatement ps = db.con.prepareStatement(UPDATE);
             ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthors());
-            ps.setString(3, object.getKeywords());
+            ps.setString(2, object.getAuthorsId());
+            ps.setString(3, object.getKeywordsId());
             ps.setString(4, object.getUsers());
             ps.setInt(5, object.getPrice());
             ps.setInt(6, object.getAmount());
@@ -135,8 +135,8 @@ public class documentDAOImpl implements documentDAO {
         try {
             PreparedStatement ps = db.con.prepareStatement(UPDATE_INFO);
             ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthors());
-            ps.setString(3, object.getKeywords());
+            ps.setString(2, object.getAuthorsId());
+            ps.setString(3, object.getKeywordsId());
             ps.setInt(4, object.getPrice());
             ps.setInt(5, object.getAmount());
             ps.setString(6, object.getType());
