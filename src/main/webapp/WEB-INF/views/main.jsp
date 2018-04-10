@@ -131,5 +131,6 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+
 </body>
 </html>

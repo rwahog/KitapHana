@@ -1,4 +1,11 @@
 $(document).ready(function (e) {
+    $('[data-toggle="tab"]').tab().on('shown.bs.tab', function (e) {
+        updateMasonry();
+    });
+    updateMasonry();
+})
+
+function updateMasonry(){
     $('.cards').scrollspy({
         target: '.navbar'
     }).masonry({
@@ -6,7 +13,4 @@ $(document).ready(function (e) {
         itemSelector: '.card-holder',
         percentPosition: true
     });
-})
-$(function(){
-
-})
+}
