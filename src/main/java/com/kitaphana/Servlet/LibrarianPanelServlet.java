@@ -53,17 +53,17 @@ public class LibrarianPanelServlet extends HttpServlet {
             response.sendRedirect("/main");
         } else if (request.getParameter("checkout_disapproval") != null && Integer.parseInt(request.getParameter("checkout_disapproval")) == 1) {
             documentService.checkOutDisapproval(userId, docId);
-            String message = "You have checked out new book unsuccessfully! :(";
+            String message = "Your request to check out the book was rejected";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if (request.getParameter("renew_approval") != null && Integer.parseInt(request.getParameter("renew_approval")) == 1) {
             documentService.renewDocApproval(userId, docId);
-            String message = "Renew was approved :)";
+            String message = "Renew has approved";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("renew_disapproval") != null && Integer.parseInt(request.getParameter("renew_disapproval")) == 1)){
             documentService.renewDocDisApproval(userId, docId);
-            String message = "Renew wasn't approved :(";
+            String message = "Renew hasn't approved";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("return_approval") != null && Integer.parseInt(request.getParameter("return_approval")) == 1)) {

@@ -159,7 +159,7 @@ public class DocumentService {
                 }
             }
             DBService.updateColumn(String.valueOf(id), String.valueOf(amount), "documents", "amount");
-            DBService.sendMessageToLibrarians("You have some work to do (new checkout)");
+            DBService.sendMessageToLibrarians("You have a new checkout request");
         } catch (Exception e) {
             e.printStackTrace();
         }
