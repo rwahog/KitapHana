@@ -57,21 +57,23 @@
         <div class="tab-pane fade show active" id="books" role="tabpanel" aria-labelledby="books-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <div class="col-lg-4 col-6 card-holder">
-                        <div class="card">
-                            <div class="img-container">
-                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
-                                    <c:out value="${document.getTitle()}"/></a>
-                                <p class="card-text"><c:out value="${document.getAuthorsAsString()}"/></p>
-                                <p class="card-text">
-                                    <small class="text-muted"><c:out value="${document.getKeywordsAsString()}"/></small>
-                                </p>
+                    <c:if test="${document.getType().equals('book')}">
+                        <div class="col-lg-4 col-6 card-holder">
+                            <div class="card">
+                                <div class="img-container">
+                                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                                </div>
+                                <div class="card-body">
+                                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                        <c:out value="${document.getTitle()}"/></a>
+                                    <p class="card-text"><c:out value="${document.getAuthorsAsString()}"/></p>
+                                    <p class="card-text">
+                                        <small class="text-muted"><c:out value="${document.getKeywordsAsString()}"/></small>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
@@ -79,48 +81,50 @@
         <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <div class="col-lg-4 col-6 card-holder">
-                        <div class="card">
-                            <div class="img-container">
-                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
-                                    <c:out value="${document.getTitle()}"/></a>
-                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
-                                <p class="card-text">
-                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
-                                </p>
+                    <c:if test="${document.getType().equals('ja')}">
+                        <div class="col-lg-4 col-6 card-holder">
+                            <div class="card">
+                                <div class="img-container">
+                                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                                </div>
+                                <div class="card-body">
+                                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                        <c:out value="${document.getTitle()}"/></a>
+                                    <p class="card-text"><c:out value="${document.getAuthorsAsString()}"/></p>
+                                    <p class="card-text">
+                                        <small class="text-muted"><c:out value="${document.getKeywordsAsString()}"/></small>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
 
-        <div class="tab-pane fade" id="AV" role="tabpanel" aria-labelledby="AV-tab">
+        <div class="tab-pane fade" id="AVmaterials" role="tabpanel" aria-labelledby="AVmaterials-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <div class="col-lg-4 col-6 card-holder">
-                        <div class="card">
-                            <div class="img-container">
-                                <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
-                            </div>
-                            <div class="card-body">
-                                <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
-                                    <c:out value="${document.getTitle()}"/></a>
-                                <p class="card-text"><c:out value="${document.getAuthors()}"/></p>
-                                <p class="card-text">
-                                    <small class="text-muted"><c:out value="${document.getKeywords()}"/></small>
-                                </p>
+                    <c:if test="${document.getType().equals('av')}">
+                        <div class="col-lg-4 col-6 card-holder">
+                            <div class="card">
+                                <div class="img-container">
+                                    <img class="card-img-top" src="/resources/images/${document.getCover()}" alt="Card image cap">
+                                </div>
+                                <div class="card-body">
+                                    <a class="card-title" href="<%=request.getContextPath()%>/document?id=${document.getId()}" name="title">
+                                        <c:out value="${document.getTitle()}"/></a>
+                                    <p class="card-text"><c:out value="${document.getAuthorsAsString()}"/></p>
+                                    <p class="card-text">
+                                        <small class="text-muted"><c:out value="${document.getKeywordsAsString()}"/></small>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </c:forEach>
             </div>
         </div>
-
-    </div>
     </div>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
