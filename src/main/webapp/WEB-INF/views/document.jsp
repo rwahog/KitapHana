@@ -87,6 +87,14 @@
                                     <td class="bold">Copies available</td>
                                     <td>${document.getAmount()}</td>
                                 </tr>
+                                <tr>
+                                    <td class="bold">Number of days</td>
+                                    <td>
+                                        <div class="form-group col-4">
+                                            <input type="number" max="7" min="0" class="form-control" id="number" placeholder="Days" required="" style="margin-top: 40px; margin-left: 30px;">
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                             </table>
                             <form class="form-singin col-12" action="/document?id=${document.getId()}" method="POST">
