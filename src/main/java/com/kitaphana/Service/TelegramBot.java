@@ -19,11 +19,12 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     Database db = Database.getInstance();
     userDAOImpl userDAO = new userDAOImpl();
+    DBService dbService = new DBService();
 //    documentDAOImpl documentDAO = new documentDAOImpl();
 
     public TelegramBot() {
-        //ApiContextInitializer.init();
-        //TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+        ApiContextInitializer.init();
+        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
         try {
             db.connect();
         } catch (Exception e) {
@@ -41,15 +42,15 @@ public class TelegramBot extends TelegramLongPollingBot {
                 sendMsg(chatId, "Enter your phone number in KitapHana library system to attach your account");
             } else if (mes.matches("[0-9]+")) {
                 try {
-                    User user = userDAO.findByChatId(chatId);
-                    if (user != null) {
-                        user.setChatId(0);
-                        userDAO.update(user);
+                    String user = dbService.findColumn(String.valueOf(chatId), "users", "id", "chat_id");
+                    if (user != "") {
+                        String chat = String.valueOf(0);
+                        dbService.updateColumn(user, chat, "users", "chat_id");
                     }
-                    user = userDAO.findByPhoneNumber(mes);
-                    user.setChatId(chatId);
-                    userDAO.update(user);
-                    sendMsg(chatId, "Dear " + user.getName() +
+                    String user_in = dbService.findColumn(mes, "users", "id", "phone_number");
+                    dbService.updateColumn(user_in, String.valueOf(chatId), "users", "chat_id");
+                    String name = dbService.findColumn(user_in, "users", "name");
+                    sendMsg(chatId, "Dear " + name +
                                             "\nYou have successfully attached your account. All important notifications will be sent there!");
                 } catch (Exception e) {
                     sendMsg(chatId, "Sorry we cannot find this account in KitapHana");
@@ -59,7 +60,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             }
 
             //sendMessage(update.getMessage().getChatId(), update.getMessage().getText());
-            //System.out.println(update.getMessage().getChatId() + "\n" + update.getMessage().getText());
+            System.out.println(update.getMessage().getChatId() + "\n" + update.getMessage().getText());
         }
     }
 
