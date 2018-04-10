@@ -77,7 +77,6 @@
                 </c:forEach>
             </div>
         </div>
-
         <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">

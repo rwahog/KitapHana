@@ -20,12 +20,8 @@
                 <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="${doc.getTitle()}" required="" autofocus="">
             </div>
             <div class="form-group col-12">
-                <c:set var="string" value=""/>
-                <c:forEach var="author" items="${doc.getAuthors()}">
-                    <c:set var="${string}" value="${string = string.concat(author)}"/>
-                </c:forEach>
                 <label for="authors">Authors</label>
-                <input type="text" class="form-control" id="authors" name="authors" value="${doc.getAuthors()}" placeholder="Keywords" required="">
+                <input type="text" class="form-control" id="authors" name="authors" value="${doc.getAuthorsAsString()}" placeholder="Keywords" required="">
             </div>
             <div class="form-group col-12">
                 <label for="description">Description</label>
@@ -33,12 +29,8 @@
                           required="">${doc.getDescription()}</textarea>
             </div>
             <div class="form-group col-12">
-                <c:set var="string" value=""/>
-                <c:forEach var="key" items="${doc.getKeywords()}">
-                    <c:set var="${string}" value="${string = string.concat(key)}"/>
-                </c:forEach>
                 <label for="keywords">Keywords</label>
-                <input type="text" class="form-control" id="keywords" name="keywords" value="${doc.getKeywords()}" placeholder="Keywords" required="">
+                <input type="text" class="form-control" id="keywords" name="keywords" value="${doc.getKeywordsAsString()}" placeholder="Keywords" required="">
             </div>
             <div class="form-group col-4">
                 <label for="type">Type</label>

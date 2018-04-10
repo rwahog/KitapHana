@@ -113,7 +113,7 @@
                         <td>
                             <a class="title" href="/document2?id=${doc.getId()}">${doc.getTitle()}</a>
                         </td>
-                        <td>${doc.getAuthors()}</td>
+                        <td>${doc.getAuthorsAsString()}</td>
                         <td>${doc.getType()}</td>
                         <td>${doc.getAmount()}</td>
                         <td>
