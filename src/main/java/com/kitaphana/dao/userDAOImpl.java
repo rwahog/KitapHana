@@ -63,7 +63,7 @@ public class userDAOImpl implements userDAO {
     public User findByPhoneNumber(String phone) {
         User user = null;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_PHONE_NUMBER);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_PHONE_NUMBER);
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -83,6 +83,8 @@ public class userDAOImpl implements userDAO {
                 user.setFine(rs.getString("fine"));
                 user.setWaitingList(rs.getString("waiting_list"));
                 user.setRenews(rs.getString("renews"));
+                user.setReturns(rs.getString("returns"));
+                user.setCheckouts(rs.getString("checkouts"));
                 user.setChatId(rs.getLong("chat_id"));
             }
 

@@ -38,7 +38,7 @@
                             </div>
                             <ul class="document-authors">
                                 <li *ngFor="let author of document.authors"
-                                    itemprop="author" class="document-author">${document.getAuthors()}</li>
+                                    itemprop="author" class="document-author">${document.getAuthorsAsString()}</li>
                             </ul>
                             <div itemprop="description"
                                  class="document-description card-text italic">
@@ -49,16 +49,32 @@
                                 <tr><th width="50%"></th><th width="50%"></th></tr>
                                 </thead>
                                 <tbody>
-                                <c:if test="${type.equals('book')}">
-                                    <tr *ngIf="document.publisher">
-                                        <td class="bold">Publisher</td>
-                                        <td>${document.getPublisher()}</td>
-                                    </tr>
-                                    <tr *ngIf="document.year">
-                                        <td class="bold">Year of publication</td>
-                                        <td>${document.getYear()}</td>
-                                    </tr>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${type.equals('book')}">
+                                        <tr *ngIf="document.publisher">
+                                            <td class="bold">Publisher</td>
+                                            <td>${document.getPublisher()}</td>
+                                        </tr>
+                                        <tr *ngIf="document.year">
+                                            <td class="bold">Year of publication</td>
+                                            <td>${document.getYear()}</td>
+                                        </tr>
+                                    </c:when>
+                                    <c:when test="${type.equals('ja')}">
+                                        <tr *ngIf="document.journal_name">
+                                            <td class="bold">Journal Name</td>
+                                            <td>${document.getJournalName()}</td>
+                                        </tr>
+                                        <tr *ngIf="document.editors">
+                                            <td class="bold">Editors</td>
+                                            <td>${document.getEditors()}</td>
+                                        </tr>
+                                        <tr *ngIf="document.date">
+                                            <td class="bold">Publication date</td>
+                                            <td>${document.getDate()}</td>
+                                        </tr>
+                                    </c:when>
+                                </c:choose>
                                 <tr>
                                     <td class="bold">Type</td>
                                     <td>${document.getType()}</td>
@@ -70,6 +86,14 @@
                                 <tr>
                                     <td class="bold">Copies available</td>
                                     <td>${document.getAmount()}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bold">Number of days</td>
+                                    <td>
+                                        <div class="form-group col-4">
+                                            <input type="number" max="7" min="0" class="form-control" id="number" placeholder="Days" required="" style="margin-top: 40px; margin-left: 30px;">
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

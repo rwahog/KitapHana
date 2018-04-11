@@ -21,7 +21,7 @@
             </div>
             <div class="form-group col-12">
                 <label for="authors">Authors</label>
-                <input type="text" class="form-control" id="authors" name="authors" value="${doc.getAuthors()}" placeholder="Keywords" required="">
+                <input type="text" class="form-control" id="authors" name="authors" value="${doc.getAuthorsAsString()}" placeholder="Keywords" required="">
             </div>
             <div class="form-group col-12">
                 <label for="description">Description</label>
@@ -30,7 +30,7 @@
             </div>
             <div class="form-group col-12">
                 <label for="keywords">Keywords</label>
-                <input type="text" class="form-control" id="keywords" name="keywords" value="${doc.getKeywords()}" placeholder="Keywords" required="">
+                <input type="text" class="form-control" id="keywords" name="keywords" value="${doc.getKeywordsAsString()}" placeholder="Keywords" required="">
             </div>
             <div class="form-group col-4">
                 <label for="type">Type</label>

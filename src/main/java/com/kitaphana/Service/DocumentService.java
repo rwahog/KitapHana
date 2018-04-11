@@ -31,12 +31,39 @@ public class DocumentService {
 
     public ArrayList<Document> findAll() {
         ArrayList<Document> docs = documentDAO.findAll();
+        for (Document doc : docs) {
+            setAuthors(doc);
+            setKeywords(doc);
+        }
         return docs;
     }
 
     public Document findById(long id) {
         Document document = documentDAO.findById(id);
+        setKeywords(document);
+        setAuthors(document);
+
         return document;
+    }
+
+    public void setKeywords(Document document) {
+        ArrayList<String> keywordsId = fromDBStringToArray(document.getKeywordsId());
+        ArrayList<Keyword> keywords = new ArrayList<>();
+        for (String keyId : keywordsId) {
+            Keyword keyword = keywordDAO.findById(Long.parseLong(keyId));
+            keywords.add(keyword);
+        }
+        document.setKeywords(keywords);
+    }
+
+    public void setAuthors(Document document) {
+        ArrayList<String> authorsId = fromDBStringToArray(document.getAuthorsId());
+        ArrayList<Author> authors = new ArrayList<>();
+        for (String authorId : authorsId) {
+            Author author = authorDAO.findById(Long.parseLong(authorId));
+            authors.add(author);
+        }
+        document.setAuthors(authors);
     }
 
     public Document setDocInfo(String id) {
@@ -55,6 +82,8 @@ public class DocumentService {
                     break;
             }
             document = DBService.findDocumentAndTypeInfo(id, type);
+            setAuthors(document);
+            setKeywords(document);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,7 +159,7 @@ public class DocumentService {
                 }
             }
             DBService.updateColumn(String.valueOf(id), String.valueOf(amount), "documents", "amount");
-            DBService.sendMessageToLibrarians("You have some work to do (new checkout)");
+            DBService.sendMessageToLibrarians("You have a new checkout request");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -192,7 +221,7 @@ public class DocumentService {
     }
 
     public ArrayList<String> fromDBStringToArray(String sample) {
-        ArrayList<String> arrayList = null;
+        ArrayList<String> arrayList = new ArrayList<>();
         if (sample != null && sample.length() != 0) {
             arrayList = new ArrayList<>(Arrays.asList(sample.split(",")));
         }
@@ -328,7 +357,7 @@ public class DocumentService {
             return;
         }
         for (String keyword: keywords) {
-            Keyword key = keywordDAO.findByKeyword(keyword);
+            Keyword key = keywordDAO.findById(Long.parseLong(keyword));
             if (key != null) {
                 ArrayList<String> docs = fromDBStringToArray(key.getDocumentsId());
                 if (docs != null) {
@@ -351,8 +380,7 @@ public class DocumentService {
             return;
         }
         for (String string: authors) {
-            ArrayList<String> nameAndSurname = getAuthorNameAndSurname(string);
-            Author author = authorDAO.findByNameAndSurname(nameAndSurname.get(0), nameAndSurname.get(1));
+            Author author = authorDAO.findById(Long.parseLong(string));
             if (author != null) {
                 ArrayList<String> docs = fromDBStringToArray(author.getDocumentsId());
                 if (docs != null) {
@@ -370,10 +398,10 @@ public class DocumentService {
     }
 
     public void editBook(Book book) {
-            ArrayList<String> authors_list = fromDBStringToArray(book.getAuthors());
-            ArrayList<String> keywords_list = fromDBStringToArray(book.getKeywords());
-            editAuthors(authors_list, book.getDocumentId());
-            editKeywords(keywords_list, book.getDocumentId());
+            ArrayList<String> authorsList = fromDBStringToArray(book.getAuthorsId());
+            ArrayList<String> keywordsList = fromDBStringToArray(book.getKeywordsId());
+            editAuthors(authorsList, book.getDocumentId());
+            editKeywords(keywordsList, book.getDocumentId());
             documentDAO.updateInfo(book);
             bookDAO.updateByIdDocument(book);
     }
@@ -475,8 +503,8 @@ public class DocumentService {
                 journalArticleDAO.insert((JournalArticle) document);
                 break;
         }
-        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthors());
-        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywords());
+        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthorsId());
+        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywordsId());
         saveAuthors(authorsList, documentDAO.findLastId());
         saveKeywords(keywordsList, documentDAO.findLastId());
     }
@@ -523,27 +551,8 @@ public class DocumentService {
                     documentDAO.delete(id);
                     break;
             }
-            deleteKeywords(fromDBStringToArray(document.getKeywords()), id);
-            deleteAuthors(fromDBStringToArray(document.getAuthors()), String.valueOf(id));
+            deleteKeywords(fromDBStringToArray(document.getKeywordsId()), id);
+            deleteAuthors(fromDBStringToArray(document.getAuthorsId()), String.valueOf(id));
         }
-    }
-
-    public long getChatId(long id) {
-        long chat_id = 0;
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT users.chat_id FROM users WHERE users.id = '"+id+"';");
-            while (rs.next()) {
-                chat_id = rs.getLong("chat_id");
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return chat_id;
     }
 }
