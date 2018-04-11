@@ -199,11 +199,8 @@ public class Document {
         long left;
         Date date = new Date();
         left = deadline - date.getTime();
-        if (left > 0) {
-            return 0;
-        } else {
-            return getFine(left);
-        }
+        left = (left + day - 1) / day;
+        return left;
     }
 
     public long getFine(long left) {
