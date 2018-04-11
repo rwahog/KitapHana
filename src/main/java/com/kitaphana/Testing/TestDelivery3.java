@@ -154,14 +154,13 @@ public class TestDelivery3 {
         fine1 = d1.getDeadlineOfDocument(Long.parseLong(deadlines1[0]));
         fine2 = d2.getDeadlineOfDocument(Long.parseLong(deadlines1[1]));
         Assertions.assertEquals(fine1, 700);
-        //Assertions.assertEquals(fine2, 1400);
+        Assertions.assertEquals(fine2, 1400);
         rs = db.runSqlQuery("SELECT * from users where id = '"+v.getId()+"'");
         rs.next();
         deadlines1 = rs.getString("deadlines").split(",");
         fine1 = d1.getDeadlineOfDocument(Long.parseLong(deadlines1[0]));
         fine2 = d2.getDeadlineOfDocument(Long.parseLong(deadlines1[1]));
 
-        //Assertions.assertTrue(fine.equals("2100,1700"));
         Assertions.assertEquals(fine1, 2100);
         Assertions.assertEquals(fine2, 1700);
 
@@ -190,6 +189,7 @@ public class TestDelivery3 {
         docServ.checkOut(s.getId(), (int)d2_id);
         docServ.checkOutApproval(s.getId()+"", d2_id+"");
         setDeadlines(s, 4);
+
         v = service.findUserById(v_id);
         docServ.checkOut(v.getId(), (int)d2_id);
         docServ.checkOutApproval(v.getId()+"", d2_id+"");
@@ -237,12 +237,34 @@ public class TestDelivery3 {
         docServ.checkOutApproval(s.getId()+"", d2_id+"");
         setDeadlines(s, 4);
         v = service.findUserById(v_id);
+
         docServ.checkOut(v.getId(), (int)d2_id);
         docServ.checkOutApproval(v.getId()+"", d2_id+"");
         setDeadlines(v, 4);
+        docServ.outstandingRequest(d2_id+"");
+        libr.renewDoc(p1.getId()+"", d1_id+"");
+        libr.renewDoc(s.getId()+"", d2_id+"");
+        libr.renewDoc(v.getId()+"", d2_id+"");
+        setDeadlines(p1, 28);
+        rs = db.runSqlQuery("SELECT * from users where id = '"+p1.getId()+"'");
+        rs.next();
+        long deadline = Long.parseLong(rs.getString("deadlines"));
+        long fine = d1.getDeadlineOfDocument(deadline)+3;
+        Assertions.assertEquals(fine, 0);
+        rs = db.runSqlQuery("SELECT * from users where id = '"+s.getId()+"'");
+        rs.next();
+        deadline = Long.parseLong(rs.getString("deadlines"));
+        fine = d1.getDeadlineOfDocument(deadline);
+        Assertions.assertEquals(fine, 0);
+        rs = db.runSqlQuery("SELECT * from users where id = '"+v.getId()+"'");
+        rs.next();
+        deadline = Long.parseLong(rs.getString("deadlines"));
+        fine = d1.getDeadlineOfDocument(deadline);
+        Assertions.assertEquals(fine, 0);
         //!!!!!!!!!!FINE!!!!!!!!!!!!!!!!!
         //outstanding request to d2
         //assertions
+
         libr.returnDoc(p1.getId()+"", d1_id+"");
         libr2.returnDocApproval(p1.getId()+"", d1_id+"");
 
@@ -262,11 +284,18 @@ public class TestDelivery3 {
         docServ.checkOutApproval(s.getId()+"", d3_id+"");
 
         v = service.findUserById(v_id);
-        docServ.checkOut(v.getId(), (int)d3_id);
-        docServ.checkOutApproval(v.getId()+"", d3_id+"");
-
+        rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
+        rs.next();
+        if(rs.getInt("amount")<=0){
+            docServ.queue(v.getId(), d3_id);
+        }
+        else {
+            docServ.checkOut(v.getId(), (int) d3_id);
+            docServ.checkOutApproval(v.getId() + "", d3_id + "");
+        }
         //assert: waiting list for d3 is [v]
-        rs = db.runSqlQuery("SELECT * from documents where id = '"+d3.getId()+"'");
+
+        rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), v.getId()+"");
         //outstanding request to d3
@@ -280,22 +309,38 @@ public class TestDelivery3 {
 
         p2 = service.findUserById(p2_id);
         docServ.checkOut(p2.getId(), (int)d3_id);
-        docServ.checkOutApproval(p3.getId()+"", d3_id+"");
+        docServ.checkOutApproval(p2.getId()+"", d3_id+"");
 
         s = service.findUserById(s_id);
-        docServ.checkOut(s.getId(), (int)d3_id);
-        docServ.checkOutApproval(s.getId()+"", d3_id+"");
-
+        rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
+        rs.next();
+        if(rs.getInt("amount")<=0){
+            docServ.queue(s.getId(), d3_id);
+        }
+        else {
+            docServ.checkOut(s.getId(), (int) d3_id);
+            docServ.checkOutApproval(s.getId() + "", d3_id + "");
+        }
         v = service.findUserById(v_id);
-        docServ.checkOut(v.getId(), (int)d3_id);
-        docServ.checkOutApproval(v.getId()+"", d3_id+"");
-
+        rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
+        rs.next();
+        if(rs.getInt("amount")<=0){
+            docServ.queue(v.getId(), d3_id);
+        }
+        else {
+            docServ.checkOut(v.getId(), (int) d3_id);
+            docServ.checkOutApproval(v.getId() + "", d3_id + "");
+        }
 
 
         p3 = service.findUserById(p3_id);
-        docServ.checkOut(p3.getId(), (int)d3_id);
-        docServ.checkOutApproval(p3.getId()+"", d3_id+"");
-
+        if(rs.getInt("amount")<=0){
+            docServ.queue(p3.getId(), d3_id);
+        }
+        else {
+            docServ.checkOut(p3.getId(), (int) d3_id);
+            docServ.checkOutApproval(p3.getId() + "", d3_id + "");
+        }
         rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), s.getId()+","+v.getId()+","+p3.getId());
@@ -304,6 +349,7 @@ public class TestDelivery3 {
     public void test_case7() throws SQLException {
         test_case6(true);
         //outstanding request to d3
+        docServ.outstandingRequest(d3_id+"");
         rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), "");
@@ -316,6 +362,9 @@ public class TestDelivery3 {
         rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), s.getId()+","+v.getId()+","+p3.getId());
+        rs = db.runSqlQuery("SELECT * from users where id = '"+p2_id+"'");
+        rs.next();
+        Assertions.assertEquals(rs.getString("deadlines"), "");
         //outstanding request to d3
     }
     public void test_case9() throws SQLException {
@@ -329,6 +378,13 @@ public class TestDelivery3 {
         rs.next();
         Assertions.assertEquals(rs.getString("documents"), d3_id+"");
         //assertion: deadline after 4 weeks
+        setDeadlines(p1, 28);
+        rs = db.runSqlQuery("SELECT * from users where id = '"+p1.getId()+"'");
+        rs.next();
+        String[] deadlines1 = rs.getString("deadlines").split(",");
+
+        long fine = d3.getDeadlineOfDocument(Long.parseLong(deadlines1[0]));
+        Assertions.assertEquals(fine, 0);
         libr.returnDoc(p1.getId()+"", d3_id+"");
         libr2.returnDocApproval(p1.getId()+"", d3_id+"");
     }
