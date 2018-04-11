@@ -22,15 +22,17 @@ public class MyDocumentsService {
     public ArrayList<Document> setDocs(String id) {
         ArrayList<Document> docs = new ArrayList<>();
         try {
-            ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines FROM users WHERE id = '" + id + "'");
+            ResultSet rs = db.runSqlQuery("SELECT users.documents, users.deadlines, users.fine FROM users WHERE id = '" + id + "'");
             while (rs.next()) {
                 String user_id = rs.getString("documents");
                 String user_deadlines = rs.getString("deadlines");
-                if (user_id.length() == 0 || user_deadlines.length() == 0) {
+                String user_fine = rs.getString("fine");
+                if (user_id.length() == 0 || user_deadlines.length() == 0 || user_fine.length() == 0) {
                     return null;
                 }
                 String[] ids = user_id.split(",");
                 String[] ids_dead = user_deadlines.split(",");
+                String[] user_fines = user_fine.split(",");
                 for (int i = 0; i < ids.length; i++) {
                     ResultSet rs1 = db.runSqlQuery("SELECT * FROM documents WHERE id = '" + ids[i] + "'");
                     Document doc = new Document();
@@ -39,7 +41,7 @@ public class MyDocumentsService {
                     doc.setTitle(rs1.getString("title"));
                     doc.setAuthorsId(rs1.getString("authors"));
                     doc.setType(rs1.getString("type"));
-                    doc.setPrice(rs1.getInt("price"));
+                    doc.setFine(Integer.parseInt(user_fines[i]));
                     doc.setDeadline(doc.getDeadlineOfDocument(Long.parseLong(ids_dead[i])));
                     docs.add(doc);
                 }

@@ -203,16 +203,4 @@ public class Document {
         return left;
     }
 
-    public long getFine(long left) {
-        long day = 24*60*60*1000;
-        long docPrice = getPrice();
-        long fine = (long) Math.ceil((double)left / (double)day)*(-1)*100;
-        if (fine > docPrice) {
-            setFine(docPrice);
-            return docPrice;
-        } else {
-            setFine(fine);
-            return fine;
-        }
-    }
 }
