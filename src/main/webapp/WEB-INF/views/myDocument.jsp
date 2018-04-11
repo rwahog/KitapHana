@@ -31,6 +31,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Authors</th>
                         <th scope="col">Type</th>
+                        <th scope="col">Fine</th>
                         <th scope="col">Deadline</th>
                         <th scope="col">Return</th>
                         <th scope="col">Renew</th>
