@@ -155,6 +155,10 @@ public class DocumentService {
                 if (checks != null && checks.contains(String.valueOf(id))) {
                     return false;
                 }
+                String available = DBService.findColumn(String.valueOf(id), "documents", "available");
+                if (available.equals("0")) {
+                    return false;
+                }
                 String checkouts = user.getCheckouts();
                 if (checkouts.length() == 0) {
                     DBService.updateColumn(String.valueOf(id_user), checkouts.concat(String.valueOf(id)), "users", "checkouts");
