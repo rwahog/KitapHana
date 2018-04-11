@@ -146,6 +146,9 @@ public class DocumentService {
             if (user != null) {
                 ArrayList docs = fromDBStringToArray(user.getDocuments());
                 ArrayList checks = fromDBStringToArray(user.getCheckouts());
+                if (document.getAmount() <= 0) {
+                    return false;
+                }
                 if (docs != null && docs.contains(id)) {
                     return false;
                 }
@@ -153,6 +156,10 @@ public class DocumentService {
                     return false;
                 }
                 if (checks != null && checks.contains(String.valueOf(id))) {
+                    return false;
+                }
+                String available = DBService.findColumn(String.valueOf(id), "documents", "available");
+                if (available.equals("0")) {
                     return false;
                 }
                 String checkouts = user.getCheckouts();
