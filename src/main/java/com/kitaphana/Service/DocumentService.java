@@ -345,6 +345,8 @@ public class DocumentService {
         String returns_str = DBService.findColumn(id_user, "users", "returns");
         String awaiters_str = DBService.findColumn(id_doc, "documents", "waiting_list");
         String title = DBService.findColumn(id_doc, "documents", "title");
+        String fines = DBService.findColumn(id_user, "users", "fine");
+
         ArrayList<String> arrayList = fromDBStringToArray(documents_str);
         int index = arrayList.indexOf(id_doc);
         arrayList.remove(index);
@@ -353,6 +355,14 @@ public class DocumentService {
         arrayList = DBService.fromDBStringToArray(deadlines_str);
         arrayList.remove(index);
         deadlines_str = DBService.fromArrayToDBString(arrayList);
+
+        arrayList = DBService.fromDBStringToArray(fines);
+        if (!arrayList.get(index).equals("0")) {
+            return;
+        } else {
+            arrayList.remove(index);
+        }
+        fines = DBService.fromArrayToDBString(arrayList);
 
         arrayList = DBService.fromDBStringToArray(users_str);
         arrayList.remove(id_user);
@@ -372,6 +382,7 @@ public class DocumentService {
         }
         DBService.updateColumn(id_user, deadlines_str, "users", "deadlines");
         DBService.updateColumn(id_user, documents_str, "users", "documents");
+        DBService.updateColumn(id_user, fines, "users", "fine");
         DBService.updateColumn(id_doc, users_str, "documents", "users");
         DBService.updateColumn(id_doc, String.valueOf(newAmount), "documents", "amount");
         DBService.updateColumn(id_user, returns_str, "users", "returns");
