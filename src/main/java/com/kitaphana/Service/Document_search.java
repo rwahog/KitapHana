@@ -1,3 +1,8 @@
+//package com.kitaphana.Service;
+//
+//import com.kitaphana.Entities.Author;
+//import com.kitaphana.Entities.Document;
+//import com.kitaphana.Entities.Keyword;
 //
 //import javax.print.Doc;
 //import java.sql.Connection;
@@ -15,6 +20,7 @@
 //    protected ArrayList<Document> documents;
 //    protected ArrayList<Author> authors;
 //    protected ArrayList<Keyword> keywords;
+//    protected DBService dbService;
 //    protected Trie trie;
 //    Document_search(Connection connection, Scanner in) throws SQLException {
 //        this.connection = connection;
@@ -29,18 +35,18 @@
 //        ResultSet resultSet = statement.executeQuery("select * from documents");
 //        documents = new ArrayList<>();
 //        while(resultSet.next()){
-//            Document document = new Document(connection, in);
-//            document.setVariablesKnowingId(resultSet.getInt("id"));
+//            Document document = new Document();
+//            document = dbService.findDocumentAndTypeInfo(String.valueOf(resultSet.getInt("id")), "documents");
 //            documents.add(document);
-//            update(document.title, 0);
+//            update(document.getTitle(), 0);
 //        }
 //    }
 //    public void initializeAuthors() throws SQLException {
 //        ResultSet resultSet = statement.executeQuery("select * from authors");
 //        authors = new ArrayList<>();
 //        while(resultSet.next()){
-//            Author author = new Author(connection, in);
-//            author.setVariablesKnowingNameSurname(resultSet.getString("name"), resultSet.getString("surname"));
+//            Author author = new Author();
+//            author = dbService.g(resultSet.getString("name"), resultSet.getString("surname"));
 //            authors.add(author);
 //            update(author.name, 0);
 //            update(author.surname, 0);
