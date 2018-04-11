@@ -95,8 +95,8 @@ public class DocumentService {
         User user = userDAO.findById(id_user);
         String docsId = user.getDocuments();
         if (docsId != null && docsId.length() != 0) {
-            ArrayList docs = fromDBStringToArray(docsId);
-            boolean exist = docs.contains(id_doc);
+            ArrayList<String> docs = fromDBStringToArray(docsId);
+            boolean exist = docs.contains(String.valueOf(id_doc));
             if (exist) {
                 return false;
             }
@@ -343,7 +343,8 @@ public class DocumentService {
         String amount_str = DBService.findColumn(id_doc, "documents", "amount");
         String users_str = DBService.findColumn(id_doc, "documents", "users");
         String returns_str = DBService.findColumn(id_user, "users", "returns");
-
+        String awaiters_str = DBService.findColumn(id_doc, "documents", "waiting_list");
+        String title = DBService.findColumn(id_doc, "documents", "title");
         ArrayList<String> arrayList = fromDBStringToArray(documents_str);
         int index = arrayList.indexOf(id_doc);
         arrayList.remove(index);
@@ -365,6 +366,10 @@ public class DocumentService {
         if (amount_str.equals("")) amount_str = "0";
         int newAmount = Integer.parseInt(amount_str) + 1;
 
+        ArrayList<String> awaitersId = fromDBStringToArray(awaiters_str);
+        if (awaitersId.size() >= 1) {
+            DBService.sendMessageToUser("The book " + title + " is available for checkout.", awaitersId.get(0));
+        }
         DBService.updateColumn(id_user, deadlines_str, "users", "deadlines");
         DBService.updateColumn(id_user, documents_str, "users", "documents");
         DBService.updateColumn(id_doc, users_str, "documents", "users");
