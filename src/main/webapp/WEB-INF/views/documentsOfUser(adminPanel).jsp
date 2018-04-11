@@ -32,7 +32,7 @@
             <tr>
                 <td>${doc.getId()}</td>
                 <td>${doc.getTitle()}</td>
-                <td>${doc.getAuthors()}</td>
+                <td>${doc.getAuthorsAsString()}</td>
                 <td>${doc.getType()}</td>
                 <c:choose>
                     <c:when test="${doc.fine != null && doc.fine != 0}">

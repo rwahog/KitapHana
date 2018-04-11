@@ -1,10 +1,11 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
+import com.kitaphana.Entities.Author;
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.Keyword;
 import com.kitaphana.Entities.User;
-import com.kitaphana.dao.documentDAOImpl;
-import com.kitaphana.dao.userDAOImpl;
+import com.kitaphana.dao.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +18,8 @@ public class MyDocumentsService {
     Database db = Database.getInstance();
     userDAOImpl userDAO = new userDAOImpl();
     documentDAOImpl documentDAO = new documentDAOImpl();
+    authorDAOImpl authorDAO = new authorDAOImpl();
+    keywordDAOImpl keywordDAO = new keywordDAOImpl();
     DBService dbService = new DBService();
 
     public ArrayList<Document> setDocs(String id) {
@@ -43,6 +46,7 @@ public class MyDocumentsService {
                     doc.setType(rs1.getString("type"));
                     doc.setFine(Integer.parseInt(user_fines[i]));
                     doc.setDeadline(doc.getDeadlineOfDocument(Long.parseLong(ids_dead[i])));
+                    setAuthors(doc);
                     docs.add(doc);
                 }
             }
@@ -50,6 +54,26 @@ public class MyDocumentsService {
             e.printStackTrace();
         }
         return docs;
+    }
+
+    public void setKeywords(Document document) {
+        ArrayList<String> keywordsId = dbService.fromDBStringToArray(document.getKeywordsId());
+        ArrayList<Keyword> keywords = new ArrayList<>();
+        for (String keyId : keywordsId) {
+            Keyword keyword = keywordDAO.findById(Long.parseLong(keyId));
+            keywords.add(keyword);
+        }
+        document.setKeywords(keywords);
+    }
+
+    public void setAuthors(Document document) {
+        ArrayList<String> authorsId = dbService.fromDBStringToArray(document.getAuthorsId());
+        ArrayList<Author> authors = new ArrayList<>();
+        for (String authorId : authorsId) {
+            Author author = authorDAO.findById(Long.parseLong(authorId));
+            authors.add(author);
+        }
+        document.setAuthors(authors);
     }
 
     public ArrayList<Document> setWaitingsInfo(Long user_id) throws SQLException {
