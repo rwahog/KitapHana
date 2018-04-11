@@ -119,6 +119,7 @@ public class TestDelivery3 {
         Assertions.assertEquals(idshnik, d1_id);
         libr.returnDoc(p1.getId()+"", d1_id+"");
         libr2.returnDocApproval(p1.getId()+"", d1_id+"");
+        System.out.println("test_case1 passed!");
     }
     public void test_case2() throws SQLException {
 
@@ -178,6 +179,7 @@ public class TestDelivery3 {
         libr2.returnDocApproval(s.getId()+"", d1_id+"");
         libr.returnDoc(s.getId()+"", d2_id+"");
         libr2.returnDocApproval(s.getId()+"", d2_id+"");
+        System.out.println("test_case2 passed!");
     }
     public void test_case3() throws SQLException {
 
@@ -224,6 +226,7 @@ public class TestDelivery3 {
 
         libr.returnDoc(s.getId()+"", d2_id+"");
         libr2.returnDocApproval(s.getId()+"", d2_id+"");
+        System.out.println("test_case3 passed!");
     }
     public void test_case4() throws SQLException {
         p1 = service.findUserById(p1_id);
@@ -273,6 +276,7 @@ public class TestDelivery3 {
 
         libr.returnDoc(s.getId()+"", d2_id+"");
         libr2.returnDocApproval(s.getId()+"", d2_id+"");
+        System.out.println("test_case4 passed!");
     }
     public void test_case5() throws SQLException {
         p1 = service.findUserById(p1_id);
@@ -299,6 +303,7 @@ public class TestDelivery3 {
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), v.getId()+"");
         //outstanding request to d3
+        System.out.println("test_case5 passed!");
 
     }
     public void test_case6(boolean tc) throws SQLException {
@@ -345,6 +350,7 @@ public class TestDelivery3 {
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), s.getId()+","+v.getId()+","+p3.getId());
         //outstanding request for d3 if not going to tc
+        System.out.println("test_case6 passed!");
     }
     public void test_case7() throws SQLException {
         test_case6(true);
@@ -353,6 +359,7 @@ public class TestDelivery3 {
         rs = db.runSqlQuery("SELECT * from documents where id = '"+d3_id+"'");
         rs.next();
         Assertions.assertEquals(rs.getString("waiting_list"), "");
+        System.out.println("test_case7 passed!");
     }
     public void test_case8() throws SQLException {
         test_case6(true);
@@ -366,6 +373,7 @@ public class TestDelivery3 {
         rs.next();
         Assertions.assertEquals(rs.getString("deadlines"), "");
         //outstanding request to d3
+        System.out.println("test_case8 passed!");
     }
     public void test_case9() throws SQLException {
         test_case6(true);
@@ -387,6 +395,7 @@ public class TestDelivery3 {
         Assertions.assertEquals(fine, 0);
         libr.returnDoc(p1.getId()+"", d3_id+"");
         libr2.returnDocApproval(p1.getId()+"", d3_id+"");
+        System.out.println("test_case9 passed!");
     }
     public void test_case10() throws SQLException {
         p1 = service.findUserById(p1_id);
@@ -417,6 +426,7 @@ public class TestDelivery3 {
         String deadline2_2 = rs.getString("deadlines");
         Assertions.assertEquals(deadline1_1, deadline2_1);
         Assertions.assertEquals(deadline1_2, deadline2_2);
+        System.out.println("test_case10 passed!");
     }
     public User setDeadlines(User user, int days) throws SQLException {
         rs = db.runSqlQuery("SELECT * from users where id = '"+user.getId()+"'");
