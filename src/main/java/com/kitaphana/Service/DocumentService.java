@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -196,6 +197,7 @@ public class DocumentService {
                     }
                 }
             }
+
             users = document.getUsers();
         }
         User user = userDAO.findById(Long.parseLong(id_user));

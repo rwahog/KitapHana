@@ -47,7 +47,6 @@ public class DocumentServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/views/failure.jsp").forward(request, response);
             }
         } else if (checkout_button.equals("queue")) {
-            try {
                 checkOut = service.queue(id_user, id);
                 if (checkOut) {
                     response.sendRedirect("/verification");
@@ -56,9 +55,6 @@ public class DocumentServlet extends HttpServlet {
                     request.setAttribute("message", message);
                     request.getRequestDispatcher("/WEB-INF/views/failure.jsp").forward(request, response);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
