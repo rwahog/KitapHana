@@ -48,14 +48,8 @@
                         </td>
                         <td>${doc.getAuthors()}</td>
                         <td>${doc.getType()}</td>
-                        <c:choose>
-                            <c:when test="${doc.fine != null && doc.fine != 0}">
-                                <td>${doc.getFine()} &#8381;</td>
-                            </c:when>
-                            <c:otherwise>
-                                <td>${doc.deadline} days</td>
-                            </c:otherwise>
-                        </c:choose>
+                        <td>${doc.getFine()} &#8381;</td>
+                        <td>${doc.getDeadline()} days</td>
                         <form action="/myDocs" method="POST">
                         <td>
                             <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
