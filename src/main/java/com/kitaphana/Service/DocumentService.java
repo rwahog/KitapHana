@@ -90,7 +90,7 @@ public class DocumentService {
         return document;
     }
 
-    public boolean queue(long id_user, int id_doc) throws SQLException {
+    public boolean queue(long id_user, int id_doc) {
         User user = userDAO.findById(id_user);
         String docsId = user.getDocuments();
         if (docsId != null && docsId.length() != 0) {
@@ -101,6 +101,10 @@ public class DocumentService {
             }
         }
         if (!user.getPossibleType().equals(user.getType())) {
+            return false;
+        }
+        String available = DBService.findColumn(String.valueOf(id_doc), "documents", "available");
+        if (available.equals("0")) {
             return false;
         }
         Document document = documentDAO.findById(id_doc);
