@@ -198,7 +198,7 @@ public class Document {
         Date date = new Date();
         left = deadline - date.getTime();
         if (left > 0) {
-            return (long) Math.ceil((double)left / (double)day);
+            return 0;
         } else {
             return getFine(left);
         }

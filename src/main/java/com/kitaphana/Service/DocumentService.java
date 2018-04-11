@@ -72,7 +72,7 @@ public class DocumentService {
             String type = DBService.findColumn(id, "documents","type");
             switch (type) {
                 case "book":
-                    type = "books";
+                    type = "book";
                     break;
                 case "ja":
                     type = "ja";
@@ -325,9 +325,11 @@ public class DocumentService {
         users_str = DBService.fromArrayToDBString(arrayList);
 
         arrayList = DBService.fromDBStringToArray(returns_str);
-        arrayList.remove(id_doc);
+        try {
+            arrayList.remove(id_doc);
+        }catch (Exception e){}
         returns_str = DBService.fromArrayToDBString(arrayList);
-
+        if (amount_str.equals("")) amount_str = "0";
         int newAmount = Integer.parseInt(amount_str) + 1;
 
         DBService.updateColumn(id_user, deadlines_str, "users", "deadlines");
