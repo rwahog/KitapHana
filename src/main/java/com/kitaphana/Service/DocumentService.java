@@ -362,9 +362,19 @@ public class DocumentService {
     public void outstandingRequest(String docId) {
         Date date = new Date();
         long currentTime = date.getTime();
-        DBService.updateColumn(docId, "", "documents", "waiting_list");
-        DBService.updateColumn(docId, String.valueOf(0), "users", "available");
         String title = DBService.findColumn(docId, "documents", "title");
+        String awaiters = DBService.findColumn(docId, "documents", "waiting_list");
+        ArrayList<String> awaitersId = fromDBStringToArray(awaiters);
+        for (String id : awaitersId) {
+            String waitingList = DBService.findColumn(id, "users", "waiting_list");
+            ArrayList<String> waitingListId = fromDBStringToArray(waitingList);
+            waitingListId.remove(waitingList.indexOf(docId));
+            waitingList = DBService.fromArrayToDBString(waitingListId);
+            DBService.updateColumn(id, waitingList, "users", "waiting_list");
+            DBService.sendMessageToUser("The book " + title + " is no longer available.", id);
+        }
+        DBService.updateColumn(docId, "", "documents", "waiting_list");
+        DBService.updateColumn(docId, String.valueOf(0), "documents", "available");
         String users = DBService.findColumn(docId, "documents", "users");
         ArrayList<String> usersId = fromDBStringToArray(users);
         for (String id : usersId) {
