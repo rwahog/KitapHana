@@ -144,7 +144,7 @@ public class UserService {
 
     public boolean isLibrarian(String phone_number) {
         boolean isLib = false;
-            User user = userDAO.findByPhoneNumber(phone_number);
+        User user = userDAO.findByPhoneNumber(phone_number);
             if (user.getType().equals("Librarian")) {
                 isLib = true;
             }

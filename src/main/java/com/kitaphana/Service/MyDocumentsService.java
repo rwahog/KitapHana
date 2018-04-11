@@ -73,6 +73,7 @@ public class MyDocumentsService {
             user.setRenews(doc_id);
         }
         userDAO.update(user);
+        dbService.sendMessageToLibrarians("You have some work to do (new renew)");
     }
 
     public void returnDoc(String docId, String userId) {
@@ -83,6 +84,7 @@ public class MyDocumentsService {
             returns = docId;
         }
         dbService.updateColumn(userId, returns, "users", "returns");
+        dbService.sendMessageToLibrarians("You have some work to do (new return)");
     }
 
     public ArrayList<String> setNameAndSurname(String id) {

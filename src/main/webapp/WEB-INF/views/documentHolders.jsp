@@ -35,11 +35,11 @@
                 <td>${user.getSurname()}</td>
                 <td>${user.getType()}</td>
                 <c:choose>
-                    <c:when test="${user.fine != null && doc.fine != 0}">
+                    <c:when test="${user.getFine() != null && doc.getFine() != 0}">
                         <td>${doc.getFine()} &#8381;</td>
                     </c:when>
                     <c:otherwise>
-                        <td>${doc.deadline} days</td>
+                        <td>${doc.getDeadline()} days</td>
                     </c:otherwise>
                 </c:choose>
             </tr>

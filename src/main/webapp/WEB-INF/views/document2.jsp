@@ -38,7 +38,7 @@
                         </div>
                         <ul class="document-authors">
                             <li *ngFor="let author of document.authors"
-                                itemprop="author" class="document-author">${document.getAuthors()}</li>
+                                itemprop="author" class="document-author">${document.getAuthorsAsString()}</li>
                         </ul>
                         <div itemprop="description"
                              class="document-description card-text italic">

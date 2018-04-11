@@ -37,7 +37,6 @@ public class MainServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
     
     @Override

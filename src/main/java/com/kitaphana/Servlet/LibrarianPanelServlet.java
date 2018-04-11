@@ -68,6 +68,11 @@ public class LibrarianPanelServlet extends HttpServlet {
             response.sendRedirect("/main");
         } else if ((request.getParameter("return_approval") != null && Integer.parseInt(request.getParameter("return_approval")) == 1)) {
             documentService.returnDocApproval(userId, docId);
+            String message = "You returned document successfully.";
+            dbService.sendMessageToUser(message, userChatId);
+            response.sendRedirect("/main");
+        } else if ((request.getParameter("outstanding_request") != null && Integer.parseInt(request.getParameter("outstanding_request")) == 1)) {
+            documentService.outstandingRequest(request.getParameter(docId));
             response.sendRedirect("/main");
         }
     }

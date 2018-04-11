@@ -72,7 +72,7 @@ public class DocumentService {
             String type = DBService.findColumn(id, "documents","type");
             switch (type) {
                 case "book":
-                    type = "book";
+                    type = "books";
                     break;
                 case "ja":
                     type = "ja";
@@ -145,10 +145,14 @@ public class DocumentService {
             amount--;
             if (user != null) {
                 ArrayList docs = fromDBStringToArray(user.getDocuments());
+                ArrayList checks = fromDBStringToArray(user.getCheckouts());
                 if (docs != null && docs.contains(id)) {
                     return false;
                 }
                 if (!user.getPossibleType().equals(user.getType())) {
+                    return false;
+                }
+                if (checks != null && checks.contains(String.valueOf(id))) {
                     return false;
                 }
                 String checkouts = user.getCheckouts();
@@ -194,6 +198,7 @@ public class DocumentService {
             String docs = user.getDocuments();
             String deadlines = user.getDeadlines();
             String checkouts = user.getCheckouts();
+            String fines = user.getFine();
             if (deadlines.length() != 0) {
                 deadlines = deadlines + "," + current_time;
             } else {
@@ -203,6 +208,11 @@ public class DocumentService {
                 docs = docs + "," + id_document;
             } else {
                 docs = String.valueOf(id_document);
+            }
+            if (fines.length() != 0) {
+                fines = fines.concat("," + 0);
+            } else {
+                fines = String.valueOf(0);
             }
             ArrayList<String> arrayList = fromDBStringToArray(checkouts);
             arrayList.remove(arrayList.indexOf(id_document));
@@ -216,6 +226,7 @@ public class DocumentService {
             DBService.updateColumn(id_user, docs, "users", "documents");
             DBService.updateColumn(id_document, users, "documents","users");
             DBService.updateColumn(id_user, checkouts, "users", "checkouts");
+            DBService.updateColumn(id_user, fines, "users", "fine");
         }
         return true;
     }
@@ -240,6 +251,8 @@ public class DocumentService {
     }
 
     public boolean renewDocApproval(String id_user, String id_doc) {
+        Date date = new Date();
+        long currentTime = date.getTime();
         String docs_str = DBService.findColumn(id_user, "users","documents");
         String deadlines_str = DBService.findColumn(id_user, "users", "deadlines");
         String renew_str = DBService.findColumn(id_user, "users", "renews");
@@ -247,10 +260,15 @@ public class DocumentService {
         ArrayList<String> deadlines = fromDBStringToArray(deadlines_str);
         ArrayList<String> renews = fromDBStringToArray(renew_str);
         int index = docs.indexOf(id_doc);
-        long deadline = Long.parseLong(deadlines.get(index));
         String type = DBService.findColumn(id_user, "users", "type");
-        Book doc = bookDAO.findById(Long.parseLong(id_doc));
-        int best = doc.isBestseller();
+        String docType = DBService.findColumn(id_doc, "documents", "type");
+        int best = 0;
+        if (docType.equals("book")) {
+            Book doc = bookDAO.findById(Long.parseLong(id_doc));
+            best = doc.isBestseller();
+        } else {
+            best = 0;
+        }
         long add_time = 0;
         if (best == 1) {
             add_time += 14 * day;
@@ -261,27 +279,29 @@ public class DocumentService {
         } else {
             add_time += 28 * day;
         }
-        deadline += add_time;
+        currentTime += add_time;
         deadlines.remove(index);
         renews.remove(id_doc);
-        deadlines.add(index, String.valueOf(deadline));
+        deadlines.add(index, String.valueOf(currentTime));
         deadlines_str = "";
         renew_str = "";
         if (deadlines.size() == 1) {
             deadlines_str = deadlines.get(0);
         } else {
-            for (String id : deadlines) {
-                deadlines_str = deadlines_str.concat("," + id);
+            for (int i = 0; i < deadlines.size() - 1; i++) {
+                deadlines_str = deadlines_str.concat(deadlines.get(i) + ",");
             }
+            deadlines_str = deadlines_str.concat(deadlines.get(deadlines.size() - 1));
         }
         if (renews.size() == 1) {
             renew_str = renews.get(0);
         } else if (renews.size() == 0) {
             renew_str = "";
         } else {
-            for (String id : renews) {
-                renew_str = renew_str.concat("," + id);
+            for (int i = 0; i < renews.size() - 1; i++) {
+                renew_str = renew_str.concat(renews.get(i) + ",");
             }
+            renew_str = renew_str.concat(renews.get(renews.size() - 1));
         }
         DBService.updateColumn(id_user, deadlines_str,"users","deadlines");
         DBService.updateColumn(id_user, renew_str, "users", "renews");
@@ -339,19 +359,26 @@ public class DocumentService {
         DBService.updateColumn(id_user, returns_str, "users", "returns");
     }
 
-    public ArrayList<String> getAuthorNameAndSurname(String author) {
-        ArrayList<String> arrayList = new ArrayList<>();
-        int i = 0;
-        String name = "";
-        String surname;
-        while (author.charAt(i) != ' ') {
-            name = name + author.charAt(i);
-            i = i + 1;
+    public void outstandingRequest(String docId) {
+        Date date = new Date();
+        long currentTime = date.getTime();
+        DBService.updateColumn(docId, "", "documents", "waiting_list");
+        DBService.updateColumn(docId, String.valueOf(0), "users", "available");
+        String title = DBService.findColumn(docId, "documents", "title");
+        String users = DBService.findColumn(docId, "documents", "users");
+        ArrayList<String> usersId = fromDBStringToArray(users);
+        for (String id : usersId) {
+            String docs = DBService.findColumn(id, "users", "documents");
+            String deadlines = DBService.findColumn(id, "users", "deadlines");
+            ArrayList<String> docsId = fromDBStringToArray(docs);
+            ArrayList<String> deadlinesId = fromDBStringToArray(deadlines);
+            int index = docsId.indexOf(docId);
+            deadlinesId.remove(index);
+            deadlinesId.add(index, String.valueOf(currentTime));
+            deadlines = DBService.fromArrayToDBString(deadlinesId);
+            DBService.updateColumn(id, deadlines, "users", "deadlines");
+            DBService.sendMessageToUser("Please return book " + title + " to the library", id);
         }
-        surname = author.substring(i + 1);
-        arrayList.add(name);
-        arrayList.add(surname);
-        return arrayList;
     }
 
     public void deleteKeywords(ArrayList<String> keywords, long id) {
