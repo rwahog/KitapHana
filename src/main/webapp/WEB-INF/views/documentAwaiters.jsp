@@ -24,7 +24,6 @@
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col">Type</th>
-                <td scope="col">Allow out of queue</td>
             </tr>
             </thead>
             <tbody>
@@ -34,8 +33,6 @@
                     <td>${user.getName()}</td>
                     <td>${user.getSurname()}</td>
                     <td>${user.getType()}</td>
-                    <td><input type="image" style="border-style: none" src="/resources/images/ok.png"/></td>
-
                 </tr>
             </c:forEach>
             </tbody>

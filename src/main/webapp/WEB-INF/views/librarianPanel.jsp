@@ -278,6 +278,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Type</th>
                         <th scope="col">Number of requests</th>
+                        <th scope="col">Outstanding Request</th>
                         <th scope="col">Waiters</th>
                     </tr>
                     </thead>
@@ -290,6 +291,7 @@
                         </td>
                         <td>${doc.getType()}</td>
                         <td>${doc.getRequests()}</td>
+                        <td><input type="image" style="border-style: none" src="/resources/images/ok.png"/></td>
                         <td>
                             <a href="/awaiters?doc_id=${doc.getId()}"><img itemprop="image" src="/resources/images/people.png">
                             </a>
