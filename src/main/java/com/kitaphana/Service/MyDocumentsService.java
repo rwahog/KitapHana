@@ -67,6 +67,10 @@ public class MyDocumentsService {
     public void renewDoc(String doc_id, String user_id) {
         User user = userDAO.findById(Long.parseLong(user_id));
         String user_renews = user.getRenews();
+        String available = dbService.findColumn(doc_id, "documents", "available");
+        if (available.equals("0")) {
+            return;
+        }
         if (user_renews != null && user_renews.length() != 0) {
             user.setRenews(user_renews.concat("," + doc_id));
         } else {
