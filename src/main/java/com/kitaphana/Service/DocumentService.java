@@ -146,6 +146,9 @@ public class DocumentService {
             if (user != null) {
                 ArrayList docs = fromDBStringToArray(user.getDocuments());
                 ArrayList checks = fromDBStringToArray(user.getCheckouts());
+                if (document.getAmount() <= 0) {
+                    return false;
+                }
                 if (docs != null && docs.contains(id)) {
                     return false;
                 }
