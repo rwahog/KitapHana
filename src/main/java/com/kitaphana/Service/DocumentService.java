@@ -94,8 +94,8 @@ public class DocumentService {
         User user = userDAO.findById(id_user);
         String docsId = user.getDocuments();
         if (docsId != null && docsId.length() != 0) {
-            ArrayList docs = fromDBStringToArray(docsId);
-            boolean exist = docs.contains(id_doc);
+            ArrayList<String> docs = fromDBStringToArray(docsId);
+            boolean exist = docs.contains(String.valueOf(id_doc));
             if (exist) {
                 return false;
             }
