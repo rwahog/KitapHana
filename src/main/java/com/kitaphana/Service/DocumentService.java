@@ -3,19 +3,8 @@ package com.kitaphana.Service;
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.*;
 import com.kitaphana.dao.*;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 public class DocumentService {
@@ -167,6 +156,10 @@ public class DocumentService {
                 if (available.equals("0")) {
                     return false;
                 }
+                String waiting_list = DBService.findColumn(String.valueOf(id), "documents" , "waiting_list");
+                if (waiting_list != "") {
+                    queue(id_user, id);
+                }
                 String checkouts = user.getCheckouts();
                 if (checkouts.length() == 0) {
                     DBService.updateColumn(String.valueOf(id_user), checkouts.concat(String.valueOf(id)), "users", "checkouts");
@@ -212,6 +205,12 @@ public class DocumentService {
             String deadlines = user.getDeadlines();
             String checkouts = user.getCheckouts();
             String fines = user.getFine();
+            String renews_num = DBService.findColumn(id_user, "users", "renews_num");
+            if (renews_num.length() !=0) {
+                renews_num = renews_num.concat("," + 0);
+            } else {
+                renews_num = String.valueOf(0);
+            }
             if (deadlines.length() != 0) {
                 deadlines = deadlines + "," + current_time;
             } else {
@@ -235,6 +234,7 @@ public class DocumentService {
             } else {
                 users = id_user;
             }
+            DBService.updateColumn(id_user, renews_num, "users", "renews_num");
             DBService.updateColumn(id_user, deadlines, "users", "deadlines");
             DBService.updateColumn(id_user, docs, "users", "documents");
             DBService.updateColumn(id_document, users, "documents","users");
@@ -316,6 +316,12 @@ public class DocumentService {
             }
             renew_str = renew_str.concat(renews.get(renews.size() - 1));
         }
+        String renews_num = DBService.findColumn(id_user, "users", "renews_num");
+        ArrayList<String> renewsNum = fromDBStringToArray(renews_num);
+        int q = Integer.parseInt(renewsNum.get(index));
+        renewsNum.remove(index);
+        q++;
+        renewsNum.add(index, String.valueOf(q));
         DBService.updateColumn(id_user, deadlines_str,"users","deadlines");
         DBService.updateColumn(id_user, renew_str, "users", "renews");
         return true;
@@ -375,7 +381,6 @@ public class DocumentService {
         returns_str = DBService.fromArrayToDBString(arrayList);
         if (amount_str.equals("")) amount_str = "0";
         int newAmount = Integer.parseInt(amount_str) + 1;
-
         ArrayList<String> awaitersId = fromDBStringToArray(awaiters_str);
         if (awaitersId.size() >= 1) {
             DBService.sendMessageToUser("The book " + title + " is available for checkout.", awaitersId.get(0));
@@ -386,6 +391,7 @@ public class DocumentService {
         DBService.updateColumn(id_doc, users_str, "documents", "users");
         DBService.updateColumn(id_doc, String.valueOf(newAmount), "documents", "amount");
         DBService.updateColumn(id_user, returns_str, "users", "returns");
+
     }
 
     public void outstandingRequest(String docId) {

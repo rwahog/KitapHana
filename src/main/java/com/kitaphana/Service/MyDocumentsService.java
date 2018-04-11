@@ -71,6 +71,15 @@ public class MyDocumentsService {
         if (available.equals("0")) {
             return;
         }
+        String userRenewsNum = dbService.findColumn(user_id, "users", "renews_num");
+        ArrayList<String> userRenews = dbService.fromDBStringToArray(userRenewsNum);
+        String userDocs = dbService.findColumn(user_id, "users", "documents");
+        ArrayList<String> userDocsId = dbService.fromDBStringToArray(userDocs);
+        int index = userDocsId.indexOf(doc_id);
+        String type = user.getType();
+        if (Integer.parseInt(userRenews.get(index)) >= 1 && !type.equals("Visiting Professor")) {
+            return;
+        }
         if (user_renews != null && user_renews.length() != 0) {
             user.setRenews(user_renews.concat("," + doc_id));
         } else {
