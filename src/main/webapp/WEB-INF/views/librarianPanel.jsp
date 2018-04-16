@@ -53,6 +53,9 @@
         <li class="nav-item">
             <a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab" aria-controls="waitinglist" aria-selected="false">Waiting list</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
+        </li>
     </ul>
     <div class="tab-content users" id="myTabContent" style="position: relative !important; top:0px !important; margin-left: 0px !important;">
         <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
@@ -326,6 +329,28 @@
 
                     </tr>
                     </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+            <div class="panel container-fluid mx-auto px-0">
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">Action</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lol zabral knigy Touch Of class</td>
+                            <td>17 March 20:00</td>
+                        </tr>
+                        <tr>
+                            <td>Librarian dropnul queue</td>
+                            <td>15 March 16:00</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
