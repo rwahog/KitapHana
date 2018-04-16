@@ -4,9 +4,9 @@ public class AVMaterial extends Document {
     private String title;
     private long docId;
 
-    public AVMaterial(String title, String authors, String keywords, int price,
-                      int amount, String type, String cover, String description) {
-        super(title, authors, keywords, price, amount, type, description);
+    public AVMaterial(String title, int price,
+                      int amount, String type, String description) {
+        super(title, price, amount, type, description);
         this.title = title;
     }
 

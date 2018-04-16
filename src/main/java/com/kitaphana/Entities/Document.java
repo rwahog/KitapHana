@@ -10,6 +10,8 @@ public class Document {
     private String title;
     private String keywordsId;
     private String authorsId;
+    private String authorsString;
+    private String keywordsString;
     private String cover;
     private String type;
     private String users;
@@ -19,11 +21,9 @@ public class Document {
     private ArrayList<Keyword> keywords;
     private ArrayList<Author> authors;
 
-    public Document(String title, String authorsId, String keywordsId, int price,
-                    int amount, String type, String description) {
+    public Document(String title, int price, int amount, String type,
+                    String description) {
         this.title = title;
-        this.authorsId = authorsId;
-        this.keywordsId = keywordsId;
         this.price = price;
         this.amount = amount;
         this.type = type;
@@ -47,6 +47,22 @@ public class Document {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public void setAuthorsString(String authorsString) {
+        this.authorsString = authorsString;
+    }
+
+    public String getAuthorsString() {
+        return authorsString;
+    }
+
+    public void setKeywordsString(String keywordsString) {
+        this.keywordsString = keywordsString;
+    }
+
+    public String getKeywordsString() {
+        return keywordsString;
     }
 
     public void setAuthorsId(String authorsId) {

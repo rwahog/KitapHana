@@ -1,6 +1,9 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.AVMaterial;
 import com.kitaphana.Entities.Book;
+import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.JournalArticle;
 import com.kitaphana.Service.DBService;
 import com.kitaphana.Service.DocumentService;
 import com.kitaphana.Service.LoginService;
@@ -14,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/addDocument")
+@WebServlet(urlPatterns = {"/addDocument", "/editDocument"})
 public class AddDocumentServlet extends HttpServlet {
 
     DocumentService service = new DocumentService();
@@ -22,13 +25,24 @@ public class AddDocumentServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        try {
-            new LoginService().redirect(request,response, "addDocument", true);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (request.getRequestURI().equals("/editDocument")) {
+            String docId = request.getParameter("id");
+            String type = dbService.findColumn(docId, "documents", "type");
+            Document doc = new Document();
+            switch (type) {
+                case "book":
+                    doc = dbService.findDocumentAndTypeInfo(docId, "books");
+                    break;
+                case "ja":
+                    doc = dbService.findDocumentAndTypeInfo(docId, type);
+                    break;
+                case "av":
+                    doc = dbService.findDocumentAndTypeInfo(docId, type);
+                    break;
+            }
+            request.setAttribute("doc", doc);
         }
-
-        //request.getRequestDispatcher("WEB-INF/views/addDocument.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/editDocument.jsp").forward(request, response);
     }
 
     @Override
@@ -53,16 +67,32 @@ public class AddDocumentServlet extends HttpServlet {
                     bestseller = Integer.parseInt(request.getParameter("bestseller"));
                 }
                 if (unique) {
-                    Book book = new Book(title, authors, keywords, price, amount, type, description, publisher, year, edition_number, bestseller);
+                    Book book = new Book(title, price, amount, type, description, publisher, year, edition_number, bestseller);
+                    book.setAuthorsString(authors);
+                    book.setKeywordsString(keywords);
                     service.saveDocument(book);
-                    response.sendRedirect("/librarianPanel");
                 }
                 break;
             case "article":
                 String editors = request.getParameter("editors");
                 String journal_name = request.getParameter("journal_name");
                 String date = request.getParameter("date");
+                if (unique) {
+                    JournalArticle journalArticle = new JournalArticle(title, price, amount, type, description, editors, journal_name, date);
+                    journalArticle.setAuthorsString(authors);
+                    journalArticle.setKeywordsString(keywords);
+                    service.saveDocument(journalArticle);
+                }
+                break;
+            case "av":
+                if (unique) {
+                    AVMaterial avMaterial = new AVMaterial(title, price, amount, type, description);
+                    avMaterial.setAuthorsString(authors);
+                    avMaterial.setKeywordsString(keywords);
+                    service.saveDocument(avMaterial);
+                }
                 break;
         }
+        response.sendRedirect("/librarianPanel");
     }
 }

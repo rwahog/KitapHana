@@ -31,12 +31,7 @@ public class MyDocumentsServlet extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("myDocs", docs);
-        try {
-            new LoginService().redirect(request, response, "myDocument", false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        request.getRequestDispatcher("WEB-INF/views/myDocument.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

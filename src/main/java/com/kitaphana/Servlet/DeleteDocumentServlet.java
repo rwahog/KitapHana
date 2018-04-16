@@ -17,12 +17,7 @@ public class DeleteDocumentServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        try {
-            service.deleteDocument(Long.parseLong(request.getParameter("id")));
-            response.sendRedirect("/librarianPanel");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        service.deleteDocument(Long.parseLong(request.getParameter("id")));
+        response.sendRedirect("/librarianPanel");
     }
 }

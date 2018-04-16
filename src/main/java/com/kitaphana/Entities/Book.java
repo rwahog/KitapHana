@@ -13,10 +13,10 @@ public class Book extends Document {
         this.bestseller = bestseller;
     }
 
-    public Book(String title, String authors, String keywords, int price, int amount,
+    public Book(String title, int price, int amount,
                 String type, String description, String publisher,
                 int year, int editionNumber, int bestseller) {
-        super(title, authors, keywords, price, amount, type, description);
+        super(title, price, amount, type, description);
         this.publisher = publisher;
         this.year = year;
         this.editionNumber = editionNumber;
@@ -30,36 +30,36 @@ public class Book extends Document {
         this.editionNumber = editionNumber;
     }
 
+    public int getEditionNumber() {
+        return editionNumber;
+    }
+
     public void setBestseller(int bestseller) {
         this.bestseller = bestseller;
+    }
+
+    public int isBestseller() {
+        return bestseller;
     }
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public void setDocumentId(long documentId) {
-        this.documentId = documentId;
-    }
-
-    public int getEditionNumber() {
-        return editionNumber;
     }
 
     public int getYear() {
         return year;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public int isBestseller() {
-        return bestseller;
+    public void setDocumentId(long documentId) {
+        this.documentId = documentId;
     }
 
     public long getDocumentId() {

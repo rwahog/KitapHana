@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns="/login.do")
+@WebServlet(urlPatterns="/login")
 public class LoginServlet extends HttpServlet{
 
     String phone_number;
@@ -26,8 +26,6 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        session.setMaxInactiveInterval(2*60*60);
         request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
     }
 
@@ -54,7 +52,7 @@ public class LoginServlet extends HttpServlet{
         if (isValidUser){
             boolean isLibrarian = userService.isLibrarian(phone_number);
             if (isLibrarian) {
-                session.setAttribute("libr", "true");
+                session.setAttribute("librarian", "true");
             }
             try {
                 session.setAttribute("name", service.getUserNameAndId(phone_number).getName());
@@ -66,7 +64,6 @@ public class LoginServlet extends HttpServlet{
             session.setAttribute("login", phone_number);
             session.setAttribute("password", password);
             session.setAttribute("chat_id", service.getChatId(phone_number));
-            System.out.println(service.getChatId(phone_number));
             if (service.getChatId(phone_number)!=0){
                 try {
                     telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");

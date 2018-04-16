@@ -28,11 +28,7 @@ public class ProfileServlet extends HttpServlet {
             user = userService.findUserById(Long.parseLong(session.getAttribute("id").toString()));
         }
         session.setAttribute("user", user);
-        try {
-            new LoginService().redirect(request, response, "profile", false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.getRequestDispatcher("WEB-INF/views/profile.jsp").forward(request, response);
     }
 
     @Override

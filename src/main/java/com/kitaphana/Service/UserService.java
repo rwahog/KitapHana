@@ -61,6 +61,22 @@ public class UserService {
         return userDAO.findAll();
     }
 
+    public int numberOfUnconfirmedUsers() {
+        int count = 0;
+        final String statement = "SELECT COUNT(users.id) AS count FROM users WHERE users.possible_type <> users.type";
+        try {
+            PreparedStatement ps = db.con.prepareStatement(statement);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
 
     public void deleteUserAddress(long id) {
         addressDAO.delete(getUserAddressId(id));

@@ -1,7 +1,5 @@
 package com.kitaphana.Service;
 
-import javafx.collections.transformation.SortedList;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +30,7 @@ public class Trie {
         }
     };
     public void initializeTrie() throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from search");
+        ResultSet resultSet = statement.executeQuery("SELECT * from search");
         while(resultSet.next()){
             String query = resultSet.getString("query");
             int amount = resultSet.getInt("amount");

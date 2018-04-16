@@ -22,24 +22,14 @@ public class LibrarianPanelServlet extends HttpServlet {
     DBService dbService = new DBService();
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        ArrayList<User> users = userService.findAll();
-        ArrayList<Document> docs = documentService.findAll();
-        ArrayList<User> arr3 = service.setCheckoutsInfo();
-        ArrayList<User> arr4 = service.setRenewsInfo();
-        ArrayList<User> arr5 = service.setReturnsInfo();
-        ArrayList<Document> arr6 = service.setWaintingsInfo();
-        session.setAttribute("docs", docs);
-        session.setAttribute("users", users);
-        request.setAttribute("usersCheckouts", arr3);
-        request.setAttribute("renews", arr4);
-        request.setAttribute("returns", arr5);
-        request.setAttribute("waitingList", arr6);
-        try {
-            new LoginService().redirect(request, response, "librarianPanel", true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.setAttribute("docs", documentService.findAll());
+        request.setAttribute("usersCount", userService.numberOfUnconfirmedUsers());
+        request.setAttribute("users", userService.findAll());
+        request.setAttribute("checkouts", service.setCheckoutsInfo());
+        request.setAttribute("renews", service.setRenewsInfo());
+        request.setAttribute("returns", service.setReturnsInfo());
+        request.setAttribute("waitingList", service.setWaintingsInfo());
+        request.getRequestDispatcher("WEB-INF/views/librarianPanel.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -60,13 +50,13 @@ public class LibrarianPanelServlet extends HttpServlet {
         } else if (request.getParameter("renew_approval") != null && Integer.parseInt(request.getParameter("renew_approval")) == 1) {
             String userChatId = dbService.findColumn(request.getParameter("user_id"), "users", "chat_id");
             documentService.renewDocApproval(userId, docId);
-            String message = "Renew has approved";
+            String message = "Renew has been approved";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("renew_disapproval") != null && Integer.parseInt(request.getParameter("renew_disapproval")) == 1)){
             String userChatId = dbService.findColumn(request.getParameter("user_id"), "users", "chat_id");
             documentService.renewDocDisApproval(userId, docId);
-            String message = "Renew hasn't approved";
+            String message = "Renew hasn't been approved";
             dbService.sendMessageToUser(message, userChatId);
             response.sendRedirect("/main");
         } else if ((request.getParameter("return_approval") != null && Integer.parseInt(request.getParameter("return_approval")) == 1)) {

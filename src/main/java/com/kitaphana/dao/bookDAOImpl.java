@@ -133,7 +133,7 @@ public class bookDAOImpl implements bookDAO {
             ps.setInt(3, object.getYear());
             ps.setInt(4, object.getEditionNumber());
             ps.setInt(5, object.isBestseller());
-            ps.setLong(6, object.getDocumentId());
+            ps.setLong(6, object.getId());
 
             ps.executeUpdate();
             ps.close();

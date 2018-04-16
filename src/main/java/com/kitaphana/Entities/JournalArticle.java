@@ -14,10 +14,10 @@ public class JournalArticle extends Document {
         this.editors = editors;
     }
 
-    public JournalArticle(String title, String authors, String keywords, int price,
+    public JournalArticle(String title, int price,
                           int amount, String type, String description,
                           String journalName, String date, String editors) {
-        super(title, authors, keywords, price, amount, type, description);
+        super(title, price, amount, type, description);
         this.journalName = journalName;
         this.date = date;
         this.title = title;

@@ -13,6 +13,7 @@ public class User {
     private long cardNumber, maxDays, id, addressId;
     public long deadline, chatId;
     private int priority;
+    private int privilege;
 
     public User(String name, String surname, String phone_number, String password,
                 String email, Address address, String possibleType) {
@@ -44,16 +45,32 @@ public class User {
         this.id = id;
     }
 
+    public void setPrivilege(int privilege) {
+        this.privilege = privilege;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
     public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public long getCardNumber() {
+        return cardNumber;
     }
 
     public void setPossibleType(String possibleType) {
@@ -168,18 +185,6 @@ public class User {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public long getCardNumber() {
-        return cardNumber;
-    }
-
     public String getPossibleType() {
         return possibleType;
     }
@@ -242,6 +247,10 @@ public class User {
 
     public String getCheckouts() {
         return checkouts;
+    }
+
+    public int getPrivilege() {
+        return privilege;
     }
 
     public ArrayList<Document> getDocumentsArray() {

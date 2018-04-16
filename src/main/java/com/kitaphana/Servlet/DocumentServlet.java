@@ -26,12 +26,7 @@ public class DocumentServlet extends HttpServlet {
         Document document = service.setDocInfo(request.getParameter("id"));
         request.setAttribute("document", document);
         request.setAttribute("doc_button_available", "true");
-
-        try {
-            new LoginService().redirect(request, response, "document", false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.getRequestDispatcher("WEB-INF/views/document.jsp").forward(request, response);
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         id_user = Long.parseLong(String.valueOf(request.getSession().getAttribute("id")));

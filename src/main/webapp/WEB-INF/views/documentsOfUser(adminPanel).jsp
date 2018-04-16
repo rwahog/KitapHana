@@ -1,13 +1,15 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <c:set var="path" value="${request.getContextPath()}"/>
     <meta charset="UTF-8">
     <title>KitapHana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/common.css"
+    <link href="${path}/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/list.css"
+    <link href="${path}/resources/css/list.css"
           rel="stylesheet">
 </head>
 <body>
@@ -51,11 +53,11 @@
         <a class="btn btn-block" id = "button" onclick="goBack()">Cancel</a>
     </div>
 </main>
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script src="${path}/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="${path}/resources/js/popper.min.js"></script>
+<script src="${path}/resources/js/bootstrap.min.js"></script>
+<script src="${path}/resources/js/masonry.pkgd.min.js"></script>
+<script src="${path}/resources/js/main.js"></script>
 <script>
     function goBack() {
         window.history.back();

@@ -24,11 +24,7 @@ public class Document2Servlet extends HttpServlet {
 
         Document document = service.setDocInfo(request.getParameter("id"));
         request.setAttribute("document", document);
-        try {
-            new LoginService().redirect(request, response, "document2", false);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.getRequestDispatcher("WEB-INF/views/document2.jsp").forward(request, response);
     }
 
 }

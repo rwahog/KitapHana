@@ -24,11 +24,7 @@ public class EditUserServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         user = userService.findUserById(Long.parseLong(request.getParameter("id")));
         request.setAttribute("user", user);
-        try {
-            new LoginService().redirect(request, response, "editUser", true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

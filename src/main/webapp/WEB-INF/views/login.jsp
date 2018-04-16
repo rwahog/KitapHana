@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="row">
-            <form class="form-singin col-12" action="/login.do" method="POST">
+            <form class="form-singin col-12" action="/login" method="POST">
                 <h1 class="logo">KitapHana</h1>
                 <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
                 <input type="text" name="login" class="form-control" placeholder="Phone number" required=""

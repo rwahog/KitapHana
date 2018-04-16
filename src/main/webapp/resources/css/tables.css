@@ -59,3 +59,8 @@ a:hover{
     color: white;
 }
 
+.notification {
+    position: absolute;
+    right: 4px;
+    top: 0;
+}

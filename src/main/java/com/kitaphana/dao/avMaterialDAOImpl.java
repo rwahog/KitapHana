@@ -95,8 +95,8 @@ public class avMaterialDAOImpl {
         }
     }
 
-    public void delete(String id) {
-        commonDAO.delete(Long.parseLong(id), "av", "document_id");
+    public void delete(long id) {
+        commonDAO.delete(id, "av", "document_id");
     }
 
 }

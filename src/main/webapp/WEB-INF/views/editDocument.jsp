@@ -12,7 +12,7 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" method="post">
+<form class="form-registration col-12 col-md-8 col-lg-6 mx-auto" method="POST">
     <div class="container addDocument">
         <div class="form-row">
             <div class="form-group col-12">

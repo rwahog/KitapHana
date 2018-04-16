@@ -22,12 +22,7 @@ public class DocumentHoldersServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ArrayList<User> users = service.fillPage(request.getParameter("id"));
-        HttpSession session = request.getSession();
         request.setAttribute("users", users);
-        try {
-            new LoginService().redirect(request, response, "documentHolders", true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }
 }

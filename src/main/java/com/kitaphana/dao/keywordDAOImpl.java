@@ -18,6 +18,10 @@ public class keywordDAOImpl implements keywordDAO {
     private static final String INSERT = "INSERT INTO keywords (keyword, documents) VALUES (?,?)";
     private static final String UPDATE = "UPDATE keywords SET keyword=?, documents=? WHERE id=?";
 
+    public long findLastId() {
+        return commonDAO.findLastId("keywords");
+    }
+
     public Keyword findByKeyword(String key) {
         Keyword keyword = null;
 

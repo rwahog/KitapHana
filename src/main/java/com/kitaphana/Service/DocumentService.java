@@ -4,7 +4,6 @@ import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.*;
 import com.kitaphana.dao.*;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class DocumentService {
@@ -22,39 +21,20 @@ public class DocumentService {
     public ArrayList<Document> findAll() {
         ArrayList<Document> docs = documentDAO.findAll();
         for (Document doc : docs) {
-            setAuthors(doc);
-            setKeywords(doc);
+            DBService.setAuthors(doc);
+            DBService.setKeywords(doc);
         }
         return docs;
     }
 
     public Document findById(long id) {
         Document document = documentDAO.findById(id);
-        setKeywords(document);
-        setAuthors(document);
+        DBService.setKeywords(document);
+        DBService.setAuthors(document);
 
         return document;
     }
 
-    public void setKeywords(Document document) {
-        ArrayList<String> keywordsId = fromDBStringToArray(document.getKeywordsId());
-        ArrayList<Keyword> keywords = new ArrayList<>();
-        for (String keyId : keywordsId) {
-            Keyword keyword = keywordDAO.findById(Long.parseLong(keyId));
-            keywords.add(keyword);
-        }
-        document.setKeywords(keywords);
-    }
-
-    public void setAuthors(Document document) {
-        ArrayList<String> authorsId = fromDBStringToArray(document.getAuthorsId());
-        ArrayList<Author> authors = new ArrayList<>();
-        for (String authorId : authorsId) {
-            Author author = authorDAO.findById(Long.parseLong(authorId));
-            authors.add(author);
-        }
-        document.setAuthors(authors);
-    }
 
     public Document setDocInfo(String id) {
         Document document = new Document();
@@ -72,8 +52,8 @@ public class DocumentService {
                     break;
             }
             document = DBService.findDocumentAndTypeInfo(id, type);
-            setAuthors(document);
-            setKeywords(document);
+            DBService.setAuthors(document);
+            DBService.setKeywords(document);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -516,7 +496,8 @@ public class DocumentService {
         saveAuthors(authorsToAdd, id);
     }
 
-    public void saveAuthors(ArrayList<String> authors, long id) {
+    public ArrayList<String> saveAuthors(ArrayList<String> authors, long id) {
+        ArrayList<String> authorsId = new ArrayList<>();
         for (String author: authors) {
             String name = "";
             String surname;
@@ -527,7 +508,7 @@ public class DocumentService {
                     i++;
                 }
                 name = name.concat(".");
-                surname = author.substring(i + 1);
+                surname = author.substring(i + 2);
             } else {
                 int i = 0;
                 while (author.charAt(i) != ' ') {
@@ -541,16 +522,20 @@ public class DocumentService {
                 Author author_obj = new Author(name, surname);
                 author_obj.setDocumentsId(String.valueOf(id));
                 authorDAO.insert(author_obj);
+                authorsId.add(String.valueOf(authorDAO.findLastId()));
             } else {
                 author1.setDocumentsId(author1.getDocumentsId().concat("," + id));
                 authorDAO.update(author1);
+                authorsId.add(String.valueOf(author1.getId()));
             }
         }
+        return authorsId;
     }
 
-    public void saveKeywords(ArrayList<String> keywords, long id) {
+    public ArrayList<String> saveKeywords(ArrayList<String> keywords, long id) {
+        ArrayList<String> keywordsId = new ArrayList<>();
         if (keywords == null || keywords.size() == 0) {
-            return;
+            return null;
         }
         for (String keyword: keywords) {
             Keyword key = keywordDAO.findByKeyword(keyword);
@@ -558,29 +543,40 @@ public class DocumentService {
                 Keyword keyword1 = new Keyword(keyword);
                 keyword1.setDocumentsId(String.valueOf(id));
                 keywordDAO.insert(keyword1);
+                keywordsId.add(String.valueOf(keywordDAO.findLastId()));
             } else {
                 key.setDocumentsId(key.getDocumentsId().concat("," + id));
                 keywordDAO.update(key);
+                keywordsId.add(String.valueOf(key.getId()));
             }
         }
+        return keywordsId;
     }
 
     public void saveDocument(Document document) {
+        document.setAuthorsId("");
+        document.setKeywordsId("");
         documentDAO.insert(document);
-        document.setId(documentDAO.findLastId());
+        long docId = documentDAO.findLastId();
+        document.setId(docId);
         String type = document.getType();
         switch (type) {
             case "book":
                 bookDAO.insert((Book) document);
                 break;
-            case "ja":
+            case "":
                 journalArticleDAO.insert((JournalArticle) document);
                 break;
+            case "av":
+                avMaterialDAO.insert((AVMaterial) document);
+                break;
         }
-        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthorsId());
-        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywordsId());
-        saveAuthors(authorsList, documentDAO.findLastId());
-        saveKeywords(keywordsList, documentDAO.findLastId());
+        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthorsString());
+        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywordsString());
+        String authorsId = DBService.fromArrayToDBString(saveAuthors(authorsList, docId));
+        String keywordsId = DBService.fromArrayToDBString(saveKeywords(keywordsList, docId));
+        DBService.updateColumn(String.valueOf(docId), authorsId, "documents", "authors");
+        DBService.updateColumn(String.valueOf(docId), keywordsId, "documents", "keywords");
     }
 
     public void deleteBook(long id) {
@@ -592,18 +588,19 @@ public class DocumentService {
     }
 
     public void deleteAV(long id) {
-        avMaterialDAO.delete(String.valueOf(id));
+        avMaterialDAO.delete(id);
     }
 
-    public void deleteDocument(long id) throws SQLException {
+    public void deleteDocument(long id) {
         Document document = documentDAO.findById(id);
-        if (document.getUsers() != null && document.getUsers().length() != 0) {
+        if (document.getUsers().length() != 0) {
             return;
         } else {
-            if (document.getAwaiters() != null && document.getAwaiters().length() != 0) {
-                 String[] awaiters = document.getAwaiters().split(",");
+            if (document.getAwaiters().length() != 0) {
+                String[] awaiters = document.getAwaiters().split(",");
                 for (String user_id: awaiters) {
                     User user = userDAO.findById(Long.parseLong(user_id));
+                    DBService.sendMessageToUser("The document is no longer available.", user_id);
                     ArrayList<String> waiting_list = fromDBStringToArray(user.getWaitingList());
                     waiting_list.remove(waiting_list.indexOf(String.valueOf(id)));
                     String waiting = DBService.fromArrayToDBString(waiting_list);

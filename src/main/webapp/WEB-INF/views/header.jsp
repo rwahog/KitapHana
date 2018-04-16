@@ -1,4 +1,3 @@
-<%@ page session="true" %>
 <%@ page import="com.kitaphana.Service.UserService" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -19,14 +18,13 @@
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="/main">KitapHana</a>
     <div class="rightside">
-        <%--<c:out value="${sessionScope.libr}"/>--%>
-        <%--<c:set value='${sessionScope.libr}' var="libr">--%>
-        <%if (session.getAttribute("libr") != null) {
-            if (session.getAttribute("libr").equals("true")) {%>
+        <%if (request.getSession(false) != null) {
+                if (request.getSession(false).getAttribute("librarian") != null) {
+            if (request.getSession(false).getAttribute("librarian").equals("true")) {%>
             <div class="nav-item" >
             <a class="nav-link" href = "/librarianPanel" > Librarian panel</a >
             </div >
-        <%}}%>
+        <%}}}%>
 
         <div class="dropdown nav-item">
             <a class="nav-link dropdown-toggle" href="#"

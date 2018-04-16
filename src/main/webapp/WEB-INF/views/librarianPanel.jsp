@@ -5,28 +5,49 @@
     <title>KitapHana</title>
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/common.css"
+    <link href="/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/tables.css"
+    <link href="/resources/css/tables.css"
           rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body>
 <%@include file="header.jsp" %>
 <main class="body container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
+            <c:if test="${usersCount != 0}">
+            <div class="notification">
+                <span class="badge badge-warning">${usersCount}</span>
+            </div>
+            </c:if>
             <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true">Users</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
         </li>
         <li class="nav-item">
+            <c:if test="${checkouts.size() != 0}">
+                <div class="notification">
+                    <span class="badge badge-warning">${checkouts.size()}</span>
+                </div>
+            </c:if>
             <a class="nav-link" id="checkouts-tab" data-toggle="tab" href="#checkouts" role="tab" aria-controls="checkouts" aria-selected="false">Checkouts</a>
         </li>
         <li class="nav-item">
+            <c:if test="${renews.size() != 0}">
+                <div class="notification">
+                    <span class="badge badge-warning">${renews.size()}</span>
+                </div>
+            </c:if>
             <a class="nav-link" id="renews-tab" data-toggle="tab" href="#renews" role="tab" aria-controls="renews" aria-selected="false">Renews</a>
         </li>
         <li class="nav-item">
+            <c:if test="${returns.size() != 0}">
+                <div class="notification">
+                    <span class="badge badge-warning">${returns.size()}</span>
+                </div>
+            </c:if>
             <a class="nav-link" id="returns-tab" data-toggle="tab" href="#returns" role="tab" aria-controls="returns" aria-selected="false">Returns</a>
         </li>
         <li class="nav-item">
@@ -60,11 +81,11 @@
                             <td>${user.getCardNumber()}</td>
                             <td>${user.getPossibleType()}</td>
                             <td>
-                                <a href="/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/doc.png">
+                                <a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/doc.png">
                                 </a>
                             </td>
                             <td>
-                                <a href="/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/clock.png">
+                                <a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/clock.png">
                                 </a>
                             </td>
                             <td>
@@ -128,7 +149,7 @@
                             </form>
                         </td>
                         <td>
-                            <a href="/editDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a>
+                            <a href="/editDocument?id=${doc.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a>
                         </td>
                         <td>
                             <a href="/deleteDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/bin.png"></a>
@@ -157,7 +178,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="user" items="${usersCheckouts}">
+                        <c:forEach var="user" items="${checkouts}">
                             <c:forEach var="doc" items="${user.getDocumentsArray()}">
                                 <tr>
                                     <td>${user.getId()}</td>

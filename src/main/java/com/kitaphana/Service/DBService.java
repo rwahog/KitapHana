@@ -1,10 +1,9 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.AVMaterial;
-import com.kitaphana.Entities.Book;
-import com.kitaphana.Entities.Document;
-import com.kitaphana.Entities.JournalArticle;
+import com.kitaphana.Entities.*;
+import com.kitaphana.dao.authorDAOImpl;
+import com.kitaphana.dao.keywordDAOImpl;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -23,14 +22,16 @@ import java.util.List;
 
 public class DBService {
 
-    Database db = Database.getInstance();
+    private Database db = Database.getInstance();
+    private authorDAOImpl authorDAO = new authorDAOImpl();
+    private keywordDAOImpl keywordDAO = new keywordDAOImpl();
 
-    public Document findDocumentAndTypeInfo(String doc_id, String table) {
+    public Document findDocumentAndTypeInfo(String docId, String table) {
         String statement = String.format("SELECT * FROM documents INNER JOIN %s ON documents.id = %s.document_id WHERE %s.document_id=?", table, table, table);
         Document document = new Document();
         try {
             PreparedStatement ps = db.con.prepareStatement(statement);
-            ps.setLong(1, Long.parseLong(doc_id));
+            ps.setLong(1, Long.parseLong(docId));
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -50,6 +51,8 @@ public class DBService {
                         book.setYear(rs.getInt("year"));
                         book.setDescription(rs.getString("description"));
                         book.setKeywordsId(rs.getString("keywords"));
+                        setAuthors(book);
+                        setKeywords(book);
                         document = book;
                         break;
                     case "ja":
@@ -57,6 +60,7 @@ public class DBService {
                         journalArticle.setId(rs.getInt("id"));
                         journalArticle.setTitle(rs.getString("title"));
                         journalArticle.setAuthorsId(rs.getString("authors"));
+                        journalArticle.setKeywordsId(rs.getString("keywords"));
                         journalArticle.setCover(rs.getString("document_cover"));
                         journalArticle.setAmount(rs.getInt("amount"));
                         journalArticle.setPrice(rs.getInt("price"));
@@ -65,6 +69,8 @@ public class DBService {
                         journalArticle.setEditors(rs.getString("editors"));
                         journalArticle.setTitle(rs.getString("title"));
                         journalArticle.setDate(rs.getString("date"));
+                        setAuthors(journalArticle);
+                        setKeywords(journalArticle);
                         document = journalArticle;
                         break;
                     case "av":
@@ -72,10 +78,13 @@ public class DBService {
                         avMaterial.setId(rs.getInt("id"));
                         avMaterial.setTitle(rs.getString("title"));
                         avMaterial.setAuthorsId(rs.getString("authors"));
+                        avMaterial.setKeywordsId(rs.getString("keywords"));
                         avMaterial.setCover(rs.getString("document_cover"));
                         avMaterial.setAmount(rs.getInt("amount"));
                         avMaterial.setPrice(rs.getInt("price"));
                         avMaterial.setType(rs.getString("type"));
+                        setAuthors(avMaterial);
+                        setKeywords(avMaterial);
                         document = avMaterial;
                         break;
                 }
@@ -88,6 +97,26 @@ public class DBService {
             e.printStackTrace();
         }
         return document;
+    }
+
+    public void setAuthors(Document document) {
+        ArrayList<String> authorsId = fromDBStringToArray(document.getAuthorsId());
+        ArrayList<Author> authors = new ArrayList<>();
+        for (String authorId : authorsId) {
+            Author author = authorDAO.findById(Long.parseLong(authorId));
+            authors.add(author);
+        }
+        document.setAuthors(authors);
+    }
+
+    public void setKeywords(Document document) {
+        ArrayList<String> keywordsId = fromDBStringToArray(document.getKeywordsId());
+        ArrayList<Keyword> keywords = new ArrayList<>();
+        for (String keyId : keywordsId) {
+            Keyword keyword = keywordDAO.findById(Long.parseLong(keyId));
+            keywords.add(keyword);
+        }
+        document.setKeywords(keywords);
     }
 
     public void updateColumn(String user_id, String info, String table, String column) {

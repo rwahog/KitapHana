@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class commonDAOImpl implements commonDAO {
 
-    Database db = Database.getInstance();
+    private Database db = Database.getInstance();
     private static final String FIND_LAST_ID = "SELECT MAX(id) AS maxID FROM %s";
     private static final String DELETE = "DELETE FROM %s WHERE %s=?";
     private static final String FIND_BY_DOCUMENT_ID = "SELECT * FROM %s WHERE document_id=?";
@@ -69,7 +69,7 @@ public class commonDAOImpl implements commonDAO {
                         break;
                     case "ja":
                         JournalArticle journalArticle = new JournalArticle();
-                        document.setTitle(rs.getString("title"));
+                        journalArticle.setTitle(rs.getString("title"));
                         journalArticle.setDate(rs.getString("date"));
                         journalArticle.setJournalName(rs.getString("journal_name"));
                         journalArticle.setEditors(rs.getString("editors"));
