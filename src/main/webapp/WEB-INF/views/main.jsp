@@ -13,6 +13,8 @@
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/main.css"
           rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/auto-complete.css"
+          rel="stylesheet">
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -131,6 +133,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/js/auto-complete.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/auto-complete.min.js"></script>
 </body>
 </html>
