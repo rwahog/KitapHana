@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Registration</title>
-    <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">

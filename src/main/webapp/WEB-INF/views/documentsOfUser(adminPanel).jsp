@@ -5,7 +5,7 @@
     <c:set var="path" value="${request.getContextPath()}"/>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${path}/resources/css/common.css"
           rel="stylesheet">
