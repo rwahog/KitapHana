@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class Keyword {
     protected long id;
     protected String keyword, documentsId;
-
+    protected ArrayList<Document>
     public Keyword() {
 
     }
@@ -27,7 +27,9 @@ public class Keyword {
     public void setDocumentsId(String documentsId) {
         this.documentsId = documentsId;
     }
-
+    public void ArrayList<Document> setDocuments(ArrayList<Document> documents) {
+        this.documents = documents;
+    }
     public long getId() {
         return id;
     }
@@ -39,4 +41,6 @@ public class Keyword {
     public String getDocumentsId() {
         return documentsId;
     }
+
+    public ArrayList<Document> getDocuments(){return documents;}
 }
