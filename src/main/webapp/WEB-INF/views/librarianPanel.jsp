@@ -152,17 +152,17 @@
                             </form>
                         </td>
                         <td>
-                            <a href="/editDocument?id=${doc.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a>
+                            <a href="/librarianPanel/editDocument?id=${doc.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a>
                         </td>
                         <td>
-                            <a href="/deleteDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/bin.png"></a>
+                            <a href="${pageContext.request.contextPath}/deleteDoc?id=${doc.getId()}"><img itemprop="image" src="/resources/images/bin.png"></a>
                         </td>
                     </tr>
                     </c:forEach>
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-primary btn-block col-12 col-md-3 link"  href="/addDocument">Add new Document</a>
+                    <a class="btn btn-primary btn-block col-12 col-md-3 link"  href="/librarianPanel/addDocument">Add new Document</a>
                 </div>
             </div>
         </div>

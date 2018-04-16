@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <c:set var="path" value="${request.getContextPath()}"/>
+    <c:set var="path" value="${application.getRealPath(\"/\")}"/>
     <meta charset="UTF-8">
     <title>KitapHana</title>
     <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${path}/resources/css/common.css"
+    <link href="/resources/css/common.css"
           rel="stylesheet">
-    <link href="${path}/resources/css/list.css"
+    <link href="/resources/css/list.css"
           rel="stylesheet">
 </head>
 <body>
@@ -53,11 +53,11 @@
         <a class="btn btn-block" id = "button" onclick="goBack()">Cancel</a>
     </div>
 </main>
-<script src="${path}/resources/js/jquery-3.2.1.slim.min.js"></script>
-<script src="${path}/resources/js/popper.min.js"></script>
-<script src="${path}/resources/js/bootstrap.min.js"></script>
-<script src="${path}/resources/js/masonry.pkgd.min.js"></script>
-<script src="${path}/resources/js/main.js"></script>
+<script src="/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="/resources/js/popper.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/masonry.pkgd.min.js"></script>
+<script src="/resources/js/main.js"></script>
 <script>
     function goBack() {
         window.history.back();

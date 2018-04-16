@@ -1,9 +1,6 @@
 package com.kitaphana.Entities;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 public class Document {
@@ -208,15 +205,11 @@ public class Document {
         return authorsStr;
     }
 
-
-
     public long getDeadlineOfDocument(long deadline){
         long day = 24*60*60*1000;
         long left;
         Date date = new Date();
         left = deadline - date.getTime();
-        left = (left + day - 1) / day;
-        return left;
+        return (long) Math.ceil((double)left / (double)day);
     }
-
 }

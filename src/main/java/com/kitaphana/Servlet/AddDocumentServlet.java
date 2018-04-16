@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/addDocument", "/editDocument"})
+@WebServlet(urlPatterns = {"/librarianPanel/addDocument", "/librarianPanel/editDocument"})
 public class AddDocumentServlet extends HttpServlet {
 
     DocumentService service = new DocumentService();
@@ -25,7 +25,7 @@ public class AddDocumentServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        if (request.getRequestURI().equals("/editDocument")) {
+        if (request.getRequestURI().equals("/librarianPanel/editDocument")) {
             String docId = request.getParameter("id");
             String type = dbService.findColumn(docId, "documents", "type");
             Document doc = new Document();

@@ -1,13 +1,15 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <c:set var="path" value="${application.getRealPath(\"/\")}"/>
+    <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/common.css"
+    <link href="${path}/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/forms.css"
+    <link href="${path}/resources/css/forms.css"
           rel="stylesheet">
 </head>
 <body>
@@ -139,12 +141,13 @@
             </div>
         </div>
     </div>
+
 </form>
-<script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script src="${path}/resources/js/jquery-3.2.1.slim.min.js"></script>
+<script src="/resources/js/popper.min.js"></script>
+<script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/masonry.pkgd.min.js"></script>
+<script src="/resources/js/main.js"></script>
 <%--<script src="${pageContext.request.contextPath}/resources/js/addDocument.js"></script>--%>
 <script>
     function goBack() {
