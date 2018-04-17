@@ -69,15 +69,15 @@ public class DocumentSearch {
     }
     public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) throws SQLException {//Кол-во документов, которые нужно вернуть
         update(possible_title, 1);
-        ArrayList<Document> [] sorted_documents = new ArrayList[100];
+        ArrayList<Document> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<documents.size(); i++){
             int dist = levenshteinDistance(possible_title, documents.get(i).getTitle());
-            if(dist < 100){
+            if(dist <= lev_dist){
                 sorted_documents[dist].add(documents.get(i));
             }
         }
         ArrayList<Document> ans = new ArrayList<>();
-        for(int dist = 0; dist<100 && amount > 0; dist++){
+        for(int dist = 0; dist<= lev_dist && amount > 0; dist++){
             for(int i = 0; i <sorted_documents[dist].size() && amount>0; i++){
                 ans.add(sorted_documents[dist].get(i));
                 amount--;
@@ -87,17 +87,17 @@ public class DocumentSearch {
     }
     public ArrayList<Author> getAuthorsByPossibleNameOrSurname(String possible_name_or_surname, int amount, int lev_dist) throws SQLException {
         update(possible_name_or_surname, 1);
-        ArrayList<Author> [] sorted_documents = new ArrayList[100];
+        ArrayList<Author> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<authors.size(); i++){
             int dist1 = levenshteinDistance(possible_name_or_surname, authors.get(i).getName());
             int dist2 = levenshteinDistance(possible_name_or_surname, authors.get(i).getSurname());
 
-            if(dist1 < 100 || dist2 < 100){
+            if(dist1 <= lev_dist || dist2 <= lev_dist){
                 sorted_documents[Math.min(dist1, dist2)].add(authors.get(i));
             }
         }
         ArrayList<Author> ans = new ArrayList<>();
-        for(int dist = 0; dist<100 && amount > 0; dist++){
+        for(int dist = 0; dist <= lev_dist && amount > 0; dist++){
             for(int i = 0; i <sorted_documents[dist].size() && amount>0; i++){
                 ans.add(sorted_documents[dist].get(i));
                 amount--;
@@ -107,15 +107,15 @@ public class DocumentSearch {
     }
     public ArrayList<Keyword> getKeywordsByPossibleKeyword(String possible_keyword, int amount, int lev_dist) throws SQLException {
         update(possible_keyword, 1);
-        ArrayList<Keyword> [] sorted_documents = new ArrayList[100];
+        ArrayList<Keyword> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<keywords.size(); i++){
             int dist = levenshteinDistance(possible_keyword, authors.get(i).getSurname());
-            if(dist < 100){
+            if(dist <= lev_dist){
                 sorted_documents[dist].add(keywords.get(i));
             }
         }
         ArrayList<Keyword> ans = new ArrayList<>();
-        for(int dist = 0; dist<100 && amount > 0; dist++){
+        for(int dist = 0; dist<=lev_dist && amount > 0; dist++){
             for(int i = 0; i <sorted_documents[dist].size() && amount>0; i++){
                 ans.add(sorted_documents[dist].get(i));
                 amount--;
