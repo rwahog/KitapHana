@@ -7,7 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
+    <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
@@ -19,12 +20,12 @@
 <body>
 <%@include file="header.jsp" %>
 <nav class="navbar search-menu">
-    <form class="form-group col-4">
-        <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+    <form class="form-group col-4" method="POST">
+        <input class="form-control" type="search" placeholder="Search" name="query" aria-label="Search">
     </form>
     <div class="form-group col-3">
-        <select id="searchBy" class="form-control">
-            <option selected>Title</option>
+        <select id="searchBy" name="search" class="form-control">
+            <option value="" selected>Title</option>
             <option>Author</option>
             <option>Keywords</option>
         </select>

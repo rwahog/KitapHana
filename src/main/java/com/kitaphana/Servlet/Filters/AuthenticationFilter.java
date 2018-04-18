@@ -24,13 +24,16 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
         String URI = request.getRequestURI();
-        if (session == null && (!URI.endsWith("login"))) {
-            response.sendRedirect("/login");
-        } else if (session != null && session.getAttribute("id") == null && (!URI.endsWith("login"))) {
-            response.sendRedirect("/login");
+        if ((session == null && (URI.endsWith("login") || URI.endsWith("registration"))) ||
+                session != null && session.getAttribute("user") == null && (URI.endsWith("login") || URI.endsWith("registration"))) {
+            filterChain.doFilter(request, response);
+        } else if (session != null && session.getAttribute("user") != null) {
+            filterChain.doFilter(request, response);
+        } else if (URI.endsWith(".css") || URI.endsWith(".js")) {
+            filterChain.doFilter(request, response);
         }
         else {
-            filterChain.doFilter(request, response);
+            response.sendRedirect(request.getContextPath() + "login");
         }
     }
 

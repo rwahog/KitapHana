@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 	<display-name>To do List</display-name>
-	
+
 	<welcome-file-list>
 		<welcome-file>login</welcome-file>
 	</welcome-file-list>
@@ -12,6 +12,10 @@
 	<filter>
 		<filter-name>AuthenticationFilter</filter-name>
 		<filter-class>com.kitaphana.Servlet.Filters.AuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>excludePattern</param-name>
+			<param-value>/registration/*</param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>AuthenticationFilter</filter-name>
@@ -26,4 +30,13 @@
 		<url-pattern>/librarianPanel/*</url-pattern>
 	</filter-mapping>
 
+	<!--<error-page>-->
+		<!--<error-code>404</error-code>-->
+		<!--<location>/AppExceptionHandler</location>-->
+	<!--</error-page>-->
+
+	<!--<error-page>-->
+		<!--<exception-type>java.lang.Throwable</exception-type>-->
+		<!--&lt;!&ndash;<location>/AppExceptionHandler</location>&ndash;&gt;-->
+	<!--</error-page>-->
 </web-app>

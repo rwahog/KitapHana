@@ -34,22 +34,22 @@ public class DocumentSearch {
         initializeKeywords();
         trie = new Trie(connection);
     }
-    public void initializeDocuments() throws SQLException {
+    public void initializeDocuments() {
         documentDAOImpl documentDAO = new documentDAOImpl();
         documents = documentDAO.findAll();
     }
-    public void initializeAuthors() throws SQLException {
+    public void initializeAuthors() {
         authorDAOImpl authorDAO = new authorDAOImpl();
         authors = authorDAO.findAll();
     }
-    public void initializeKeywords() throws SQLException {
+    public void initializeKeywords() {
         keywordDAOImpl keywordDAO = new keywordDAOImpl();
         keywords = keywordDAO.findAll();
     }
     public ArrayList<String> getPossibleQueries(String s){//Работает за |s|
         return trie.get(s);
     }
-    public Document getDocumentByTitle(String title) throws SQLException {
+    public Document getDocumentByTitle(String title) {
         for(int i = 0; i<documents.size(); i++){
             if(documents.get(i).getTitle().equals(title)){
                 return documents.get(i);

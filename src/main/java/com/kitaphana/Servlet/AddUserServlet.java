@@ -1,7 +1,8 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.LoginService;
+import com.kitaphana.Entities.User;
 import com.kitaphana.Service.RegistrationService;
+import com.kitaphana.Service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,15 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
-@WebServlet(urlPatterns = "/addUser")
+@WebServlet(urlPatterns = {"/librarianPanel/addUser", "/librarianPanel/editUser", "/profile"})
 public class AddUserServlet extends HttpServlet {
     RegistrationService service = new RegistrationService();
-
+    UserService userService = new UserService();
+    User user;
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        request.getRequestDispatcher("WEB-INF/views/addUser.jsp").forward(request, response);
+        if (request.getRequestURI().endsWith("editUser") || request.getRequestURI().endsWith("profile")) {
+            user = userService.findUserById(Long.parseLong(request.getParameter("id")));
+            request.setAttribute("user", user);
+        }
+        request.getRequestDispatcher("/WEB-INF/views/editUser.jsp").forward(request, response);
     }
 
     @Override
@@ -25,22 +30,22 @@ public class AddUserServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String status = request.getParameter("status");
-        String phone_number = request.getParameter("phone_number");
+        String phoneNumber = request.getParameter("phone_number");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");
         String country = request.getParameter("country");
         String town = request.getParameter("town");
         String street = request.getParameter("street");
-        String house_number = request.getParameter("house_number");
-        String apartment_number = request.getParameter("apartment_number");
-        String post_code = request.getParameter("postcode");
+        String houseNumber = request.getParameter("house_number");
+        String apartmentNumber = request.getParameter("apartment_number");
+        String postcode = request.getParameter("postcode");
 
         boolean isValidUser = true;
-        isValidUser = service.checkIfPossibleToRegister(phone_number, password1, password2);
+        isValidUser = service.checkIfPhoneNumberIsUnique(phoneNumber, password1, password2);
         String button = request.getParameter("button");
         if (isValidUser) {
-            service.saveUser(name, surname, status, phone_number, password1, email, country, town, street, house_number, apartment_number, post_code);
+            service.saveUser(name, surname, status, phoneNumber, password1, email, country, town, street, houseNumber, apartmentNumber, postcode);
             response.sendRedirect("/librarianPanel");
         }
         else {

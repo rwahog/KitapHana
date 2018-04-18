@@ -7,7 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
+    <c:set var="path" value="${application.getRealPath(\"/\")}"/>
+    <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
@@ -29,12 +31,12 @@
         <div class="dropdown nav-item">
             <a class="nav-link dropdown-toggle" href="#"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                ${name} ${surname}
+                ${sessionScope["user"].getName()} ${sessionScope["user"].getSurname()}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="/profile?id=${id}">Profile</a>
+                <a class="dropdown-item" href="/profile?id=${sessionScope["user"].getId()}">Profile</a>
                 <%if (session.getAttribute("libr") == null) {%>
-                    <a class="dropdown-item" href="/myDocs?id=${id}">My Docs</a>
+                    <a class="dropdown-item" href="/myDocs?id=${sessionScope["user"].getId()}">My Docs</a>
                 <%}%>
                 <a class="dropdown-item" href="/logout">Log out</a>
             </div>
