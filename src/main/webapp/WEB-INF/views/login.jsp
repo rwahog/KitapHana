@@ -20,11 +20,17 @@
             <form class="form-singin col-12" action="/login" method="POST">
                 <h1 class="logo">KitapHana</h1>
                 <h2 class="h3 mb-3 font-weight-normal">Please sign in</h2>
-                <input type="text" name="login" class="form-control" placeholder="Phone number" required="" autofocus=""><br>
-                <input type="password" name="password" class="form-control" placeholder="Password" required=""><br>
-                <c:if test='${requestScope["errorMessage"] != null}'>
-                    <p style="color: #cccccc"><%=request.getAttribute("errorMessage")%></p>
-                </c:if>
+                <c:choose>
+                    <c:when test='${requestScope["errorMessage"] != null}'>
+                        <input type="text" id ="email" name="login" class="form-control" placeholder="Phone number" required="" autofocus="" style="border-color: #76050f"><br>
+                        <input type="password" id = "password" name="password" class="form-control" placeholder="Password" required="" style="border-color: #76050f"><br>
+                        <p style="color: #cc1010; font-weight: bold; text-align: center"><%=request.getAttribute("errorMessage")%></p>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" id ="email" name="login" class="form-control" placeholder="Phone number" required="" autofocus=""><br>
+                        <input type="password" id = "password" name="password" class="form-control" placeholder="Password" required=""><br>
+                    </c:otherwise>
+                </c:choose>
                 <div class="checkbox mb-3">
                     <label>
                         <input type="checkbox" name="remember" value="remember-me"> Remember me
