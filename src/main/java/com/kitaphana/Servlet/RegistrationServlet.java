@@ -10,12 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegistrationServlet extends HttpServlet {
     private UserService service = new UserService();
-    DBService dbService = new DBService();
+    private DBService dbService = new DBService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,22 +41,20 @@ public class RegistrationServlet extends HttpServlet {
         int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
         String postcode = request.getParameter("postcode");
 
-        boolean isValidUser = true;
-        isValidUser = service.checkIfPossibleToRegister(phoneNumber, password1, password2);
+        boolean isValidUser = service.checkIfPossibleToRegister(phoneNumber, password1, password2);
         if (isValidUser) {
             Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
             User user = new User(name, surname, phoneNumber, password1, email, address, status);
             service.saveUser(user);
-            request.getSession().setAttribute("name", name);
-            request.getSession().setAttribute("surname", surname);
-            request.getSession().setAttribute("id", service.getUserId(phoneNumber));
-            request.getSession().setAttribute("login", phoneNumber);
-            request.getSession().setAttribute("password", password1);
+            HttpSession session = request.getSession();
+            user = service.findUserByPhoneNumber(phoneNumber);
+            session.setAttribute("user", user);
             String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
             dbService.sendMessageToLibrarians(message);
             response.sendRedirect("/main");
         }
         else {
+            request.setAttribute("errorMessage", "User with such phone number is already exist.");
             request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
         }
     }

@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 
+import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.TelegramBot;
 import com.kitaphana.Service.UserService;
@@ -26,7 +27,12 @@ public class LoginServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            response.sendRedirect("/main");
+        } else {
+            request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -39,43 +45,26 @@ public class LoginServlet extends HttpServlet{
         telegramBot = new TelegramBot();
         HttpSession session = request.getSession();
         String check = request.getParameter("remember");
-        if(check != null){
+        if (check != null) {
             session.setMaxInactiveInterval(24*60*60);
+        } else {
+            session.setMaxInactiveInterval(2*60*60);
         }
-        boolean isValidUser = false;
-        try {
-            isValidUser = service.loginCheck(phone_number, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        if (isValidUser){
+        boolean isValidUser = service.loginCheck(phone_number, password);
+        if (isValidUser) {
             boolean isLibrarian = userService.isLibrarian(phone_number);
             if (isLibrarian) {
                 session.setAttribute("librarian", "true");
             }
-            try {
-                session.setAttribute("name", service.getUserNameAndId(phone_number).getName());
-                session.setAttribute("surname", service.getUserNameAndId(phone_number).getSurname());
-                session.setAttribute("id", service.getUserNameAndId(phone_number).getId());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            session.setAttribute("login", phone_number);
-            session.setAttribute("password", password);
-            session.setAttribute("chat_id", service.getChatId(phone_number));
-            if (service.getChatId(phone_number)!=0){
-                try {
-                    telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
-                }
-                catch (Exception e){
-                }
+            User user = userService.findUserByPhoneNumber(phone_number);
+            session.setAttribute("user", user);
+            if (user.getChatId() != 0){
+                telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
             }
             response.sendRedirect("/main");
-        }
-        else {
+        } else {
+            request.setAttribute("errorMessage", "Invalid username/password.");
             request.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(request, response);
         }
-
     }
 }

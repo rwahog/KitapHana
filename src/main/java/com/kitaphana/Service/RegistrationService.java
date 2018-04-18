@@ -7,25 +7,21 @@ import java.sql.SQLException;
 
 public class RegistrationService {
     public Database db = Database.getInstance();
+    private DBService dbService = new DBService();
 
-    public boolean checkIfPossibleToRegister(String phone_number, String password1, String password2) {
-        try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String dbPhone_Number;
+    public boolean checkIfPhoneNumberIsUnique(String phone_number, String password1, String password2) {
         boolean possible = false;
-        try {
-            ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
-            if (!rs.next() && password1.equals(password2)) {
-                    possible = true;
-                }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String db = dbService.findColumn(phone_number, "users", "id", "phone_number");
+        if (db.length() == 0) {
+            possible = true;
         }
         return possible;
     }
+
+//    public boolean checkIfPasswordsAreEqual(String phone_number, String pass1, String pass2) {
+//        boolean equal = false;
+//        String db = dbService.findColumn()
+//    }
 
     public void saveUser(String name, String surname, String possible_type, String phone_number,
                          String password, String email, String country, String town, String street,

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
+    <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
     <link href="/resources/css/common.css"
           rel="stylesheet">
     <link href="/resources/css/tables.css"
@@ -99,7 +101,7 @@
                                 </c:if>
                             </td>
                             <td>
-                                <a href="/editUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/pencil.png">
+                                <a href="/librarianPanel/editUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/pencil.png">
                                 </a>
                             </td>
                             <td>
@@ -111,7 +113,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <a class="btn btn-primary btn-block col-12 col-md-3 link" id = "btn" href="/addUser">Add new User</a>
+                    <a class="btn btn-primary btn-block col-12 col-md-3 link" id = "btn" href="/librarianPanel/addUser">Add new User</a>
                 </div>
             </div>
         </div>

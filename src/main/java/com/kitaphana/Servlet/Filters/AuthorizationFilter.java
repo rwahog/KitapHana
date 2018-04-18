@@ -9,6 +9,7 @@ import java.io.IOException;
 
 @WebFilter("/AuthorizationFilter")
 public class AuthorizationFilter implements Filter {
+
     private ServletContext context;
 
     @Override

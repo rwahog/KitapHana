@@ -1,13 +1,16 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
+    <c:set var="path" value="${application.getRealPath(\"/\")}"/>
+    <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/common.css"
+    <link href="/resources/css/common.css"
           rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/forms.css"
+    <link href="/resources/css/forms.css"
           rel="stylesheet">
 </head>
 <body>

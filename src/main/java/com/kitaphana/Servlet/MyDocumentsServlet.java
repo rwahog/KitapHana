@@ -2,6 +2,7 @@ package com.kitaphana.Servlet;
 
 
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.MyDocumentsService;
 
@@ -23,9 +24,9 @@ public class MyDocumentsServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        ArrayList<Document> docs = service.setDocs(session.getAttribute("id").toString());
+        ArrayList<Document> docs = service.setDocs(String.valueOf(((User)session.getAttribute("user")).getId()));
         try {
-            ArrayList<Document> waitings = service.setWaitingsInfo(Long.parseLong(session.getAttribute("id").toString()));
+            ArrayList<Document> waitings = service.setWaitingsInfo(((User)session.getAttribute("user")).getId());
             request.setAttribute("myWaitings", waitings);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -5,6 +6,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Registration</title>
+    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
     <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
@@ -17,6 +19,9 @@
     <h1 class="logo">KitapHana</h1>
     <div class="container" style="margin-top: 0">
         <div class="form-row">
+            <c:if test='${requestScope["errorMessage"] != null}'>
+                <h5 style="color: #cccccc"><%=request.getAttribute("errorMessage")%></h5>
+            </c:if>
             <div class="form-group col-4">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" name="name" id = "name" placeholder="Name" required="" autofocus="">
@@ -96,7 +101,7 @@
             <div class="form-group col-md-6">
             </div>
             <div class="form-group col-12 col-md-3">
-                <a class="btn btn-block" id = "button" href="/login.do">Cancel</a>
+                <a class="btn btn-block" id = "button" href="/login">Cancel</a>
             </div>
             <div class="form-group col-12 col-md-3">
                 <button class="btn btn-block btn-primary" type="submit">Submit</button>
