@@ -41,8 +41,22 @@ public class RegistrationServlet extends HttpServlet {
         int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
         String postcode = request.getParameter("postcode");
 
-        boolean isValidUser = service.checkIfPossibleToRegister(phoneNumber, password1, password2);
-        if (isValidUser) {
+        boolean isValidUser = service.checkIfPossibleToRegister(phoneNumber);
+        boolean isValidPassword = service.checkIfPossiblePassword(password1, password2);
+        if (!isValidPassword && !isValidUser){
+            request.setAttribute("errorBoth", "Your password is not matching or it too short " +
+                    "and the user is already exits with this prone number");
+            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        }
+        else if (!isValidPassword && isValidUser){
+            request.setAttribute("errorPassword", "Your password is not matching or it too short");
+            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        }
+        else if (!isValidUser && isValidPassword){
+            request.setAttribute("errorPhone", "Your password is not matching or it too short");
+            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        }
+        else {
             Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
             User user = new User(name, surname, phoneNumber, password1, email, address, status);
             service.saveUser(user);
@@ -52,10 +66,6 @@ public class RegistrationServlet extends HttpServlet {
             String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
             dbService.sendMessageToLibrarians(message);
             response.sendRedirect("/main");
-        }
-        else {
-            request.setAttribute("errorMessage", "User with such phone number is already exist.");
-            request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
         }
     }
 }

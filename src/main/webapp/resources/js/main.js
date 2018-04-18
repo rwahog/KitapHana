@@ -3,6 +3,7 @@ $(document).ready(function (e) {
         updateMasonry();
     });
     updateMasonry();
+    console.log ($('input'));
 })
 
 function updateMasonry(){
@@ -14,3 +15,15 @@ function updateMasonry(){
         percentPosition: true
     });
 }
+
+$(document).ready(function () {
+    $('#phone_number').mask("+7(999)999-9999");
+})
+
+
+$(function(){
+    $('input[data-type="number"]').bind('keypress', function(e){
+        var keyCode = (e.which)?e.which:event.keyCode
+        return !(keyCode>31 && (keyCode<48 || keyCode>57));
+    });
+});

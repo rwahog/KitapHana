@@ -9,12 +9,18 @@ public class RegistrationService {
     public Database db = Database.getInstance();
     private DBService dbService = new DBService();
 
-    public boolean checkIfPhoneNumberIsUnique(String phone_number, String password1, String password2) {
+    public boolean checkIfPhoneNumberIsUnique(String phone_number) {
         boolean possible = false;
         String db = dbService.findColumn(phone_number, "users", "id", "phone_number");
         if (db.length() == 0) {
             possible = true;
         }
+        return possible;
+    }
+    public boolean possiblePassword(String password1, String password2){
+        boolean possible = false;
+        if (password1.equals(password2) && password1.length() > 5)
+            possible = true;
         return possible;
     }
 

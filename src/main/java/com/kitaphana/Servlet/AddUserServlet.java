@@ -42,7 +42,7 @@ public class AddUserServlet extends HttpServlet {
         String postcode = request.getParameter("postcode");
 
         boolean isValidUser = true;
-        isValidUser = service.checkIfPhoneNumberIsUnique(phoneNumber, password1, password2);
+        isValidUser = service.checkIfPhoneNumberIsUnique(phoneNumber) && service.possiblePassword(password1, password2);
         String button = request.getParameter("button");
         if (isValidUser) {
             service.saveUser(name, surname, status, phoneNumber, password1, email, country, town, street, houseNumber, apartmentNumber, postcode);

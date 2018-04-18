@@ -24,7 +24,7 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession(false);
         String URI = request.getRequestURI();
-        if ((session == null && (URI.endsWith("login") || URI.endsWith("registration"))) ||
+        if ((session == null && (URI.endsWith("login") || URI.endsWith("registration"))) || URI.contains("resources") ||
                 session != null && session.getAttribute("user") == null && (URI.endsWith("login") || URI.endsWith("registration"))) {
             filterChain.doFilter(request, response);
         } else if (session != null && session.getAttribute("user") != null) {
@@ -33,7 +33,7 @@ public class AuthenticationFilter implements Filter {
             filterChain.doFilter(request, response);
         }
         else {
-            response.sendRedirect(request.getContextPath() + "login");
+            response.sendRedirect("/login");
         }
     }
 

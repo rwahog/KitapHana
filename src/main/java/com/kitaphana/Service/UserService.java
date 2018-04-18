@@ -138,17 +138,23 @@ public class UserService {
         return documents;
     }
 
-    public boolean checkIfPossibleToRegister(String phone_number, String password1, String password2) {
+    public boolean checkIfPossibleToRegister(String phone_number) {
         boolean possible = false;
         try {
             db.connect();
             ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
-            if (!rs.next() && password1.equals(password2)) {
+            if (!rs.next()) {
                 possible = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return possible;
+    }
+    public boolean checkIfPossiblePassword(String password1, String password2){
+        boolean possible = false;
+        if (password1.equals(password2) && password1.length() > 5)
+            possible = true;
         return possible;
     }
 
