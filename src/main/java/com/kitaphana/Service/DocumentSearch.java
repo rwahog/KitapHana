@@ -37,14 +37,25 @@ public class DocumentSearch {
     public void initializeDocuments() throws SQLException {
         documentDAOImpl documentDAO = new documentDAOImpl();
         documents = documentDAO.findAll();
+        for(int i = 0; i<documents.size(); i++){
+            update(documents.get(i).getTitle(), 0);
+        }
     }
     public void initializeAuthors() throws SQLException {
         authorDAOImpl authorDAO = new authorDAOImpl();
         authors = authorDAO.findAll();
+        for(int i = 0; i<authors.size(); i++){
+            update(authors.get(i).getName(), 0);
+            update(authors.get(i).getSurname(), 0);
+        }
     }
     public void initializeKeywords() throws SQLException {
         keywordDAOImpl keywordDAO = new keywordDAOImpl();
         keywords = keywordDAO.findAll();
+        for(int i = 0; i<keywords.size(); i++){
+            update(keywords.get(i).getKeyword(), 0);
+        }
+
     }
     public ArrayList<String> getPossibleQueries(String s){//Работает за |s|
         return trie.get(s);

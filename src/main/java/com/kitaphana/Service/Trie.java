@@ -76,17 +76,7 @@ public class Trie {
         return curNode;
     }
     public ArrayList<String> get(String s){
-        Node curNode = root;
-        for(int i = 0; i<s.length(); i++){
-            Character next = s.charAt(i);
-            if(!curNode.next.containsKey(next)){
-                return curNode.possible_strings;//Если впереди идут ошибки, то возврщаем последние возможные слова
-            }
-            else{
-                curNode = curNode.next.get(next);
-            }
-        }
-        return curNode.possible_strings;
+        return find(s).possible_strings;
     }
     public void setSize(int size){
         this.size = size;
