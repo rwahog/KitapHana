@@ -34,14 +34,14 @@ public class DocumentSearch {
         initializeKeywords();
         trie = new Trie(connection);
     }
-    public void initializeDocuments() {
+    public void initializeDocuments() throws SQLException {
         documentDAOImpl documentDAO = new documentDAOImpl();
         documents = documentDAO.findAll();
         for(int i = 0; i<documents.size(); i++){
             update(documents.get(i).getTitle(), 0);
         }
     }
-    public void initializeAuthors() {
+    public void initializeAuthors() throws SQLException {
         authorDAOImpl authorDAO = new authorDAOImpl();
         authors = authorDAO.findAll();
         for(int i = 0; i<authors.size(); i++){
@@ -49,7 +49,7 @@ public class DocumentSearch {
             update(authors.get(i).getSurname(), 0);
         }
     }
-    public void initializeKeywords() {
+    public void initializeKeywords() throws SQLException {
         keywordDAOImpl keywordDAO = new keywordDAOImpl();
         keywords = keywordDAO.findAll();
         for(int i = 0; i<keywords.size(); i++){
