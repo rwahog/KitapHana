@@ -30,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String status = request.getParameter("status");
-        String phoneNumber = request.getParameter("phone_number");
+        String phoneNumber = request.getParameter("phone_number").replaceAll("[^0-9]", "");
         String email = request.getParameter("email");
         String password1 = request.getParameter("password1");
         String password2 = request.getParameter("password2");

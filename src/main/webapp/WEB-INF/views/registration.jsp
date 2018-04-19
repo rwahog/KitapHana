@@ -19,9 +19,6 @@
     <h1 class="logo">KitapHana</h1>
     <div class="container" style="margin-top: 0">
         <div class="form-row">
-            <c:if test='${requestScope["errorMessage"] != null}'>
-                <h5 style="color: #cccccc"><%=request.getAttribute("errorMessage")%></h5>
-            </c:if>
             <div class="form-group col-4">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" name="name" value="<%=String.valueOf(request.getAttribute("name"))%>" id = "name" placeholder="Name" required=""  autofocus="">
@@ -46,9 +43,13 @@
             <div class="form-group col-6">
                 <label for="phone_number">Phone number</label>
                 <c:choose>
-                    <c:when test='${requestScope["errorBoth"] != null} || ${requestScope["errorPhone"] != null}'>
-                        <h5 style="color: #cccccc"><%=request.getAttribute("errorPhone")%></h5>
+                    <c:when test='${requestScope["errorBoth"] != null}'>
                         <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%=request.getAttribute("phone_number")%>" placeholder="Phone number" style="border-color: #76050f" required="">
+                        <h5 style="color: #cccccc"><%=request.getAttribute("errorPhone")%></h5>
+                    </c:when>
+                    <c:when test='${requestScope["errorPhone"] != null}'>
+                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%=request.getAttribute("phone_number")%>" placeholder="Phone number" style="border-color: #76050f" required="">
+                        <h5 style="color: #cccccc"><%=request.getAttribute("errorPhone")%></h5>
                     </c:when>
                     <c:otherwise>
                         <input type="text" class="form-control" id="phone_number" name="phone_number" value="<%=request.getAttribute("phone_number")%>" placeholder="Phone number" required="">
@@ -65,9 +66,13 @@
             <div class="form-group col-6">
                 <label for="password1">Password</label>
                 <c:choose>
-                    <c:when test='${requestScope["errorBoth"] != null} || ${requestScope["errorPassword"] != null}'>
-                        <h5 style="color: #cccccc"><%=request.getAttribute("errorPassword")%></h5>
+                    <c:when test='${requestScope["errorBoth"] != null}'>
                         <input type="password" class="form-control" id="password1" name="password1" value="<%=request.getAttribute("password1")%>" placeholder="Password" style="border-color: #76050f" required="">
+                        <h3 style="color: #cccccc"><%=request.getAttribute("errorPassword")%></h3>
+                    </c:when>
+                    <c:when test='${requestScope["errorPassword"] != null}'>
+                        <input type="password" class="form-control" id="password1" name="password1" value="<%=request.getAttribute("password1")%>" placeholder="Password" style="border-color: #76050f" required="">
+                        <h3 style="color: #cccccc"><%=request.getAttribute("errorPassword")%></h3>
                     </c:when>
                     <c:otherwise>
                         <input type="password" class="form-control" id="password1" name="password1" value="<%=request.getAttribute("password1")%>" placeholder="Password" required="">
@@ -77,8 +82,10 @@
             <div class="form-group col-6">
                 <label for="password2">Confirm your password</label>
                 <c:choose>
-                    <c:when test='${requestScope["errorBoth"] != null} || ${requestScope["errorPassword"] != null}'>
-                        <h5 style="color: #cccccc"><%=request.getAttribute("errorPassword")%></h5>
+                    <c:when test='${requestScope["errorBoth"] != null}'>
+                        <input type="password" class="form-control" id="password2" name="password2" value="<%=request.getAttribute("password2")%>" placeholder="Confirm your password" style="border-color: #76050f" required="">
+                    </c:when>
+                    <c:when test='${requestScope["errorPassword"] != null}'>
                         <input type="password" class="form-control" id="password2" name="password2" value="<%=request.getAttribute("password2")%>" placeholder="Confirm your password" style="border-color: #76050f" required="">
                     </c:when>
                     <c:otherwise>

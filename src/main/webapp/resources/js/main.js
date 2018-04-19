@@ -17,7 +17,7 @@ function updateMasonry(){
 }
 
 $(document).ready(function () {
-    $('#phone_number').mask("+7(999)999-9999");
+    $('#phone_number').mask("8(999)999-9999");
 })
 
 
