@@ -102,7 +102,7 @@ public class DocumentSearch {
                     dist = Math.min(dist, levenshteinDistance(s, possible_title));
                     s = "";
                 } else {
-                    s.concat(String.valueOf(documents.get(i).getTitle().charAt(j)));
+                    s = s.concat(String.valueOf(documents.get(i).getTitle().charAt(j)));
                 }
             }
             dist = Math.min(dist, levenshteinDistance(s, possible_title));
@@ -159,6 +159,7 @@ public class DocumentSearch {
     }
 
     private int levenshteinDistance(String a, String b){
+        a.toLowerCase(); b.toLowerCase();
         int dp[][] = new int[a.length() + 1][b.length() + 1];
         for (int i = 0; i <= a.length(); i++) {
             for (int j = 0; j <= b.length(); j++) {
