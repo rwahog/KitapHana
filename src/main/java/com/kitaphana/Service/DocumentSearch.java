@@ -96,13 +96,18 @@ public class DocumentSearch {
         }
         for(int i = 0; i < documents.size(); i++){
             int dist = Integer.MAX_VALUE;
+            String title = new String(documents.get(i).getTitle());
+            title = title.toLowerCase();
+            if(title.contains(possible_title)){
+                dist = 0;
+            }
             String s ="";
-            for(int j = 0; j<documents.get(i).getTitle().length(); j++) {
-                if (documents.get(i).getTitle().charAt(j) == ' ') {
+            for(int j = 0; j<title.length(); j++) {
+                if (title.charAt(j) == ' ') {
                     dist = Math.min(dist, levenshteinDistance(s, possible_title));
                     s = "";
                 } else {
-                    s = s.concat(String.valueOf(documents.get(i).getTitle().charAt(j)));
+                    s = s.concat(String.valueOf(title.charAt(j)));
                 }
             }
             dist = Math.min(dist, levenshteinDistance(s, possible_title));
@@ -123,9 +128,18 @@ public class DocumentSearch {
         update(possible_name_or_surname, 1);
         ArrayList<Author> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<authors.size(); i++){
-            int dist1 = levenshteinDistance(possible_name_or_surname, authors.get(i).getName());
-            int dist2 = levenshteinDistance(possible_name_or_surname, authors.get(i).getSurname());
-
+            String name = new String(authors.get(i).getName());
+            name = name.toLowerCase();
+            int dist1 = levenshteinDistance(possible_name_or_surname, name);
+            if(name.contains(possible_name_or_surname)){
+                dist1 = 0;
+            }
+            String surname = new String(authors.get(i).getSurname());
+            surname = surname.toLowerCase();
+            int dist2 = levenshteinDistance(possible_name_or_surname, surname);
+            if(surname.contains(possible_name_or_surname)){
+                dist2 = 0;
+            }
             if(dist1 <= lev_dist || dist2 <= lev_dist){
                 sorted_documents[Math.min(dist1, dist2)].add(authors.get(i));
             }
@@ -143,7 +157,12 @@ public class DocumentSearch {
         update(possible_keyword, 1);
         ArrayList<Keyword> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<keywords.size(); i++){
-            int dist = levenshteinDistance(possible_keyword, authors.get(i).getSurname());
+            String keyword = new String(keywords.get(i).getKeyword());
+            keyword = keyword.toLowerCase();
+            int dist = levenshteinDistance(possible_keyword, keyword);
+            if(keyword.contains(possible_keyword)){
+                dist = 0;
+            }
             if(dist <= lev_dist){
                 sorted_documents[dist].add(keywords.get(i));
             }
