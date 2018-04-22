@@ -60,7 +60,7 @@
         <div class="tab-pane fade show active" id="books" role="tabpanel" aria-labelledby="books-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('book')}">
+                    <c:if test="${document.getType().equals('Book')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">
@@ -83,7 +83,7 @@
         <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('ja')}">
+                    <c:if test="${document.getType().equals('Journal Article')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">
@@ -107,7 +107,7 @@
         <div class="tab-pane fade" id="AVmaterials" role="tabpanel" aria-labelledby="AVmaterials-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('av')}">
+                    <c:if test="${document.getType().equals('Audio/Video material')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">
