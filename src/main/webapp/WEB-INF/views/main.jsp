@@ -19,31 +19,31 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
+<form class="form-group col-4" method="post">
 <nav class="navbar search-menu">
-    <form class="form-group col-4" method="post">
         <input class="form-control" type="search" placeholder="Search" name="query" aria-label="Search">
-    </form>
-    <form class="form-group col-3" method="post">
+    <nav class="form-group col-3">
         <select id="searchBy" name="search" class="form-control">
             <option value="" selected>Title</option>
             <option>Author</option>
             <option>Keywords</option>
         </select>
-    </form>
-    <form class="checkbox col-2">
+    </nav>
+    <nav class="checkbox col-2">
         <label>
             <input type="checkbox" value="notref" id = "notref"> Not reference
         </label>
-    </form>
-    <form class="checkbox col-2">
+    </nav>
+    <nav class="checkbox col-2">
         <label>
             <input type="checkbox" value="bestseller" id = "bestseller"> Bestseller
         </label>
-    </form>
-    <form method="post">
+    </nav>
+    <nav>
         <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
-    </form>
+    </nav>
 </nav>
+</form>
 
 <main class="body container">
     <ul class="nav nav-tabs type" id="myTab" role="tablist" style="position: relative; margin-top: 10px">
