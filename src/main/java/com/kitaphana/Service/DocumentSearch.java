@@ -95,8 +95,16 @@ public class DocumentSearch {
             sorted_documents[i] = new ArrayList<>();
         }
         for(int i = 0; i < documents.size(); i++){
-            int dist = levenshteinDistance(possible_title, documents.get(i).getTitle());
-            System.out.println(dist + " " + documents.get(i).getTitle());
+            int dist = Integer.MAX_VALUE;
+            String s ="";
+            for(int j = 0; j<documents.get(i).getTitle().length(); j++) {
+                if (documents.get(i).getTitle().charAt(j) == ' ') {
+                    dist = Math.min(dist, levenshteinDistance(s, possible_title));
+                    s = "";
+                } else {
+                    s.concat(String.valueOf(documents.get(i).getTitle().charAt(j)));
+                }
+            }
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(documents.get(i));
             }
