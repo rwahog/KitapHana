@@ -5,6 +5,8 @@ import com.kitaphana.Entities.AVMaterial;
 import com.kitaphana.Entities.Book;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.JournalArticle;
+import com.kitaphana.exceptions.DocumentNotFoundException;
+import com.kitaphana.exceptions.OperationFailedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,19 +18,22 @@ public class commonDAOImpl implements commonDAO {
     private static final String FIND_LAST_ID = "SELECT MAX(id) AS maxID FROM %s";
     private static final String DELETE = "DELETE FROM %s WHERE %s=?";
     private static final String FIND_BY_DOCUMENT_ID = "SELECT * FROM %s WHERE document_id=?";
+
     @Override
     public long findLastId(String table) {
         long id = 0;
         try {
             String statement = String.format(FIND_LAST_ID, table);
-            PreparedStatement ps = db.con.prepareStatement(statement);
+            PreparedStatement ps = db.connect().prepareStatement(statement);
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 id = rs.getInt("maxID");
+            } else {
+                throw new OperationFailedException();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
         return id;
     }
@@ -37,21 +42,21 @@ public class commonDAOImpl implements commonDAO {
     public void delete(long id, String table, String column) {
         try {
             String statement = String.format(DELETE, table, column);
-            PreparedStatement ps = db.con.prepareStatement(statement);
+            PreparedStatement ps = db.connect().prepareStatement(statement);
             ps.setLong(1, id);
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     public Document findByDocumentId(String docId, String table) {
-        Document document = null;
+        Document document = new Document();
         try {
             String statement = String.format(FIND_BY_DOCUMENT_ID, table);
-            PreparedStatement ps = db.con.prepareStatement(statement);
+            PreparedStatement ps = db.connect().prepareStatement(statement);
             ps.setLong(1, Long.parseLong(docId));
 
             ResultSet rs = ps.executeQuery();
@@ -82,13 +87,16 @@ public class commonDAOImpl implements commonDAO {
                         avMaterial.setDocumentId(rs.getLong("document_id"));
                         break;
                 }
+            } else {
+                throw new DocumentNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new OperationFailedException();
         }
         return document;
     }
+
 }

@@ -2,6 +2,8 @@ package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Keyword;
+import com.kitaphana.exceptions.KeywordNotFoundException;
+import com.kitaphana.exceptions.OperationFailedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +14,7 @@ public class keywordDAOImpl implements keywordDAO {
 
     Database db = Database.getInstance();
     commonDAOImpl commonDAO = new commonDAOImpl();
+
     private static final String FIND_BY_ID = "SELECT * FROM keywords WHERE id=?";
     private static final String FIND_BY_KEYWORD = "SELECT * FROM keywords WHERE keyword=?";
     private static final String FIND_ALL = "SELECT * FROM keywords";
@@ -23,25 +26,23 @@ public class keywordDAOImpl implements keywordDAO {
     }
 
     public Keyword findByKeyword(String key) {
-        Keyword keyword = null;
-
+        Keyword keyword;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_KEYWORD);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_KEYWORD);
             ps.setString(1, key);
 
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                keyword = new Keyword(key);
-                keyword.setId(rs.getLong("id"));
-                keyword.setDocumentsId(rs.getString("documents"));
-                keyword.setKeyword(rs.getString("keyword"));
+                keyword = setVariables(rs);
+            } else {
+                throw new KeywordNotFoundException();
             }
 
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
 
         return keyword;
@@ -49,24 +50,22 @@ public class keywordDAOImpl implements keywordDAO {
 
     @Override
     public Keyword findById(long id) {
-        Keyword keyword = null;
-
+        Keyword keyword;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                keyword = new Keyword();
-                keyword.setKeyword(rs.getString("keyword"));
-                keyword.setId(rs.getLong("id"));
-                keyword.setDocumentsId(rs.getString("documents"));
+                keyword = setVariables(rs);
+            } else {
+                throw new KeywordNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
 
         return keyword;
@@ -77,58 +76,73 @@ public class keywordDAOImpl implements keywordDAO {
         ArrayList<Keyword> keywords = new ArrayList<>();
 
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_ALL);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Keyword keyword = new Keyword();
-
-                keyword.setKeyword(rs.getString("keyword"));
-                keyword.setDocumentsId(rs.getString("documents"));
-                keyword.setId(rs.getInt("id"));
-
+                Keyword keyword = findById(rs.getLong("id"));
                 keywords.add(keyword);
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
 
         return keywords;
     }
 
     @Override
-    public void insert(Keyword object) {
+    public void insert(Keyword keyword) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(INSERT);
-            ps.setString(1, object.getKeyword());
-            ps.setString(2, object.getDocumentsId());
+            PreparedStatement ps = db.connect().prepareStatement(INSERT);
+            setVariables(keyword, ps);
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
-    public void update(Keyword object) {
+    public void update(Keyword keyword) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(UPDATE);
-            ps.setString(1, object.getKeyword());
-            ps.setString(2, object.getDocumentsId());
-            ps.setLong(3, object.getId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE);
+            setVariables(keyword, ps);
+            ps.setLong(3, keyword.getId());
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
     public void delete(long id) {
         commonDAO.delete(id, "keywords", "id");
+    }
+
+    private Keyword setVariables(ResultSet rs) {
+        Keyword keyword;
+        try {
+            keyword = new Keyword();
+            keyword.setId(rs.getLong("id"));
+            keyword.setKeyword(rs.getString("keyword"));
+            keyword.setDocumentsId(rs.getString("documents"));
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
+        return keyword;
+    }
+
+    private void setVariables(Keyword keyword, PreparedStatement ps) {
+        try {
+            ps.setString(1, keyword.getKeyword());
+            ps.setString(2, keyword.getDocumentsId());
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
     }
 }

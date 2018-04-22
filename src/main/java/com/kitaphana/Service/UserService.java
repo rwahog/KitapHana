@@ -2,10 +2,14 @@ package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
+import com.kitaphana.Entities.Librarian;
+import com.kitaphana.Entities.Patron;
 import com.kitaphana.Entities.User;
 import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
-import com.kitaphana.dao.userDAOImpl;
+import com.kitaphana.dao.librarianDAO;
+import com.kitaphana.dao.patronDAOImpl;
+import com.kitaphana.exceptions.UserNotFoundException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,63 +18,70 @@ import java.util.ArrayList;
 
 public class UserService {
     Database db = Database.getInstance();
-    userDAOImpl userDAO = new userDAOImpl();
-    addressDAOImpl addressDAO = new addressDAOImpl();
-    documentDAOImpl documentDAO = new documentDAOImpl();
-    DBService dbService = new DBService();
+    private patronDAOImpl patronDAO = new patronDAOImpl();
+    private addressDAOImpl addressDAO = new addressDAOImpl();
+    private documentDAOImpl documentDAO = new documentDAOImpl();
+    private librarianDAO librarianDAO = new librarianDAO();
+    private DBService dbService = new DBService();
 
     public long getUserId(String phone) {
         return Long.parseLong(dbService.findColumn(phone, "users", "id", "phone_number"));
     }
 
-    public long getUserAddressId(long id) {
+    private long getUserAddressId(long id) {
         return Long.parseLong(dbService.findColumn(String.valueOf(id), "users", "id_address"));
     }
 
-    public User findUserById(long id) {
-        User user;
-        user = userDAO.findById(id);
-        user.setAddress(addressDAO.findById(user.getAddressId()));
-        return user;
+    public ArrayList<String> phones() {
+        return dbService.findAllPhones();
+    }
+
+    public Patron findUserById(long id) {
+        Patron patron;
+        patron = patronDAO.findById(id);
+        patron.setAddress(addressDAO.findById(patron.getAddressId()));
+        return patron;
     }
 
     public long getChatId(String phone) {
         final String query = "SELECT users.id FROM users WHERE users.chat_id=?";
-        long char_id = 0;
+        long chat_id = 0;
         try {
             PreparedStatement ps = db.connect().prepareStatement(query);
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                char_id = rs.getLong("char_id");
+                chat_id = rs.getLong("char_id");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return char_id;
+        return chat_id;
     }
 
-    public User findUserByPhoneNumber(String phone) {
-        User user;
-        user = userDAO.findByPhoneNumber(phone);
-        user.setAddress(addressDAO.findById(user.getAddressId()));
-        return user;
+    public Patron findUserByPhoneNumber(String phone) {
+        Patron patron;
+        patron = patronDAO.findByPhoneNumber(phone);
+        patron.setAddress(addressDAO.findById(patron.getAddressId()));
+        return patron;
     }
 
-    public ArrayList<User> findAll() {
-        return userDAO.findAll();
+    public ArrayList<Patron> findAll() {
+        return patronDAO.findAll();
     }
 
     public int numberOfUnconfirmedUsers() {
         int count = 0;
         final String statement = "SELECT COUNT(users.id) AS count FROM users WHERE users.possible_type <> users.type";
         try {
-            PreparedStatement ps = db.con.prepareStatement(statement);
+            PreparedStatement ps = db.connect().prepareStatement(statement);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 count = rs.getInt("count");
             }
+
+            ps.close();
+            rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -78,17 +89,19 @@ public class UserService {
     }
 
 
-    public void deleteUserAddress(long id) {
+    private void deleteUserAddress(long id) {
         addressDAO.delete(getUserAddressId(id));
     }
 
-    public void deleteUser(long id) {
-        User user = userDAO.findById(id);
-        if ((user.getDocuments() != null && user.getDocuments().length() != 0) || (user.getFine() != "")) {
+    public void deletePatron(long id) {
+        Patron patron = patronDAO.findById(id);
+        if (patron == null) {
+            throw new UserNotFoundException();
+        } else if ((patron.getDocuments().size() != 0) || (patron.getFines().length() != 0)) {
             return;
         } else {
             deleteUserAddress(id);
-            userDAO.delete(id);
+            patronDAO.delete(id);
         }
     }
 
@@ -108,24 +121,24 @@ public class UserService {
         return false;
     }
 
-    public void editUser(User user) {
-        addressDAO.update(user.getAddress());
-        userDAO.update(user);
+    public void editUser(Patron patron) {
+        addressDAO.update(patron.getAddress());
+        patronDAO.update(patron);
     }
 
-    public void editUserInfo(User user, String type) {
-        addressDAO.update(user.getAddress());
-        userDAO.updateUserInfo(user, type);
-        if (!user.getType().equals(user.getPossibleType())) {
-            dbService.sendMessageToLibrarians("User" + user.getName() + " " +
-                            user.getSurname() + "(id: " + user.getId() + ")" +
+    public void editUserInfo(Patron patron, String type) {
+        addressDAO.update(patron.getAddress());
+        patronDAO.updateUserInfo(patron, type);
+        if (!patron.getType().equals(patron.getPossibleType())) {
+            dbService.sendMessageToLibrarians("User" + patron.getName() + " " +
+                            patron.getSurname() + "(id: " + patron.getId() + ")" +
                             "has unconfirmed type.");
         }
     }
 
     public ArrayList<Document> fillPage(long id) {
         ArrayList<Document> documents = new ArrayList<>();
-        String ids = userDAO.findById(id).getDocuments();
+        String ids = patronDAO.findById(id).getDocumentsId();
         if (ids == null || ids.length() == 0) {
             return null;
         }
@@ -158,16 +171,16 @@ public class UserService {
         return possible;
     }
 
-    public void saveUser(User user) {
-        addressDAO.insert(user.getAddress());
-        user.setAddressId(addressDAO.findLastId());
-        userDAO.insert(user);
+    public void savePatron(Patron patron) {
+        addressDAO.insert(patron.getAddress());
+        patron.setAddressId(addressDAO.findLastId());
+        patronDAO.insert(patron);
     }
 
     public boolean isLibrarian(String phone_number) {
         boolean isLib = false;
-        User user = userDAO.findByPhoneNumber(phone_number);
-            if (user.getType().equals("Librarian")) {
+        Librarian librarian = librarianDAO.findByPhoneNumber(phone_number);
+            if (librarian != null) {
                 isLib = true;
             }
         return isLib;

@@ -15,7 +15,7 @@
 <%@include file="header.jsp" %>
 <div class="alert alert-success" role="alert">
     <h4 class="text-center">${message}</h4>
-    <a class="ref" href="/main">Back to Kitaphana</a>
+    <a class="ref" href="${back}">Back to Kitaphana</a>
 </div>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>

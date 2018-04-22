@@ -10,7 +10,7 @@ public class DocumentService {
     public Database db = Database.getInstance();
     documentDAOImpl documentDAO = new documentDAOImpl();
     bookDAOImpl bookDAO = new bookDAOImpl();
-    userDAOImpl userDAO = new userDAOImpl();
+    patronDAOImpl patronDAO = new patronDAOImpl();
     authorDAOImpl authorDAO = new authorDAOImpl();
     journalArticleDAOImpl journalArticleDAO = new journalArticleDAOImpl();
     keywordDAOImpl keywordDAO = new keywordDAOImpl();
@@ -41,13 +41,13 @@ public class DocumentService {
         try {
             String type = DBService.findColumn(id, "documents","type");
             switch (type) {
-                case "book":
+                case "Book":
                     type = "books";
                     break;
-                case "ja":
+                case "Journal Article":
                     type = "ja";
                     break;
-                case "av":
+                case "Audio/Video material":
                     type = "av";
                     break;
             }
@@ -61,8 +61,8 @@ public class DocumentService {
     }
 
     public boolean queue(long id_user, int id_doc) {
-        User user = userDAO.findById(id_user);
-        String docsId = user.getDocuments();
+        Patron patron = patronDAO.findById(id_user);
+        String docsId = patron.getDocumentsId();
         if (docsId != null && docsId.length() != 0) {
             ArrayList<String> docs = fromDBStringToArray(docsId);
             boolean exist = docs.contains(String.valueOf(id_doc));
@@ -70,7 +70,7 @@ public class DocumentService {
                 return false;
             }
         }
-        if (!user.getPossibleType().equals(user.getType())) {
+        if (!patron.getPossibleType().equals(patron.getType())) {
             return false;
         }
         String available = DBService.findColumn(String.valueOf(id_doc), "documents", "available");
@@ -78,18 +78,17 @@ public class DocumentService {
             return false;
         }
         Document document = documentDAO.findById(id_doc);
-        String awaiters = document.getAwaiters();
+        String awaiters = document.getAwaitersId();
         if (awaiters != null && awaiters.length() != 0) {
             PriorityComparator comparator = new PriorityComparator();
-            PriorityQueue<User> priorityQueue = new PriorityQueue<>(10, comparator);
+            PriorityQueue<Patron> priorityQueue = new PriorityQueue<Patron>(10, comparator);
             ArrayList<String> awaiters_arr = DBService.fromDBStringToArray(awaiters);
             for (String user_id : awaiters_arr) {
-                User awaiter = userDAO.findById(Long.parseLong(user_id));
-                awaiter.setPriority();
+                Patron awaiter = patronDAO.findById(Long.parseLong(user_id));
                 priorityQueue.add(awaiter);
             }
-            user.setPriority();
-            priorityQueue.add(user);
+            patron.setPriority();
+            priorityQueue.add(patron);
             awaiters = "";
             awaiters = awaiters.concat(String.valueOf(priorityQueue.poll().getId()));
             for (User usr : priorityQueue) {
@@ -98,35 +97,35 @@ public class DocumentService {
         } else {
             awaiters = String.valueOf(id_user);
         }
-        document.setAwaiters(awaiters);
+        document.setAwaitersId(awaiters);
         documentDAO.update(document);
-        String user_waitlist = user.getWaitingList();
+        String user_waitlist = patron.getWaitingListId();
         if (user_waitlist != null && user_waitlist.length() != 0) {
             user_waitlist = user_waitlist.concat("," + id_doc);
         } else {
             user_waitlist = String.valueOf(id_doc);
         }
-        user.setWaitingList(user_waitlist);
-        userDAO.update(user);
+        patron.setWaitingListId(user_waitlist);
+        patronDAO.update(patron);
         return true;
     }
 
     public boolean checkOut(long id_user, int id) {
         try {
-            User user = userDAO.findById(id_user);
+            Patron patron = patronDAO.findById(id_user);
             Document document = documentDAO.findById(id);
             int amount = document.getAmount();
             amount--;
-            if (user != null) {
-                ArrayList docs = fromDBStringToArray(user.getDocuments());
-                ArrayList checks = fromDBStringToArray(user.getCheckouts());
+            if (patron != null) {
+                ArrayList docs = fromDBStringToArray(patron.getDocumentsId());
+                ArrayList checks = fromDBStringToArray(patron.getCheckoutsId());
                 if (document.getAmount() <= 0) {
                     return false;
                 }
                 if (docs != null && docs.contains(id)) {
                     return false;
                 }
-                if (!user.getPossibleType().equals(user.getType())) {
+                if (!patron.getPossibleType().equals(patron.getType())) {
                     return false;
                 }
                 if (checks != null && checks.contains(String.valueOf(id))) {
@@ -140,7 +139,7 @@ public class DocumentService {
                 if (waiting_list != "") {
                     queue(id_user, id);
                 }
-                String checkouts = user.getCheckouts();
+                String checkouts = patron.getCheckoutsId();
                 if (checkouts.length() == 0) {
                     DBService.updateColumn(String.valueOf(id_user), checkouts.concat(String.valueOf(id)), "users", "checkouts");
                 } else {
@@ -171,20 +170,19 @@ public class DocumentService {
                 }
             }
 
-            users = document.getUsers();
+            users = document.getUsersId();
         }
-        User user = userDAO.findById(Long.parseLong(id_user));
-        if (user != null) {
-            user.setMaxDays();
+        Patron patron = patronDAO.findById(Long.parseLong(id_user));
+        if (patron != null) {
             if (best) {
                 current_time += 14 * day;
             } else {
-                current_time += user.getMaxDays() * day;
+                current_time += patron.getMaxDays() * day;
             }
-            String docs = user.getDocuments();
-            String deadlines = user.getDeadlines();
-            String checkouts = user.getCheckouts();
-            String fines = user.getFine();
+            String docs = patron.getDocumentsId();
+            String deadlines = patron.getDeadlines();
+            String checkouts = patron.getCheckoutsId();
+            String fines = patron.getFines();
             String renews_num = DBService.findColumn(id_user, "users", "renews_num");
             if (renews_num.length() !=0) {
                 renews_num = renews_num.concat("," + 0);
@@ -571,8 +569,8 @@ public class DocumentService {
                 avMaterialDAO.insert((AVMaterial) document);
                 break;
         }
-        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthorsString());
-        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywordsString());
+        ArrayList<String> authorsList = fromDBStringToArray(document.getAuthorsAsString());
+        ArrayList<String> keywordsList = fromDBStringToArray(document.getKeywordsAsString());
         String authorsId = DBService.fromArrayToDBString(saveAuthors(authorsList, docId));
         String keywordsId = DBService.fromArrayToDBString(saveKeywords(keywordsList, docId));
         DBService.updateColumn(String.valueOf(docId), authorsId, "documents", "authors");
@@ -593,19 +591,19 @@ public class DocumentService {
 
     public void deleteDocument(long id) {
         Document document = documentDAO.findById(id);
-        if (document.getUsers().length() != 0) {
+        if (document.getUsersId().length() != 0) {
             return;
         } else {
-            if (document.getAwaiters().length() != 0) {
-                String[] awaiters = document.getAwaiters().split(",");
+            if (document.getAwaitersId().length() != 0) {
+                String[] awaiters = document.getAwaitersId().split(",");
                 for (String user_id: awaiters) {
-                    User user = userDAO.findById(Long.parseLong(user_id));
+                    Patron patron = patronDAO.findById(Long.parseLong(user_id));
                     DBService.sendMessageToUser("The document is no longer available.", user_id);
-                    ArrayList<String> waiting_list = fromDBStringToArray(user.getWaitingList());
+                    ArrayList<String> waiting_list = fromDBStringToArray(patron.getWaitingListId());
                     waiting_list.remove(waiting_list.indexOf(String.valueOf(id)));
                     String waiting = DBService.fromArrayToDBString(waiting_list);
-                    user.setWaitingList(waiting);
-                    userDAO.update(user);
+                    patron.setWaitingListId(waiting);
+                    patronDAO.update(patron);
                 }
             }
             switch (document.getType()) {

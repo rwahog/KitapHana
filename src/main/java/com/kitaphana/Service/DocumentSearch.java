@@ -1,58 +1,54 @@
 package com.kitaphana.Service;
 
+import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Author;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.Keyword;
 import com.kitaphana.dao.authorDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.keywordDAOImpl;
+import com.kitaphana.exceptions.OperationFailedException;
 
-import javax.print.Doc;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Scanner;
 
 public class DocumentSearch {
-    protected Connection connection;
-    protected Statement statement;
-    protected Scanner in;
     protected ArrayList<Document> documents;
     protected ArrayList<Author> authors;
     protected ArrayList<Keyword> keywords;
     protected DBService dbService;
     protected Trie trie;
-    DocumentSearch(Connection connection, Scanner in) throws SQLException {
-        this.connection = connection;
-        this.in = in;
-        this.statement = connection.createStatement();
+    DocumentService documentService = new DocumentService();
+    keywordDAOImpl keywordDAO = new keywordDAOImpl();
+    authorDAOImpl authorDAO = new authorDAOImpl();
+    Database db = Database.getInstance();
+    private static final String init = "SELECT * FROM search WHERE query=?";
+    private static final String upd = "UPDATE search SET amount =?, last_search=? WHERE query=?";
+    private static final String insert = "INSERT INTO search (query, amount, last_search) VALUES(?,?,?)";
+    public DocumentSearch() {
         initializeDocuments();
         initializeAuthors();
         initializeKeywords();
-        trie = new Trie(connection);
+        trie = new Trie();
     }
-    public void initializeDocuments() throws SQLException {
-        documentDAOImpl documentDAO = new documentDAOImpl();
-        documents = documentDAO.findAll();
-        for(int i = 0; i<documents.size(); i++){
+    public void initializeDocuments() {
+        documents = documentService.findAll();
+        for (int i = 0; i < documents.size(); i++) {
             update(documents.get(i).getTitle(), 0);
         }
     }
-    public void initializeAuthors() throws SQLException {
-        authorDAOImpl authorDAO = new authorDAOImpl();
+    public void initializeAuthors() {
         authors = authorDAO.findAll();
-        for(int i = 0; i<authors.size(); i++){
+        for (int i = 0; i<authors.size(); i++) {
             update(authors.get(i).getName(), 0);
             update(authors.get(i).getSurname(), 0);
         }
     }
-    public void initializeKeywords() throws SQLException {
-        keywordDAOImpl keywordDAO = new keywordDAOImpl();
+    public void initializeKeywords() {
         keywords = keywordDAO.findAll();
-        for(int i = 0; i<keywords.size(); i++){
+        for (int i = 0; i<keywords.size(); i++) {
             update(keywords.get(i).getKeyword(), 0);
         }
 
@@ -68,28 +64,46 @@ public class DocumentSearch {
         }
         return null;
     }
-    public void update(String s, int k) throws SQLException {
-        ResultSet resultSet = statement.executeQuery("select * from search where query = '"+s+"'");
-        Date date = new Date();
-        if(resultSet.next()){
-            statement.executeUpdate("update search set amount = '"+resultSet.getInt("amount")+k+"', last_search = '"+date.getTime()+"' where query = '"+s+"'");
-        }
-        else{
-            statement.executeUpdate("insert into search (query, amount, last_search) values('"+s+"', '"+k+"', '"+date.getTime()+"')");
+    public void update(String s, int k) {
+        try {
+            PreparedStatement ps = db.connect().prepareStatement(init);
+            ps.setString(1, s);
+            ResultSet resultSet = ps.executeQuery();
+            Date date = new Date();
+            if (resultSet.next()) {
+                ps = db.connect().prepareStatement(upd);
+                ps.setInt(1, resultSet.getInt("amount") + k);
+                ps.setLong(2, date.getTime());
+                ps.setString(3, s);
+                ps.executeUpdate();
+            }
+            else {
+                ps = db.connect().prepareStatement(insert);
+                ps.setString(1, s);
+                ps.setInt(2, k);
+                ps.setLong(3, date.getTime());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new OperationFailedException();
         }
     }
-    public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) throws SQLException {//Кол-во документов, которые нужно вернуть
+    public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) {//Кол-во документов, которые нужно вернуть
         update(possible_title, 1);
-        ArrayList<Document> [] sorted_documents = new ArrayList[lev_dist + 1];
-        for(int i = 0; i<documents.size(); i++){
+        ArrayList<Document>[] sorted_documents = new ArrayList[lev_dist + 1];
+        for (int i = 0; i < sorted_documents.length; i++) {
+            sorted_documents[i] = new ArrayList<>();
+        }
+        for(int i = 0; i < documents.size(); i++){
             int dist = levenshteinDistance(possible_title, documents.get(i).getTitle());
-            if(dist <= lev_dist){
+            System.out.println(dist + " " + documents.get(i).getTitle());
+            if (dist <= lev_dist) {
                 sorted_documents[dist].add(documents.get(i));
             }
         }
         ArrayList<Document> ans = new ArrayList<>();
-        for(int dist = 0; dist<= lev_dist && amount > 0; dist++){
-            for(int i = 0; i <sorted_documents[dist].size() && amount>0; i++){
+        for (int dist = 0; dist <= lev_dist && amount > 0; dist++) {
+            for (int i = 0; i < sorted_documents[dist].size() && amount > 0; i++) {
                 ans.add(sorted_documents[dist].get(i));
                 amount--;
             }
@@ -134,6 +148,7 @@ public class DocumentSearch {
         }
         return ans;
     }
+
     private int levenshteinDistance(String a, String b){
         int dp[][] = new int[a.length() + 1][b.length() + 1];
         for (int i = 0; i <= a.length(); i++) {
@@ -145,14 +160,25 @@ public class DocumentSearch {
                     dp[i][j] = i;
                 }
                 else {
-                    int substitutionCost = 0;
-                    if(!(a.charAt(i) == b.charAt(j))) substitutionCost = 1;
-                    dp[i][j] = Math.min(dp[i - 1][j - 1] + substitutionCost, Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1));
+                    dp[i][j] = min(dp[i - 1][j - 1]
+                                    + costOfSubstitution(a.charAt(i - 1), b.charAt(j - 1)),
+                            dp[i - 1][j] + 1,
+                            dp[i][j - 1] + 1);
                 }
             }
         }
         return dp[a.length()][b.length()];
     }
+
+    public static int min(int... numbers) {
+        return Arrays.stream(numbers)
+                .min().orElse(Integer.MAX_VALUE);
+    }
+
+    public static int costOfSubstitution(char a, char b) {
+        return a == b ? 0 : 1;
+    }
+
     public ArrayList<Document> getDocumentsByAuthorsNameSurname(String name, String surname) throws SQLException {
         ArrayList<Document> ans = new ArrayList<>();
         for(int i = 0; i<authors.size(); i++){
@@ -185,14 +211,14 @@ public class DocumentSearch {
     public int getNumberOfAVMaterials() throws SQLException {
         int ans = 0;
         for(int i = 0; i<documents.size(); i++){
-            if(documents.get(i).getType().equals("avmaterial")) ans++;
+            if(documents.get(i).getType().equals("Audio/Video material")) ans++;
         }
         return ans;
     }
     public int getNumberOfBooks() throws SQLException {
         int ans = 0;
         for(int i = 0; i<documents.size(); i++){
-            if(documents.get(i).getType().equals("book")) ans++;
+            if(documents.get(i).getType().equals("Book")) ans++;
         }
         return ans;
     }

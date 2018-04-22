@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.Address;
+import com.kitaphana.Entities.Patron;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.DBService;
 import com.kitaphana.Service.UserService;
@@ -21,7 +22,8 @@ public class RegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-         request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+        request.setAttribute("checker", dbService.findAllPhones());
+        request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
     }
 
     @Override
@@ -58,13 +60,13 @@ public class RegistrationServlet extends HttpServlet {
         }
         else {
             Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
-            User user = new User(name, surname, phoneNumber, password1, email, address, status);
-            service.saveUser(user);
+            Patron patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
+            service.savePatron(patron);
             HttpSession session = request.getSession();
-            user = service.findUserByPhoneNumber(phoneNumber);
-            session.setAttribute("user", user);
-            String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
-            dbService.sendMessageToLibrarians(message);
+            patron = service.findUserByPhoneNumber(phoneNumber);
+            session.setAttribute("user", patron);
+//            String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
+//            dbService.sendMessageToLibrarians(message);
             response.sendRedirect("/main");
         }
     }

@@ -2,8 +2,7 @@ package com.kitaphana.Entities;
 
 public class Book extends Document {
     private String publisher;
-    private int year, editionNumber;
-    private int bestseller;
+    private int year, editionNumber, bestseller;
     private long documentId;
 
     public Book(String publisher, int year, int edition_number, int bestseller) {

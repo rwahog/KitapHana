@@ -1,22 +1,18 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.Author;
-import com.kitaphana.Entities.Document;
-import com.kitaphana.Entities.Keyword;
-import com.kitaphana.Entities.User;
+import com.kitaphana.Entities.*;
 import com.kitaphana.dao.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MyDocumentsService {
 
     Database db = Database.getInstance();
-    userDAOImpl userDAO = new userDAOImpl();
+    patronDAOImpl patronDAO = new patronDAOImpl();
     documentDAOImpl documentDAO = new documentDAOImpl();
     authorDAOImpl authorDAO = new authorDAOImpl();
     keywordDAOImpl keywordDAO = new keywordDAOImpl();
@@ -78,8 +74,8 @@ public class MyDocumentsService {
 
     public ArrayList<Document> setWaitingsInfo(Long user_id) throws SQLException {
         ArrayList<Document> waitings = new ArrayList<>();
-        User user = userDAO.findById(user_id);
-        String user_waitlist = user.getWaitingList();
+        Patron patron = patronDAO.findById(user_id);
+        String user_waitlist = patron.getWaitingListId();
         if (user_waitlist != null && user_waitlist.length() != 0) {
             ArrayList<String> docs = new ArrayList<>(Arrays.asList(user_waitlist.split(",")));
             for (String id_doc : docs) {
@@ -90,34 +86,33 @@ public class MyDocumentsService {
         return waitings;
     }
 
-    public void renewDoc(String doc_id, String user_id) {
-        User user = userDAO.findById(Long.parseLong(user_id));
-        String user_renews = user.getRenews();
-        String available = dbService.findColumn(doc_id, "documents", "available");
+    public String renewDoc(String docId, String userId) {
+        Patron patron = patronDAO.findById(Long.parseLong(userId));
+        String userRenews = patron.getRenewsId();
+        String available = dbService.findColumn(docId, "documents", "available");
         if (available.equals("0")) {
-            return;
+            return "This document is reference.";
         }
-        String userRenewsNum = dbService.findColumn(user_id, "users", "renews_num");
-        ArrayList<String> userRenews = dbService.fromDBStringToArray(userRenewsNum);
-        String userDocs = dbService.findColumn(user_id, "users", "documents");
-        ArrayList<String> userDocsId = dbService.fromDBStringToArray(userDocs);
-        int index = userDocsId.indexOf(doc_id);
-        String type = user.getType();
-        if (Integer.parseInt(userRenews.get(index)) >= 1 && !type.equals("Visiting Professor")) {
-            return;
+        ArrayList<String> userRenewsNum = dbService.fromDBStringToArray(dbService.findColumn(userId, "users", "renews_num"));
+        ArrayList<String> userDocsId = dbService.fromDBStringToArray(dbService.findColumn(userId, "users", "documents"));
+        int index = userDocsId.indexOf(docId);
+        String type = patron.getType();
+        if (Integer.parseInt(userRenewsNum.get(index)) >= 1 && !type.equals("Visiting Professor")) {
+            return "This document was already renewed.";
         }
-        if (user_renews != null && user_renews.length() != 0) {
-            user.setRenews(user_renews.concat("," + doc_id));
+        if (userRenews.length() != 0) {
+            patron.setRenewsId(userRenews.concat("," + docId));
         } else {
-            user.setRenews(doc_id);
+            patron.setRenewsId(docId);
         }
-        userDAO.update(user);
-        dbService.sendMessageToLibrarians("You have some work to do (new renew)");
+        patronDAO.update(patron);
+        return "Successfully renewed.";
+//        dbService.sendMessageToLibrarians("You have some work to do (new renew)");
     }
 
     public void returnDoc(String docId, String userId) {
         String returns = dbService.findColumn(userId, "users", "returns");
-        if (returns != null && returns.length() != 0) {
+        if (returns.length() != 0) {
             returns = returns.concat("," + docId);
         } else {
             returns = docId;

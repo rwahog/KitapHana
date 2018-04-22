@@ -30,13 +30,18 @@
 		<url-pattern>/librarianPanel/*</url-pattern>
 	</filter-mapping>
 
-	<!--<error-page>-->
-		<!--<error-code>404</error-code>-->
-		<!--<location>/AppExceptionHandler</location>-->
-	<!--</error-page>-->
+	<context-param>
+		<param-name>log4j-config</param-name>
+		<param-value>WEB-INF/log4j.xml</param-value>
+	</context-param>
 
-	<!--<error-page>-->
-		<!--<exception-type>java.lang.Throwable</exception-type>-->
-		<!--&lt;!&ndash;<location>/AppExceptionHandler</location>&ndash;&gt;-->
-	<!--</error-page>-->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/AppExceptionHandler</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.RuntimeException</exception-type>
+		<location>/AppExceptionHandler</location>
+	</error-page>
 </web-app>

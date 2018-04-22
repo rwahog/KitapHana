@@ -1,9 +1,9 @@
 package com.kitaphana.Entities;
 
 public class Address {
-    protected String country, town, postcode, street;
-    protected int houseNumber, apartmentNumber;
-    protected long addressId;
+    private String country, town, postcode, street;
+    private int houseNumber, apartmentNumber;
+    private long addressId;
 
     public Address(String country, String town, String street, int houseNumber, int apartmentNumber, String postcode, long addressId) {
         this.country = country;
@@ -31,52 +31,52 @@ public class Address {
         this.addressId = addressId;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setTown(String town) {
-        this.town = town;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setHouseNumber(int houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public void setApartmentNumber(int apartmentNumber) {
-        this.apartmentNumber = apartmentNumber;
-    }
-
-    public void setPostcode(String postcode) {
-        this.postcode = postcode;
-    }
-
     public long getAddressId() {
         return addressId;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getCountry() {
         return country;
     }
 
+    public void setTown(String town) {
+        this.town = town;
+    }
+
     public String getTown() {
         return town;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public String getStreet() {
         return street;
     }
 
+    public void setHouseNumber(int houseNumber) {
+        this.houseNumber = houseNumber;
+    }
+
     public int getHouseNumber() {
         return houseNumber;
     }
 
+    public void setApartmentNumber(int apartmentNumber) {
+        this.apartmentNumber = apartmentNumber;
+    }
+
     public int getApartmentNumber() {
         return apartmentNumber;
+    }
+
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 
     public String getPostcode() {

@@ -1,10 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>KitapHana</title>
         <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
-        <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
+        <c:set var="path" value="${application.getRealPath(\"/\")}"/>
+        <link href="${path}/webjars/bootstrap/4.0.0/css/bootstrap.min.css"
               rel="stylesheet">
         <link href="${pageContext.request.contextPath}/resources/css/common.css"
               rel="stylesheet">
@@ -19,56 +21,91 @@
             <form method="POST" name="main">
                 <div class="form-group col-12">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" required="" autofocus="">
+                    <input type="text" class="form-control" id="title" name="title" placeholder="Title" required="" value="${doc.getTitle()}" autofocus="">
                 </div>
                 <div class="form-group col-12">
                     <label>Authors</label>
-                    <textarea type="text" class="form-control" name="authors" id="authors" placeholder="Authors"
+                    <textarea type="text" class="form-control" name="authors" id="authors" value="${doc.getAuthorsAsString()}" placeholder="Authors"
                               required=""></textarea>
                 </div>
                 <div class="form-group col-12">
                     <label for="description">Description</label>
                     <textarea type="text" class="form-control" name="description" id="description" placeholder="Description"
-                              required=""></textarea>
+                              required="">${doc.getDescription()}</textarea>
                 </div>
                 <div class="form-group col-12">
                     <label for="keywords">Keywords</label>
-                    <input type="text" class="form-control" name="keywords" id="keywords" placeholder="Keywords" required="">
+                    <input type="text" class="form-control" name="keywords" id="keywords" placeholder="Keywords" value="${doc.getKeywordsAsString()}" required="">
                 </div>
                 <div class="form-group col-4">
                     <label for="type">Type</label>
                     <select id="type" class="form-control document-type" name="document-type">
-                        <option value="" selected>Choose...</option>
-                        <option value="book">Book</option>
-                        <option value="article">Journal Article</option>
-                        <option value="av">AV material</option>
+                        <c:set var="type" value="${doc.getType()}"/>
+                        <c:choose>
+                            <c:when test="${type == 'article'}">
+                                <option value="book" style="background-color:black">Book</option>
+                                <option value="av" style="background-color:black">AV Material</option>
+                                <option value="article" selected style="background-color:black">Journal Article</option>
+                            </c:when>
+                            <c:when test="${type == 'av'}">
+                                <option value="av" selected style="background-color:black">AV Material</option>
+                                <option value="book" style="background-color:black">Book</option>
+                                <option value="article" style="background-color:black">Journal Article</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="book" selected style="background-color:black">Book</option>
+                                <option value="article" style="background-color:black">Journal Article</option>
+                                <option value="av" style="background-color:black">AV Material</option>
+                            </c:otherwise>
+                        </c:choose>
                     </select>
                 </div>
                 <div class="form-group col-4">
                     <label for="inputName">Price</label>
-                    <input type="text" class="form-control" id="inputName" name="price" placeholder="Price" required="">
+                    <input type="text" class="form-control" id="inputName" name="price" value="${doc.getPrice()}" placeholder="Price" required="">
                 </div>
                 <div class="form-group col-4">
                     <label for="inputSurname">Amount</label>
-                    <input type="number" class="form-control" id="inputSurname" name="amount" placeholder="Amount" required="">
+                    <input type="number" class="form-control" id="inputSurname" name="amount" value="${doc.getAmount()}" placeholder="Amount" required="">
                 </div>
             </form>
+            <c:set var="type" value="${doc.getType()}"/>
+            <c:choose>
+                <c:when test="${type.equals('book')}">
+                    <c:set var="editionNumber" value="${doc.getEditionNumber()}"/>
+                    <c:set var="publisher" value="${doc.getPublisher()}"/>
+                    <c:set var="year" value="${doc.getYear()}"/>
+                    <c:set var="bestseller" value="${doc.isBestseller()}"/>
+                </c:when>
+                <c:when test="${type.equals('ja')}">
+                    <c:set var="editors" value="${doc.getEditors()}"/>
+                    <c:set var="journalName" value="${doc.getJournalName()}"/>
+                    <c:set var="date" value="${doc.getDate()}"/>
+                </c:when>
+            </c:choose>
             <form method="POST" name="book">
                 <div class="book-props row hidden" id="book">
                     <div class="form-group col-3">
                         <label for="edition_number">Edition number</label>
-                        <input type="text" class="form-control" id="edition_number" name="edition_number" placeholder="Edition number">
+                        <input type="text" class="form-control" id="edition_number" name="edition_number" value="${editionNumber}" placeholder="Edition number">
                     </div>
                     <div class="form-group col-4">
                         <label for="publisher">Publisher</label>
-                        <input type="text" class="form-control" id="publisher" name="publisher" placeholder="Publisher">
+                        <input type="text" class="form-control" id="publisher" name="publisher" value="${publisher}" placeholder="Publisher">
                     </div>
                     <div class="form-group col-3">
                         <label for="year">Year</label>
-                        <input type="text" class="form-control" id="year" name="year" placeholder="Year">
+                        <input type="text" class="form-control" id="year" name="year" value="${year}" placeholder="Year">
                     </div>
                     <div class="custom-control custom-checkbox my-1 mr-sm-2">
-                        <input type="checkbox" name="bestseller" value="1" class="custom-control-input" id="customControlInline">
+                        <c:choose>
+                            <c:when test="${bestseller == 1}">
+                                <input type="checkbox" class="custom-control-input" name="bestseller" value="1" checked id="customControlInline">
+                            </c:when>
+                            <c:otherwise>
+                                <input type="checkbox" class="custom-control-input" name="bestseller" value="1" id="customControlInline">
+                            </c:otherwise>
+                        </c:choose>
                         <label class="custom-control-label" for="customControlInline">Bestseller</label>
                     </div>
                 </div>
@@ -77,15 +114,15 @@
                 <div class="ja-props row hidden" id="article">
                     <div class="form-group col-5">
                         <label for="editors">Editors</label>
-                        <input type="text" class="form-control" name="editors" id="editors" placeholder="Editors">
+                        <input type="text" class="form-control" name="editors" value="${editors}" id="editors" placeholder="Editors">
                     </div>
                     <div class="form-group col-4">
                         <label for="journal_name">Journal name</label>
-                        <input type="text" class="form-control" name="journal_name" id="journal_name" placeholder="Journal name">
+                        <input type="text" class="form-control" name="journal_name" id="journal_name" value="${journalName}" placeholder="Journal name">
                     </div>
                     <div class="form-group col-3">
                         <label for="date">Date</label>
-                        <input type="text" class="form-control" name="date" id="date" placeholder="Date">
+                        <input type="text" class="form-control" name="date" value="${date}" id="date" placeholder="Date">
                     </div>
                 </div>
             </form>

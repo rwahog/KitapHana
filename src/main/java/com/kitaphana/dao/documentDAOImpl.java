@@ -2,6 +2,8 @@ package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
+import com.kitaphana.exceptions.DocumentNotFoundException;
+import com.kitaphana.exceptions.OperationFailedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,9 +16,9 @@ public class documentDAOImpl implements documentDAO {
     commonDAOImpl commonDAO = new commonDAOImpl();
 
     private static final String FIND_BY_ID = "SELECT * FROM documents WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM documents";
+    private static final String FIND_ALL = "SELECT id FROM documents";
     private static final String INSERT = "INSERT INTO documents (title, authors, keywords, price, amount, type, description) VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE documents SET title=?, authors=?, keywords=?, users=?, price=?, amount=?, type=?, document_cover=?, description=?, waiting_list=? WHERE id=?";
+    private static final String UPDATE = "UPDATE documents SET title=?, authors=?, keywords=?, price=?, amount=?, type=?, description=?, users=?, waiting_list=? WHERE id=?";
     private static final String UPDATE_INFO = "UPDATE documents SET title=?, authors=?, keywords=?, price=?, amount=?, type=?, description=? WHERE id=?";
 
     public long findLastId() {
@@ -25,31 +27,21 @@ public class documentDAOImpl implements documentDAO {
 
     @Override
     public Document findById(long id) {
-        Document document = null;
+        Document document;
         try {
-
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                document = new Document();
-                document.setId(rs.getLong("id"));
-                document.setTitle(rs.getString("title"));
-                document.setAuthorsId(rs.getString("authors"));
-                document.setKeywordsId(rs.getString("keywords"));
-                document.setUsers(rs.getString("users"));
-                document.setPrice(rs.getInt("price"));
-                document.setAmount(rs.getInt("amount"));
-                document.setType(rs.getString("type"));
-                document.setCover(rs.getString("document_cover"));
-                document.setDescription(rs.getString("description"));
-                document.setAwaiters(rs.getString("waiting_list"));
+                document = getVariables(rs);
+            } else {
+                throw new DocumentNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
         return document;
     }
@@ -57,102 +49,102 @@ public class documentDAOImpl implements documentDAO {
     @Override
     public ArrayList<Document> findAll() {
         ArrayList<Document> documents = new ArrayList<>();
-
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_ALL);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
-                Document document = new Document();
-
-                document.setId(rs.getLong("id"));
-                document.setTitle(rs.getString("title"));
-                document.setAuthorsId(rs.getString("authors"));
-                document.setKeywordsId(rs.getString("keywords"));
-                document.setUsers(rs.getString("users"));
-                document.setPrice(rs.getInt("price"));
-                document.setAmount(rs.getInt("amount"));
-                document.setType(rs.getString("type"));
-                document.setCover(rs.getString("document_cover"));
-                document.setDescription(rs.getString("description"));
-
+                Document document = findById(rs.getLong("id"));
                 documents.add(document);
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
         return documents;
     }
 
     @Override
-    public void insert(Document object) {
+    public void insert(Document document) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(INSERT);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthorsId());
-            ps.setString(3, object.getKeywordsId());
-            ps.setInt(4, object.getPrice());
-            ps.setInt(5, object.getAmount());
-            ps.setString(6, object.getType());
-            ps.setString(7, object.getDescription());
+            PreparedStatement ps = db.connect().prepareStatement(INSERT);
+            setVariables(document, ps);
 
             ps.executeUpdate();
             ps.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
-    public void update(Document object) {
+    public void update(Document document) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(UPDATE);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthorsId());
-            ps.setString(3, object.getKeywordsId());
-            ps.setString(4, object.getUsers());
-            ps.setInt(5, object.getPrice());
-            ps.setInt(6, object.getAmount());
-            ps.setString(7, object.getType());
-            ps.setString(8, object.getCover());
-            ps.setString(9, object.getDescription());
-            ps.setString(10, object.getAwaiters());
-            ps.setLong(11, object.getId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE);
+            setVariables(document, ps);
+            ps.setString(8, document.getUsersId());
+            ps.setString(9, document.getAwaitersId());
+            ps.setLong(10, document.getId());
 
             ps.executeUpdate();
             ps.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
-    public void updateInfo(Document object) {
+    public void updateInfo(Document document) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(UPDATE_INFO);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getAuthorsId());
-            ps.setString(3, object.getKeywordsId());
-            ps.setInt(4, object.getPrice());
-            ps.setInt(5, object.getAmount());
-            ps.setString(6, object.getType());
-            ps.setString(7, object.getDescription());
-            ps.setLong(8, object.getId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE_INFO);
+            setVariables(document, ps);
+            ps.setLong(8, document.getId());
 
             ps.executeUpdate();
             ps.close();
-
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
     public void delete(long id) {
         commonDAO.delete(id, "documents", "id");
+    }
+
+    private Document getVariables(ResultSet rs) {
+        Document document;
+        try {
+            document = new Document();
+            document.setId(rs.getLong("id"));
+            document.setTitle(rs.getString("title"));
+            document.setAuthorsId(rs.getString("authors"));
+            document.setKeywordsId(rs.getString("keywords"));
+            document.setUsersId(rs.getString("users"));
+            document.setPrice(rs.getInt("price"));
+            document.setAmount(rs.getInt("amount"));
+            document.setType(rs.getString("type"));
+            document.setCover(rs.getString("document_cover"));
+            document.setDescription(rs.getString("description"));
+            document.setAwaitersId(rs.getString("waiting_list"));
+            document.setAvailable(rs.getInt("available"));
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
+        return document;
+    }
+
+    private void setVariables(Document document, PreparedStatement ps) {
+        try {
+            ps.setString(1, document.getTitle());
+            ps.setString(2, document.getAuthorsId());
+            ps.setString(3, document.getKeywordsId());
+            ps.setInt(4, document.getPrice());
+            ps.setInt(5, document.getAmount());
+            ps.setString(6, document.getType());
+            ps.setString(7, document.getDescription());
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
     }
 }

@@ -34,9 +34,9 @@
                 ${sessionScope["user"].getName()} ${sessionScope["user"].getSurname()}
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="/profile?id=${sessionScope["user"].getId()}">Profile</a>
-                <%if (session.getAttribute("libr") == null) {%>
-                    <a class="dropdown-item" href="/myDocs?id=${sessionScope["user"].getId()}">My Docs</a>
+                <a class="dropdown-item" href="/profile">Profile</a>
+                <%if (session.getAttribute("librarian") == null) {%>
+                    <a class="dropdown-item" href="/myDocs">My Docs</a>
                 <%}%>
                 <a class="dropdown-item" href="/logout">Log out</a>
             </div>

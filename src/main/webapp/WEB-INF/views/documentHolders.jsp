@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,22 +26,22 @@
                 <th scope="col">Name</th>
                 <th scope="col">Surname</th>
                 <th scope="col">Type</th>
-                <th scope="col">Deadline</th>
+                <th scope="col">Deadline/Fine</th>
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="user" items="${users}">
+            <c:forEach var="holder" items="${users}">
             <tr>
-                <td>${user.getId()}</td>
-                <td>${user.getName()}</td>
-                <td>${user.getSurname()}</td>
-                <td>${user.getType()}</td>
+                <td>${holder.getId()}</td>
+                <td>${holder.getName()}</td>
+                <td>${holder.getSurname()}</td>
+                <td>${holder.getType()}</td>
                 <c:choose>
-                    <c:when test="${user.getFine() != null && doc.getFine() != 0}">
-                        <td>${doc.getFine()} &#8381;</td>
+                    <c:when test="${holder.getDocumentFine() != 0}">
+                        <td>${holder.getDocumentFine()} &#8381;</td>
                     </c:when>
                     <c:otherwise>
-                        <td>${doc.getDeadline()} days</td>
+                        <td>${holder.getDocumentDeadline()} days</td>
                     </c:otherwise>
                 </c:choose>
             </tr>

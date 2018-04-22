@@ -11,7 +11,6 @@ public class AVMaterial extends Document {
     }
 
     public AVMaterial() {
-
     }
     
     @Override
@@ -19,13 +18,13 @@ public class AVMaterial extends Document {
         this.title = title;
     }
 
-    public void setDocumentId(long docId) {
-        this.docId = docId;
-    }
-
     @Override
     public String getTitle() {
         return title;
+    }
+
+    public void setDocumentId(long docId) {
+        this.docId = docId;
     }
 
     public long getDocumentId() {

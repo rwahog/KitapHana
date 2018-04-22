@@ -56,6 +56,9 @@
             <a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab" aria-controls="waitinglist" aria-selected="false">Waiting list</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" id="librarians-tab" data-toggle="tab" href="#librarians" role="tab" aria-controls="librarians" aria-selected="false">Librarians</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History</a>
         </li>
     </ul>
@@ -184,7 +187,7 @@
                     </thead>
                     <tbody>
                         <c:forEach var="user" items="${checkouts}">
-                            <c:forEach var="doc" items="${user.getDocumentsArray()}">
+                            <c:forEach var="doc" items="${user.getCheckouts()}">
                                 <tr>
                                     <td>${user.getId()}</td>
                                     <td>${user.getName()} ${user.getSurname()}</td>
@@ -232,7 +235,7 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${renews}" var="user">
-                        <c:forEach items="${user.getDocumentsArray()}" var="doc">
+                        <c:forEach items="${user.getRenews()}" var="doc">
                             <tr>
                                 <td>${user.getId()}</td>
                                 <td>${user.getName()} ${user.getSurname()}</td>
@@ -279,7 +282,7 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${returns}" var="user">
-                        <c:forEach items="${user.getDocumentsArray()}" var="doc">
+                        <c:forEach items="${user.getReturns()}" var="doc">
                             <tr>
                                 <td>${user.getId()}</td>
                                 <td>${user.getName()} ${user.getSurname()}</td>
@@ -335,6 +338,32 @@
                 </table>
             </div>
         </div>
+        <div class="tab-pane fade" id="librarians" role="tabpanel" aria-labelledby="librarians-tab">
+            <div class="panel container-fluid mx-auto px-0">
+                <table class="table table-hover table-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name Surname</th>
+                        <th scope="col">Privilege</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${librarians}" var="librarian">
+                            <tr>
+                                <td>${librarian.getId()}</td>
+                                <td>${librarian.getName()} ${librarian.getSurname()}</td>
+                                <td>${librarian.getPrivilege()}</td>
+                                <td><a href="/librarianPanel/admin/editLibrarian?id=${librarian.getId()}"><img itemprop="image" src="/resources/images/pencil.png"></a></td>
+                                <td><a href="/librarianPanel/admin/deleteLibrarian?id=${librarian.getId()}"><img itemprop="image" src="/resources/images/bin.png"></a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
             <div class="panel container-fluid mx-auto px-0">
                 <table class="table table-hover table-dark">
@@ -345,14 +374,12 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <c:forEach var="message" items="${history}">
                         <tr>
-                            <td>Lol zabral knigy Touch Of class</td>
-                            <td>17 March 20:00</td>
+                            <td>${message.getAction()}</td>
+                            <td>${message.getDate()}</td>
                         </tr>
-                        <tr>
-                            <td>Librarian dropnul queue</td>
-                            <td>15 March 16:00</td>
-                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>

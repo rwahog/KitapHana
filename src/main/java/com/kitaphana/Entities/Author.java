@@ -3,9 +3,9 @@ package com.kitaphana.Entities;
 import java.util.ArrayList;
 
 public class Author {
-    protected long id;
-    protected ArrayList<Document> documents;
-    protected String name, surname, documentsId;
+    private String name, surname, documentsId;
+    private long id;
+    private ArrayList<Document> documents;
 
     public Author(String name, String surname) {
         this.name = name;
@@ -16,43 +16,44 @@ public class Author {
 
     }
 
-    public void setDocuments(ArrayList<Document> documents) {
-        this.documents = documents;
-    }
-
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setDocumentsId(String documentsId) {
-        this.documentsId = documentsId;
     }
 
     public long getId() {
         return id;
     }
 
-    public ArrayList<Document> getDocuments() {
-        return documents;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getSurname() {
         return surname;
+    }
+
+    public void setDocumentsId(String documentsId) {
+        this.documentsId = documentsId;
     }
 
     public String getDocumentsId() {
         return documentsId;
     }
+
+    public void setDocuments(ArrayList<Document> documents) {
+        this.documents = documents;
+    }
+
+    public ArrayList<Document> getDocuments() {
+        return documents;
+    }
+
 }

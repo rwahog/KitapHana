@@ -20,28 +20,29 @@
 <body>
 <%@include file="header.jsp" %>
 <nav class="navbar search-menu">
-    <form class="form-group col-4" method="POST">
+    <form class="form-group col-4" method="post">
         <input class="form-control" type="search" placeholder="Search" name="query" aria-label="Search">
     </form>
-    <div class="form-group col-3">
+    <form class="form-group col-3" method="post">
         <select id="searchBy" name="search" class="form-control">
             <option value="" selected>Title</option>
             <option>Author</option>
             <option>Keywords</option>
         </select>
-    </div>
-    <div class="checkbox col-2">
+    </form>
+    <form class="checkbox col-2">
         <label>
             <input type="checkbox" value="notref" id = "notref"> Not reference
         </label>
-    </div>
-    <div class="checkbox col-2">
+    </form>
+    <form class="checkbox col-2">
         <label>
             <input type="checkbox" value="bestseller" id = "bestseller"> Bestseller
         </label>
-    </div>
-
-    <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
+    </form>
+    <form method="post">
+        <button class="btn btn-outline-success my-8 my-sm-0" type="submit">Search</button>
+    </form>
 </nav>
 
 <main class="body container">
@@ -60,7 +61,7 @@
         <div class="tab-pane fade show active" id="books" role="tabpanel" aria-labelledby="books-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('book')}">
+                    <c:if test="${document.getType().equals('Book')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">
@@ -83,7 +84,7 @@
         <div class="tab-pane fade" id="journals" role="tabpanel" aria-labelledby="journals-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('ja')}">
+                    <c:if test="${document.getType().equals('Journal Article')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">
@@ -107,7 +108,7 @@
         <div class="tab-pane fade" id="AVmaterials" role="tabpanel" aria-labelledby="AVmaterials-tab">
             <div class="cards container">
                 <c:forEach var="document" items="${list}">
-                    <c:if test="${document.getType().equals('av')}">
+                    <c:if test="${document.getType().equals('Audio/Video material')}">
                         <div class="col-lg-4 col-6 card-holder">
                             <div class="card">
                                 <div class="img-container">

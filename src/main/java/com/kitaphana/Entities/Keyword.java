@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Keyword {
-    protected long id;
-    protected String keyword, documentsId;
-    protected ArrayList<Document> documents;
+    private long id;
+    private String keyword, documentsId;
+    private ArrayList<Document> documents;
+
     public Keyword() {
 
     }
@@ -19,26 +20,28 @@ public class Keyword {
         this.id = id;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
-    }
-
-    public void setDocumentsId(String documentsId) {
-        this.documentsId = documentsId;
-    }
-    public void setDocuments(ArrayList<Document> documents) {
-        this.documents = documents;
-    }
     public long getId() {
         return id;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
     public String getKeyword() {
         return keyword;
     }
 
+    public void setDocumentsId(String documentsId) {
+        this.documentsId = documentsId;
+    }
+
     public String getDocumentsId() {
         return documentsId;
+    }
+
+    public void setDocuments(ArrayList<Document> documents) {
+        this.documents = documents;
     }
 
     public ArrayList<Document> getDocuments(){ return documents; }

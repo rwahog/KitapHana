@@ -2,6 +2,8 @@ package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Address;
+import com.kitaphana.exceptions.AddressNotFoundException;
+import com.kitaphana.exceptions.OperationFailedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class addressDAOImpl implements addressDAO {
     commonDAOImpl commonDAO = new commonDAOImpl();
 
     private static final String FIND_BY_ID = "SELECT * FROM addresses WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM addresses";
+    private static final String FIND_ALL = "SELECT id FROM addresses";
     private static final String INSERT = "INSERT INTO addresses (country, town, street, house_number, apartment_number, postcode) VALUES (?,?,?,?,?,?)";
     private static final String UPDATE = "UPDATE addresses SET country=?, town=?, street=?, house_number=?, apartment_number=?, postcode=? WHERE id=?";
 
@@ -24,27 +26,22 @@ public class addressDAOImpl implements addressDAO {
 
     @Override
     public Address findById(long id) {
-        Address address = null;
-
+        Address address;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                address = new Address();
-                address.setCountry(rs.getString("country"));
-                address.setTown(rs.getString("town"));
-                address.setStreet(rs.getString("street"));
-                address.setHouseNumber(rs.getInt("house_number"));
-                address.setApartmentNumber(rs.getInt("apartment_number"));
-                address.setPostcode(rs.getString("postcode"));
+                address = setVariables(rs);
+            } else {
+                throw new AddressNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
 
         return address;
@@ -53,72 +50,81 @@ public class addressDAOImpl implements addressDAO {
     @Override
     public ArrayList<Address> findAll() {
         ArrayList<Address> addresses = new ArrayList<>();
-
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_ALL);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Address address = new Address();
-
-                address.setCountry(rs.getString("country"));
-                address.setTown(rs.getString("town"));
-                address.setStreet(rs.getString("street"));
-                address.setHouseNumber(rs.getInt("house_number"));
-                address.setApartmentNumber(rs.getInt("apartment_number"));
-                address.setPostcode(rs.getString("postcode"));
-                address.setAddressId(rs.getInt("id"));
-
+                Address address = findById(rs.getLong("id"));
                 addresses.add(address);
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
-
         return addresses;
     }
 
     @Override
-    public void insert(Address object) {
+    public void insert(Address address) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(INSERT);
-            ps.setString(1, object.getCountry());
-            ps.setString(2, object.getTown());
-            ps.setString(3, object.getStreet());
-            ps.setInt(4, object.getHouseNumber());
-            ps.setInt(5, object.getApartmentNumber());
-            ps.setString(6, object.getPostcode());
+            PreparedStatement ps = db.connect().prepareStatement(INSERT);
+            setVariables(address, ps);
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
-    public void update(Address object) {
+    public void update(Address address) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(UPDATE);
-            ps.setString(1, object.getCountry());
-            ps.setString(2, object.getTown());
-            ps.setString(3, object.getStreet());
-            ps.setInt(4, object.getHouseNumber());
-            ps.setInt(5, object.getApartmentNumber());
-            ps.setString(6, object.getPostcode());
-            ps.setLong(7, object.getAddressId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE);
+            setVariables(address, ps);
+            ps.setLong(7, address.getAddressId());
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     @Override
     public void delete(long id) {
         commonDAO.delete(id, "addresses", "id");
+    }
+
+    private Address setVariables(ResultSet rs) {
+        Address address;
+        try {
+            address = new Address();
+            address.setAddressId(rs.getLong("id"));
+            address.setCountry(rs.getString("country"));
+            address.setTown(rs.getString("town"));
+            address.setStreet(rs.getString("street"));
+            address.setHouseNumber(rs.getInt("house_number"));
+            address.setApartmentNumber(rs.getInt("apartment_number"));
+            address.setPostcode(rs.getString("postcode"));
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
+        return address;
+    }
+
+    private void setVariables(Address address, PreparedStatement ps) {
+        try {
+            ps.setString(1, address.getCountry());
+            ps.setString(2, address.getTown());
+            ps.setString(3, address.getStreet());
+            ps.setInt(4, address.getHouseNumber());
+            ps.setInt(5, address.getApartmentNumber());
+            ps.setString(6, address.getPostcode());
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
     }
 }

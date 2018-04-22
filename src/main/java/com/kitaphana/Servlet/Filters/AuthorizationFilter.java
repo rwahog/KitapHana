@@ -24,7 +24,7 @@ public class AuthorizationFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         HttpSession session = request.getSession(false);
-        if (session.getAttribute("librarian") == null) {
+        if (session.getAttribute("librarian") == null || session.getAttribute("admin") == null) {
             response.sendRedirect("/main");
         } else {
             filterChain.doFilter(request, response);

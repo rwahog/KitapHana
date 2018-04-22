@@ -1,5 +1,6 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.Patron;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.DocumentHoldersService;
 import com.kitaphana.Service.LoginService;
@@ -21,8 +22,8 @@ public class DocumentHoldersServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ArrayList<User> users = service.fillPage(request.getParameter("id"));
-        request.setAttribute("users", users);
+        ArrayList<Patron> patrons = service.fillPage(request.getParameter("id"));
+        request.setAttribute("users", patrons);
         request.getRequestDispatcher("WEB-INF/views/documentHolders.jsp").forward(request, response);
     }
 }

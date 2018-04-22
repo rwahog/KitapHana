@@ -4,19 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Document {
-    private String title;
-    private String keywordsId;
-    private String authorsId;
-    private String authorsString;
-    private String keywordsString;
-    private String cover;
-    private String type;
-    private String users;
-    private String description, awaiters;
-    protected long id, deadline, fine;
-    private int price, amount, requests;
+    private String title, type, cover, description, authorsId, keywordsId,
+                    usersId, awaitersId;
+    private long id, deadline;
+    private int price, amount, requests, available, fine, renewCount;
     private ArrayList<Keyword> keywords;
     private ArrayList<Author> authors;
+    private ArrayList<User> users, awaiters;
 
     public Document(String title, int price, int amount, String type,
                     String description) {
@@ -34,144 +28,160 @@ public class Document {
         this.id = id;
     }
 
-    public void setCover(String cover) {
-        this.cover = cover;
-    }
-    
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public void setAuthorsString(String authorsString) {
-        this.authorsString = authorsString;
-    }
-
-    public String getAuthorsString() {
-        return authorsString;
-    }
-
-    public void setKeywordsString(String keywordsString) {
-        this.keywordsString = keywordsString;
-    }
-
-    public String getKeywordsString() {
-        return keywordsString;
-    }
-
-    public void setAuthorsId(String authorsId) {
-        this.authorsId = authorsId;
-    }
-
-    public void setKeywordsId(String keywordsId) {
-        this.keywordsId = keywordsId;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDeadline(long deadline) {
-        this.deadline = deadline;
-    }
-
-    public void setUsers(String users) {
-        this.users = users;
-    }
-
-    public void setAwaiters(String awaiters) {
-        this.awaiters = awaiters;
-    }
-
-    public void setRequests(int requests) {
-        this.requests = requests;
-    }
-
-    public void setFine(long fine) {
-        this.fine = fine;
-    }
-
-    public void setKeywords(ArrayList<Keyword> keywords) {
-        this.keywords = keywords;
-    }
-
-    public void setAuthors(ArrayList<Author> authors) {
-        this.authors = authors;
-    }
-
     public long getId() {
         return id;
     }
 
-    public String getAuthorsId() {
-        return authorsId;
-    }
-    
-    public String getType() {
-        return type;
-    }
-
-    public String getKeywordsId() {
-        return keywordsId;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public int getPrice() {
-        return price;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getCover() {
-        return cover;
-    }
-    
-    public String getDescription() {
-        return description;
+    public void setAuthorsId(String authorsId) {
+        this.authorsId = authorsId;
     }
 
-    public long getDeadline() {
-        return deadline;
+    public String getAuthorsId() {
+        return authorsId;
     }
 
-    public String getUsers() {
-        return users;
+    public void setAuthors(ArrayList<Author> authors) {
+        this.authors = authors;
     }
 
-    public long getFine() {
-        return fine;
+    public ArrayList<Author> getAuthors() {
+        return authors;
     }
 
-    public int getRequests() {
-        return requests;
+    public void setKeywordsId(String keywordsId) {
+        this.keywordsId = keywordsId;
     }
 
-    public String getAwaiters() {
-        return awaiters;
+    public String getKeywordsId() {
+        return keywordsId;
+    }
+
+    public void setKeywords(ArrayList<Keyword> keywords) {
+        this.keywords = keywords;
     }
 
     public ArrayList<Keyword> getKeywords() {
         return keywords;
     }
 
-    public ArrayList<Author> getAuthors() {
-        return authors;
+    public void setUsersId(String usersId) {
+        this.usersId = usersId;
+    }
+
+    public String getUsersId() {
+        return usersId;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setAwaitersId(String awaitersId) {
+        this.awaitersId = awaitersId;
+    }
+
+    public String getAwaitersId() {
+        return awaitersId;
+    }
+
+    public void setAwaiters(ArrayList<User> awaiters) {
+        this.awaiters = awaiters;
+    }
+
+    public ArrayList<User> getAwaiters() {
+        return awaiters;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDeadline(long deadline) {
+        this.deadline = deadline;
+    }
+
+    public long getDeadline() {
+        return deadline;
+    }
+
+    public void setRenewCount(int renewCount) {
+        this.renewCount = renewCount;
+    }
+
+    public int getRenewCount() {
+        return renewCount;
+    }
+
+    public void setRequests(int requests) {
+        this.requests = requests;
+    }
+
+    public int getRequests() {
+        return requests;
+    }
+
+    public void setFine(int fine) {
+        this.fine = fine;
+    }
+
+    public long getFine() {
+        return fine;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
+    }
+
+    public int getAvailable() {
+        return available;
     }
 
     public String getKeywordsAsString() {

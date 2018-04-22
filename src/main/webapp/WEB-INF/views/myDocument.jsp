@@ -47,17 +47,17 @@
                             <a class="title" href="">${doc.getTitle()}
                             </a>
                         </td>
-                        <td>${doc.getAuthors()}</td>
+                        <td>${doc.getAuthorsAsString()}</td>
                         <td>${doc.getType()}</td>
                         <td>${doc.getFine()} &#8381;</td>
                         <td>${doc.getDeadline()} days</td>
                         <form action="/myDocs" method="POST">
                         <td>
-                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="button" value="${doc.id}">Return</button>
+                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="return" value="${doc.getId()}">Return</button>
                         </td>
                         <c:set var="count" value="${count + 1}" scope="page"/>
                         <td>
-                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="renew" value="${doc.id}">Renew</button>
+                            <button type="submit" class="btn btn-primary btn-block" href="/verification" name="renew" value="${doc.getId()}">Renew</button>
                         </td>
                         </form>
                     </tr>
@@ -88,7 +88,7 @@
                                     <a class="title" href="/document?id=${doc.getId()}" target="_blank" >${doc.getTitle()}</a>
                                 </form>
                             </td>
-                            <td>${doc.getAuthors()}</td>
+                            <td>${doc.getAuthorsAsString()}</td>
                             <td>${doc.getType()}</td>
                         </tr>
                         </c:forEach>

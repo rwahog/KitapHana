@@ -32,7 +32,7 @@ public class journalArticleDAOImpl implements journalArticleDAO {
         JournalArticle journalArticle = null;
 
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -58,7 +58,7 @@ public class journalArticleDAOImpl implements journalArticleDAO {
         ArrayList<JournalArticle> journalArticles = new ArrayList<>();
 
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_ALL);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 JournalArticle journalArticle = new JournalArticle();
@@ -81,7 +81,7 @@ public class journalArticleDAOImpl implements journalArticleDAO {
     @Override
     public void insert(JournalArticle object) {
         try {
-            PreparedStatement ps = db.con.prepareStatement(INSERT);
+            PreparedStatement ps = db.connect().prepareStatement(INSERT);
             ps.setString(1, object.getTitle());
             ps.setString(2, object.getDate());
             ps.setString(3, object.getJournalName());
@@ -98,7 +98,7 @@ public class journalArticleDAOImpl implements journalArticleDAO {
     @Override
     public void update(JournalArticle object) {
         try{
-            PreparedStatement ps = db.con.prepareStatement(UPDATE);
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE);
             ps.setString(1, object.getTitle());
             ps.setString(2, object.getDate());
             ps.setString(3, object.getJournalName());

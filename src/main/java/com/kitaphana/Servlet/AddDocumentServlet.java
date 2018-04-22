@@ -42,7 +42,7 @@ public class AddDocumentServlet extends HttpServlet {
             }
             request.setAttribute("doc", doc);
         }
-        request.getRequestDispatcher("/WEB-INF/views/editDocument.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/addDocument.jsp").forward(request, response);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class AddDocumentServlet extends HttpServlet {
                 }
                 if (unique) {
                     Book book = new Book(title, price, amount, type, description, publisher, year, edition_number, bestseller);
-                    book.setAuthorsString(authors);
-                    book.setKeywordsString(keywords);
+                    book.setAuthorsId(authors);
+                    book.setKeywordsId(keywords);
                     service.saveDocument(book);
                 }
                 break;
@@ -79,16 +79,16 @@ public class AddDocumentServlet extends HttpServlet {
                 String date = request.getParameter("date");
                 if (unique) {
                     JournalArticle journalArticle = new JournalArticle(title, price, amount, type, description, editors, journal_name, date);
-                    journalArticle.setAuthorsString(authors);
-                    journalArticle.setKeywordsString(keywords);
+                    journalArticle.setAuthorsId(authors);
+                    journalArticle.setKeywordsId(keywords);
                     service.saveDocument(journalArticle);
                 }
                 break;
             case "av":
                 if (unique) {
                     AVMaterial avMaterial = new AVMaterial(title, price, amount, type, description);
-                    avMaterial.setAuthorsString(authors);
-                    avMaterial.setKeywordsString(keywords);
+                    avMaterial.setAuthorsId(authors);
+                    avMaterial.setKeywordsId(keywords);
                     service.saveDocument(avMaterial);
                 }
                 break;

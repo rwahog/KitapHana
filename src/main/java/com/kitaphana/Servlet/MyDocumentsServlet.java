@@ -36,15 +36,16 @@ public class MyDocumentsServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String button = request.getParameter("button");
-        String renew_button = request.getParameter("renew");
-        HttpSession session = request.getSession();
-        if (button != null) {
-            service.returnDoc(button, session.getAttribute("id").toString());
-            response.sendRedirect("/myDocs?id=" + session.getAttribute("id"));
-        } else if (renew_button != null) {
-            service.renewDoc(renew_button, session.getAttribute("id").toString());
-            response.sendRedirect("myDocs?id=" + session.getAttribute("id") );
+        String returnButton = request.getParameter("return");
+        String renewButton = request.getParameter("renew");
+        HttpSession session = request.getSession(false);
+        String userId = String.valueOf(((User)session.getAttribute("user")).getId());
+        if (returnButton != null) {
+            service.returnDoc(returnButton, userId);
+            response.sendRedirect("/myDocs");
+        } else if (renewButton != null) {
+            service.renewDoc(renewButton, userId);
+            response.sendRedirect("/myDocs");
         }
     }
 }

@@ -33,11 +33,6 @@ public class RegistrationService {
                          String password, String email, String country, String town, String street,
                          String house_number, String apart_number, String post_code) {
         try {
-            db.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             long card_number = setCard_number(phone_number);
             db.runSqlUpdate("INSERT INTO addresses(country, town, street, house_number, apartment_number, postcode) VALUES('" + country + "', '" + town + "', '" + street + "', '" + house_number + "', '" + apart_number + "','" + post_code + "')");
             ResultSet resultSet = db.runSqlQuery("SELECT * FROM addresses WHERE country = '" + country + "' AND town = '" + town + "' AND street = '" + street + "' AND house_number = '" + house_number + "' AND apartment_number = '" + apart_number + "' AND postcode = '" + post_code + "'");

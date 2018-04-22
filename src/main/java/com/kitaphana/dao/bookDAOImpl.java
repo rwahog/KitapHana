@@ -2,6 +2,8 @@ package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Book;
+import com.kitaphana.exceptions.DocumentNotFoundException;
+import com.kitaphana.exceptions.OperationFailedException;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +16,7 @@ public class bookDAOImpl implements bookDAO {
     Database db = Database.getInstance();
     commonDAOImpl commonDAO = new commonDAOImpl();
     //Prepared statements which will be used in methods below.
-    private static final String FIND_ALL = "SELECT * FROM books";
+    private static final String FIND_ALL = "SELECT id FROM books";
     private static final String FIND_BY_ID = "SELECT * FROM books WHERE id=?";
     private static final String UPDATE = "UPDATE books SET title=?, publisher=?, year=?, edition_number=?, best_seller=? WHERE id=?";
     private static final String UPDATE_BY_ID_DOCUMENT = "UPDATE books SET title=?, publisher=?, year=?, edition_number=?, best_seller=? WHERE document_id=?";
@@ -29,25 +31,21 @@ public class bookDAOImpl implements bookDAO {
      * @return - book object
      */
     public Book findByIdDocument(long id) {
-        Book book = null;
+        Book book;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID_DOCUMENT);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID_DOCUMENT);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
-                book = new Book();
-                book.setTitle(rs.getString("title"));
-                book.setPublisher(rs.getString("publisher"));
-                book.setYear(rs.getInt("year"));
-                book.setEditionNumber(rs.getInt("edition_number"));
-                book.setBestseller(rs.getInt("best_seller"));
+                book = getVariables(rs);
+            } else {
+                throw new DocumentNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
 
         return book;
@@ -63,28 +61,22 @@ public class bookDAOImpl implements bookDAO {
      */
     @Override
     public Book findById(long id) {
-        Book book = null;
-
+        Book book;
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_BY_ID);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
-                book = new Book();
-                book.setTitle(rs.getString("title"));
-                book.setPublisher(rs.getString("publisher"));
-                book.setYear(rs.getInt("year"));
-                book.setEditionNumber(rs.getInt("edition_number"));
-                book.setBestseller(rs.getInt("best_seller"));
+                book = getVariables(rs);
+            } else {
+                throw new DocumentNotFoundException();
             }
 
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
-
         return book;
     }
 
@@ -98,87 +90,66 @@ public class bookDAOImpl implements bookDAO {
         ArrayList<Book> books = new ArrayList<>();
 
         try {
-            PreparedStatement ps = db.con.prepareStatement(FIND_ALL);
+            PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Book book = new Book();
-
-                book.setTitle(rs.getString("title"));
-                book.setPublisher(rs.getString("publisher"));
-                book.setYear(rs.getInt("year"));
-                book.setEditionNumber(rs.getInt("edition_number"));
-                book.setBestseller(rs.getInt("best_seller"));
+                Book book = findById(rs.getLong("id"));
                 books.add(book);
-
             }
-
             rs.close();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
         return books;
     }
 
     /**
      * Add new object into the database table "books".
-     * @param object - book object
+     * @param book - book object
      */
     @Override
-    public void insert(Book object) {
+    public void insert(Book book) {
         try {
             PreparedStatement ps = db.con.prepareStatement(INSERT);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getPublisher());
-            ps.setInt(3, object.getYear());
-            ps.setInt(4, object.getEditionNumber());
-            ps.setInt(5, object.isBestseller());
-            ps.setLong(6, object.getId());
+            setVariables(book, ps);
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
     /**
      * Update information about book which
      * is passing as argument.
-     * @param object - book object
+     * @param book - book object
      */
     @Override
-    public void update(Book object) {
+    public void update(Book book) {
         try{
-            PreparedStatement ps = db.con.prepareStatement(UPDATE);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getPublisher());
-            ps.setInt(3, object.getYear());
-            ps.setInt(4, object.getEditionNumber());
-            ps.setInt(5, object.isBestseller());
-            ps.setLong(6, object.getId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE);
+            setVariables(book, ps);
+            ps.setLong(6, book.getId());
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
-    public void updateByIdDocument(Book object) {
+    public void updateByIdDocument(Book book) {
         try{
-            PreparedStatement ps = db.con.prepareStatement(UPDATE_BY_ID_DOCUMENT);
-            ps.setString(1, object.getTitle());
-            ps.setString(2, object.getPublisher());
-            ps.setInt(3, object.getYear());
-            ps.setInt(4, object.getEditionNumber());
-            ps.setInt(5, object.isBestseller());
-            ps.setLong(6, object.getDocumentId());
+            PreparedStatement ps = db.connect().prepareStatement(UPDATE_BY_ID_DOCUMENT);
+            setVariables(book, ps);
+            ps.setLong(6, book.getDocumentId());
 
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new OperationFailedException();
         }
     }
 
@@ -194,5 +165,33 @@ public class bookDAOImpl implements bookDAO {
 
     public void deleteByDocumentId(long id) {
         commonDAO.delete(id, "books", "document_id");
+    }
+
+    private Book getVariables(ResultSet rs) {
+        Book book;
+        try {
+            book = new Book();
+            book.setDocumentId(rs.getInt("document_id"));
+            book.setTitle(rs.getString("title"));
+            book.setPublisher(rs.getString("publisher"));
+            book.setYear(rs.getInt("year"));
+            book.setEditionNumber(rs.getInt("edition_number"));
+            book.setBestseller(rs.getInt("best_seller"));
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
+        return book;
+    }
+
+    private void setVariables(Book book, PreparedStatement ps) {
+        try {
+            ps.setString(1, book.getTitle());
+            ps.setString(2, book.getPublisher());
+            ps.setInt(3, book.getYear());
+            ps.setInt(4, book.getEditionNumber());
+            ps.setInt(5, book.isBestseller());
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
     }
 }

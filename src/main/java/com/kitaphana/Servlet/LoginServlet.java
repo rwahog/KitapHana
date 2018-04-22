@@ -2,12 +2,13 @@ package com.kitaphana.Servlet;
 
 
 import com.kitaphana.Entities.User;
+
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.TelegramBot;
 import com.kitaphana.Service.UserService;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,8 @@ public class LoginServlet extends HttpServlet{
     String password;
     LoginService service;
     UserService userService;
-    TelegramBot telegramBot;
+    final static Logger logger = Logger.getLogger(LoginServlet.class);
+//    TelegramBot telegramBot;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +44,7 @@ public class LoginServlet extends HttpServlet{
         service = new LoginService();
         phone_number = request.getParameter("login");
         password = request.getParameter("password");
-        telegramBot = new TelegramBot();
+//        telegramBot = new TelegramBot();
         HttpSession session = request.getSession();
         String check = request.getParameter("remember");
         if (check != null) {
@@ -58,9 +60,10 @@ public class LoginServlet extends HttpServlet{
             }
             User user = userService.findUserByPhoneNumber(phone_number);
             session.setAttribute("user", user);
-            if (user.getChatId() != 0){
-                telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
-            }
+//            if (user.getChatId() != 0){
+//                telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
+//            }
+            logger.info(user.getName() + user.getSurname() + " have logged in Kitaphana.");
             response.sendRedirect("/main");
         } else {
             request.setAttribute("errorMessage", "Invalid username or password");

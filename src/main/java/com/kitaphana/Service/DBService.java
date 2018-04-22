@@ -4,6 +4,7 @@ import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.*;
 import com.kitaphana.dao.authorDAOImpl;
 import com.kitaphana.dao.keywordDAOImpl;
+import com.kitaphana.exceptions.OperationFailedException;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -131,6 +132,21 @@ public class DBService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ArrayList<String> findAllPhones() {
+        ArrayList<String> phones = new ArrayList<>();
+        final String query = "SELECT users.phone_number FROM users";
+        try {
+            PreparedStatement ps = db.connect().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                phones.add(rs.getString("phone_number"));
+            }
+        } catch (SQLException e) {
+            throw new OperationFailedException();
+        }
+        return phones;
     }
 
     public String findColumn(String id, String table, String column) {

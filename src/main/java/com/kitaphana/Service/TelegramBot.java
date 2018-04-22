@@ -1,24 +1,18 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.*;
 import com.kitaphana.dao.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 public class TelegramBot extends TelegramLongPollingBot {
 
     Database db = Database.getInstance();
-    userDAOImpl userDAO = new userDAOImpl();
+    patronDAOImpl userDAO = new patronDAOImpl();
     DBService dbService = new DBService();
 //    documentDAOImpl documentDAO = new documentDAOImpl();
 
