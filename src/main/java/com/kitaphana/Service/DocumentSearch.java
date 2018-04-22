@@ -105,6 +105,7 @@ public class DocumentSearch {
                     s.concat(String.valueOf(documents.get(i).getTitle().charAt(j)));
                 }
             }
+            dist = Math.min(dist, levenshteinDistance(s, possible_title));
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(documents.get(i));
             }
