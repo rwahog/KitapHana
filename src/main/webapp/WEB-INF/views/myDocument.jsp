@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>KitapHana</title>
-    <link rel="icon" href="/resources/images/favicon-32x32.png" type="image/x-icon">
+    <link rel="icon" href="/resources/images/favicon-16x16.png" type="image/x-icon">
     <link href="${path}webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
