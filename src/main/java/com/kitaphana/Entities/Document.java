@@ -186,7 +186,9 @@ public class Document {
 
   public String getKeywordsAsString() {
     String keys = "";
-    if (keywords.size() == 1) {
+    if (keywords == null) {
+      keys = "";
+    } else if (keywords.size() == 1) {
       keys = keywords.get(0).getKeyword();
     } else if (keywords.size() == 0) {
       keys = "";
@@ -201,7 +203,9 @@ public class Document {
 
   public String getAuthorsAsString() {
     String authorsStr = "";
-    if (authors.size() == 1) {
+    if (authors == null) {
+      authorsStr = "";
+    } else if (authors.size() == 1) {
       authorsStr = authors.get(0).getName() + " " + authors.get(0).getSurname();
     } else if (authors.size() == 0) {
       authorsStr = "";

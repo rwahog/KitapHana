@@ -38,6 +38,18 @@ public class DocumentService {
     return document;
   }
 
+  public ArrayList<Keyword> findAllKeywords() {
+    ArrayList<Keyword> keys = keywordDAO.findAll();
+    for (Keyword key : keys) {
+      ArrayList<String> docsId = fromDBStringToArray(key.getDocumentsId());
+      ArrayList<Document> documents = new ArrayList<>();
+      for (String docId : docsId) {
+          documents.add(documentDAO.findById(Long.parseLong(docId)));
+      }
+      key.setDocuments(documents);
+    }
+    return keys;
+  }
 
   public Document setDocInfo(String id) {
     Document document = new Document();

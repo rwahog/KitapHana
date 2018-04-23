@@ -53,7 +53,7 @@ public class DocumentSearch {
     }
 
     public void initializeKeywords() {
-        keywords = keywordDAO.findAll();
+        keywords = documentService.findAllKeywords();
         for (int i = 0; i < keywords.size(); i++) {
             update(keywords.get(i).getKeyword(), 0);
         }
@@ -115,8 +115,8 @@ public class DocumentSearch {
                 }
             }
 
-            System.out.println(title);
-            System.out.println(dist);
+//            System.out.println(title);
+//            System.out.println(dist);
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(documents.get(i));
             }
@@ -147,6 +147,9 @@ public class DocumentSearch {
         update(possible_name_or_surname, 1);
         possible_name_or_surname = possible_name_or_surname.toLowerCase();
         ArrayList<Author>[] sorted_documents = new ArrayList[lev_dist + 1];
+        for (int i = 0; i < sorted_documents.length; i++) {
+          sorted_documents[i] = new ArrayList<>();
+        }
         for (int i = 0; i < authors.size(); i++) {
             String name = new String(authors.get(i).getName());
             name = name.toLowerCase();
@@ -167,9 +170,9 @@ public class DocumentSearch {
                 }
             }
 
-            System.out.println(name);
-            System.out.println(surname);
-            System.out.println(dist);
+//            System.out.println(name);
+//            System.out.println(surname);
+//            System.out.println(dist);
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(authors.get(i));
             }
@@ -197,6 +200,9 @@ public class DocumentSearch {
         update(possible_keyword, 1);
         possible_keyword = possible_keyword.toLowerCase();
         ArrayList<Keyword>[] sorted_documents = new ArrayList[lev_dist + 1];
+        for (int i = 0; i < sorted_documents.length; i++) {
+          sorted_documents[i] = new ArrayList<>();
+        }
         for (int i = 0; i < keywords.size(); i++) {
             String keyword = new String(keywords.get(i).getKeyword());
             keyword = keyword.toLowerCase();
@@ -207,8 +213,8 @@ public class DocumentSearch {
                     dist = Math.min(dist, levenshteinDistance(s, possible_keyword));
                 }
             }
-            System.out.println(keyword);
-            System.out.println(dist);
+//            System.out.println(keyword);
+//            System.out.println(dist);
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(keywords.get(i));
             }

@@ -28,7 +28,15 @@ public class MainServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     DocumentSearch documentSearch = new DocumentSearch();
     String query = request.getParameter("query");
-    ArrayList<Document> arr = documentSearch.getDocumentsByPossibleTitle(query, 10, query.length());
+    String searchBy = request.getParameter("criteria");
+    ArrayList<Document> arr = null;
+    if (searchBy.equals("title")) {
+      arr = documentSearch.getDocumentsByPossibleTitle(query, 10, query.length()/4);
+    } else if (searchBy.equals("keyword")) {
+      arr = documentSearch.getDocumentsByPossibleKeyword(query, 10, query.length()/4);
+    } else if (searchBy.equals("author")) {
+      arr = documentSearch.getDocumentsByPossibleNameOrSurname(query, 10, query.length()/4);
+    }
     request.setAttribute("list", arr);
     request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
   }

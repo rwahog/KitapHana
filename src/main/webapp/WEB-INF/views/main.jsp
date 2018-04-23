@@ -24,10 +24,10 @@
 		<input class="form-control" id="searchBy" type="search" placeholder="Search" name="query"
 					 aria-label="Search">
 		<nav class="form-group col-3">
-			<select id="search" name="search" class="form-control">
-				<option value="" selected>Title</option>
-				<option>Author</option>
-				<option>Keywords</option>
+			<select id="criteria" name="criteria" class="form-control">
+				<option value="title" selected>Title</option>
+				<option value="author">Author</option>
+				<option value="keyword">Keywords</option>
 			</select>
 		</nav>
 		<nav class="checkbox col-2">
