@@ -1,6 +1,8 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Employee;
+import com.kitaphana.Entities.Librarian;
 import com.kitaphana.Service.AdminService;
 
 import javax.servlet.ServletException;
@@ -36,17 +38,24 @@ public class AdminServlet extends HttpServlet {
     String action = request.getParameter("action");
     String name = request.getParameter("name");
     String surname = request.getParameter("surname");
-    String privilege = request.getParameter("privilege");
+    int privilege = Integer.parseInt(request.getParameter("privilege"));
     String phone_number = request.getParameter("phone_number");
     String email = request.getParameter("email");
     String password = request.getParameter("password");
     String country = request.getParameter("country");
     String town = request.getParameter("town");
     String street = request.getParameter("street");
-    String houseNumber = request.getParameter("house_number");
-    String apartmentNumber = request.getParameter("apartment_number");
+    int houseNumber = Integer.parseInt(request.getParameter("house_number"));
+    int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
     String postcode = request.getParameter("postcode");
-    if (action.equals("edit")) {
+    if (action.equals("add")) {
+      Address address = new Address(country, town, street, houseNumber,
+              apartmentNumber, postcode);
+      Librarian librarian = new Librarian(name, surname, privilege, phone_number,
+              email, password, address);
+      adminService.addLibrarian(librarian);
+      response.sendRedirect("/librarianPanel");
+    } else if (action.equals("edit")) {
 
     }
   }

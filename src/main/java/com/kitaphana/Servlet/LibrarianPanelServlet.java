@@ -14,14 +14,14 @@ public class LibrarianPanelServlet extends HttpServlet {
   AdminService adminService = new AdminService();
   LibrarianPanelService service = new LibrarianPanelService();
   DocumentService documentService = new DocumentService();
-  UserService userService = new UserService();
+  PatronService patronService = new PatronService();
   DBService dbService = new DBService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     request.setAttribute("docs", documentService.findAll());
-    request.setAttribute("usersCount", userService.numberOfUnconfirmedUsers());
-    request.setAttribute("users", userService.findAll());
+    request.setAttribute("usersCount", patronService.numberOfUnconfirmedUsers());
+    request.setAttribute("users", patronService.findAll());
     request.setAttribute("checkouts", service.setCheckoutsInfo());
     request.setAttribute("renews", service.setRenewsInfo());
     request.setAttribute("returns", service.setReturnsInfo());

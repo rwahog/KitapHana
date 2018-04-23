@@ -4,7 +4,7 @@
 //import com.kitaphana.Entities.User;
 //import com.kitaphana.Service.DBService;
 //import com.kitaphana.Service.LoginService;
-//import com.kitaphana.Service.UserService;
+//import com.kitaphana.Service.PatronService;
 //
 //import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
@@ -17,12 +17,12 @@
 //@WebServlet(urlPatterns = "/editUser")
 //public class EditUserServlet extends HttpServlet {
 //
-//    UserService userService = new UserService();
+//    PatronService patronService = new PatronService();
 //    DBService dbService = new DBService();
 //    User user = new User();
 //
 //    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-//        user = userService.findUserById(Long.parseLong(request.getParameter("id")));
+//        user = patronService.findUserById(Long.parseLong(request.getParameter("id")));
 //        request.setAttribute("user", user);
 //        request.getRequestDispatcher("WEB-INF/views/editUser.jsp").forward(request, response);
 //    }
@@ -43,15 +43,15 @@
 //        int apartment_number = Integer.parseInt(request.getParameter("apartment_number"));
 //        String post_code = request.getParameter("postcode");
 //
-//        boolean isValid = userService.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
+//        boolean isValid = patronService.isValid(Integer.parseInt(request.getParameter("id")), phone_number, password1, password2);
 //        if (isValid) {
 //            Address address = new Address(country, town, street, house_number, apartment_number, post_code);
-//            address.setAddressId(userService.getUserAddressId(Long.parseLong(request.getParameter("id"))));
+//            address.setAddressId(patronService.getUserAddressId(Long.parseLong(request.getParameter("id"))));
 //            User user = new User(name, surname, phone_number, password1, email, address);
 //            user.setId(Long.parseLong(request.getParameter("id")));
 //            user.setType(status);
 //            user.setPossibleType(dbService.findColumn(request.getParameter("id"), "users", "possible_type"));
-//            userService.editUserInfo(user, "Librarian");
+//            patronService.editUserInfo(user, "Librarian");
 //            dbService.updateColumn(request.getParameter("id"), status, "users", "type");
 //            response.sendRedirect("/librarianPanel");
 //        } else {

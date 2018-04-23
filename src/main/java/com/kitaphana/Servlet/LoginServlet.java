@@ -4,7 +4,7 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LibrarianService;
 import com.kitaphana.Service.LoginService;
-import com.kitaphana.Service.UserService;
+import com.kitaphana.Service.PatronService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
   String phone_number;
   String password;
   LoginService service;
-  UserService userService;
+  PatronService patronService;
   LibrarianService librarianService;
   final static Logger logger = Logger.getLogger(LoginServlet.class);
 //    TelegramBot telegramBot;
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException {
-    userService = new UserService();
+    patronService = new PatronService();
     service = new LoginService();
     phone_number = request.getParameter("login");
     password = request.getParameter("password");
@@ -52,15 +52,15 @@ public class LoginServlet extends HttpServlet {
     } else {
       session.setMaxInactiveInterval(2 * 60 * 60);
     }
-    boolean isValidUser = service.loginCheck(phone_number, password);
+    boolean isValidUser = patronService.loginCheck(phone_number, password);
     if (isValidUser) {
-      String role = userService.getRole(phone_number);
+      String role = patronService.getRole(phone_number);
       session.setAttribute("role", role);
       User user;
       if (role.equals("librarian")) {
         user = librarianService.findByPhone(phone_number);
       } else {
-        user = userService.findUserByPhoneNumber(phone_number);
+        user = patronService.findUserByPhoneNumber(phone_number);
       }
       session.setAttribute("user", user);
       logger.info(user.getName() + user.getSurname() + " have logged in Kitaphana.");

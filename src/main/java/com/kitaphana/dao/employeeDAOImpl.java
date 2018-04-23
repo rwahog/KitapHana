@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class librarianDAO {
+public class employeeDAOImpl {
 
   Database db = Database.getInstance();
   commonDAOImpl commonDAO = new commonDAOImpl();

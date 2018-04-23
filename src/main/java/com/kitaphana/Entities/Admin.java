@@ -4,6 +4,10 @@ public class Admin extends Employee {
   private int privilege = 0;
   private String type = "Admin";
 
+  public Admin() {
+
+  }
+
   public Admin(Employee employee) {
     super(employee);
   }

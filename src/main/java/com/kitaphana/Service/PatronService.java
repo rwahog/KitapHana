@@ -4,9 +4,10 @@ import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.Document;
 import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.Patron;
+import com.kitaphana.Entities.User;
 import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
-import com.kitaphana.dao.librarianDAO;
+import com.kitaphana.dao.employeeDAOImpl;
 import com.kitaphana.dao.patronDAOImpl;
 import com.kitaphana.exceptions.UserNotFoundException;
 
@@ -15,12 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UserService {
+public class PatronService {
   Database db = Database.getInstance();
   private patronDAOImpl patronDAO = new patronDAOImpl();
   private addressDAOImpl addressDAO = new addressDAOImpl();
   private documentDAOImpl documentDAO = new documentDAOImpl();
-  private librarianDAO librarianDAO = new librarianDAO();
+  private employeeDAOImpl employeeDAO = new employeeDAOImpl();
   private DBService dbService = new DBService();
 
   public long getUserId(String phone) {
@@ -40,22 +41,6 @@ public class UserService {
     patron = patronDAO.findById(id);
     patron.setAddress(addressDAO.findById(patron.getAddressId()));
     return patron;
-  }
-
-  public long getChatId(String phone) {
-    final String query = "SELECT users.id FROM users WHERE users.chat_id=?";
-    long chat_id = 0;
-    try {
-      PreparedStatement ps = db.connect().prepareStatement(query);
-      ps.setString(1, phone);
-      ResultSet rs = ps.executeQuery();
-      if (rs.next()) {
-        chat_id = rs.getLong("char_id");
-      }
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return chat_id;
   }
 
   public Patron findUserByPhoneNumber(String phone) {
@@ -78,7 +63,6 @@ public class UserService {
       if (rs.next()) {
         count = rs.getInt("count");
       }
-
       ps.close();
       rs.close();
     } catch (SQLException e) {
@@ -92,32 +76,18 @@ public class UserService {
     addressDAO.delete(getUserAddressId(id));
   }
 
-  public void deletePatron(long id) {
+  public void deletePatron(String userId) {
+    long id = Long.parseLong(userId);
     Patron patron = patronDAO.findById(id);
     if (patron == null) {
       throw new UserNotFoundException();
     } else if ((patron.getDocuments().size() != 0) || (patron.getFines().length() != 0)) {
       return;
-    } else {
+    }
+    else {
       deleteUserAddress(id);
       patronDAO.delete(id);
     }
-  }
-
-  public boolean isValid(long id, String phone_number, String password1, String password2) {
-    try {
-      db.connect();
-      ResultSet rs = db.runSqlQuery("SELECT users.phone_number FROM users WHERE users.phone_number ='" + phone_number + "' AND users.id <> '" + id + "'");
-      if (rs.next()) {
-        return false;
-      }
-      if (password1.equals(password2)) {
-        return true;
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return false;
   }
 
   public void editUser(Patron patron) {
@@ -129,9 +99,9 @@ public class UserService {
     addressDAO.update(patron.getAddress());
     patronDAO.updateUserInfo(patron, type);
     if (!patron.getType().equals(patron.getPossibleType())) {
-      dbService.sendMessageToLibrarians("User" + patron.getName() + " " +
-              patron.getSurname() + "(id: " + patron.getId() + ")" +
-              "has unconfirmed type.");
+      dbService.sendMessageToLibrarians("Patron " + patron.getName() + " " +
+              patron.getSurname() + " (id: " + patron.getId() + ")" +
+              " has unconfirmed type.");
     }
   }
 
@@ -150,27 +120,6 @@ public class UserService {
     return documents;
   }
 
-  public boolean checkIfPossibleToRegister(String phone_number) {
-    boolean possible = false;
-    try {
-      db.connect();
-      ResultSet rs = db.runSqlQuery("SELECT * FROM users WHERE phone_number = '" + phone_number + "'");
-      if (!rs.next()) {
-        possible = true;
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return possible;
-  }
-
-  public boolean checkIfPossiblePassword(String password1, String password2) {
-    boolean possible = false;
-    if (password1.equals(password2) && password1.length() > 5)
-      possible = true;
-    return possible;
-  }
-
   public void savePatron(Patron patron) {
     addressDAO.insert(patron.getAddress());
     patron.setAddressId(addressDAO.findLastId());
@@ -179,13 +128,25 @@ public class UserService {
 
   public String getRole(String phone_number) {
     String role = "patron";
-    Employee employee = librarianDAO.findByPhoneNumber(phone_number);
+    Employee employee = employeeDAO.findByPhoneNumber(phone_number);
     if (employee != null) {
       role = "librarian";
-    }
-    if (employee.getPrivilege() == 0) {
-      role = "admin";
+      if (employee.getPrivilege() == 0) {
+        role = "admin";
+      }
     }
     return role;
+  }
+
+  public boolean loginCheck(String phone_number, String password) {
+    boolean login = false;
+    User user = patronDAO.findByPhoneNumber(phone_number);
+    Employee employee = employeeDAO.findByPhoneNumber(phone_number);
+    if (user != null && user.getPassword().equals(password)) {
+      login = true;
+    } else if (employee != null && employee.getPassword().equals(password)) {
+      login = true;
+    }
+    return login;
   }
 }

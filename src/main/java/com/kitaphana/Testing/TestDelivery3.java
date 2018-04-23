@@ -6,7 +6,7 @@
 //import com.kitaphana.Entities.User;
 //import com.kitaphana.Service.DocumentService;
 //import com.kitaphana.Service.MyDocumentsService;
-//import com.kitaphana.Service.UserService;
+//import com.kitaphana.Service.PatronService;
 //import com.kitaphana.Service.MyDocumentsService;
 //import com.kitaphana.Service.LoginService;
 //import org.junit.jupiter.api.Assertions;
@@ -24,7 +24,7 @@
 //    ResultSet rs;
 //    public Database db = Database.getInstance();
 //    DocumentService docServ = new DocumentService();
-//    UserService service = new UserService();
+//    PatronService service = new PatronService();
 //    //d1:
 //    User p1, p2, p3, s, v;
 //    Document d1 = new Document();

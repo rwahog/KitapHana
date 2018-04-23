@@ -3,7 +3,8 @@ package com.kitaphana.Service;
 import com.kitaphana.Entities.ActionMessage;
 import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.Librarian;
-import com.kitaphana.dao.librarianDAO;
+import com.kitaphana.dao.addressDAOImpl;
+import com.kitaphana.dao.employeeDAOImpl;
 import com.kitaphana.exceptions.OperationFailedException;
 
 import java.io.File;
@@ -12,27 +13,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminService {
-  private librarianDAO librarianDAO = new librarianDAO();
-
+  private employeeDAOImpl employeeDAOImpl = new employeeDAOImpl();
+  private addressDAOImpl addressDAO = new addressDAOImpl();
 
   public ArrayList<Employee> findAll() {
-    return librarianDAO.findAll();
+    return employeeDAOImpl.findAll();
   }
 
   public void addLibrarian(Librarian librarian) {
-    librarianDAO.insert(librarian);
+    addressDAO.insert(librarian.getAddress());
+    long addressId = addressDAO.findLastId();
+    librarian.setAddressId(addressId);
+    employeeDAOImpl.insert(librarian);
   }
 
   public void updateLibrarian(Librarian librarian) {
-    librarianDAO.update(librarian);
+    employeeDAOImpl.update(librarian);
   }
 
   public void deleteLibrarian(String id) {
-    librarianDAO.delete(Long.parseLong(id));
+    employeeDAOImpl.delete(Long.parseLong(id));
   }
 
   public Employee findById(String id) {
-    Employee employee = librarianDAO.findById(Long.parseLong(id));
+    Employee employee = employeeDAOImpl.findById(Long.parseLong(id));
     return employee;
   }
 

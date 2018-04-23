@@ -1,6 +1,6 @@
 package com.kitaphana.Servlet;
 
-import com.kitaphana.Service.UserService;
+import com.kitaphana.Service.PatronService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +12,11 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
 
-  UserService service = new UserService();
+  PatronService service = new PatronService();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    service.deletePatron(Long.parseLong(request.getParameter("id")));
+    service.deletePatron(request.getParameter("id"));
     response.sendRedirect("/librarianPanel");
   }
 }

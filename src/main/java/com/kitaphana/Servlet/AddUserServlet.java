@@ -3,7 +3,7 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Entities.Patron;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.RegistrationService;
-import com.kitaphana.Service.UserService;
+import com.kitaphana.Service.PatronService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,17 +16,17 @@ import java.io.IOException;
 @WebServlet(urlPatterns = {"/librarianPanel/addUser", "/librarianPanel/editUser", "/profile"})
 public class AddUserServlet extends HttpServlet {
   RegistrationService service = new RegistrationService();
-  UserService userService = new UserService();
+  PatronService patronService = new PatronService();
   User user;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
     HttpSession session = request.getSession(false);
     if (request.getRequestURI().endsWith("editUser")) {
-      user = userService.findUserById(Long.parseLong(request.getParameter("id")));
+      user = patronService.findUserById(Long.parseLong(request.getParameter("id")));
       request.setAttribute("user", user);
     } else if (request.getRequestURI().endsWith("profile")) {
-      user = userService.findUserById(((Patron) session.getAttribute("user")).getId());
+      user = patronService.findUserById(((Patron) session.getAttribute("user")).getId());
       request.setAttribute("user", user);
     }
     request.getRequestDispatcher("/WEB-INF/views/editUser.jsp").forward(request, response);

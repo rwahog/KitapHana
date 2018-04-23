@@ -360,6 +360,7 @@
 				</table>
 			</div>
 		</div>
+		<c:if test="${sessionScope['role'] == 'admin'}">
 		<div class="tab-pane fade" id="librarians" role="tabpanel" aria-labelledby="librarians-tab">
 			<div class="panel container-fluid mx-auto px-0">
 				<table class="table table-hover table-dark">
@@ -387,7 +388,7 @@
 					</tbody>
 				</table>
 				<div class="form-group">
-					<a class="btn btn-primary btn-block col-12 col-md-3 link" id="btn"
+					<a class="btn btn-primary btn-block col-12 col-md-3 link" id="addLibrarian"
 						 href="/librarianPanel/admin/addLibrarian">Add new Librarian</a>
 				</div>
 			</div>
@@ -412,6 +413,7 @@
 				</table>
 			</div>
 		</div>
+		</c:if>
 	</div>
 </main>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>

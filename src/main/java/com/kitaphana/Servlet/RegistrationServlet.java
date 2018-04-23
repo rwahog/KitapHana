@@ -3,7 +3,7 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Patron;
 import com.kitaphana.Service.DBService;
-import com.kitaphana.Service.UserService;
+import com.kitaphana.Service.PatronService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegistrationServlet extends HttpServlet {
-  private UserService service = new UserService();
+  private PatronService service = new PatronService();
   private DBService dbService = new DBService();
 
   @Override
@@ -42,28 +42,25 @@ public class RegistrationServlet extends HttpServlet {
     int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
     String postcode = request.getParameter("postcode");
 
-    boolean isValidUser = service.checkIfPossibleToRegister(phoneNumber);
-    boolean isValidPassword = service.checkIfPossiblePassword(password1, password2);
-    if (!isValidPassword && !isValidUser) {
-      request.setAttribute("errorBoth", "Your password is not matching or it too short " +
-              "and the user is already exits with this prone number");
-      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
-    } else if (!isValidPassword && isValidUser) {
-      request.setAttribute("errorPassword", "Your password is not matching or it too short");
-      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
-    } else if (!isValidUser && isValidPassword) {
-      request.setAttribute("errorPhone", "Your password is not matching or it too short");
-      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
-    } else {
-      Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
-      Patron patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
-      service.savePatron(patron);
-      HttpSession session = request.getSession();
-      patron = service.findUserByPhoneNumber(phoneNumber);
-      session.setAttribute("user", patron);
-//            String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
-//            dbService.sendMessageToLibrarians(message);
-      response.sendRedirect("/main");
+//    if (!isValidPassword && !isValidUser) {
+//      request.setAttribute("errorBoth", "Your password is not matching or it too short " +
+//              "and the user is already exits with this prone number");
+//      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+//    } else if (!isValidPassword && isValidUser) {
+//      request.setAttribute("errorPassword", "Your password is not matching or it too short");
+//      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+//    } else if (!isValidUser && isValidPassword) {
+//      request.setAttribute("errorPhone", "Your password is not matching or it too short");
+//      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
+//    } else {
+//      Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
+//      Patron patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
+//      service.savePatron(patron);
+//      HttpSession session = request.getSession();
+//      patron = service.findUserByPhoneNumber(phoneNumber);
+//      session.setAttribute("user", patron);
+////            String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
+////            dbService.sendMessageToLibrarians(message);
+//      response.sendRedirect("/main");
     }
   }
-}
