@@ -1,23 +1,24 @@
 package com.kitaphana.Entities;
 
 public class Librarian extends Admin {
-    private String type = "Librarian";
-    private int privilege = 3;
-    public Librarian(Employee employee) {
-        super(employee);
-    }
+  private String type = "Librarian";
+  private int privilege = 3;
 
-    public void setPrivilege(int privilege) {
-        this.privilege = privilege;
-    }
+  public Librarian(Employee employee) {
+    super(employee);
+  }
 
-    @Override
-    public int getPrivilege() {
-        return privilege;
-    }
+  public void setPrivilege(int privilege) {
+    this.privilege = privilege;
+  }
 
-    @Override
-    public String getType() {
-        return type;
-    }
+  @Override
+  public int getPrivilege() {
+    return privilege;
+  }
+
+  @Override
+  public String getType() {
+    return type;
+  }
 }

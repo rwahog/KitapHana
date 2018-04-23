@@ -14,22 +14,22 @@ import java.util.ArrayList;
 
 @WebServlet(urlPatterns = "/main")
 public class MainServlet extends HttpServlet {
-    DocumentService documentService = new DocumentService();
+  DocumentService documentService = new DocumentService();
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        ArrayList<Document> arr = documentService.findAll();
-        request.setAttribute("list", arr);
-        request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
-    }
-    
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        DocumentSearch documentSearch = new DocumentSearch();
-        String query = request.getParameter("query");
-        ArrayList<Document> arr = documentSearch.getDocumentsByPossibleTitle(query, 10, query.length());
-        request.setAttribute("list", arr);
-        request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
-    }
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws IOException, ServletException {
+    ArrayList<Document> arr = documentService.findAll();
+    request.setAttribute("list", arr);
+    request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
+  }
+
+  @Override
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    DocumentSearch documentSearch = new DocumentSearch();
+    String query = request.getParameter("query");
+    ArrayList<Document> arr = documentSearch.getDocumentsByPossibleTitle(query, 10, query.length());
+    request.setAttribute("list", arr);
+    request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
+  }
 }

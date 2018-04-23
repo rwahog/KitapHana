@@ -4,21 +4,26 @@
     max-width: 500px;
     margin: 10% auto;
 }
+
 .form-singin h2, .form-singin label {
     color: #969548;
 }
-.form-singin .form-control{
+
+.form-singin .form-control {
     color: #ffe292;
 }
+
 @media (max-width: 600px) {
-    .form-singin h1{
+    .form-singin h1 {
         font-size: 40px;
     }
 }
-.form-singin h5, .form-singin h2{
+
+.form-singin h5, .form-singin h2 {
     text-align: center !important;
     color: #969548;
 }
+
 @media (min-width: 800px) {
     .form-singin {
     }

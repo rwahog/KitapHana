@@ -1,10 +1,12 @@
-label{
+label {
     color: rgba(150, 140, 54, 0.84)
 }
+
 .container {
     position: relative;
     margin-top: 140px;
 }
+
 .form-registration > .container:before {
     content: "";
     position: absolute;
@@ -16,14 +18,17 @@ label{
     background: rgba(0, 0, 0, 0.51);
     box-shadow: 0 0 45px 15px rgba(0, 0, 0, 0.51);
 }
-option{
+
+option {
     color: rgba(150, 140, 54, 0.84) !important;
     background: black !important;
 }
+
 .hidden {
     display: none;
 }
-.file{
+
+.file {
     color: rgba(150, 140, 54, 0.84);
     position: relative;
     z-index: 1;

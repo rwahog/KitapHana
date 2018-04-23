@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface documentDAO {
 
-    Document findById(long id) throws SQLException;
-    List<Document> findAll() throws SQLException;
-    void insert(Document object) throws SQLException;
-    void update(Document object) throws SQLException;
-    void delete(long id) throws SQLException;
+  Document findById(long id) throws SQLException;
+
+  List<Document> findAll() throws SQLException;
+
+  void insert(Document object) throws SQLException;
+
+  void update(Document object) throws SQLException;
+
+  void delete(long id) throws SQLException;
 }

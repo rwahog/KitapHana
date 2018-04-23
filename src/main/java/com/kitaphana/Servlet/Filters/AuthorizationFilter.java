@@ -10,29 +10,29 @@ import java.io.IOException;
 @WebFilter("/AuthorizationFilter")
 public class AuthorizationFilter implements Filter {
 
-    private ServletContext context;
+  private ServletContext context;
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        this.context = filterConfig.getServletContext();
+  @Override
+  public void init(FilterConfig filterConfig) {
+    this.context = filterConfig.getServletContext();
+  }
+
+  @Override
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+                       FilterChain filterChain) throws IOException, ServletException {
+    HttpServletRequest request = (HttpServletRequest) servletRequest;
+    HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+    HttpSession session = request.getSession(false);
+    if (session.getAttribute("role").equals("patron")) {
+      response.sendRedirect("/main");
+    } else {
+      filterChain.doFilter(request, response);
     }
+  }
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+  @Override
+  public void destroy() {
 
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-        HttpSession session = request.getSession(false);
-        if (session.getAttribute("role").equals("patron")) {
-            response.sendRedirect("/main");
-        } else {
-            filterChain.doFilter(request, response);
-        }
-    }
-
-    @Override
-    public void destroy() {
-
-    }
+  }
 }

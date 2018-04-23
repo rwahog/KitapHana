@@ -7,10 +7,14 @@ import java.util.List;
 
 public interface authorDAO {
 
-    Author findById(long id) throws SQLException;
-    List<Author> findAll() throws SQLException;
-    void insert(Author object) throws SQLException;
-    void update(Author object) throws SQLException;
-    void delete(long id) throws SQLException;
+  Author findById(long id) throws SQLException;
+
+  List<Author> findAll() throws SQLException;
+
+  void insert(Author object) throws SQLException;
+
+  void update(Author object) throws SQLException;
+
+  void delete(long id) throws SQLException;
 
 }

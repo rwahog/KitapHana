@@ -1,4 +1,4 @@
-.search-menu{
+.search-menu {
     height: 70px;
     top: 80px !important;
     padding-top: 70px;
@@ -11,114 +11,132 @@
     background-color: rgba(0, 0, 0, 0.71) !important;
     z-index: 10 !important;
 }
-.cards{
+
+.cards {
     margin-top: 20px !important;
 }
+
 .cards .container {
     position: relative;
-    margin-right: 30px; !important;
+    margin-right: 30px;
+!important;
     margin-left: 30px;
     background-color: rgba(0, 0, 0, 0.3) !important;
     border-radius: 20px;
     top: 10px;
 }
-.card{
-    background-color: rgba(0, 0, 0,0.71) !important;
+
+.card {
+    background-color: rgba(0, 0, 0, 0.71) !important;
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 80px;
     position: relative;
 }
 
-.card-body .card-title{
+.card-body .card-title {
     font-weight: 600;
     font-size: 30px;
     line-height: 1;
     margin: 0;
     color: rgba(255, 247, 75, 0.55);
 }
-.card-title:link{
+
+.card-title:link {
     text-decoration: none;
 }
-.card-text{
+
+.card-text {
     margin-bottom: 30px;
     color: rgba(255, 255, 255, 0.77);
 }
-.text-muted{
+
+.text-muted {
     color: rgba(255, 255, 255, 0.77);
     font-style: italic;
 }
-.card-img-top{
+
+.card-img-top {
     width: 100%;
     height: auto;
     background-position: center;
 }
+
 .img-container {
     width: 100%;
     height: 450px;
     overflow: hidden;
 }
+
 .search-menu label {
     color: #969548 !important;
     margin-bottom: 55px;
 }
-.search-menu{
+
+.search-menu {
     position: relative;
     top: 80px;
 }
-.search-menu .form-control{
+
+.search-menu .form-control {
     margin-bottom: 45px;
 }
-.search-menu .btn{
+
+.search-menu .btn {
     margin-bottom: 45px !important;
 }
 
-option{
-    color: rgba(150, 140, 54, 0.84) !important;
-    background: black !important;
-}
-option:hover{
+option {
     color: rgba(150, 140, 54, 0.84) !important;
     background: black !important;
 }
 
-.body.container{
+option:hover {
+    color: rgba(150, 140, 54, 0.84) !important;
+    background: black !important;
+}
+
+.body.container {
     position: relative;
     top: 100px;
 }
-.nav-tabs{
+
+.nav-tabs {
     border-bottom: 1px solid rgba(0, 0, 0, 0) !important;
 }
-.nav.nav-tabs .type{
+
+.nav.nav-tabs .type {
     border-bottom: none !important;
     position: relative !important;
     margin-top: 20px !important;
     margin-left: 30% !important;
 }
 
-
 .nav-tabs .nav-link {
-    border: none!important;
+    border: none !important;
     font-size: 23px !important;
-    background-color: rgba(0, 0, 0, 0)!important;
+    background-color: rgba(0, 0, 0, 0) !important;
     color: rgba(150, 140, 54, 0.84) !important;
     margin-right: 5px !important;
-    border-color:rgba(0, 0, 0, 0) !important;
+    border-color: rgba(0, 0, 0, 0) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0) !important;
 }
+
 .nav-tabs .nav-link.active {
-    color: rgba(255, 247, 75, 0.55)!important;
-    border:none!important;
-    font-weight: bold!important;
-    background-color: rgba(0, 0, 0, 0)!important;
+    color: rgba(255, 247, 75, 0.55) !important;
+    border: none !important;
+    font-weight: bold !important;
+    background-color: rgba(0, 0, 0, 0) !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0) !important;
 }
+
 .nav-tabs .nav-link:hover {
-    border-color:rgba(99, 89, 39, 0.84) !important;
+    border-color: rgba(99, 89, 39, 0.84) !important;
     border-bottom: 1px solid #585128 !important;
-    background-color: rgba(0, 0, 0, 0)!important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
-.tab-content{
+
+.tab-content {
     position: relative !important;
     top: 10px !important;
 }

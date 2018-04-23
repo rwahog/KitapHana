@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface keywordDAO {
 
-    Keyword findById(long id) throws SQLException;
-    List<Keyword> findAll() throws SQLException;
-    void insert(Keyword object) throws SQLException;
-    void update(Keyword object) throws SQLException;
-    void delete(long id) throws SQLException;
+  Keyword findById(long id) throws SQLException;
+
+  List<Keyword> findAll() throws SQLException;
+
+  void insert(Keyword object) throws SQLException;
+
+  void update(Keyword object) throws SQLException;
+
+  void delete(long id) throws SQLException;
 }

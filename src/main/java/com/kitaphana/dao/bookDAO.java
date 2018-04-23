@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface bookDAO {
 
-    Book findById(long id) throws SQLException;
-    List<Book> findAll() throws SQLException;
-    void insert(Book object) throws SQLException;
-    void update(Book object) throws SQLException;
-    void delete(long id) throws SQLException;
+  Book findById(long id) throws SQLException;
+
+  List<Book> findAll() throws SQLException;
+
+  void insert(Book object) throws SQLException;
+
+  void update(Book object) throws SQLException;
+
+  void delete(long id) throws SQLException;
 }

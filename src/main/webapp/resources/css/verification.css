@@ -1,25 +1,28 @@
-.alert-success{
-    color:rgba(255, 247, 75, 0.55) !important;
-    background-color: rgba(0, 0, 0,0.71) !important;
+.alert-success {
+    color: rgba(255, 247, 75, 0.55) !important;
+    background-color: rgba(0, 0, 0, 0.71) !important;
     border-radius: 20px;
     text-align: center;
     top: 35%;
     width: 40%;
     height: 200px;
     left: 30%;
-    right:30%;
+    right: 30%;
     border-color: black;
     line-height: 2;
 }
-h2{
+
+h2 {
     font-size: 50px !important;
 }
-.alert-success a{
+
+.alert-success a {
     font-size: 20px;
     color: rgb(118, 110, 44) !important;
     text-decoration: none !important;
 }
-.alert-success a:hover{
+
+.alert-success a:hover {
     color: rgb(130, 93, 46) !important;
     text-decoration: none !important;
 }
