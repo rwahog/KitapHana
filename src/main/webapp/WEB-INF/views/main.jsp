@@ -19,10 +19,12 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-group col-4" method="post">
+<form class="form-group" method="post">
 	<nav class="navbar search-menu">
-		<input class="form-control" id="searchBy" type="search" placeholder="Search" name="query"
-					 aria-label="Search">
+		<nav class="form-group col-4">
+		<input class="form-control" id="searchBy" type="search" placeholder="Search"
+					 name="query" aria-label="Search">
+		</nav>
 		<nav class="form-group col-3">
 			<select id="criteria" name="criteria" class="form-control">
 				<option value="title" selected>Title</option>
