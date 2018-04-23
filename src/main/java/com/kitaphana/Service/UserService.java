@@ -1,10 +1,7 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.Document;
-import com.kitaphana.Entities.Librarian;
-import com.kitaphana.Entities.Patron;
-import com.kitaphana.Entities.User;
+import com.kitaphana.Entities.*;
 import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.librarianDAO;
@@ -177,12 +174,15 @@ public class UserService {
         patronDAO.insert(patron);
     }
 
-    public boolean isLibrarian(String phone_number) {
-        boolean isLib = false;
-        Librarian librarian = librarianDAO.findByPhoneNumber(phone_number);
-            if (librarian != null) {
-                isLib = true;
+    public String getRole(String phone_number) {
+        String role = "patron";
+        Employee employee = librarianDAO.findByPhoneNumber(phone_number);
+            if (employee != null) {
+                role = "librarian";
             }
-        return isLib;
+            if (employee.getPrivilege() == 0) {
+                role = "admin";
+            }
+        return role;
     }
 }

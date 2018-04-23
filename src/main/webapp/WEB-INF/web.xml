@@ -30,6 +30,15 @@
 		<url-pattern>/librarianPanel/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>AdminFilter</filter-name>
+		<filter-class>com.kitaphana.Servlet.Filters.AdminFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminFilter</filter-name>
+		<url-pattern>/librarianPanel/admin/*</url-pattern>
+	</filter-mapping>
+
 	<context-param>
 		<param-name>log4j-config</param-name>
 		<param-value>WEB-INF/log4j.xml</param-value>

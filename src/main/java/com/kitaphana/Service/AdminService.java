@@ -1,6 +1,8 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Entities.ActionMessage;
+import com.kitaphana.Entities.Admin;
+import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.Librarian;
 import com.kitaphana.dao.librarianDAO;
 import com.kitaphana.exceptions.OperationFailedException;
@@ -17,7 +19,7 @@ public class AdminService {
     private librarianDAO librarianDAO = new librarianDAO();
 
 
-    public ArrayList<Librarian> findAll() {
+    public ArrayList<Employee> findAll() {
         return librarianDAO.findAll();
     }
 
@@ -31,6 +33,11 @@ public class AdminService {
 
     public void deleteLibrarian(String id) {
         librarianDAO.delete(Long.parseLong(id));
+    }
+
+    public Employee findById(String id) {
+        Employee employee = librarianDAO.findById(Long.parseLong(id));
+        return employee;
     }
 
     public ArrayList<ActionMessage> logging() {

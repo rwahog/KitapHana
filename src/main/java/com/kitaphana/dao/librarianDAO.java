@@ -1,6 +1,8 @@
 package com.kitaphana.dao;
 
 import com.kitaphana.Database.Database;
+import com.kitaphana.Entities.Admin;
+import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.Librarian;
 import com.kitaphana.exceptions.OperationFailedException;
 import com.kitaphana.exceptions.UserNotFoundException;
@@ -25,15 +27,15 @@ public class librarianDAO {
         return commonDAO.findLastId("librarians");
     }
 
-    public Librarian findById(long id) {
-        Librarian librarian;
+    public Employee findById(long id) {
+        Employee employee;
         try {
             PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                librarian = setVariables(rs);
+                employee = getVariables(rs);
             } else {
                 throw new UserNotFoundException();
             }
@@ -43,18 +45,18 @@ public class librarianDAO {
         } catch (SQLException e) {
             throw new OperationFailedException();
         }
-        return librarian;
+        return employee;
     }
 
-    public Librarian findByPhoneNumber(String phoneNumber) {
-        Librarian librarian = null;
+    public Employee findByPhoneNumber(String phoneNumber) {
+        Employee employee = null;
         try {
             PreparedStatement ps = db.connect().prepareStatement(FIND_BY_PHONE_NUMBER);
             ps.setString(1, phoneNumber);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                librarian = setVariables(rs);
+                employee = getVariables(rs);
             }
 
             ps.close();
@@ -62,17 +64,17 @@ public class librarianDAO {
         } catch (SQLException e) {
             throw new OperationFailedException();
         }
-        return librarian;
+        return employee;
     }
 
-    public ArrayList<Librarian> findAll() {
-        ArrayList<Librarian> librarians = new ArrayList<>();
+    public ArrayList<Employee> findAll() {
+        ArrayList<Employee> employees = new ArrayList<>();
         try {
             PreparedStatement ps = db.connect().prepareStatement(FIND_ALL);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Librarian librarian = findById(rs.getLong("id"));
-                librarians.add(librarian);
+                Employee employee = findById(rs.getLong("id"));
+                employees.add(employee);
             }
 
             rs.close();
@@ -80,7 +82,7 @@ public class librarianDAO {
         } catch (SQLException e) {
             throw new OperationFailedException();
         }
-        return librarians;
+        return employees;
     }
 
     public void insert(Librarian librarian) {
@@ -115,36 +117,43 @@ public class librarianDAO {
         commonDAO.delete(id, "librarians", "id");
     }
 
-    private Librarian setVariables(ResultSet rs) {
-        Librarian librarian;
+    private Employee getVariables(ResultSet rs) {
+        Employee employee;
         try {
-            librarian = new Librarian();
-            librarian.setId(rs.getLong("id"));
-            librarian.setName(rs.getString("name"));
-            librarian.setSurname(rs.getString("surname"));
-            librarian.setCardNumber(rs.getLong("card_number"));
-            librarian.setPhoneNumber(rs.getString("phone_number"));
-            librarian.setPassword(rs.getString("password"));
-            librarian.setEmail(rs.getString("email"));
-            librarian.setAddressId(rs.getLong("address_id"));
-            librarian.setChatId(rs.getLong("chat_id"));
-            librarian.setPrivilege(rs.getInt("privilege"));
+            employee = new Employee();
+            employee.setId(rs.getLong("id"));
+            employee.setName(rs.getString("name"));
+            employee.setSurname(rs.getString("surname"));
+            employee.setCardNumber(rs.getLong("card_number"));
+            employee.setPhoneNumber(rs.getString("phone_number"));
+            employee.setPassword(rs.getString("password"));
+            employee.setEmail(rs.getString("email"));
+            employee.setAddressId(rs.getLong("address_id"));
+            employee.setChatId(rs.getLong("chat_id"));
+            int privilege = rs.getInt("privilege");
+            if (privilege == 0) {
+                Admin admin = new Admin(employee);
+                return admin;
+            } else {
+                Librarian librarian = new Librarian(employee);
+                librarian.setPrivilege(rs.getInt("privilege"));
+                return librarian;
+            }
         } catch (SQLException e) {
             throw new OperationFailedException();
         }
-        return librarian;
     }
 
-    private void setVariables(Librarian librarian, PreparedStatement ps) {
+    private void setVariables(Employee employee, PreparedStatement ps) {
         try {
-            ps.setString(1, librarian.getName());
-            ps.setString(2, librarian.getSurname());
-            ps.setLong(3, librarian.getCardNumber());
-            ps.setString(4, librarian.getPhoneNumber());
-            ps.setString(5, librarian.getPassword());
-            ps.setString(6, librarian.getEmail());
-            ps.setLong(7, librarian.getAddressId());
-            ps.setInt(8, librarian.getPrivilege());
+            ps.setString(1, employee.getName());
+            ps.setString(2, employee.getSurname());
+            ps.setLong(3, employee.getCardNumber());
+            ps.setString(4, employee.getPhoneNumber());
+            ps.setString(5, employee.getPassword());
+            ps.setString(6, employee.getEmail());
+            ps.setLong(7, employee.getAddressId());
+            ps.setInt(8, employee.getPrivilege());
         } catch (SQLException e) {
             throw new OperationFailedException();
         }

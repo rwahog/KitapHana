@@ -10,6 +10,7 @@
     <link rel="icon" href="/resources/images/favicon-16x16.png" type="image/x-icon">
     <link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
           rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="${pageContext.request.contextPath}/resources/css/common.css"
           rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/main.css"
@@ -21,9 +22,9 @@
 <%@include file="header.jsp" %>
 <form class="form-group col-4" method="post">
 <nav class="navbar search-menu">
-        <input class="form-control" type="search" placeholder="Search" name="query" aria-label="Search">
+        <input class="form-control" id="searchBy" type="search" placeholder="Search" name="query" aria-label="Search">
     <nav class="form-group col-3">
-        <select id="searchBy" name="search" class="form-control">
+        <select id="search" name="search" class="form-control">
             <option value="" selected>Title</option>
             <option>Author</option>
             <option>Keywords</option>
@@ -130,6 +131,24 @@
         </div>
     </div>
 </main>
+<script>
+    var titles = [];
+    // var keywords = [];
+    // var authors = [];
+    var i = 0;
+    <c:forEach items="${list}" var="document" varStatus="status">
+        titles[i] = '<c:out value='${document.getTitle()}'/>';
+        i++;
+    </c:forEach>
+    $(function () {
+        var sources = titles;
+        $("#searchBy").autoComplete ({
+            source: sources
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>

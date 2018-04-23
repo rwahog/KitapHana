@@ -3,6 +3,7 @@ package com.kitaphana.Servlet;
 
 import com.kitaphana.Entities.User;
 
+import com.kitaphana.Service.LibrarianService;
 import com.kitaphana.Service.LoginService;
 import com.kitaphana.Service.TelegramBot;
 import com.kitaphana.Service.UserService;
@@ -23,6 +24,7 @@ public class LoginServlet extends HttpServlet{
     String password;
     LoginService service;
     UserService userService;
+    LibrarianService librarianService;
     final static Logger logger = Logger.getLogger(LoginServlet.class);
 //    TelegramBot telegramBot;
 
@@ -44,7 +46,7 @@ public class LoginServlet extends HttpServlet{
         service = new LoginService();
         phone_number = request.getParameter("login");
         password = request.getParameter("password");
-//        telegramBot = new TelegramBot();
+        librarianService = new LibrarianService();
         HttpSession session = request.getSession();
         String check = request.getParameter("remember");
         if (check != null) {
@@ -54,15 +56,15 @@ public class LoginServlet extends HttpServlet{
         }
         boolean isValidUser = service.loginCheck(phone_number, password);
         if (isValidUser) {
-            boolean isLibrarian = userService.isLibrarian(phone_number);
-            if (isLibrarian) {
-                session.setAttribute("librarian", "true");
+            String role = userService.getRole(phone_number);
+            session.setAttribute("role", role);
+            User user;
+            if (role.equals("librarian")) {
+                user = librarianService.findByPhone(phone_number);
+            } else {
+                user = userService.findUserByPhoneNumber(phone_number);
             }
-            User user = userService.findUserByPhoneNumber(phone_number);
             session.setAttribute("user", user);
-//            if (user.getChatId() != 0){
-//                telegramBot.sendMsg(service.getChatId(phone_number), "You have logged in Kitaphana Library System successfully!");
-//            }
             logger.info(user.getName() + user.getSurname() + " have logged in Kitaphana.");
             response.sendRedirect("/main");
         } else {

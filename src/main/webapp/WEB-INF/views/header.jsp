@@ -21,8 +21,8 @@
     <a class="navbar-brand" href="/main">KitapHana</a>
     <div class="rightside">
         <%if (request.getSession(false) != null) {
-                if (request.getSession(false).getAttribute("librarian") != null) {
-            if (request.getSession(false).getAttribute("librarian").equals("true")) {%>
+                if (request.getSession(false).getAttribute("role") != null) {
+            if (!request.getSession(false).getAttribute("role").equals("patron")) {%>
             <div class="nav-item" >
             <a class="nav-link" href = "/librarianPanel" > Librarian panel</a >
             </div >

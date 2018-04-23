@@ -362,6 +362,9 @@
                         </c:forEach>
                     </tbody>
                 </table>
+                <div class="form-group">
+                    <a class="btn btn-primary btn-block col-12 col-md-3 link" id = "btn" href="/librarianPanel/admin/addLibrarian">Add new Librarian</a>
+                </div>
             </div>
         </div>
         <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">

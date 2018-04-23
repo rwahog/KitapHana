@@ -28,7 +28,7 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         DocumentSearch documentSearch = new DocumentSearch();
         String query = request.getParameter("query");
-        ArrayList<Document> arr = documentSearch.getDocumentsByPossibleTitle(query, 50, 100);
+        ArrayList<Document> arr = documentSearch.getDocumentsByPossibleTitle(query, 10, query.length());
         request.setAttribute("list", arr);
         request.getRequestDispatcher("/WEB-INF/views/main.jsp").forward(request, response);
     }

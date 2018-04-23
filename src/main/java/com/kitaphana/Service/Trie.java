@@ -45,11 +45,11 @@ public class Trie {
 
     public void add(String s){
         Node curNode = root;
-        for (int i = 0; i<s.length(); i++){
-            if (curNode.possible_strings.size()<size) {
+        for (int i = 0; i < s.length(); i++) {
+            if (curNode.possible_strings.size() < size) {
                 curNode.possible_strings.add(s);
             }
-            else if (curNode.possible_strings.size()==size && priority.get(curNode.possible_strings.get(size-1)) < priority.get(s)){
+            else if (curNode.possible_strings.size() == size && priority.get(curNode.possible_strings.get(size-1)) < priority.get(s)){
                 curNode.possible_strings.set(size-1, s);
             }
             Collections.sort(curNode.possible_strings);
@@ -66,7 +66,8 @@ public class Trie {
         curNode.possible_strings.add(s);
         curNode.isEndOfWord = true;
     }
-    public Node find(String s){
+
+    public Node find(String s) {
         Node curNode = root;
         for (int i = 0; i<s.length(); i++) {
             Character next = s.charAt(i);
@@ -79,9 +80,11 @@ public class Trie {
         }
         return curNode;
     }
+
     public ArrayList<String> get(String s) {
         return find(s).possible_strings;
     }
+
     public void setSize(int size) {
         this.size = size;
     }
