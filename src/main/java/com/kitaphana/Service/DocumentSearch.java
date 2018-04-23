@@ -98,7 +98,53 @@ public class DocumentSearch {
     }
 
     public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) {//Кол-во документов, которые нужно вернуть
-        update(possible_title, 1);
+        possible_title = possible_title.toLowerCase();
+        String or =" or ", and = " and ";
+        String s ="";
+        if(possible_title.contains(or)){//or
+            String[] possible_titles = possible_title.split(or);
+            ArrayList<Document> ans = new ArrayList<>();
+            for(int i = 0; i<possible_titles.length; i++){
+                ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
+                for(int j = 0; j<cur.size(); j++){
+                    boolean f = false;
+                    for(int l = 0; l<ans.size(); l++){
+                        if(ans.get(l).getTitle().equals(cur.get(j).getTitle())){
+                            f = true;
+                        }
+                    }
+                    if(!f && ans.size() < amount){
+                        ans.add(cur.get(j));
+                    }
+                }
+            }
+            return ans;
+        }
+        else {//and
+            String[] possible_titles = possible_title.split(and);
+            ArrayList<Document> ans = new ArrayList<>();
+            if(possible_titles.length == 0) return ans;
+            else ans = getDocumentsByPossibleTitle2(possible_titles[0], amount, possible_titles[0].length()/4);
+            for (int i = 1; i < possible_titles.length; i++) {
+                ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
+                for (int j = 0; j < ans.size(); j++) {
+                    boolean f = false;
+                    for(int l = 0; l < cur.size(); l++){
+                        if(cur.get(l).getTitle().equals(ans.get(j).getTitle())){
+                            f = true;
+                        }
+                    }
+                    if (!f) {
+                        ans.remove(ans.get(j));
+                        j--;
+                    }
+                }
+            }
+            return ans;
+        }
+    }
+
+    public ArrayList<Document> getDocumentsByPossibleTitle2(String possible_title, int amount, int lev_dist) {
         possible_title = possible_title.toLowerCase();
         ArrayList<Document>[] sorted_documents = new ArrayList[lev_dist + 1];
         for (int i = 0; i < sorted_documents.length; i++) {
@@ -137,7 +183,14 @@ public class DocumentSearch {
         ArrayList<Author> authors = getAuthorsByPossibleNameOrSurname(possible_name_or_surname, amount, lev_dist);
         for(int i = 0; i<authors.size(); i++){
             for(int j = 0; j<authors.get(i).getDocuments().size(); j++){
-                if(!ans.contains(authors.get(i).getDocuments().get(j))){
+                boolean f = false;
+                for(int l = 0; l<ans.size(); l++){
+                    if(ans.get(l).getTitle().equals(authors.get(i).getDocuments().get(j).getTitle())){
+                        f = true;
+                        break;
+                    }
+                }
+                if(!f){
                     ans.add(authors.get(i).getDocuments().get(j));
                 }
             }
@@ -189,11 +242,19 @@ public class DocumentSearch {
         return ans;
     }
     public ArrayList<Document> getDocumentsByPossibleKeyword(String possible_keyword, int amount, int lev_dist){
-        ArrayList<Document> ans = ans = new ArrayList<>();
+        ArrayList<Document> ans = new ArrayList<>();
         ArrayList<Keyword> keywords = getKeywordsByPossibleKeyword(possible_keyword, amount, lev_dist);
         for(int i = 0; i<keywords.size(); i++){
             for(int j = 0; j<keywords.get(i).getDocuments().size(); j++){
-                if(!ans.contains(keywords.get(i).getDocuments().get(j))){
+                boolean f = false;
+
+                for(int l = 0; l<ans.size(); l++){
+                    if(ans.get(l).getTitle().equals(keywords.get(i).getDocuments().get(j).getTitle())){
+                        f = true;
+                        break;
+                    }
+                }
+                if(!f){
                     ans.add(keywords.get(i).getDocuments().get(j));
                 }
             }
