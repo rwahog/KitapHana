@@ -90,6 +90,7 @@ public class DocumentSearch {
     }
     public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) {//Кол-во документов, которые нужно вернуть
         update(possible_title, 1);
+        possible_title = possible_title.toLowerCase();
         ArrayList<Document>[] sorted_documents = new ArrayList[lev_dist + 1];
         for (int i = 0; i < sorted_documents.length; i++) {
             sorted_documents[i] = new ArrayList<>();
@@ -126,6 +127,7 @@ public class DocumentSearch {
     }
     public ArrayList<Author> getAuthorsByPossibleNameOrSurname(String possible_name_or_surname, int amount, int lev_dist) throws SQLException {
         update(possible_name_or_surname, 1);
+        possible_name_or_surname = possible_name_or_surname.toLowerCase();
         ArrayList<Author> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<authors.size(); i++){
             String name = new String(authors.get(i).getName());
@@ -155,6 +157,7 @@ public class DocumentSearch {
     }
     public ArrayList<Keyword> getKeywordsByPossibleKeyword(String possible_keyword, int amount, int lev_dist) throws SQLException {
         update(possible_keyword, 1);
+        possible_keyword = possible_keyword.toLowerCase();
         ArrayList<Keyword> [] sorted_documents = new ArrayList[lev_dist + 1];
         for(int i = 0; i<keywords.size(); i++){
             String keyword = new String(keywords.get(i).getKeyword());
