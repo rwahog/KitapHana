@@ -213,8 +213,8 @@ public class DocumentSearch {
                     dist = Math.min(dist, levenshteinDistance(s, possible_keyword));
                 }
             }
-//            System.out.println(keyword);
-//            System.out.println(dist);
+            System.out.println(keyword);
+            System.out.println(dist);
             if (dist <= lev_dist) {
                 sorted_documents[dist].add(keywords.get(i));
             }
