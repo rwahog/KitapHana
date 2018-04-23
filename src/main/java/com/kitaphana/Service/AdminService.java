@@ -30,8 +30,8 @@ public class AdminService {
   }
 
   public void updateLibrarian(Librarian librarian) {
-    String addressId = DBService.findColumn(String.valueOf(librarian.getId()), "users",
-            "id_address");
+    String addressId = DBService.findColumn(String.valueOf(librarian.getId()), "librarians",
+            "address_id");
     Address address = librarian.getAddress();
     address.setAddressId(Long.parseLong(addressId));
     addressDAO.update(address);

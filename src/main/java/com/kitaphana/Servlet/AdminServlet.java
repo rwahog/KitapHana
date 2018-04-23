@@ -35,7 +35,6 @@ public class AdminServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-    long librarianId = Long.parseLong(request.getParameter("id"));
     String action = request.getParameter("action");
     String name = request.getParameter("name");
     String surname = request.getParameter("surname");
@@ -57,6 +56,7 @@ public class AdminServlet extends HttpServlet {
       adminService.addLibrarian(librarian);
       response.sendRedirect("/librarianPanel");
     } else if (action.equals("edit")) {
+      long librarianId = Long.parseLong(request.getParameter("id"));
       librarian.setId(librarianId);
       adminService.updateLibrarian(librarian);
       response.sendRedirect("/librarianPanel");
