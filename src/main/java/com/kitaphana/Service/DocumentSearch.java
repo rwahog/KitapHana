@@ -137,7 +137,9 @@ public class DocumentSearch {
         ArrayList<Author> authors = getAuthorsByPossibleNameOrSurname(possible_name_or_surname, amount, lev_dist);
         for(int i = 0; i<authors.size(); i++){
             for(int j = 0; j<authors.get(i).getDocuments().size(); j++){
-                ans.add(authors.get(i).getDocuments().get(j));
+                if(!ans.contains(authors.get(i).getDocuments().get(j))){
+                    ans.add(authors.get(i).getDocuments().get(j));
+                }
             }
         }
         return ans;
@@ -191,7 +193,9 @@ public class DocumentSearch {
         ArrayList<Keyword> keywords = getKeywordsByPossibleKeyword(possible_keyword, amount, lev_dist);
         for(int i = 0; i<keywords.size(); i++){
             for(int j = 0; j<keywords.get(i).getDocuments().size(); j++){
-                ans.add(keywords.get(i).getDocuments().get(j));
+                if(!ans.contains(keywords.get(i).getDocuments().get(j))){
+                    ans.add(keywords.get(i).getDocuments().get(j));
+                }
             }
         }
         return ans;
