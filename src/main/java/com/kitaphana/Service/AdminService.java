@@ -1,6 +1,7 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Entities.ActionMessage;
+import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.Librarian;
 import com.kitaphana.dao.addressDAOImpl;
@@ -15,6 +16,7 @@ import java.util.Scanner;
 public class AdminService {
   private employeeDAOImpl employeeDAOImpl = new employeeDAOImpl();
   private addressDAOImpl addressDAO = new addressDAOImpl();
+  private DBService DBService = new DBService();
 
   public ArrayList<Employee> findAll() {
     return employeeDAOImpl.findAll();
@@ -28,6 +30,11 @@ public class AdminService {
   }
 
   public void updateLibrarian(Librarian librarian) {
+    String addressId = DBService.findColumn(String.valueOf(librarian.getId()), "users",
+            "id_address");
+    Address address = librarian.getAddress();
+    address.setAddressId(Long.parseLong(addressId));
+    addressDAO.update(address);
     employeeDAOImpl.update(librarian);
   }
 
@@ -37,6 +44,8 @@ public class AdminService {
 
   public Employee findById(String id) {
     Employee employee = employeeDAOImpl.findById(Long.parseLong(id));
+    Address address = addressDAO.findById(employee.getAddressId());
+    employee.setAddress(address);
     return employee;
   }
 
