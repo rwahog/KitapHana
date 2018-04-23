@@ -48,15 +48,18 @@ public class AdminServlet extends HttpServlet {
     int houseNumber = Integer.parseInt(request.getParameter("house_number"));
     int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
     String postcode = request.getParameter("postcode");
+    Address address = new Address(country, town, street, houseNumber,
+            apartmentNumber, postcode);
+    Librarian librarian = new Librarian(name, surname, privilege, phone_number,
+            email, password, address);
     if (action.equals("add")) {
-      Address address = new Address(country, town, street, houseNumber,
-              apartmentNumber, postcode);
-      Librarian librarian = new Librarian(name, surname, privilege, phone_number,
-              email, password, address);
       adminService.addLibrarian(librarian);
       response.sendRedirect("/librarianPanel");
     } else if (action.equals("edit")) {
-
+      long librarianId = Long.parseLong(request.getParameter("id"));
+      librarian.setId(librarianId);
+      adminService.updateLibrarian(librarian);
+      response.sendRedirect("/librarianPanel");
     }
   }
 }

@@ -46,17 +46,14 @@ public class patronDAOImpl implements patronDAO {
   }
 
   public Patron findByPhoneNumber(String phone) {
-    Patron patron;
+    Patron patron = null;
     try {
       PreparedStatement ps = db.connect().prepareStatement(FIND_BY_PHONE_NUMBER);
       ps.setString(1, phone);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         patron = setUserVariables(rs);
-      } else {
-        throw new UserNotFoundException();
       }
-
       rs.close();
       ps.close();
     } catch (SQLException e) {
