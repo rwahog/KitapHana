@@ -26,15 +26,13 @@ public class patronDAOImpl implements patronDAO {
 
   @Override
   public Patron findById(long id) {
-    Patron patron;
+    Patron patron = null;
     try {
       PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ID);
       ps.setLong(1, id);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         patron = setUserVariables(rs);
-      } else {
-        throw new UserNotFoundException();
       }
 
       rs.close();
@@ -63,15 +61,13 @@ public class patronDAOImpl implements patronDAO {
   }
 
   public Patron findByChatId(long chatId) {
-    Patron patron;
+    Patron patron = null;
     try {
       PreparedStatement ps = db.connect().prepareStatement(FIND_BY_CHAT_ID);
       ps.setLong(1, chatId);
       ResultSet rs = ps.executeQuery();
       if (rs.next()) {
         patron = setUserVariables(rs);
-      } else {
-        throw new UserNotFoundException();
       }
 
       rs.close();
@@ -143,7 +139,7 @@ public class patronDAOImpl implements patronDAO {
     }
   }
 
-  public void updateUserInfo(Patron patron, String type) {
+  public void updatePatronInfo(Patron patron, String type) {
     try {
       PreparedStatement ps = db.connect().prepareStatement(UPDATE_INFO);
       setUserVariables(patron, ps);
@@ -152,7 +148,7 @@ public class patronDAOImpl implements patronDAO {
       ps.executeUpdate();
       ps.close();
 
-      if (type.equals("Librarian")) {
+      if (type.equals("Librarian") || type.equals("Admin")) {
         dbService.updateColumn(String.valueOf(patron.getId()), patron.getType(), "users", "type");
       } else {
         dbService.updateColumn(String.valueOf(patron.getId()), patron.getPossibleType(), "users", "possible_type");

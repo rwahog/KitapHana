@@ -19,9 +19,28 @@ public class addressDAOImpl implements addressDAO {
   private static final String FIND_ALL = "SELECT id FROM addresses";
   private static final String INSERT = "INSERT INTO addresses (country, town, street, house_number, apartment_number, postcode) VALUES (?,?,?,?,?,?)";
   private static final String UPDATE = "UPDATE addresses SET country=?, town=?, street=?, house_number=?, apartment_number=?, postcode=? WHERE id=?";
+  private static final String FIND_BY_ADDRESS = "SELECT id FROM addresses WHERE country=? AND " +
+          "town=? AND street=? AND house_number=? AND apartment_number=? AND postcode=?";
+
 
   public long findLastId() {
     return commonDAO.findLastId("addresses");
+  }
+
+  public long findDuplicate(Address address) {
+    long addressId = 0;
+    try {
+      PreparedStatement ps = db.connect().prepareStatement(FIND_BY_ADDRESS);
+      setVariables(address, ps);
+
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        addressId = rs.getLong("id");
+      }
+    } catch (SQLException e) {
+      throw new OperationFailedException();
+    }
+    return addressId;
   }
 
   @Override
@@ -33,7 +52,7 @@ public class addressDAOImpl implements addressDAO {
       ResultSet rs = ps.executeQuery();
 
       if (rs.next()) {
-        address = setVariables(rs);
+        address = getVariables(rs);
       } else {
         throw new AddressNotFoundException();
       }
@@ -98,7 +117,7 @@ public class addressDAOImpl implements addressDAO {
     commonDAO.delete(id, "addresses", "id");
   }
 
-  private Address setVariables(ResultSet rs) {
+  private Address getVariables(ResultSet rs) {
     Address address;
     try {
       address = new Address();

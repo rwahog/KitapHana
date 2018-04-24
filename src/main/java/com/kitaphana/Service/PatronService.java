@@ -1,14 +1,12 @@
 package com.kitaphana.Service;
 
 import com.kitaphana.Database.Database;
-import com.kitaphana.Entities.Document;
-import com.kitaphana.Entities.Employee;
-import com.kitaphana.Entities.Patron;
-import com.kitaphana.Entities.User;
+import com.kitaphana.Entities.*;
 import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.documentDAOImpl;
 import com.kitaphana.dao.employeeDAOImpl;
 import com.kitaphana.dao.patronDAOImpl;
+import com.kitaphana.exceptions.OperationFailedException;
 import com.kitaphana.exceptions.UserNotFoundException;
 
 import java.sql.PreparedStatement;
@@ -23,6 +21,7 @@ public class PatronService {
   private documentDAOImpl documentDAO = new documentDAOImpl();
   private employeeDAOImpl employeeDAO = new employeeDAOImpl();
   private DBService dbService = new DBService();
+  private static final String GET_USER_BY_ADDRESS_ID = "SELECT id FROM users WHERE id_address=?";
 
   public long getUserId(String phone) {
     return Long.parseLong(dbService.findColumn(phone, "users", "id", "phone_number"));
@@ -56,7 +55,8 @@ public class PatronService {
 
   public int numberOfUnconfirmedUsers() {
     int count = 0;
-    final String statement = "SELECT COUNT(users.id) AS count FROM users WHERE users.possible_type <> users.type";
+    final String statement = "SELECT COUNT(users.id) AS count FROM users" +
+                              " WHERE users.possible_type <> users.type";
     try {
       PreparedStatement ps = db.connect().prepareStatement(statement);
       ResultSet rs = ps.executeQuery();
@@ -66,14 +66,34 @@ public class PatronService {
       ps.close();
       rs.close();
     } catch (SQLException e) {
-      e.printStackTrace();
+      throw new OperationFailedException();
     }
     return count;
   }
 
 
   private void deleteUserAddress(long id) {
-    addressDAO.delete(getUserAddressId(id));
+    long addressId = getUserAddressId(id);
+    try {
+      PreparedStatement ps = db.connect().prepareStatement(GET_USER_BY_ADDRESS_ID);
+      ps.setLong(1, addressId);
+      ResultSet rs = ps.executeQuery();
+      if (!rs.next()) {
+        addressDAO.delete(addressId);
+      }
+    } catch (SQLException e) {
+      throw new OperationFailedException();
+    }
+  }
+
+  public void deletePatronCheckout(Patron patron, String docId) {
+    ArrayList<String> checkouts = dbService.fromDBStringToArray(patron.getCheckoutsId());
+    if (checkouts != null) {
+      checkouts.remove(checkouts.indexOf(docId));
+    }
+    Document document = documentDAO.findById(Long.parseLong(docId));
+    document.setAmount(document.getAmount()+1);
+    documentDAO.update(document);
   }
 
   public void deletePatron(String userId) {
@@ -90,14 +110,16 @@ public class PatronService {
     }
   }
 
-  public void editUser(Patron patron) {
+  public void editPatron(Patron patron) {
     addressDAO.update(patron.getAddress());
     patronDAO.update(patron);
   }
 
-  public void editUserInfo(Patron patron, String type) {
-    addressDAO.update(patron.getAddress());
-    patronDAO.updateUserInfo(patron, type);
+  public void editPatronInfo(Patron patron, String type) {
+    Address patronAddress = patron.getAddress();
+    patronAddress.setAddressId(getUserAddressId(patron.getId()));
+    addressDAO.update(patronAddress);
+    patronDAO.updatePatronInfo(patron, type);
     if (!patron.getType().equals(patron.getPossibleType())) {
       dbService.sendMessageToLibrarians("Patron " + patron.getName() + " " +
               patron.getSurname() + " (id: " + patron.getId() + ")" +
@@ -113,16 +135,20 @@ public class PatronService {
     }
     String[] idss = ids.split(",");
     for (int i = 0; i < idss.length; i++) {
-      Document doc = null;
-      doc = documentDAO.findById(Long.parseLong(idss[i]));
+      Document doc = documentDAO.findById(Long.parseLong(idss[i]));
       documents.add(doc);
     }
     return documents;
   }
 
-  public void savePatron(Patron patron) {
-    addressDAO.insert(patron.getAddress());
-    patron.setAddressId(addressDAO.findLastId());
+  public void addPatron(Patron patron) {
+    long duplicateAddressId = addressDAO.findDuplicate(patron.getAddress());
+    if (duplicateAddressId == 0) {
+      addressDAO.insert(patron.getAddress());
+      patron.setAddressId(addressDAO.findLastId());
+    } else {
+      patron.setAddressId(duplicateAddressId);
+    }
     patronDAO.insert(patron);
   }
 
