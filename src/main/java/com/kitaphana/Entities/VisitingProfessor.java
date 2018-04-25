@@ -12,6 +12,7 @@ public class VisitingProfessor extends Patron {
             .getDeadlines(),
             patron.getWaitingListId(), patron.getRenewsId(), patron.getReturnsId(),
             patron.getCheckoutsId(), patron.getRenewsCount(), patron.getFines());
+    this.setType("Visiting Professor");
   }
 
   @Override

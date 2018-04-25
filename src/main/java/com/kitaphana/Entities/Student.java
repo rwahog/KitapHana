@@ -12,6 +12,8 @@ public class Student extends Patron {
                     .getDeadlines(),
             patron.getWaitingListId(), patron.getRenewsId(), patron.getReturnsId(),
             patron.getCheckoutsId(), patron.getRenewsCount(), patron.getFines());
+
+    this.setType("Student");
   }
 
   @Override
