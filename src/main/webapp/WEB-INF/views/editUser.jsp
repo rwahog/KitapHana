@@ -34,27 +34,19 @@
 					<c:set var="status" value="${user.getType()}"/>
 					<c:choose>
 						<c:when test="${status == 'Patron'}">
-							<option selected style="background-color:black">Patron</option>
-							<option style="background-color:black">Student</option>
-							<option style="background-color:black">Instructor</option>
-							<option style="background-color:black">Teacher Assistant</option>
-							<option style="background-color:black">Visiting Professor</option>
-							<option style="background-color:black">Professor</option>
-						</c:when>
-						<c:when test="${status == 'Librarian'}">
-							<option selected style="background-color:black">Librarian</option>
-							<option style="background-color:black">Student</option>
-							<option style="background-color:black">Instructor</option>
-							<option style="background-color:black">Teacher Assistant</option>
-							<option style="background-color:black">Visiting Professor</option>
-							<option style="background-color:black">Professor</option>
+							<option value="Patron" selected style="background-color:black">Patron</option>
+							<option value="Student" style="background-color:black">Student</option>
+							<option value="Instructor" style="background-color:black">Instructor</option>
+							<option value="Teacher Assistant" style="background-color:black">Teacher Assistant</option>
+							<option value="Visiting Professor" style="background-color:black">Visiting Professor</option>
+							<option value="Professor" style="background-color:black">Professor</option>
 						</c:when>
 						<c:when test="${status == 'Teacher Assistant'}">
-							<option selected style="background-color:black">Teacher Assistant</option>
-							<option style="background-color:black">Student</option>
-							<option style="background-color:black">Instructor</option>
-							<option style="background-color:black">Visiting Professor</option>
-							<option style="background-color:black">Professor</option>
+							<option value="Teacher Assistant" selected style="background-color:black">Teacher Assistant</option>
+							<option value="Student" style="background-color:black">Student</option>
+							<option value="Instructor" style="background-color:black">Instructor</option>
+							<option value="Visiting Professor" style="background-color:black">Visiting Professor</option>
+							<option value="Professor" style="background-color:black">Professor</option>
 						</c:when>
 						<c:when test="${status == 'Instructor'}">
 							<option selected style="background-color:black">Instructor</option>
@@ -173,6 +165,38 @@
 <script>
   function goBack() {
     window.history.back();
+  }
+</script>
+<script>
+  var check = function () {
+    if (document.getElementById('password1').value !==
+        document.getElementById('password2').value) {
+      document.getElementById('password1').setAttribute("pattern", "");
+      document.getElementById('password1').setAttribute("title", 'Passwords do not match.');
+    } else if (document.getElementById('password1').value.length < 6) {
+      document.getElementById('password1').setAttribute("pattern", "");
+      document.getElementById('password1').setAttribute("title", 'Password must be at least 6 characters.');
+    } else {
+      document.getElementById('password1').removeAttribute("pattern");
+      document.getElementById('password1').removeAttr("title");
+    }
+  };
+</script>
+<script>
+  var checkUnique = function () {
+    var userPhone = document.getElementById('phone_number').value.replace(/[^0-9]+/g, '');
+    var array = [];
+    var i = 0;
+    <c:forEach items="${info}" var="item">
+    array.push("${item}");
+    </c:forEach>
+    if (array.indexOf(userPhone) > -1) {
+      document.getElementById('phone_number').setAttribute("pattern", "");
+      document.getElementById('phone_number').setAttribute("title", 'Such phone number already exists.\'');
+    } else {
+      document.getElementById('phone_number').removeAttribute("pattern");
+      document.getElementById('phone_number').removeAttr("title");
+    }
   }
 </script>
 </body>

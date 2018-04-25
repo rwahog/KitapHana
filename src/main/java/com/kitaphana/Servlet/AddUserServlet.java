@@ -1,5 +1,6 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Patron;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.RegistrationService;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/librarianPanel/addUser", "/librarianPanel/editUser", "/profile"})
+@WebServlet(urlPatterns = {"/librarianPanel/addUser", "/librarianPanel/editUser"})
 public class AddUserServlet extends HttpServlet {
   RegistrationService service = new RegistrationService();
   PatronService patronService = new PatronService();
@@ -45,18 +46,23 @@ public class AddUserServlet extends HttpServlet {
     String country = request.getParameter("country");
     String town = request.getParameter("town");
     String street = request.getParameter("street");
-    String houseNumber = request.getParameter("house_number");
-    String apartmentNumber = request.getParameter("apartment_number");
+    int houseNumber = Integer.parseInt(request.getParameter("house_number"));
+    int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
     String postcode = request.getParameter("postcode");
 
     boolean isValidUser = true;
-    isValidUser = service.checkIfPhoneNumberIsUnique(phoneNumber) && service.possiblePassword(password1, password2);
-    String button = request.getParameter("button");
-    if (isValidUser) {
-      service.saveUser(name, surname, status, phoneNumber, password1, email, country, town, street, houseNumber, apartmentNumber, postcode);
-      response.sendRedirect("/librarianPanel");
-    } else {
-      request.getRequestDispatcher("/WEB-INF/views/addUser.jsp").forward(request, response);
+      Patron patron;
+      if (request.getParameter("id") != null) {
+        Address address = new Address(country, town, street, houseNumber, apartmentNumber,
+                postcode);
+        patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
+        patron.setId(Long.parseLong(request.getParameter("id")));
+        patronService.editPatronInfo(patron, "librarian");
+        response.sendRedirect("/librarianPanel");
+//      patronService.editPatronInfo(name, surname, status, phoneNumber, password1, email, country,
+//              town, street,
+//              houseNumber, apartmentNumber, postcode);
+//      response.sendRedirect("/librarianPanel");
     }
   }
 }

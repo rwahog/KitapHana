@@ -23,6 +23,8 @@ public class Patron extends User {
     this.possibleType = possibleType;
   }
 
+
+
   public Patron(long id, String name, String surname, String phone_number, String password,
                 String email, long addressId, String possibleType, String type, String documentsId,
                 String deadlines, String waitingListId, String renewsId, String returnsId,
