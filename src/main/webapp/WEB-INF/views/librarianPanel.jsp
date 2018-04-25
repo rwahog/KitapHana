@@ -89,15 +89,9 @@
 						<th scope="col">Waiting</th>
 						<th scope="col">Confirmed</th>
 						<th scope="col">Edit</th>
-						<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
-						<%--<c:choose>--%>
-							<%--<c:when test="${privilege == '0'}">--%>
+						<c:if test="${sessionScope.privilege == 1 || sessionScope.privilege == 0}">
 								<th scope="col">Delete</th>
-							<%--</c:when>--%>
-							<%--<c:when test="${privilege == '3'}">--%>
-								<%--<th scope="col">Delete</th>--%>
-							<%--</c:when>--%>
-						<%--</c:choose>--%>
+						</c:if>
 					</tr>
 					</thead>
 					<tbody>
@@ -109,13 +103,11 @@
 							<td>${user.getCardNumber()}</td>
 							<td>${user.getPossibleType()}</td>
 							<td>
-								<a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image"
-																																						src="/resources/images/doc.png">
+								<a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/doc.png">
 								</a>
 							</td>
 							<td>
-								<a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image"
-																																						src="/resources/images/clock.png">
+								<a href="librarianPanel/docsOfUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/clock.png">
 								</a>
 							</td>
 							<td>
@@ -129,36 +121,26 @@
 								<a href="/librarianPanel/editUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/pencil.png">
 								</a>
 							</td>
-
-							<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
-							<%--<c:choose>--%>
-								<%--<c:when test="${privilege == '0'}">--%>
-								<td>
+							<c:if test="${sessionScope.privilege == 1 || sessionScope.privilege == 0}">
+							<td>
 									<a href="/deleteUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/bin.png">
 									</a>
 								</td>
-								<%--</c:when>--%>
-								<%--<c:when test="${privilege == '3'}">--%>
-									<%--<td>--%>
-										<%--<a href="/deleteUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/bin.png">--%>
-										<%--</a>--%>
-									<%--</td>--%>
-								<%--</c:when>--%>
-							<%--</c:choose>--%>
+							</c:if>
+
 						</tr>
 					</c:forEach>
 					</tbody>
 				</table>
 
-				<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
-					<%--<c:choose>--%>
-						<%--<c:when test="${privilege != '1'}">--%>
-							<div class="form-group">
-								<a class="btn btn-primary btn-block col-12 col-md-3 link" id="btn"
-								   href="/librarianPanel/addUser">Add new User</a>
-							</div>
-						<%--</c:when>--%>
-					<%--</c:choose>--%>
+				<c:if test="${sessionScope.privilege == 0 || sessionScope.privilege == 1 ||
+				sessionScope.privilege ==
+				2}">
+					<div class="form-group">
+						<a class="btn btn-primary btn-block col-12 col-md-3 link" id="btn"
+							 href="/librarianPanel/addUser">Add new User</a>
+					</div>
+				</c:if>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
@@ -174,8 +156,9 @@
 						<th scope="col">Users</th>
 						<th scope="col">Outstanding Request</th>
 						<th scope="col">Edit</th>
-
+<c:if test="${sessionScope.privilege == 1 || sessionScope.privilege == 0}">
 						<th scope="col">Delete</th>
+</c:if>
 					</tr>
 					</thead>
 					<tbody>
@@ -203,18 +186,24 @@
 								<a href="/librarianPanel/editDocument?id=${doc.getId()}"><img itemprop="image"
 																																							src="/resources/images/pencil.png"></a>
 							</td>
+							<c:if test="${sessionScope.privilege == 1 || sessionScope.privilege == 0}">
 							<td>
 								<a href="${pageContext.request.contextPath}/deleteDoc?id=${doc.getId()}"><img
 												itemprop="image" src="/resources/images/bin.png"></a>
 							</td>
+							</c:if>
 						</tr>
 					</c:forEach>
 					</tbody>
 				</table>
+<c:if test="${sessionScope.privilege == 1 || sessionScope.privilege == 0 ||
+sessionScope.privilege ==
+2}">
 				<div class="form-group">
 					<a class="btn btn-primary btn-block col-12 col-md-3 link"
 						 href="/librarianPanel/addDocument">Add new Document</a>
 				</div>
+</c:if>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="checkouts" role="tabpanel" aria-labelledby="checkouts-tab">
