@@ -58,7 +58,7 @@ public class LoginServlet extends HttpServlet {
       if (role.equals("librarian") || role.equals("admin")) {
         Employee employee = librarianService.findByPhone(phone_number);
         session.setAttribute("user", employee);
-        session.setAttribute("role", employee.getPrivilege());
+        session.setAttribute("privilege", employee.getPrivilege());
       } else {
         user = patronService.findUserByPhoneNumber(phone_number);
         session.setAttribute("user", user);
