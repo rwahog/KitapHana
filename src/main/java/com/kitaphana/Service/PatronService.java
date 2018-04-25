@@ -128,11 +128,11 @@ public class PatronService {
     patronAddress.setAddressId(getUserAddressId(patron.getId()));
     addressDAO.update(patronAddress);
     patronDAO.updatePatronInfo(patron, type);
-    if (!patron.getType().equals(patron.getPossibleType())) {
-      dbService.sendMessageToLibrarians("Patron " + patron.getName() + " " +
-              patron.getSurname() + " (id: " + patron.getId() + ")" +
-              " has unconfirmed type.");
-    }
+//    if (!patron.getType().equals(patron.getPossibleType())) {
+//      dbService.sendMessageToLibrarians("Patron " + patron.getName() + " " +
+//              patron.getSurname() + " (id: " + patron.getId() + ")" +
+//              " has unconfirmed type.");
+//    }
   }
 
   public ArrayList<Document> fillPage(long id) {

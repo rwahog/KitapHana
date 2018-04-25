@@ -56,8 +56,9 @@ public class AddUserServlet extends HttpServlet {
         Address address = new Address(country, town, street, houseNumber, apartmentNumber,
                 postcode);
         patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
+        patron.setType(status);
         patron.setId(Long.parseLong(request.getParameter("id")));
-        patronService.editPatronInfo(patron, "librarian");
+        patronService.editPatronInfo(patron, "Librarian");
         response.sendRedirect("/librarianPanel");
 //      patronService.editPatronInfo(name, surname, status, phoneNumber, password1, email, country,
 //              town, street,
