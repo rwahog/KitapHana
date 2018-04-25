@@ -62,9 +62,7 @@
 			<a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab"
 				 aria-controls="waitinglist" aria-selected="false">Waiting list</a>
 		</li>
-		<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
-		<%--<c:choose>--%>
-			<%--<c:when test="${privilege == '0'}">--%>
+		<c:if test="${sessionScope.role == 'admin'}">
 				<li class="nav-item">
 					<a class="nav-link" id="librarians-tab" data-toggle="tab" href="#librarians" role="tab"
 					   aria-controls="librarians" aria-selected="false">Librarians</a>
@@ -73,8 +71,7 @@
 					<a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab"
 					   aria-controls="history" aria-selected="false">History</a>
 				</li>
-			<%--</c:when>--%>
-		<%--</c:choose>--%>
+		</c:if>
 	</ul>
 	<div class="tab-content users" id="myTabContent"
 			 style="position: relative !important; top:0px !important; margin-left: 0px !important;">
@@ -390,7 +387,7 @@
 				</table>
 			</div>
 		</div>
-		<c:if test="${sessionScope['role'] == 'admin'}">
+		<c:if test="${sessionScope.role == 'admin'}">
 		<div class="tab-pane fade" id="librarians" role="tabpanel" aria-labelledby="librarians-tab">
 			<div class="panel container-fluid mx-auto px-0">
 				<table class="table table-hover table-dark">

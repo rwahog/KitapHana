@@ -1,6 +1,7 @@
 package com.kitaphana.Servlet;
 
 
+import com.kitaphana.Entities.Employee;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LibrarianService;
 import com.kitaphana.Service.PatronService;
@@ -55,12 +56,14 @@ public class LoginServlet extends HttpServlet {
       session.setAttribute("role", role);
       User user;
       if (role.equals("librarian") || role.equals("admin")) {
-        user = librarianService.findByPhone(phone_number);
+        Employee employee = librarianService.findByPhone(phone_number);
+        session.setAttribute("user", employee);
+        session.setAttribute("role", employee.getPrivilege());
       } else {
         user = patronService.findUserByPhoneNumber(phone_number);
+        session.setAttribute("user", user);
       }
-      session.setAttribute("user", user);
-      logger.info(user.getName() + user.getSurname() + " have logged in Kitaphana.");
+//      logger.info(user.getName() + user.getSurname() + " have logged in Kitaphana.");
       response.sendRedirect("/main");
     } else {
       request.setAttribute("errorMessage", "Invalid username or password");
