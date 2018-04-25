@@ -80,56 +80,56 @@ We assign the loged in user with new exemplar of appropriate class:
   
 ##Search
 </a>
+
 2 tipes:
   + 1. Main: search by the entrying string
   + 2. Support: tips for user during search
         
-        public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) {//Кол-во документов, которые нужно вернуть
-    
-        possible_title = possible_title.toLowerCase();
-        String or =" or ", and = " and ";
-        String s ="";
-        if(possible_title.contains(or)){//or
-            String[] possible_titles = possible_title.split(or);
-            ArrayList<Document> ans = new ArrayList<>();
-            for(int i = 0; i<possible_titles.length; i++){
-                ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
-                for(int j = 0; j<cur.size(); j++){
-                    boolean f = false;
-                    for(int l = 0; l<ans.size(); l++){
-                        if(ans.get(l).getTitle().equals(cur.get(j).getTitle())){
-                            f = true;
+            public ArrayList<Document> getDocumentsByPossibleTitle(String possible_title, int amount, int lev_dist) {
+            possible_title = possible_title.toLowerCase();
+            String or =" or ", and = " and ";
+            String s ="";
+            if(possible_title.contains(or)){//or
+                String[] possible_titles = possible_title.split(or);
+                ArrayList<Document> ans = new ArrayList<>();
+                for(int i = 0; i<possible_titles.length; i++){
+                    ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
+                    for(int j = 0; j<cur.size(); j++){
+                        boolean f = false;
+                        for(int l = 0; l<ans.size(); l++){
+                            if(ans.get(l).getTitle().equals(cur.get(j).getTitle())){
+                                f = true;
+                            }
+                        }
+                        if(!f && ans.size() < amount){
+                            ans.add(cur.get(j));
                         }
                     }
-                    if(!f && ans.size() < amount){
-                        ans.add(cur.get(j));
-                    }
                 }
+                return ans;
             }
-            return ans;
-        }
-        else {//and
-            String[] possible_titles = possible_title.split(and);
-            ArrayList<Document> ans = new ArrayList<>();
-            if(possible_titles.length == 0) return ans;
-            else ans = getDocumentsByPossibleTitle2(possible_titles[0], amount, possible_titles[0].length()/4);
-            for (int i = 1; i < possible_titles.length; i++) {
-                ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
-                for (int j = 0; j < ans.size(); j++) {
-                    boolean f = false;
-                    for(int l = 0; l < cur.size(); l++){
-                        if(cur.get(l).getTitle().equals(ans.get(j).getTitle())){
-                            f = true;
+            else {//and
+                String[] possible_titles = possible_title.split(and);
+                ArrayList<Document> ans = new ArrayList<>();
+                if(possible_titles.length == 0) return ans;
+                else ans = getDocumentsByPossibleTitle2(possible_titles[0], amount, possible_titles[0].length()/4);
+                for (int i = 1; i < possible_titles.length; i++) {
+                    ArrayList<Document> cur = getDocumentsByPossibleTitle2(possible_titles[i], amount, possible_titles[i].length()/4);
+                    for (int j = 0; j < ans.size(); j++) {
+                        boolean f = false;
+                        for(int l = 0; l < cur.size(); l++){
+                            if(cur.get(l).getTitle().equals(ans.get(j).getTitle())){
+                                f = true;
+                            }
+                        }
+                        if (!f) {
+                            ans.remove(ans.get(j));
+                            j--;
                         }
                     }
-                    if (!f) {
-                        ans.remove(ans.get(j));
-                        j--;
-                    }
                 }
+                return ans;
             }
-            return ans;
-        }
 
 
 
