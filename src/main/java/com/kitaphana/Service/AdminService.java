@@ -1,5 +1,6 @@
 package com.kitaphana.Service;
 
+import com.kitaphana.Database.Database;
 import com.kitaphana.Entities.ActionMessage;
 import com.kitaphana.Entities.Address;
 import com.kitaphana.Entities.Employee;
@@ -8,15 +9,18 @@ import com.kitaphana.dao.addressDAOImpl;
 import com.kitaphana.dao.employeeDAOImpl;
 import com.kitaphana.exceptions.OperationFailedException;
 
-import java.io.File;
-import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class AdminService {
+  private Database db = Database.getInstance();
   private employeeDAOImpl employeeDAOImpl = new employeeDAOImpl();
   private addressDAOImpl addressDAO = new addressDAOImpl();
   private DBService DBService = new DBService();
+  private static final String LOGGING = "SELECT * FROM logging";
 
   public ArrayList<Employee> findAll() {
     return employeeDAOImpl.findAll();
@@ -51,17 +55,15 @@ public class AdminService {
 
   public ArrayList<ActionMessage> logging() {
     ArrayList<ActionMessage> actions = new ArrayList<>();
-    final String filePath = "c://logger.log";
-
-    try (Scanner scanner = new Scanner(new File(filePath))) {
-      while (scanner.hasNext()) {
-        String out = scanner.nextLine();
-        String[] formatter = out.split(" : ");
-        ActionMessage message = new ActionMessage(
-                formatter[0], formatter[1]);
+    try {
+      PreparedStatement ps = db.connect().prepareStatement(LOGGING);
+      ResultSet rs = ps.executeQuery();
+      while (rs.next()) {
+        ActionMessage message = new ActionMessage(rs.getString("date"),
+                rs.getString("message"));
         actions.add(message);
       }
-    } catch (IOException e) {
+    } catch (SQLException e) {
       throw new OperationFailedException();
     }
     return actions;

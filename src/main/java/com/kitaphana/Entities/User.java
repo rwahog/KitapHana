@@ -6,7 +6,7 @@ public class User {
   private long cardNumber, id, addressId, chatId;
 
   public User(long id, String name, String surname, String phone_number, String password,
-              String email, long addressId) {
+              String email, long addressId, String type) {
     this.id = id;
     this.name = name;
     this.surname = surname;
@@ -15,6 +15,7 @@ public class User {
     this.email = email;
     this.cardNumber = setCardNumber(phone_number);
     this.addressId = addressId;
+    this.type = type;
   }
 
   public User(String name, String surname, String phone_number, String password,

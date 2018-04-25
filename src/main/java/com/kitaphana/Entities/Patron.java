@@ -24,10 +24,10 @@ public class Patron extends User {
   }
 
   public Patron(long id, String name, String surname, String phone_number, String password,
-                String email, long addressId, String possibleType, String documentsId,
+                String email, long addressId, String possibleType, String type, String documentsId,
                 String deadlines, String waitingListId, String renewsId, String returnsId,
                 String checkoutsId, String renewsCount, String fines) {
-    super(id, name, surname, phone_number, password, email, addressId);
+    super(id, name, surname, phone_number, password, email, addressId, type);
     this.possibleType = possibleType;
     this.documentsId = documentsId;
     this.deadlines = deadlines;

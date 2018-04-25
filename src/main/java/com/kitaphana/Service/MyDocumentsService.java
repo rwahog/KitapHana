@@ -112,8 +112,8 @@ public class MyDocumentsService {
       patron.setRenewsId(docId);
     }
     patronDAO.update(patron);
+    dbService.sendMessageToLibrarians("You have some work to do (new renew)");
     return "Successfully renewed.";
-//        dbService.sendMessageToLibrarians("You have some work to do (new renew)");
   }
 
   public void returnDoc(String docId, String userId) {

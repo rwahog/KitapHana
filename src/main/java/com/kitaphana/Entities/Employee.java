@@ -7,7 +7,7 @@ public class Employee extends User {
   public Employee(Employee employee) {
     super(employee.getId(), employee.getName(), employee.getSurname(),
             employee.getPhoneNumber(), employee.getPassword(),
-            employee.getEmail(), employee.getAddressId());
+            employee.getEmail(), employee.getAddressId(), employee.getType());
   }
 
   public void setPrivilege(int privilege) {

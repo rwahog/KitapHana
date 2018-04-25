@@ -148,13 +148,12 @@
 <script>
   var checkUnique = function () {
     var userPhone = document.getElementById('phone_number').value.replace(/[^0-9]+/g, '');
-    var arr = [];
+    var array = [];
     var i = 0;
-    <c:forEach items="${info}" var="current" varStatus="status">
-    arr[i] = '<c:out value='${current}'/>';
-    i++;
-    </c:forEach>
-    if (arr.indexOf(userPhone) > -1) {
+    <c:forEach items="${info}" var="item">
+    	array.push("${item}");
+		</c:forEach>
+    if (array.indexOf(userPhone) > -1) {
       document.getElementById('phone_number').setAttribute("pattern", "");
       document.getElementById('phone_number').setAttribute("title", 'Such phone number already exists.\'');
     } else {

@@ -130,6 +130,7 @@ public class employeeDAOImpl {
       employee.setEmail(rs.getString("email"));
       employee.setAddressId(rs.getLong("address_id"));
       employee.setChatId(rs.getLong("chat_id"));
+      employee.setType(rs.getString("type"));
       int privilege = rs.getInt("privilege");
       if (privilege == 0) {
         Admin admin = new Admin(employee);

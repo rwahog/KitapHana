@@ -42,11 +42,19 @@ public class PatronService {
     return patron;
   }
 
-  public Patron findUserByPhoneNumber(String phone) {
-    Patron patron;
-    patron = patronDAO.findByPhoneNumber(phone);
-    patron.setAddress(addressDAO.findById(patron.getAddressId()));
-    return patron;
+  public User findUserByPhoneNumber(String phone) {
+    Patron dummy = null;
+    String type = getRole(phone);
+    if (type.equals("patron")) {
+      Patron patron = patronDAO.findByPhoneNumber(phone);
+      patron.setAddress(addressDAO.findById(patron.getAddressId()));
+      return patron;
+    } else if (type.equals("librarian") || type.equals("admin")) {
+      Employee employee = employeeDAO.findByPhoneNumber(phone);
+      employee.setAddress(addressDAO.findById(employee.getAddressId()));
+      return employee;
+    }
+    return dummy;
   }
 
   public ArrayList<Patron> findAll() {

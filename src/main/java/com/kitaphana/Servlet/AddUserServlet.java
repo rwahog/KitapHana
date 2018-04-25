@@ -26,7 +26,8 @@ public class AddUserServlet extends HttpServlet {
       user = patronService.findUserById(Long.parseLong(request.getParameter("id")));
       request.setAttribute("user", user);
     } else if (request.getRequestURI().endsWith("profile")) {
-      user = patronService.findUserById(((Patron) session.getAttribute("user")).getId());
+      user = patronService.findUserByPhoneNumber(((User) session.getAttribute("user"))
+              .getPhoneNumber());
       request.setAttribute("user", user);
     }
     request.getRequestDispatcher("/WEB-INF/views/editUser.jsp").forward(request, response);

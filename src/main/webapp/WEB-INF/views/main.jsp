@@ -6,26 +6,25 @@
 <head>
 	<meta charset="UTF-8">
 	<title>KitapHana</title>
-	<link rel="icon" href="/resources/images/favicon-16x16.png" type="image/x-icon">
+	<link rel="icon" href="/resources/images/favicon-16x16.png" type="image/x-icon"/>
 	<link href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"
-				rel="stylesheet">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+				rel="stylesheet"/>
+	<link rel="stylesheet" href="/resources/css/awesomplete.css"/>
 	<link href="${pageContext.request.contextPath}/resources/css/common.css"
-				rel="stylesheet">
+				rel="stylesheet"/>
 	<link href="${pageContext.request.contextPath}/resources/css/main.css"
-				rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/auto-complete.css"
-				rel="stylesheet">
+				rel="stylesheet"/>
+	<script src="/resources/js/awesomplete.js" async></script>
 </head>
 <body>
 <%@include file="header.jsp" %>
-<form class="form-group" method="post">
+<form class="form-row" method="post">
 	<nav class="navbar search-menu">
-		<nav class="form-group col-4">
-		<input class="form-control" id="searchBy" type="search" placeholder="Search"
-					 name="query" aria-label="Search">
+		<nav class="col-4">
+		<input class="form-control awesomplete" id="searchBy" type="search" placeholder="Search"
+					 name="query" aria-label="Search" autocomplete="off">
 		</nav>
-		<nav class="form-group col-3">
+		<nav class="col-3">
 			<select id="criteria" name="criteria" class="form-control">
 				<option value="title" selected>Title</option>
 				<option value="author">Author</option>
@@ -158,21 +157,15 @@
   titles[i] = '<c:out value='${document.getTitle()}'/>';
   i++;
   </c:forEach>
-  $(function () {
-    var sources = titles;
-    $("#searchBy").autoComplete({
-      source: sources
-    });
-  });
+  var input = document.getElementById("searchBy");
+  var awesomplete = new Awesomplete(input);
+  awesomplete.list = titles;
+
 </script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/jquery-3.2.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/masonry.pkgd.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/auto-complete.js"></script>
-<script src="${pageContext.request.contextPath}/resources/js/auto-complete.min.js"></script>
 </body>
 </html>

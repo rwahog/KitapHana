@@ -125,30 +125,33 @@ public class DocumentService {
     return true;
   }
 
-  public boolean checkOut(long id_user, int id) {
+  public String checkOut(long id_user, int id) {
+    String message = "";
     try {
       Patron patron = patronDAO.findById(id_user);
       Document document = documentDAO.findById(id);
       int amount = document.getAmount();
       amount--;
       if (patron != null) {
-        ArrayList docs = fromDBStringToArray(patron.getDocumentsId());
-        ArrayList checks = fromDBStringToArray(patron.getCheckoutsId());
+        ArrayList<String> docs = fromDBStringToArray(patron.getDocumentsId());
+        ArrayList<String> checks = fromDBStringToArray(patron.getCheckoutsId());
         if (document.getAmount() <= 0) {
-          return false;
+          return message = "Amount is 0.";
         }
         if (docs != null && docs.contains(id)) {
-          return false;
+          return message = "You already have this document.";
         }
         if (!patron.getPossibleType().equals(patron.getType())) {
-          return false;
+          return message = "You cannot check out documents due to the fact that your type is not " +
+                  "confirmed.";
         }
+        System.out.println(checks.get(0));
         if (checks != null && checks.contains(String.valueOf(id))) {
-          return false;
+          return message = "You are waiting for this document.";
         }
         String available = DBService.findColumn(String.valueOf(id), "documents", "available");
         if (available.equals("0")) {
-          return false;
+          return message = "The document is unavaiblable due to the outstanding request.";
         }
         String waiting_list = DBService.findColumn(String.valueOf(id), "documents", "waiting_list");
         if (waiting_list != "") {
@@ -162,11 +165,12 @@ public class DocumentService {
         }
       }
       DBService.updateColumn(String.valueOf(id), String.valueOf(amount), "documents", "amount");
-      DBService.sendMessageToLibrarians("You have a new checkout request");
+//      DBService.sendMessageToLibrarians("You have a new checkout request");
+      message = "Success";
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return true;
+    return message;
   }
 
   public boolean checkOutApproval(String id_user, String id_document) {

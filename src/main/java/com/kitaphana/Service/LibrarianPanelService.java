@@ -41,7 +41,6 @@ public class LibrarianPanelService {
       }
 
     } catch (SQLException e) {
-      System.out.println("checkouts");
       throw new OperationFailedException();
     }
     return patrons;
@@ -64,7 +63,6 @@ public class LibrarianPanelService {
         patrons.add(patron);
       }
     } catch (SQLException e) {
-      System.out.println("renews");
       throw new OperationFailedException();
     }
     return patrons;
@@ -88,7 +86,6 @@ public class LibrarianPanelService {
       }
 
     } catch (SQLException e) {
-      System.out.println("returns");
       throw new OperationFailedException();
     }
     return patrons;
@@ -111,7 +108,6 @@ public class LibrarianPanelService {
       }
 
     } catch (SQLException e) {
-      System.out.println("waitings");
       throw new OperationFailedException();
     }
     return docs;

@@ -7,15 +7,15 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class Main {
   public static void main(String[] args) {
-    ApiContextInitializer.init();
-
-    TelegramBotsApi botsApi = new TelegramBotsApi();
-    TelegramBot ourCoolBot = new TelegramBot();
-    try {
-      botsApi.registerBot(ourCoolBot);
-    } catch (TelegramApiException e) {
-      e.printStackTrace();
-    }
-    System.out.println("Bot started!");
-  }
-}
+//    ApiContextInitializer.init();
+//
+//    TelegramBotsApi botsApi = new TelegramBotsApi();
+//    TelegramBot ourCoolBot = new TelegramBot();
+//    try {
+//      botsApi.registerBot(ourCoolBot);
+//    } catch (TelegramApiException e) {
+//      e.printStackTrace();
+//    }
+//    System.out.println("Bot started!");
+//  }
+}}
