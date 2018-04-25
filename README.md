@@ -26,6 +26,8 @@ Victoria Zubrinkina, Georgy Khorushevsky
 </a>
 Patrons are able survey diffrent documents on the main page and check them out for a certain time.
 Librarins are used to manage their moves and them as objects. 
+
+  <img src="ProvidedDoc/mainn.jpg" alt="ProvidedDoc/mainn.jpg">
 <a name="arc"> 
    
 # Users hierarchy
@@ -78,7 +80,7 @@ We assign the loged in user with new exemplar of appropriate class:
              
 <a name="search">
   
-##Search
+#Search
 </a>
 
 2 tipes:
