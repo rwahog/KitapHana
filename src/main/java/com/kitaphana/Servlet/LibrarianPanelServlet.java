@@ -1,5 +1,6 @@
 package com.kitaphana.Servlet;
 
+import com.kitaphana.Entities.Employee;
 import com.kitaphana.Service.*;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ public class LibrarianPanelServlet extends HttpServlet {
   LibrarianPanelService service = new LibrarianPanelService();
   DocumentService documentService = new DocumentService();
   PatronService patronService = new PatronService();
+  LibrarianService librarianService = new LibrarianService();
   DBService dbService = new DBService();
 
   @Override

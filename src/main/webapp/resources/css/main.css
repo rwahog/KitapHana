@@ -79,7 +79,8 @@
 }
 
 .search-menu .form-control {
-    margin-bottom: 45px;
+    position: relative;
+    bottom: 30px;
 }
 
 .search-menu .btn {

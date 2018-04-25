@@ -62,14 +62,19 @@
 			<a class="nav-link" id="waitinglist-tab" data-toggle="tab" href="#waitinglist" role="tab"
 				 aria-controls="waitinglist" aria-selected="false">Waiting list</a>
 		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="librarians-tab" data-toggle="tab" href="#librarians" role="tab"
-				 aria-controls="librarians" aria-selected="false">Librarians</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab"
-				 aria-controls="history" aria-selected="false">History</a>
-		</li>
+		<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
+		<%--<c:choose>--%>
+			<%--<c:when test="${privilege == '0'}">--%>
+				<li class="nav-item">
+					<a class="nav-link" id="librarians-tab" data-toggle="tab" href="#librarians" role="tab"
+					   aria-controls="librarians" aria-selected="false">Librarians</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab"
+					   aria-controls="history" aria-selected="false">History</a>
+				</li>
+			<%--</c:when>--%>
+		<%--</c:choose>--%>
 	</ul>
 	<div class="tab-content users" id="myTabContent"
 			 style="position: relative !important; top:0px !important; margin-left: 0px !important;">
@@ -87,7 +92,15 @@
 						<th scope="col">Waiting</th>
 						<th scope="col">Confirmed</th>
 						<th scope="col">Edit</th>
-						<th scope="col">Delete</th>
+						<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
+						<%--<c:choose>--%>
+							<%--<c:when test="${privilege == '0'}">--%>
+								<th scope="col">Delete</th>
+							<%--</c:when>--%>
+							<%--<c:when test="${privilege == '3'}">--%>
+								<%--<th scope="col">Delete</th>--%>
+							<%--</c:when>--%>
+						<%--</c:choose>--%>
 					</tr>
 					</thead>
 					<tbody>
@@ -116,23 +129,39 @@
 								</c:if>
 							</td>
 							<td>
-								<a href="/librarianPanel/editUser?id=${user.getId()}"><img itemprop="image"
-																																					 src="/resources/images/pencil.png">
+								<a href="/librarianPanel/editUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/pencil.png">
 								</a>
 							</td>
-							<td>
-								<a href="/deleteUser?id=${user.getId()}"><img itemprop="image"
-																															src="/resources/images/bin.png">
-								</a>
-							</td>
+
+							<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
+							<%--<c:choose>--%>
+								<%--<c:when test="${privilege == '0'}">--%>
+								<td>
+									<a href="/deleteUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/bin.png">
+									</a>
+								</td>
+								<%--</c:when>--%>
+								<%--<c:when test="${privilege == '3'}">--%>
+									<%--<td>--%>
+										<%--<a href="/deleteUser?id=${user.getId()}"><img itemprop="image" src="/resources/images/bin.png">--%>
+										<%--</a>--%>
+									<%--</td>--%>
+								<%--</c:when>--%>
+							<%--</c:choose>--%>
 						</tr>
 					</c:forEach>
 					</tbody>
 				</table>
-				<div class="form-group">
-					<a class="btn btn-primary btn-block col-12 col-md-3 link" id="btn"
-						 href="/librarianPanel/addUser">Add new User</a>
-				</div>
+
+				<%--<c:set var="privilege" value="${employee.getPrivilege()}"/>--%>
+					<%--<c:choose>--%>
+						<%--<c:when test="${privilege != '1'}">--%>
+							<div class="form-group">
+								<a class="btn btn-primary btn-block col-12 col-md-3 link" id="btn"
+								   href="/librarianPanel/addUser">Add new User</a>
+							</div>
+						<%--</c:when>--%>
+					<%--</c:choose>--%>
 			</div>
 		</div>
 		<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
@@ -148,6 +177,7 @@
 						<th scope="col">Users</th>
 						<th scope="col">Outstanding Request</th>
 						<th scope="col">Edit</th>
+
 						<th scope="col">Delete</th>
 					</tr>
 					</thead>

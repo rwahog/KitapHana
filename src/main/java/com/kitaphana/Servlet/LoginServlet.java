@@ -4,6 +4,7 @@ package com.kitaphana.Servlet;
 import com.kitaphana.Entities.User;
 import com.kitaphana.Service.LibrarianService;
 import com.kitaphana.Service.PatronService;
+import com.kitaphana.Service.TelegramBot;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -19,11 +20,11 @@ public class LoginServlet extends HttpServlet {
 
   String phone_number;
   String password;
-  LoginService service;
+  //LoginService service;
   PatronService patronService;
   LibrarianService librarianService;
   final static Logger logger = Logger.getLogger(LoginServlet.class);
-//    TelegramBot telegramBot;
+  //TelegramBot telegramBot;
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +41,7 @@ public class LoginServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException {
     patronService = new PatronService();
-    service = new LoginService();
+    //service = new LoginService();
     phone_number = request.getParameter("login");
     password = request.getParameter("password");
     librarianService = new LibrarianService();

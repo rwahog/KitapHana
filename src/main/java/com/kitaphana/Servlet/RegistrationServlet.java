@@ -42,6 +42,13 @@ public class RegistrationServlet extends HttpServlet {
     int apartmentNumber = Integer.parseInt(request.getParameter("apartment_number"));
     String postcode = request.getParameter("postcode");
 
+    Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
+    Patron patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
+    service.addPatron(patron);
+    HttpSession session = request.getSession();
+    patron = (Patron) service.findUserByPhoneNumber(phoneNumber);
+    session.setAttribute("user", patron);
+    response.sendRedirect("/main");
 //    if (!isValidPassword && !isValidUser) {
 //      request.setAttribute("errorBoth", "Your password is not matching or it too short " +
 //              "and the user is already exits with this prone number");
@@ -53,7 +60,7 @@ public class RegistrationServlet extends HttpServlet {
 //      request.setAttribute("errorPhone", "Your password is not matching or it too short");
 //      request.getRequestDispatcher("/WEB-INF/views/registration.jsp").forward(request, response);
 //    } else {
-//      Address address = new Address(country, town, street, houseNumber, apartmentNumber, postcode);
+//
 //      Patron patron = new Patron(name, surname, phoneNumber, password1, email, address, status);
 //      service.savePatron(patron);
 //      HttpSession session = request.getSession();
@@ -61,6 +68,6 @@ public class RegistrationServlet extends HttpServlet {
 //      session.setAttribute("user", patron);
 ////            String message = "New user " + user.getName() + " " + user.getSurname() + " (id: " + service.getUserId(phoneNumber) + ")" + " is waiting for type confirming.";
 ////            dbService.sendMessageToLibrarians(message);
-//      response.sendRedirect("/main");
+//
     }
   }

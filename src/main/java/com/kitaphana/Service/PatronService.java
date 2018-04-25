@@ -27,7 +27,7 @@ public class PatronService {
     return Long.parseLong(dbService.findColumn(phone, "users", "id", "phone_number"));
   }
 
-  private long getUserAddressId(long id) {
+  public long getUserAddressId(long id) {
     return Long.parseLong(dbService.findColumn(String.valueOf(id), "users", "id_address"));
   }
 
