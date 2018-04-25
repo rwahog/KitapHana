@@ -6,6 +6,7 @@ public class TeacherAssistant extends FacultyMember {
 
   public TeacherAssistant(Patron patron) {
     super(patron);
+    this.setType("TeacherAssistant");
   }
 
   @Override

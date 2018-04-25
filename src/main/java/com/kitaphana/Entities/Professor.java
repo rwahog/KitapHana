@@ -6,6 +6,7 @@ public class Professor extends FacultyMember {
 
   public Professor(Patron patron) {
     super(patron);
+    this.setType("Professor");
   }
 
   @Override

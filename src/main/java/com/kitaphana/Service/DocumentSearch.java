@@ -39,6 +39,7 @@ public class DocumentSearch {
 
     public void initializeDocuments() {
         documents = documentService.findAll();
+        System.out.println("kek");
         for (int i = 0; i < documents.size(); i++) {
             update(documents.get(i).getTitle(), 0);
         }

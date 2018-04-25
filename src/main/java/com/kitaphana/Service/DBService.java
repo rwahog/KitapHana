@@ -275,6 +275,8 @@ public class DBService {
 
     UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params, "UTF-8");
     post.setEntity(ent);
-    HttpResponse responsePOST = client.execute(post);
+    try {
+      HttpResponse responsePOST = client.execute(post);
+    }catch (Exception e){}
   }
 }

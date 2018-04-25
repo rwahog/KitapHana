@@ -145,7 +145,6 @@ public class DocumentService {
           return message = "You cannot check out documents due to the fact that your type is not " +
                   "confirmed.";
         }
-        System.out.println(checks.get(0));
         if (checks != null && checks.contains(String.valueOf(id))) {
           return message = "You are waiting for this document.";
         }
@@ -154,7 +153,7 @@ public class DocumentService {
           return message = "The document is unavaiblable due to the outstanding request.";
         }
         String waiting_list = DBService.findColumn(String.valueOf(id), "documents", "waiting_list");
-        if (waiting_list != "") {
+        if (waiting_list.length() != 0) {
           queue(id_user, id);
         }
         String checkouts = patron.getCheckoutsId();
@@ -226,6 +225,7 @@ public class DocumentService {
       ArrayList<String> arrayList = fromDBStringToArray(checkouts);
       arrayList.remove(arrayList.indexOf(id_document));
       checkouts = DBService.fromArrayToDBString(arrayList);
+      if (users == null) users = "";
       if (users.length() != 0) {
         users = users + "," + id_user;
       } else {
@@ -420,7 +420,9 @@ public class DocumentService {
       deadlinesId.add(index, String.valueOf(currentTime));
       deadlines = DBService.fromArrayToDBString(deadlinesId);
       DBService.updateColumn(id, deadlines, "users", "deadlines");
-      DBService.sendMessageToUser("Please return book " + title + " to the library", id);
+      try {
+        DBService.sendMessageToUser("Please return book " + title + " to the library", id);
+      }catch (Exception e){}
     }
   }
 
